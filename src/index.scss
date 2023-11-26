@@ -1,4 +1,23 @@
+@import './vendor/fonts/fonts.css';
+@import './vendor/normalize.css';
+
 body {
+    margin: 0;
+    padding: 0;
     color: #fff;
     background-color: #000;
+    font-family: Montserrat, sans-serif;
+    color: #282828;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+h1,
+h2,
+h3,
+ul,
+p {
+    margin: 0;
+    padding: 0;
 }
