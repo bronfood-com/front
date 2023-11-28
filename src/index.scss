@@ -1,16 +1,12 @@
 @import './vendor/fonts/fonts.css';
 @import './vendor/normalize.css';
-
+@import './styles/variables.scss';
 body {
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    background-color: #000;
     font-family: Montserrat, sans-serif;
-    color: #282828;
+    color: $black;
     font-size: 15px;
     font-weight: 500;
-    line-height: 140%;
+    line-height: 21px;
 }
 
 h1,
@@ -20,4 +16,8 @@ ul,
 p {
     margin: 0;
     padding: 0;
+}
+
+.button {
+    border: none;
 }

@@ -1,15 +1,17 @@
+@import '../../styles/variables.scss';
+
 .input {
     position: relative;
     width: 100%;
     margin-top: 28px;
 
     &__label {
-        color: #5e5e5e;
+        color: $grey;
         position: absolute;
         top: -10px;
         left: 8px;
         padding: 0 4px;
-        background-color: #fcfcfc;
+        background-color: $background;
     }
     &__place {
         box-sizing: border-box;
@@ -20,7 +22,7 @@
         background-color: transparent;
         padding-left: 16px;
         &:placeholder {
-            color: #aaa;
+            color: $light-gray;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
