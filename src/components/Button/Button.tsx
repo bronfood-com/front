@@ -5,13 +5,13 @@ interface Button {
     /**
      * Text on button
      */
-    buttonText: string;
+    children: string;
 }
 
 const Button: FC<Button> = (props) => {
     return (
         <button type="submit" className={styles.button}>
-            {props.buttonText}
+            {props.children}
         </button>
     );
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styles from './Input.module.scss';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { useId } from 'react';
 
 interface Input {
     /**
@@ -19,17 +19,16 @@ interface Input {
      * Name of input
      */
     name: string;
-    register: UseFormRegister<FieldValues>;
 }
 
 const Input: FC<Input> = (props) => {
-    const inputId = `${props.name}_id`;
+    const id = useId();
     return (
         <div className={styles.input}>
-            <label htmlFor={inputId} className={styles.input__label}>
+            <label htmlFor={id} className={styles.input__label}>
                 {props.nameLabel}
             </label>
-            <input id={inputId} className={styles.input__place} type={props.type} placeholder={props.placeholder} {...props.register(props.name, { required: 'Заполните все необходимые поля' })}></input>
+            <input id={id} className={styles.input__place} type={props.type} placeholder={props.placeholder} name={props.name}></input>
         </div>
     );
 };
