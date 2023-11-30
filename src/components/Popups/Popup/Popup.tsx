@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import styles from './Popup.module.scss';
 
-interface PopupForm {
+interface Popup {
     /**
      * Main popup title
      */
@@ -12,7 +12,7 @@ interface PopupForm {
     children: ReactNode;
 }
 
-const PopupForm: FC<PopupForm> = (props) => {
+const PopupForm: FC<Popup> = (props) => {
     return (
         <div className={styles.popup}>
             <h2 className={styles.popup__title}>{props.title}</h2>
