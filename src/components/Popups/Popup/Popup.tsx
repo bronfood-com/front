@@ -7,13 +7,16 @@ interface Popup {
      */
     title?: string;
     /**
+     * Personal parameters for popup
+     */
+    mode?: string;
+    /**
      * Elements that popup contains
      */
-    mode: string;
     children: ReactNode;
 }
 
-const PopupForm: FC<Popup> = (props) => {
+const Popup: FC<Popup> = (props) => {
     return (
         <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
             {props.title && <h2 className={styles.popup__title}>{props.title}</h2>}
@@ -23,4 +26,4 @@ const PopupForm: FC<Popup> = (props) => {
     );
 };
 
-export default PopupForm;
+export default Popup;
