@@ -1,0 +1,48 @@
+@import '../../../styles/variables.scss';
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 30px);
+    height: min-content;
+    background-color: $background;
+    border-radius: 25px;
+    margin: auto;
+    padding: 50px 0 55px;
+
+    &__title {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 21px;
+        margin: 0 auto 10px;
+    }
+    &__close {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        top: 40px;
+        right: 20px;
+        background-color: transparent;
+        margin: 0 auto;
+        &:before {
+            content: '';
+            width: 22px;
+            height: 2px;
+            position: absolute;
+            top: 12px;
+            left: -4px;
+            background: $grey;
+            transform: rotate(-45deg);
+        }
+        &:after {
+            content: '';
+            width: 22px;
+            height: 2px;
+            position: absolute;
+            top: 12px;
+            left: -4px;
+            background: $grey;
+            transform: rotate(45deg);
+        }
+    }
+}

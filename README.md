@@ -1,31 +1,33 @@
 # Бронфут.ком - фронтенд
 
 # Требования
+
 Node 18+  
 npm 7+
 
 # Установка
- 1. Склонировать репозиторий
- 2. Установить зависимоcти командой: 
-   
-    ```npm install``` или ```yarn install```
+
+1.  Склонировать репозиторий
+2.  Установить зависимоcти командой:
+
+    `npm install` или `yarn install`
 
 # Скрипты
 
 - Дев сервер  
-```npm run dev```
+  `npm run dev`
 
-- Превью   
-```npm run preview```
+- Превью  
+  `npm run preview`
 
 - Билд  
-```npm run build```
+  `npm run build`
 
 - Форматирование prettier  
-```npm run prettier```
+  `npm run prettier`
 
 - Запуск eslint  
-```npm run lint```
+  `npm run lint`
 
 # Styleguide
 

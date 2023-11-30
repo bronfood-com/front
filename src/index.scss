@@ -1,4 +1,23 @@
+@import './vendor/fonts/fonts.css';
+@import './vendor/normalize.css';
+@import './styles/variables.scss';
 body {
-    color: #fff;
-    background-color: #000;
+    font-family: Montserrat, sans-serif;
+    color: $black;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+h1,
+h2,
+h3,
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.button {
+    border: none;
 }

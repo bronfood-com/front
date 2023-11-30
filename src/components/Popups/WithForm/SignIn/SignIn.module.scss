@@ -1,0 +1,33 @@
+@import '../../../../styles/variables.scss';
+
+.link_registration {
+    color: $orange;
+    margin: 20px auto 0;
+}
+.link_recovery {
+    color: $grey;
+    margin: 10px 0 0 auto;
+}
+.form {
+    &__notice {
+        display: flex;
+        align-items: center;
+        border-radius: 20px;
+        gap: 12px;
+        border: 1px solid $red;
+        padding: 12px;
+        margin: 20px 0 5px;
+    }
+    &__warning {
+        min-width: 25px;
+        min-height: 25px;
+        background-image: url(../../../../vendor/images/warning.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    &__error {
+        color: $neutral-gray-900;
+        font-size: 14px;
+        font-weight: 400;
+    }
+}
