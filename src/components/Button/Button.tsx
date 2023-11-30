@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
 interface Button {
     /**
      * Text on button
      */
-    children: string;
+    children?: ReactNode;
 }
 
 const Button: FC<Button> = (props) => {
