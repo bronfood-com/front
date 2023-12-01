@@ -7,9 +7,9 @@ interface Popup {
      */
     title?: string;
     /**
-     * Personal parameters for popup
+     * Choose type of popup: info
      */
-    mode?: string;
+    mode?: 'info';
     /**
      * Elements that popup contains
      */
