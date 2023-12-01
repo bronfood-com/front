@@ -44,6 +44,9 @@
             background: $grey;
             transform: rotate(45deg);
         }
+        &_info {
+            display: none;
+        }
     }
 }
 
