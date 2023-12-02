@@ -44,5 +44,12 @@
             background: $grey;
             transform: rotate(45deg);
         }
+        &_info {
+            display: none;
+        }
     }
+}
+
+.popup_type_info {
+    padding: 30px 0;
 }
