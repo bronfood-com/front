@@ -12,6 +12,10 @@
         left: 8px;
         padding: 0 4px;
         background-color: $background;
+
+        &__error {
+            color: $red;
+        }
     }
     &__place {
         box-sizing: border-box;
@@ -27,5 +31,15 @@
             font-weight: 400;
             line-height: 21px;
         }
+    }
+
+    &__error {
+        color: $red;
+        font-family: SF Pro Display;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 24px;
+        margin-top: 3px;
+        margin-left: 18px;
     }
 }

@@ -3,18 +3,25 @@ import Form from '../../../Form/Form';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 import styles from './SignIn.module.scss';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { regexPassword, regexPhoneNumber } from '../../../../utils/consts';
 
 const SignIn = () => {
-    const onSubmit = () => {};
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data);
     return (
         <Popup title={'Вход'}>
-            <Form name="form-signin" onSubmit={onSubmit}>
-                <div className={styles.form__notice}>
+            <Form name="form-signin" onSubmit={handleSubmit(onSubmit)}>
+                <div className={`${styles.form__notice} ${styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
                     <span className={styles.form__error}>Телефон или пароль введен неверно, повторите попытку еще раз.</span>
                 </div>
-                <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
-                <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль"></Input>
+                <Input type="tel" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон" register={register} errors={errors} pattern={regexPhoneNumber}></Input>
+                <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
                 <a href="/" className={`${styles.link_recovery} link`}>
                     Забыли пароль?
                 </a>
