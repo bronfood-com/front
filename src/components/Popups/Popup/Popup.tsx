@@ -27,7 +27,3 @@ const Popup: FC<Popup> = (props) => {
 };
 
 export default Popup;
-
-
-
-  
