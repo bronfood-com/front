@@ -9,7 +9,7 @@ interface Popup {
     /**
      * Choose type of popup: info
      */
-    mode?: 'info';
+    mode?: 'info' | 'feedback-thanx';
     /**
      * Elements that popup contains
      */
