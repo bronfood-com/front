@@ -12,5 +12,3 @@ const PopupSignupSuccess = () => {
 };
 
 export default PopupSignupSuccess;
-
-
