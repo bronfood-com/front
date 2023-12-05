@@ -1,5 +1,6 @@
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
+import FormInputs from '../../../FormInputs/FormInputs';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 import styles from './SignIn.module.scss';
@@ -13,8 +14,11 @@ const SignIn = () => {
                     <div className={styles.form__warning}></div>
                     <span className={styles.form__error}>Телефон или пароль введен неверно, повторите попытку еще раз.</span>
                 </div>
-                <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
-                <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль"></Input>
+                <FormInputs>
+                    <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
+                    <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль"></Input>
+                </FormInputs>
+
                 <a href="/" className={`${styles.link_recovery} link`}>
                     Забыли пароль?
                 </a>
