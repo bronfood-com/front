@@ -5,7 +5,7 @@ import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 
 const SignUp = () => {
-    const onSubmit = () => { };
+    const onSubmit = () => {};
     return (
         <Popup title={'Регистрация'}>
             <Form name="form-signup" onSubmit={onSubmit}>
@@ -21,4 +21,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
