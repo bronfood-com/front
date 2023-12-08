@@ -80,4 +80,10 @@
         height: 49px;
         background-image: url(../../vendor/images/icons/logo.svg);
     }
+
+    button {
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
 }
