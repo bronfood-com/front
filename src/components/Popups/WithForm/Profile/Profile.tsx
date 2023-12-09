@@ -9,7 +9,7 @@ const Profile = () => {
     const onSubmit = () => {};
     return (
         <Popup title={'Профиль'}>
-            <Form name="form-signin" onSubmit={onSubmit}>
+            <Form name="form-profile" onSubmit={onSubmit}>
                 <FormInputs>
                     <Input type="text" name="input_username" placeholder="Владислав Иванов" nameLabel="Имя Фамилия"></Input>
                     <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
