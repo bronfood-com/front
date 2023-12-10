@@ -10,10 +10,12 @@
     &__container {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
     }
     &__buttons {
         position: relative;
+        display: flex;
+        align-items: center;
     }
     &__icon {
         width: 35px;
@@ -79,6 +81,11 @@
         width: 192.79px;
         height: 49px;
         background-image: url(../../vendor/images/icons/logo.svg);
+    }
+
+    &__lang{
+        margin-right: 10px;
+
     }
 
     button {
