@@ -3,11 +3,11 @@ import styles from './ConfirmPopup.module.scss';
 
 type ConfirmationPopupProps = {
     title: string;
-    confirmBtnText: 'Да' | 'Выйти';
-    cancelBtnText: 'Отмена';
+    confirmButtonText: string;
+    cancelButtonText: string;
 };
 
-const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmBtnText, cancelBtnText }) => {
+const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, cancelButtonText }) => {
     const onSubmit = () => {};
     const onCancel = () => {};
 
@@ -17,10 +17,10 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmBtnText, 
             <button className={styles.confirmPopup__close}></button>
             <div className={styles.confirmPopup__buttonContainer}>
                 <button className={styles.cancel} onClick={onCancel}>
-                    {cancelBtnText}
+                    {cancelButtonText}
                 </button>
                 <button className={styles.confirm} onClick={onSubmit}>
-                    {confirmBtnText}
+                    {confirmButtonText}
                 </button>
             </div>
         </div>
