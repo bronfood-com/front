@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import styles from './Header.module.scss';
-import ButtonLang from '../Button/ButtonLang/ButtonLang';
 import { useTranslation } from 'react-i18next';
 
 const Header = () => {
     const { t } = useTranslation();
     const [isMenuActive, setIsMenuActive] = useState(false);
-    const lngs = {
-        ru: { nativeName: 'Ru' },
-        kk: { nativeName: 'Kk' },
-    };
+    
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };
@@ -26,7 +22,7 @@ const Header = () => {
 
                 <div className={styles.header__buttons}>
                     <div className={styles.header__lang}>
-                        <ButtonLang lngs={lngs} />
+
                     </div>
                     <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
                     <button title={t('header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
