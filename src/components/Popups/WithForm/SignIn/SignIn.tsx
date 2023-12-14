@@ -1,3 +1,4 @@
+import { authApi } from '../../../../utils/api/auth';
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
 import FormInputs from '../../../FormInputs/FormInputs';
@@ -6,7 +7,12 @@ import Popup from '../../Popup/Popup';
 import styles from './SignIn.module.scss';
 
 const SignIn = () => {
-    const onSubmit = () => {};
+    const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+       const res = await authApi.login({ phone: '1223', password: 'dfjhgkdf' });
+       console.log(res)
+    };
+    
     return (
         <Popup title={'Вход'}>
             <Form name="form-signin" onSubmit={onSubmit}>
