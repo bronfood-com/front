@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import { useId } from 'react';
 
@@ -21,16 +21,16 @@ interface Input {
     name: string;
 }
 
-const Input: FC<Input> = (props) => {
+const Input = forwardRef<HTMLInputElement, Input>((props, ref) => {
     const id = useId();
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={styles.input__label}>
                 {props.nameLabel}
             </label>
-            <input id={id} className={styles.input__place} type={props.type} placeholder={props.placeholder} name={props.name}></input>
+            <input id={id} ref={ref} className={styles.input__place} type={props.type} placeholder={props.placeholder} name={props.name}></input>
         </div>
     );
-};
+});
 
 export default Input;

@@ -1,12 +1,12 @@
 import './index.scss';
 import Header from './components/Header/Header';
-import Login from './pages/Login/Login';
+import SignIn from './pages/SignIn/SignIn';
 
 function App() {
     return (
         <div>
             <Header></Header>
-            <Login />
+            <SignIn/>
         </div>
     );
 }
