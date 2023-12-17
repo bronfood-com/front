@@ -19,10 +19,10 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    cashierNavigation: {
+                    guestNavigation: {
                         signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
                         signUpAsABuyer: 'Зарегистрироваться как покупатель',
-                        signUp: 'Войти',
+                        signIn: 'Войти',
                     },
                     header: {
                         burgerTitleHover: 'Меню',
@@ -36,7 +36,7 @@ i18n
             },
             kk: {
                 translation: {
-                    cashierNavigation: {
+                    guestNavigation: {
                         signUpAsACatering: 'Қоғамдық тамақтану орны ретінде тіркеліңіз',
                         signUpAsABuyer: 'Сатып алушы ретінде тіркелу',
                         signUp: 'Кіру',
