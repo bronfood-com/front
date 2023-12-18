@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const Header = () => {
     const { t } = useTranslation();
     const [isMenuActive, setIsMenuActive] = useState(false);
-    
+
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };
@@ -21,9 +21,6 @@ const Header = () => {
                 </div>
 
                 <div className={styles.header__buttons}>
-                    <div className={styles.header__lang}>
-
-                    </div>
                     <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
                     <button title={t('header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
                 </div>
