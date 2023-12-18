@@ -1,8 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import InfoImage from '../../../InfoImage/InfoImage';
 import Popup from '../../Popup/Popup';
 import styles from './PasswordSaved.module.scss';
+import { useEffect } from 'react';
 
 const PasswordSaved = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        setTimeout(() => {
+            navigate('/');
+        }, 3000);
+    }, [navigate]);
     return (
         <Popup mode="info">
             <div className={styles.block}>

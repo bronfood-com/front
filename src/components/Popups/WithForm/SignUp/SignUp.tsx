@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
 import FormInputs from '../../../FormInputs/FormInputs';
@@ -5,7 +6,11 @@ import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 
 const SignUp = () => {
-    const onSubmit = () => {};
+    const navigate = useNavigate();
+
+    const onSubmit = () => {
+        navigate('/signup_done');
+    };
     return (
         <Popup title={'Регистрация'}>
             <Form name="form-signup" onSubmit={onSubmit}>

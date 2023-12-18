@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
 import FormInputs from '../../../FormInputs/FormInputs';
@@ -6,7 +7,10 @@ import Popup from '../../Popup/Popup';
 import styles from './Profile.module.scss';
 
 const Profile = () => {
-    const onSubmit = () => {};
+    const navigate = useNavigate();
+    const onSubmit = () => {
+        navigate('/');
+    };
     return (
         <Popup title={'Профиль'}>
             <Form name="form-profile" onSubmit={onSubmit}>

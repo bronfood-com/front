@@ -1,11 +1,15 @@
-import { Form } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../Button/Button';
+import Form from '../../../Form/Form';
+import FormInputs from '../../../FormInputs/FormInputs';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
-import FormInputs from '../../../FormInputs/FormInputs';
 
 const NewPassword = () => {
-    const onSubmit = () => {};
+    const navigate = useNavigate();
+    const onSubmit = () => {
+        navigate('/password_done');
+    };
     return (
         <Popup title={'Придумайте новый пароль'}>
             <Form name="form-password-new" onSubmit={onSubmit}>
