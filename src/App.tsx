@@ -14,7 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 
 function App() {
-    const [isLogin] = useState(true);
+    const [isLogin] = useState(false);
 
     return (
         <div>

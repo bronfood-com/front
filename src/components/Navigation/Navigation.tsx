@@ -18,7 +18,6 @@ interface Navigation {
 const Navigation: FC<Navigation> = (props) => {
     type UserRole = 'guest' | 'customer' | 'catering';
     const userRole: UserRole = props.isLogin ? 'customer' : 'guest';
-
     const navigation = userRole === 'guest' ? <GuestNavigation handleItemMenuClick={props.handleItemMenuClick} /> : <CustomerNavigation handleItemMenuClick={props.handleItemMenuClick} />;
     return <nav> {navigation} </nav>;
 };

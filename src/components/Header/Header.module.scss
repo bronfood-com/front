@@ -20,14 +20,10 @@
         height: 35px;
     }
     &__favorite {
-        display: none;
         position: absolute;
         top: 0;
         left: -55px;
         background-image: url(../../vendor/images/icons/favorite-icon.svg);
-        &_visible {
-            display: block;
-        }
         &_active {
             background-image: url(../../vendor/images/icons/favorite-icon-active.svg);
         }

@@ -25,7 +25,7 @@ const Header: FC<Header> = (props) => {
                     <p className={styles.header__place_name}>Алматы</p>
                 </div>
                 <div className={styles.header__buttons}>
-                    <button title="Избранное" className={`${styles.header__favorite} ${styles.header__icon}`}></button>
+                    {props.isLogin ? <button title="Избранное" className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
                     <button title="Поиск" className={`${styles.header__search} ${styles.header__icon}`}></button>
                 </div>
             </div>
