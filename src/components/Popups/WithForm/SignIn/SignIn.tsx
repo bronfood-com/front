@@ -21,7 +21,7 @@ const SignIn = () => {
                     <div className={styles.form__warning}></div>
                     <span className={styles.form__error}>Телефон или пароль введен неверно, повторите попытку еще раз.</span>
                 </div>
-                <InputPhone type="tel" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон" register={register} errors={errors} mask="+7 (999) 99-99-99" pattern={regexPhoneNumberKazakhstan}></InputPhone>
+                <InputPhone register={register} errors={errors} mask="+7 (999) 99-99-99" pattern={regexPhoneNumberKazakhstan}></InputPhone>
                 <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
                 <a href="/" className={`${styles.link_recovery} link`}>
                     Забыли пароль?

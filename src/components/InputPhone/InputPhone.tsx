@@ -6,22 +6,6 @@ import InputMask from 'react-input-mask';
 
 interface InputPhone {
     /**
-     * HTML type for the input
-     */
-    type: string;
-    /**
-     * Title for input
-     */
-    nameLabel: string;
-    /**
-     * Placeholder for input
-     */
-    placeholder: string;
-    /**
-     * Name of input
-     */
-    name: string;
-    /**
      * Register function inputs
      */
     register: UseFormRegister<FieldValues>;
@@ -36,24 +20,24 @@ interface InputPhone {
     /**
      * Input Mask
      */
-    mask: string | (string | RegExp)[];
+    mask: '+7 (999) 99-99-99';
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
-    const errorMessage = (props.errors[props.name]?.message as string) || undefined;
+    const errorMessage = (props.errors['input_telephone']?.message as string) || undefined;
 
     const id = useId();
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
-                {props.nameLabel}
+                Телефон
             </label>
             <InputMask
                 id={id}
                 className={`${styles.input__place}`}
-                type={props.type}
-                placeholder={props.placeholder}
-                {...props.register(props.name, {
+                type="tel"
+                placeholder="+7 (***)"
+                {...props.register('input_telephone', {
                     required: 'Обязательное поле',
                     pattern: {
                         value: props.pattern,
