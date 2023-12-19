@@ -3,6 +3,7 @@ import styles from './InputPhone.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import { regexPhoneNumberKazakhstan } from '../../utils/consts';
 
 interface InputPhone {
     /**
@@ -13,14 +14,6 @@ interface InputPhone {
      * React Hook Forms error object
      */
     errors: FieldErrors;
-    /**
-     * RegExp for input validation
-     */
-    pattern: RegExp;
-    /**
-     * Input Mask
-     */
-    mask: '+7 (999) 99-99-99';
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
@@ -40,11 +33,11 @@ const InputPhone: FC<InputPhone> = (props) => {
                 {...props.register('input_telephone', {
                     required: 'Обязательное поле',
                     pattern: {
-                        value: props.pattern,
+                        value: regexPhoneNumberKazakhstan,
                         message: 'Неверный ввод',
                     },
                 })}
-                mask={props.mask}
+                mask="+7 (999) 99-99-99"
             ></InputMask>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
         </div>
