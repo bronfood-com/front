@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
 import FormInputs from '../../../FormInputs/FormInputs';
@@ -6,7 +7,10 @@ import Popup from '../../Popup/Popup';
 import styles from './SignIn.module.scss';
 
 const SignIn = () => {
-    const onSubmit = () => {};
+    const navigate = useNavigate();
+    const onSubmit = () => {
+        navigate('/');
+    };
     return (
         <Popup title={'Вход'}>
             <Form name="form-signin" onSubmit={onSubmit}>
@@ -19,13 +23,13 @@ const SignIn = () => {
                     <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль"></Input>
                 </FormInputs>
 
-                <a href="/" className={`${styles.link_recovery} link`}>
+                <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     Забыли пароль?
-                </a>
+                </Link>
                 <Button>Вход</Button>
-                <a href="/" className={`${styles.link_registration} link`}>
+                <Link to="/signup" className={`${styles.link_registration} link`}>
                     Регистрация
-                </a>
+                </Link>
             </Form>
         </Popup>
     );
