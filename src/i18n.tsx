@@ -39,7 +39,7 @@ i18n
                     guestNavigation: {
                         signUpAsACatering: 'Қоғамдық тамақтану орны ретінде тіркеліңіз',
                         signUpAsABuyer: 'Сатып алушы ретінде тіркелу',
-                        signUp: 'Кіру',
+                        signIn: 'Кіру',
                     },
                 },
             },
