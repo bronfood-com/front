@@ -1,21 +1,28 @@
-import styles from '../Navigation.module.scss';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-const GuestNavigation = () => {
+import styles from '../Navigation.module.scss';
+interface GuestNavigation {
+    /**
+     * Click on menu item redirects to link and close menu
+     */
+    handleItemMenuClick: React.MouseEventHandler<HTMLElement>;
+}
+const GuestNavigation: FC<GuestNavigation> = (props) => {
     const { t } = useTranslation();
     return (
         <ul className={`${styles.nav__menu}`}>
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_customer}`}></div>
-                <a href="/" className={styles.nav__link}>
+                <Link to="/signup" className={styles.nav__link} onClick={props.handleItemMenuClick}>
                     {t('guestNavigation.signUpAsABuyer')}
-                </a>
+                </Link>
             </li>
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_enter}`}></div>
-                <a href="/" className={styles.nav__link}>
-                {t('guestNavigation.signIn')}
-                </a>
+                <Link to="/signin" className={styles.nav__link} onClick={props.handleItemMenuClick}>
+                    {t('guestNavigation.signIn')}
+                </Link>
             </li>
         </ul>
     );
