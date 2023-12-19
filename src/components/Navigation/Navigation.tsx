@@ -11,7 +11,7 @@ interface Navigation {
      */
     handleItemMenuClick: React.MouseEventHandler<HTMLElement>;
     /**
-     * Login status
+     * Login status. When true, the user is logged in
      */
     isLogin: boolean;
 }

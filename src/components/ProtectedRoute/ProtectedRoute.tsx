@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 export type ProtectedRouteProps = {
     /**
-     * Login status
+     * Login status. When true, the user is logged in
      */
     islogin: boolean;
     /**
