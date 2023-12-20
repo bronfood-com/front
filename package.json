@@ -16,12 +16,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
+    "react-input-mask": "^3.0.0-alpha.2",
     "react-i18next": "^13.5.0",
     "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/react-input-mask": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "@vitejs/plugin-react": "^4.2.0",
