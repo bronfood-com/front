@@ -21,10 +21,10 @@ const SignUp = () => {
     return (
         <Popup title={'Регистрация'}>
             <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-            <FormInputs>
-                <Input type="text" name="input_username" placeholder="Владислав Иванов" nameLabel="Имя Фамилия" register={register} errors={errors} pattern={regexClientName}></Input>
-                <InputPhone register={register} errors={errors}></InputPhone>
-                <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
+                <FormInputs>
+                    <Input type="text" name="input_username" placeholder="Владислав Иванов" nameLabel="Имя Фамилия" register={register} errors={errors} pattern={regexClientName}></Input>
+                    <InputPhone register={register} errors={errors}></InputPhone>
+                    <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
                 </FormInputs>
                 <Button>Регистрация</Button>
             </Form>
