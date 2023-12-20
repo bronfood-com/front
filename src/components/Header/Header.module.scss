@@ -14,6 +14,8 @@
     }
     &__buttons {
         position: relative;
+        display: flex;
+        align-items: center;
     }
     &__icon {
         width: 35px;
@@ -76,7 +78,6 @@
         height: 49px;
         background-image: url(../../vendor/images/icons/logo.svg);
     }
-
     button {
         border: none;
         background-color: transparent;
