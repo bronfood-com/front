@@ -1,5 +1,7 @@
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../Button/Button';
 import Form from '../../../Form/Form';
+import FormInputs from '../../../FormInputs/FormInputs';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 import styles from './SignIn.module.scss';
@@ -13,7 +15,10 @@ const SignIn = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit: SubmitHandler<FieldValues> = () => {};
+    const navigate = useNavigate();
+    const onSubmit: SubmitHandler<FieldValues> = () => {
+        navigate('/');
+    };
     return (
         <Popup title={'Вход'}>
             <Form name="form-signin" onSubmit={handleSubmit(onSubmit)}>
@@ -21,15 +26,18 @@ const SignIn = () => {
                     <div className={styles.form__warning}></div>
                     <span className={styles.form__error}>Телефон или пароль введен неверно, повторите попытку еще раз.</span>
                 </div>
-                <InputPhone register={register} errors={errors}></InputPhone>
-                <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
-                <a href="/" className={`${styles.link_recovery} link`}>
+                <FormInputs>
+                    <InputPhone register={register} errors={errors}></InputPhone>
+                    <Input type="password" name="input_password" placeholder="******" nameLabel="Пароль" register={register} errors={errors} pattern={regexPassword}></Input>
+                </FormInputs>
+
+                <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     Забыли пароль?
-                </a>
+                </Link>
                 <Button>Вход</Button>
-                <a href="/" className={`${styles.link_registration} link`}>
+                <Link to="/signup" className={`${styles.link_registration} link`}>
                     Регистрация
-                </a>
+                </Link>
             </Form>
         </Popup>
     );

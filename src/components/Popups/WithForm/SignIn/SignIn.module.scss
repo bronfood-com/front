@@ -6,6 +6,7 @@
 }
 .link_recovery {
     color: $grey;
+    text-decoration: underline;
     margin: 10px 0 0 auto;
 }
 .form {
@@ -16,10 +17,7 @@
         gap: 12px;
         border: 1px solid $red;
         padding: 12px;
-        margin: 20px 0 5px;
-        &_invisible {
-            display: none;
-        }
+        margin-bottom: 25px;
     }
     &__warning {
         min-width: 25px;
