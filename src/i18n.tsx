@@ -34,17 +34,19 @@ i18n
                     },
                     auth: {
                         heading: 'Вход',
-                        errorMessage:'Телефон или пароль введен неверно, повторите попытку еще раз.',
-                        phoneInput:'Телефон',
-                        passwordInput:'Пароль',
-                        forgotPass:'Забыли пароль?',
-                        loginButton:'Войти',
-                        regLink:'Регистрация',
+                        errorMessage: 'Телефон или пароль введен неверно, повторите попытку еще раз.',
+                        phoneInput: 'Телефон',
+                        passwordInput: 'Пароль',
+                        nameInput: 'Имя Фамилия',
+                        namePlaceholder: 'Владислав Иванов',
+                        forgotPass: 'Забыли пароль?',
+                        loginButton: 'Войти',
+                        regLink: 'Регистрация',
                     },
-                    input:{
-                        required:'Обязательное поле',
-                        errorMessage:'Неверный ввод'
-                    }
+                    input: {
+                        required: 'Обязательное поле',
+                        errorMessage: 'Неверный ввод',
+                    },
                 },
             },
             kk: {

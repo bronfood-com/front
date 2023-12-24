@@ -13,6 +13,7 @@ interface RegisterData extends LoginData {
 interface User {
     phone: string;
     name: string;
+    isOwner: boolean;
 }
 class AuthApi {
     async _wait(ms: number) {
@@ -22,7 +23,7 @@ class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password) {
-            return { status: 'success', data: { name: 'User', phone: phone } };
+            return { status: 'success', data: { name: 'User', phone: phone, isOwner: false } };
         } else {
             return { status: 'error', errorMessage: 'error' };
         }
@@ -30,8 +31,8 @@ class AuthApi {
 
     async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
-        if (phone && password && name && isOwner) {
-            return { status: 'success', data: { name: 'User', phone: phone } };
+        if (phone && password && name) {
+            return { status: 'success', data: { name: 'User', phone: phone, isOwner } };
         } else {
             return { status: 'error', errorMessage: 'error' };
         }
