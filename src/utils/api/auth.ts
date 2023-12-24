@@ -1,11 +1,13 @@
-/**
- * Phone number. Begins with '+' followed by 11 or more digits. Must not contain spaces or parentheses (или как вы договоритесь с бэками о формате)
- */
+//TODO: custom type for phonenumber
 type PhoneNumber = string;
 
 interface LoginData {
     phone: PhoneNumber;
     password: string;
+}
+interface RegisterData extends LoginData {
+    isOwner: boolean;
+    name: string;
 }
 
 interface User {
@@ -20,10 +22,24 @@ class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password) {
-            return { status: 'success', data: { name: 'User', phone: phone} };
+            return { status: 'success', data: { name: 'User', phone: phone } };
         } else {
             return { status: 'error', errorMessage: 'error' };
         }
+    }
+
+    async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+        await this._wait(500);
+        if (phone && password && name && isOwner) {
+            return { status: 'success', data: { name: 'User', phone: phone } };
+        } else {
+            return { status: 'error', errorMessage: 'error' };
+        }
+    }
+
+    async loguOut(): Promise<{ status: string }> {
+        await this._wait(500);
+        return { status: 'success' };
     }
 }
 
