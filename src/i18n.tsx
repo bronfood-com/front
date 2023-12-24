@@ -32,6 +32,19 @@ i18n
                         logoTitleHover: 'Bronfood',
                         buttonCloseTitleHover: 'Закрыть',
                     },
+                    auth: {
+                        heading: 'Вход',
+                        errorMessage:'Телефон или пароль введен неверно, повторите попытку еще раз.',
+                        phoneInput:'Телефон',
+                        passwordInput:'Пароль',
+                        forgotPass:'Забыли пароль?',
+                        loginButton:'Войти',
+                        regLink:'Регистрация',
+                    },
+                    input:{
+                        required:'Обязательное поле',
+                        errorMessage:'Неверный ввод'
+                    }
                 },
             },
             kk: {

@@ -4,6 +4,7 @@ import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { regexPhoneNumberKazakhstan } from '../../utils/consts';
+import { useTranslation } from 'react-i18next';
 
 interface InputPhone {
     /**
@@ -17,13 +18,15 @@ interface InputPhone {
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
+    const {t} = useTranslation()
+
     const errorMessage = (props.errors['input_telephone']?.message as string) || undefined;
 
     const id = useId();
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
-                Телефон
+                {t('auth.phoneInput')}
             </label>
             <InputMask
                 id={id}
@@ -31,10 +34,10 @@ const InputPhone: FC<InputPhone> = (props) => {
                 type="tel"
                 placeholder="+7 (***)"
                 {...props.register('input_telephone', {
-                    required: 'Обязательное поле',
+                    required: t('input.required'),
                     pattern: {
                         value: regexPhoneNumberKazakhstan,
-                        message: 'Неверный ввод',
+                        message: t('input.errorMessage'),
                     },
                 })}
                 mask="+7 (999) 99-99-99"
