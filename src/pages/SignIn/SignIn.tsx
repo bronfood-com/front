@@ -1,13 +1,14 @@
-import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../../Button/Button';
-import Form from '../../../Form/Form';
-import FormInputs from '../../../FormInputs/FormInputs';
-import Input from '../../../Input/Input';
-import Popup from '../../Popup/Popup';
+import { Link} from 'react-router-dom';
+import Button from '../../components/Button/Button';
+import Form from '../../components/Form/Form';
+import FormInputs from '../../components/FormInputs/FormInputs';
+import Input from '../../components/Input/Input';
+import Popup from '../../components/Popups/Popup/Popup';
 import styles from './SignIn.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { regexPassword } from '../../../../utils/consts';
-import InputPhone from '../../../InputPhone/InputPhone';
+import { regexPassword } from '../../utils/consts';
+import InputPhone from '../../components/InputPhone/InputPhone';
+import { authApi } from '../../utils/api/auth';
 
 const SignIn = () => {
     const {
@@ -15,9 +16,11 @@ const SignIn = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const navigate = useNavigate();
-    const onSubmit: SubmitHandler<FieldValues> = () => {
-        navigate('/');
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const { input_password, input_telephone } = data;
+
+        const res = await authApi.login({ phone: input_telephone, password: input_password });
+        alert(`status: ${res.status}, user: ${res.data?.name} ${res.data?.phone}`)
     };
     return (
         <Popup title={'Вход'}>

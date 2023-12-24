@@ -6,7 +6,7 @@ import PopupSignupSuccess from './components/Popups/InfoPopup/PopupSignupSuccess
 import NewPassword from './components/Popups/WithForm/NewPassword/NewPassword';
 import PasswordRecovery from './components/Popups/WithForm/PasswordRecovery/PasswordRecovery';
 import Profile from './components/Popups/WithForm/Profile/Profile';
-import SignIn from './components/Popups/WithForm/SignIn/SignIn';
+import SignIn from './pages/SignIn/SignIn';
 import SignUp from './components/Popups/WithForm/SignUp/SignUp';
 import './index.scss';
 import { Routes, Route } from 'react-router-dom';
