@@ -30,3 +30,14 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src:
+        url('SFProDisplay-Medium.woff2') format('woff2'),
+        url('SFProDisplay-Medium.woff') format('woff'),
+        url('SFProDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
