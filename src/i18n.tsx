@@ -44,7 +44,7 @@ i18n
                     },
                     signUp: {
                         signUpHeading: 'Регистрация',
-                        invalidPhone: 'Телефон уже используется.',
+                        invalidPhoneNumber: 'Телефон уже используется.',
                         password: 'Пароль',
                         name: 'Имя Фамилия',
                         namePlaceholder: 'Владислав Иванов',
