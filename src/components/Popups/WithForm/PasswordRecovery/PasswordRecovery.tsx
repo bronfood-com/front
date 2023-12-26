@@ -4,19 +4,22 @@ import Form from '../../../Form/Form';
 import FormInputs from '../../../FormInputs/FormInputs';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
+import { useTranslation } from 'react-i18next';
 
 const PasswordRecovery = () => {
+
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const onSubmit = () => {
         navigate('/new_pass');
     };
     return (
-        <Popup title={'Восстановить пароль'}>
+        <Popup title={t('passwordRecovery.title')}>
             <Form name="form-password-recovery" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
+                    <Input type="number" name="input_telephone" placeholder={t('passwordRecovery.placeholder')} nameLabel={t('passwordRecovery.nameLabel')}></Input>
                 </FormInputs>
-                <Button>Далее</Button>
+                <Button>{t('passwordRecovery.button')}</Button>
             </Form>
         </Popup>
     );

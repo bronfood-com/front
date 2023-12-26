@@ -3,8 +3,10 @@ import InfoImage from '../../../InfoImage/InfoImage';
 import styles from './PopupFeedbackThanks.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PopupFeedbackThanks = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
@@ -15,7 +17,7 @@ const PopupFeedbackThanks = () => {
         <Popup>
             <div className={styles.feedback__thanks}>
                 <InfoImage mode="stars_tube" />
-                <h2 className={styles.feedback__title}>Спасибо за отзыв!</h2>
+                <h2 className={styles.feedback__title}>{t('popupFeedbackThanks.title')}</h2>
             </div>
         </Popup>
     );

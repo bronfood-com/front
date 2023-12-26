@@ -2,6 +2,8 @@ import { FC } from 'react';
 import styles from './Input.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
 
 interface Input {
     /**
@@ -35,6 +37,7 @@ interface Input {
 }
 
 const Input: FC<Input> = (props) => {
+    const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
     return (
@@ -48,10 +51,10 @@ const Input: FC<Input> = (props) => {
                 type={props.type}
                 placeholder={props.placeholder}
                 {...props.register(props.name, {
-                    required: 'Обязательное поле',
+                    required: t('input.required'),
                     pattern: {
                         value: props.pattern,
-                        message: 'Неверный ввод',
+                        message: t('input.errorMessage'),
                     },
                 })}
             ></input>

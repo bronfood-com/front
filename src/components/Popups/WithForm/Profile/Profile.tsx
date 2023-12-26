@@ -5,23 +5,25 @@ import FormInputs from '../../../FormInputs/FormInputs';
 import Input from '../../../Input/Input';
 import Popup from '../../Popup/Popup';
 import styles from './Profile.module.scss';
-
+import { useTranslation } from 'react-i18next';
 const Profile = () => {
+
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const onSubmit = () => {
         navigate('/');
     };
     return (
-        <Popup title={'Профиль'}>
+        <Popup title={t('profile.title')}>
             <Form name="form-profile" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="text" name="input_username" placeholder="Владислав Иванов" nameLabel="Имя Фамилия"></Input>
-                    <Input type="number" name="input_telephone" placeholder="+7 (***)" nameLabel="Телефон"></Input>
-                    <Input type="password" name="input_password" placeholder="******" nameLabel="Новый пароль"></Input>
-                    <Input type="password" name="input_password" placeholder="******" nameLabel="Повторите пароль"></Input>
+                    <Input type="text" name="input_username" placeholder={t('profile.placeholderUserName')} nameLabel={t('profile.nameLabelUserName')}></Input>
+                    <Input type="number" name="input_telephone" placeholder={t('profile.placeholderPhone')} nameLabel={t('profile.nameLabelPhone')}></Input>
+                    <Input type="password" name="input_password" placeholder={t('profile.placeholderPassword')} nameLabel={t('profile.nameLabelPassword')}></Input>
+                    <Input type="password" name="input_password" placeholder={t('profile.placeholderRepeatPassword')} nameLabel={t('profile.nameLabelRepeatPassword')}></Input>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button>Далее</Button>
+                <Button>{t('profile.button')}</Button>
             </Form>
         </Popup>
     );

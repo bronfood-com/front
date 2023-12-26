@@ -32,6 +32,58 @@ i18n
                         logoTitleHover: 'Bronfood',
                         buttonCloseTitleHover: 'Закрыть',
                     },
+                    input: {
+                        required: 'Обязательное поле',
+                        errorMessage:  'Неверный ввод',
+                    },
+
+                    customerNavigation: {
+                        editPersonalData: 'Редактировать личные данные',
+                        editBankData: 'Редактировать банковские данные',
+                        signOut: 'Выйти',
+                    },
+
+                    passwordSaved: {
+                        title: 'Ваш пароль сохранен!',
+                    },
+
+                    popupFeedbackThanks: {
+                        title: 'Спасибо за отзыв!'
+                    },
+
+                    popupSignupSuccess: {
+                        title: 'Спасибо за регистрацию!'
+                    },
+
+                    newPassword: {
+                        title:'Придумайте новый пароль',
+                        nameLabel: 'Новый пароль',
+                        nameLabelRepeat: 'Повторите пароль',
+                        button:'Сохранить'
+                    },
+
+                    passwordRecovery: {
+                        title: 'Восстановить пароль',
+                        nameLabel: 'Телефон',
+                        placeholder: '+7 (***)',
+                        button: 'Далее',
+                    },
+
+                    profile: {
+                        title: 'Профиль',
+                        placeholderUserName: 'Владислав Иванов',
+                        placeholderPhone: '+7 (***)',
+                        placeholderPassword:'******',
+                        placeholderRepeatPassword: '******',
+                        nameLabelUserName: 'Имя Фамилия',
+                        nameLabelPhone: 'Телефон',
+                        nameLabelPassword: 'Новый пароль',
+                        nameLabelRepeatPassword: 'Повторите пароль',
+                        button: 'Далее',
+                    },
+
+
+
                 },
             },
             kk: {

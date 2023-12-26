@@ -3,8 +3,10 @@ import InfoImage from '../../../InfoImage/InfoImage';
 import styles from './PopupSignupSuccess.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PopupSignupSuccess = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
@@ -13,7 +15,7 @@ const PopupSignupSuccess = () => {
     }, [navigate]);
     return (
         <Popup mode="info">
-            <h2 className={styles.popup__title}>Спасибо за регистрацию!</h2>
+            <h2 className={styles.popup__title}>{t('popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </Popup>
     );
