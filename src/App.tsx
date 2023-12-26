@@ -12,6 +12,7 @@ import './index.scss';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
+import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
     const [isLogin] = useState(false);
@@ -19,6 +20,7 @@ function App() {
     return (
         <div>
             <Header isLogin={isLogin} />
+            <YandexMap></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
