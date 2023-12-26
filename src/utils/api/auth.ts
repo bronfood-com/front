@@ -1,4 +1,3 @@
-//TODO: custom type for phonenumber
 type PhoneNumber = string;
 
 interface LoginData {
@@ -11,7 +10,7 @@ interface RegisterData extends LoginData {
 }
 
 interface User {
-    phone: string;
+    phone: PhoneNumber;
     name: string;
     isOwner: boolean;
 }
@@ -23,16 +22,16 @@ class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password) {
-            return { status: 'success', data: { name: 'User', phone: phone, isOwner: false } };
+            return { status: 'success', data: { name: 'User', phone, isOwner: false } };
         } else {
-            return { status: 'error', errorMessage: 'error' };
+            return { status: 'error', errorMessage: 'invalidCredentials' };
         }
     }
 
     async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone: phone, isOwner } };
+            return { status: 'success', data: { name: 'User', phone, isOwner } };
         } else {
             return { status: 'error', errorMessage: 'error' };
         }
