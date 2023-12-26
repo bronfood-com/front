@@ -13,8 +13,8 @@ const YandexMap = () => {
         setIsPlaceActive(!isPlaceActive);
     };
 
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
+    const [latitude, setLatitude] = useState(43.246345);
+    const [longitude, setLongitude] = useState(76.921552);
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -29,7 +29,7 @@ const YandexMap = () => {
         <YMaps query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
             <div className={styles.yamap}>
                 <Map
-                    defaultState={{ center: [latitude, longitude], zoom: 15 }}
+                    state={{ center: [latitude, longitude], zoom: 15 }}
                     width="100%"
                     height="100vh"
                     options={{
