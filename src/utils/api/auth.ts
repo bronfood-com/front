@@ -3,8 +3,11 @@ type PhoneNumber = string;
 interface LoginData {
     phone: PhoneNumber;
     password: string;
+
 }
-interface RegisterData extends LoginData {
+interface RegisterData{
+    phone: PhoneNumber;
+    password: string;
     isOwner: boolean;
     name: string;
 }
@@ -33,7 +36,7 @@ class AuthApi {
         if (phone && password && name) {
             return { status: 'success', data: { name: 'User', phone, isOwner } };
         } else {
-            return { status: 'error', errorMessage: 'error' };
+            return { status: 'error', errorMessage: 'invalidPhoneNumber' };
         }
     }
 
