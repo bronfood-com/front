@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
@@ -10,8 +10,12 @@ import { regexPassword } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { authApi } from '../../utils/api/auth';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 const SignIn = () => {
+    const [showError, setShowError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string | undefined>('')
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const {
         register,
@@ -19,28 +23,33 @@ const SignIn = () => {
         formState: { errors },
     } = useForm();
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const { input_password, input_telephone } = data;
-        const res = await authApi.login({ phone: input_telephone, password: input_password });
-        alert(`status: ${res.status}, user: ${res.data?.name} ${res.data?.phone}`);
+        const { password, phoneNumber } = data;
+        const res = await authApi.login({ phone: phoneNumber, password });
+        if (res.status === 'error') {
+            setShowError(true);
+            setErrorMessage(res.errorMessage)
+            return;
+        }
+        navigate('/');
     };
+
     return (
-        <Popup title={t('auth.heading')}>
+        <Popup title={t('signIn.signInHeading')}>
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                <div className={`${styles.form__notice} ${styles.form__notice_invisible}`}>
+                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t('auth.errorMessage')}</span>
+                    <span className={styles.form__error}>{t(`signIn.${errorMessage}`)}</span>
                 </div>
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="input_password" placeholder="******" nameLabel={t('auth.passwordInput')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="password" name="password" placeholder="******" nameLabel={t('signIn.password')} register={register} errors={errors} pattern={regexPassword}></Input>
                 </FormInputs>
-
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
-                    {t('auth.forgotPass')}
+                    {t('signIn.forgotPass')}
                 </Link>
-                <Button>{t('auth.loginButton')}</Button>
+                <Button>{t('signIn.loginButton')}</Button>
                 <Link to="/signup" className={`${styles.link_registration} link`}>
-                    {t('auth.regLink')}
+                    {t('signIn.registartion')}
                 </Link>
             </Form>
         </Popup>

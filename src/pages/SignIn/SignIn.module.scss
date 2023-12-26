@@ -18,6 +18,10 @@
         border: 1px solid $red;
         padding: 12px;
         margin-bottom: 25px;
+
+        &_invisible{
+            display: none;
+        }
     }
     &__warning {
         min-width: 25px;
