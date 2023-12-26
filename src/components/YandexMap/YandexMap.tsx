@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
-/**
- * Placemark: add coordinates places
- */
+
 const YandexMap = () => {
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
@@ -49,6 +47,7 @@ const YandexMap = () => {
                             }}
                         />
                     )}
+                    //*Placemark: add coordinates places
                     <Placemark
                         geometry={[latitude + 0.0007, longitude + 0.0007]}
                         options={{
