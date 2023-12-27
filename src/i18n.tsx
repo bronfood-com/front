@@ -44,7 +44,7 @@ i18n
                     },
                     signUp: {
                         signUpHeading: 'Регистрация',
-                        invalidPhoneNumber: 'Телефон уже используется.',
+                        phoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
                         password: 'Пароль',
                         name: 'Имя Фамилия',
                         namePlaceholder: 'Владислав Иванов',
@@ -52,7 +52,7 @@ i18n
                     },
                     inputPhone: {
                         required: 'Обязательное поле',
-                        errorMessage: 'Неверный ввод',
+                        invalidPhoneNumberFormat: 'Неверный ввод',
                         phoneNumber: 'Телефон',
                     },
                 },

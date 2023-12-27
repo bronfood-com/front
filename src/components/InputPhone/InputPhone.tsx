@@ -37,7 +37,7 @@ const InputPhone: FC<InputPhone> = (props) => {
                     required: t('inputPhone.required'),
                     pattern: {
                         value: regexPhoneNumberKazakhstan,
-                        message: t('inputPhone.errorMessage'),
+                        message: t('inputPhone.invalidPhoneNumberFormat'),
                     },
                 })}
                 mask="+7 (999) 99-99-99"
