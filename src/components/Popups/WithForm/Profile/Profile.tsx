@@ -23,7 +23,7 @@ const Profile = () => {
                     <Input type="password" name="input_password" placeholder={t('profile.placeholderRepeatPassword')} nameLabel={t('profile.nameLabelRepeatPassword')}></Input>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button>{t('profile.button')}</Button>
+                <Button>{t('profile.continue')}</Button>
             </Form>
         </Popup>
     );

@@ -64,9 +64,9 @@ i18n
 
                     passwordRecovery: {
                         title: 'Восстановить пароль',
-                        nameLabel: 'Телефон',
+                        phoneNumber: 'Телефон',
                         placeholder: '+7 (***)',
-                        button: 'Далее',
+                        continue: 'Далее',
                     },
 
                     profile: {
@@ -79,7 +79,7 @@ i18n
                         nameLabelPhone: 'Телефон',
                         nameLabelPassword: 'Новый пароль',
                         nameLabelRepeatPassword: 'Повторите пароль',
-                        button: 'Далее',
+                        continue: 'Далее',
                     },
 
 

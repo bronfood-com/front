@@ -17,9 +17,9 @@ const PasswordRecovery = () => {
         <Popup title={t('passwordRecovery.title')}>
             <Form name="form-password-recovery" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="number" name="input_telephone" placeholder={t('passwordRecovery.placeholder')} nameLabel={t('passwordRecovery.nameLabel')}></Input>
+                    <Input type="number" name="input_telephone" placeholder={t('passwordRecovery.placeholder')} nameLabel={t('passwordRecovery.phoneNumber')}></Input>
                 </FormInputs>
-                <Button>{t('passwordRecovery.button')}</Button>
+                <Button>{t('passwordRecovery.continue')}</Button>
             </Form>
         </Popup>
     );
