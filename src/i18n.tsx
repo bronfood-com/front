@@ -32,6 +32,9 @@ i18n
                         logoTitleHover: 'Bronfood',
                         buttonCloseTitleHover: 'Закрыть',
                     },
+                    conformationPopup:{
+                        cancel: "Отмена"
+                    }
                 },
             },
             kk: {
