@@ -28,7 +28,6 @@ const Header: FC<Header> = (props) => {
                     <p className={styles.header__place_name}>{t('header.placeName')}</p>
                 </div>
                 <div className={styles.header__buttons}>
-                    <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
                     {props.isLogin ? <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
                     <button title={t('header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
                 </div>
