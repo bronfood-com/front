@@ -45,7 +45,7 @@ const SignIn = () => {
                     <Input type="password" name="password" placeholder="******" nameLabel={t('signIn.password')} register={register} errors={errors} pattern={regexPassword}></Input>
                 </FormInputs>
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
-                    {t('signIn.forgotPass')}
+                    {t('signIn.forgotPassword')}
                 </Link>
                 <Button>{t('signIn.loginButton')}</Button>
                 <Link to="/signup" className={`${styles.link_registration} link`}>
