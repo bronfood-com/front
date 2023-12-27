@@ -10,11 +10,11 @@ import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../utils/api/auth';
 import { useState } from 'react';
-import styles from './SignUp.module.scss'
+import styles from './SignUp.module.scss';
 
 const SignUp = () => {
-    const [showError, setShowError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | undefined>('');
+    const showError = !!errorMessage
     const { t } = useTranslation();
     const navigate = useNavigate();
     const {
@@ -26,13 +26,11 @@ const SignUp = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
-        if (res.status === 'error') {
-            setShowError(true);
+        if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
-            return;
+        } else {
+            navigate('/signup_done');
         }
-
-        navigate('/signup_done');
     };
 
     return (

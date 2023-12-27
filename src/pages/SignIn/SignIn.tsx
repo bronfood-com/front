@@ -13,8 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 const SignIn = () => {
-    const [showError, setShowError] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string | undefined>('')
+    const [errorMessage, setErrorMessage] = useState<string | null>('');
+    const showError = !!errorMessage
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -25,12 +25,12 @@ const SignIn = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         const res = await authApi.login({ phone: phoneNumber, password });
-        if (res.status === 'error') {
-            setShowError(true);
-            setErrorMessage(res.errorMessage)
-            return;
+
+        if (res.errorMessage) {
+            setErrorMessage(res.errorMessage);
+        } else {
+            navigate('/');
         }
-        navigate('/');
     };
 
     return (
