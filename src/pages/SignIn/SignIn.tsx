@@ -36,22 +36,22 @@ const SignIn = () => {
     };
 
     return (
-        <Popup title={t('signIn.signInHeading')}>
+        <Popup title={t('pages.signIn.signInHeading')}>
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
                 <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`signIn.${errorMessage}`)}</span>
+                    <span className={styles.form__error}>{t(`pages.signIn.${errorMessage}`)}</span>
                 </div>
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder="******" nameLabel={t('signIn.password')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="password" name="password" placeholder="******" nameLabel={t('pages.signIn.password')} register={register} errors={errors} pattern={regexPassword}></Input>
                 </FormInputs>
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
-                    {t('signIn.forgotPassword')}
+                    {t('pages.signIn.forgotPassword')}
                 </Link>
-                <Button>{t('signIn.loginButton')}</Button>
+                <Button>{t('pages.signIn.loginButton')}</Button>
                 <Link to="/signup" className={`${styles.link_registration} link`}>
-                    {t('signIn.registartion')}
+                    {t('pages.signIn.registartion')}
                 </Link>
             </Form>
         </Popup>

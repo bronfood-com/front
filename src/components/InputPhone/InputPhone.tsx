@@ -26,7 +26,7 @@ const InputPhone: FC<InputPhone> = (props) => {
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
-                {t('inputPhone.phoneNumber')}
+                {t('components.inputPhone.phoneNumber')}
             </label>
             <InputMask
                 id={id}
@@ -34,10 +34,10 @@ const InputPhone: FC<InputPhone> = (props) => {
                 type="tel"
                 placeholder="+7 (***)"
                 {...props.register('phoneNumber', {
-                    required: t('inputPhone.required'),
+                    required: t('components.inputPhone.required'),
                     pattern: {
                         value: regexPhoneNumberKazakhstan,
-                        message: t('inputPhone.invalidPhoneNumberFormat'),
+                        message: t('components.inputPhone.invalidPhoneNumberFormat'),
                     },
                 })}
                 mask="+7 (999) 99-99-99"

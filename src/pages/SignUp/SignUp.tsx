@@ -27,7 +27,7 @@ const SignUp = () => {
         const { password, phoneNumber, username } = data;
         setErrorMessage(null)
         const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
-        
+
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
@@ -36,18 +36,18 @@ const SignUp = () => {
     };
 
     return (
-        <Popup title={t('signUp.signUpHeading')}>
+        <Popup title={t('pages.signUp.signUpHeading')}>
             <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
                 <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`signUp.${errorMessage}`)}</span>
+                    <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
                 </div>
                 <FormInputs>
-                    <Input type="text" name="username" placeholder={t('signUp.namePlaceholder')} nameLabel={t('signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
+                    <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder="******" nameLabel={t('signUp.password')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="password" name="password" placeholder="******" nameLabel={t('pages.signUp.password')} register={register} errors={errors} pattern={regexPassword}></Input>
                 </FormInputs>
-                <Button>{t('signUp.registerButton')}</Button>
+                <Button>{t('pages.signUp.registerButton')}</Button>
             </Form>
         </Popup>
     );
