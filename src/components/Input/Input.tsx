@@ -51,10 +51,10 @@ const Input: FC<Input> = (props) => {
                 type={props.type}
                 placeholder={props.placeholder}
                 {...props.register(props.name, {
-                    required: t('input.required'),
+                    required: t('components.input.required'),
                     pattern: {
                         value: props.pattern,
-                        message: t('input.errorMessage'),
+                        message: t('components.input.errorMessage'),
                     },
                 })}
             ></input>

@@ -13,13 +13,13 @@ const NewPassword = () => {
         navigate('/password_done');
     };
     return (
-        <Popup title={t('newPassword.title')}>
+        <Popup title={t('pages.newPassword.title')}>
             <Form name="form-password-new" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="text" name="input_newPassword" placeholder="******" nameLabel={t('newPassword.nameLabel')}></Input>
-                    <Input type="text" name="input_newPasswordDouble" placeholder="******" nameLabel={t('newPassword.nameLabelRepeat')}></Input>
+                    <Input type="text" name="input_newPassword" placeholder="******" nameLabel={t('pages.newPassword.nameLabel')}></Input>
+                    <Input type="text" name="input_newPasswordDouble" placeholder="******" nameLabel={t('pages.newPassword.nameLabelRepeat')}></Input>
                 </FormInputs>
-                <Button>{t('newPassword.button')}</Button>
+                <Button>{t('pages.newPassword.button')}</Button>
             </Form>
         </Popup>
     );

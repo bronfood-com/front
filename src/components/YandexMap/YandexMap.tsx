@@ -47,7 +47,7 @@ const YandexMap = () => {
                             }}
                         />
                     )}
-                    //*Placemark: add coordinates places
+                    {/* //*Placemark: add coordinates places */}
                     <Placemark
                         geometry={[latitude + 0.0007, longitude + 0.0007]}
                         options={{

@@ -17,7 +17,7 @@ const PasswordSaved = () => {
         <Popup mode="info">
             <div className={styles.block}>
                 <div className={styles.block__success}></div>
-                <p className={styles.block__text}>{t('passwordSaved.title')}</p>
+                <p className={styles.block__text}>{t('pages.passwordSaved.title')}</p>
                 <InfoImage mode="red_tube"></InfoImage>
             </div>
         </Popup>

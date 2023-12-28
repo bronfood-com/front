@@ -15,7 +15,7 @@ const PopupSignupSuccess = () => {
     }, [navigate]);
     return (
         <Popup mode="info">
-            <h2 className={styles.popup__title}>{t('popupSignupSuccess.title')}</h2>
+            <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </Popup>
     );

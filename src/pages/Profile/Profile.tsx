@@ -14,16 +14,16 @@ const Profile = () => {
         navigate('/');
     };
     return (
-        <Popup title={t('profile.title')}>
+        <Popup title={t('pages.profile.title')}>
             <Form name="form-profile" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="text" name="input_username" placeholder={t('profile.placeholderUserName')} nameLabel={t('profile.nameLabelUserName')}></Input>
-                    <Input type="number" name="input_telephone" placeholder={t('profile.placeholderPhone')} nameLabel={t('profile.nameLabelPhone')}></Input>
-                    <Input type="password" name="input_password" placeholder={t('profile.placeholderPassword')} nameLabel={t('profile.nameLabelPassword')}></Input>
-                    <Input type="password" name="input_password" placeholder={t('profile.placeholderRepeatPassword')} nameLabel={t('profile.nameLabelRepeatPassword')}></Input>
+                    <Input type="text" name="input_username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')}></Input>
+                    <Input type="number" name="input_telephone" placeholder={t('pages.profile.placeholderPhone')} nameLabel={t('pages.profile.nameLabelPhone')}></Input>
+                    <Input type="password" name="input_password" placeholder={t('pages.profile.placeholderPassword')} nameLabel={t('pages.profile.nameLabelPassword')}></Input>
+                    <Input type="password" name="input_password" placeholder={t('pages.profile.placeholderRepeatPassword')} nameLabel={t('pages.profile.nameLabelRepeatPassword')}></Input>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button>{t('profile.continue')}</Button>
+                <Button>{t('pages.profile.continue')}</Button>
             </Form>
         </Popup>
     );
