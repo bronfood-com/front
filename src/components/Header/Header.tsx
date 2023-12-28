@@ -22,21 +22,21 @@ const Header: FC<Header> = (props) => {
     return (
         <header className={styles.header}>
             <div className={styles.header__container}>
-                <button title={t('header.burgerTitleHover')} className={`${styles.header__burger} ${styles.header__icon}`} onClick={handleMenuActive}></button>
+                <button title={t('components.header.burgerTitleHover')} className={`${styles.header__burger} ${styles.header__icon}`} onClick={handleMenuActive}></button>
                 <div className={styles.header__place}>
                     <div className={styles.header__place_point}></div>
-                    <p className={styles.header__place_name}>{t('header.placeName')}</p>
+                    <p className={styles.header__place_name}>{t('components.header.placeName')}</p>
                 </div>
                 <div className={styles.header__buttons}>
-                    <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
-                    {props.isLogin ? <button title={t('header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
-                    <button title={t('header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
+                    <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
+                    {props.isLogin ? <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
+                    <button title={t('components.header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
                 </div>
             </div>
             <div className={`${styles.header__menu} ${isMenuActive ? styles.header__menu_active : ''}`}>
                 <div className={styles.header__upblock}>
-                    <Link title={t('header.logoTitleHover')} className={styles.header__logo} to="/" onClick={handleItemMenuClick}></Link>
-                    <button title={t('header.buttonCloseTitleHover')} className={`${styles.header__close} ${styles.header__icon}`} onClick={handleMenuActive}></button>
+                    <Link title={t('components.header.logoTitleHover')} className={styles.header__logo} to="/" onClick={handleItemMenuClick}></Link>
+                    <button title={t('components.header.buttonCloseTitleHover')} className={`${styles.header__close} ${styles.header__icon}`} onClick={handleMenuActive}></button>
                 </div>
                 <Navigation handleItemMenuClick={handleItemMenuClick} isLogin={props.isLogin} />
             </div>

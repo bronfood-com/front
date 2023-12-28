@@ -15,13 +15,13 @@ const GuestNavigation: FC<GuestNavigation> = (props) => {
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_customer}`}></div>
                 <Link to="/signup" className={styles.nav__link} onClick={props.handleItemMenuClick}>
-                    {t('guestNavigation.signUpAsABuyer')}
+                    {t('components.guestNavigation.signUpAsABuyer')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_enter}`}></div>
                 <Link to="/signin" className={styles.nav__link} onClick={props.handleItemMenuClick}>
-                    {t('guestNavigation.signIn')}
+                    {t('components.guestNavigation.signIn')}
                 </Link>
             </li>
         </ul>

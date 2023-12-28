@@ -19,7 +19,7 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonTex
             <button className={styles.confirmPopup__close}></button>
             <div className={styles.confirmPopup__buttonContainer}>
                 <button className={styles.cancel} onClick={onCancel}>
-                   { t('conformationPopup.cancel')}
+                   { t('components.conformationPopup.cancel')}
                 </button>
                 <button className={styles.confirm} onClick={onSubmit}>
                     {confirmButtonText}

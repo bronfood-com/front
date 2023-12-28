@@ -19,22 +19,24 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    guestNavigation: {
-                        signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
-                        signUpAsABuyer: 'Зарегистрироваться как покупатель',
-                        signIn: 'Войти',
+                    components: {
+                        guestNavigation: {
+                            signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
+                            signUpAsABuyer: 'Зарегистрироваться как покупатель',
+                            signIn: 'Войти',
+                        },
+                        header: {
+                            burgerTitleHover: 'Меню',
+                            placeName: 'Алматы',
+                            favouritesTitleHover: 'Избранное',
+                            searchTitleHover: 'Поиск',
+                            logoTitleHover: 'Bronfood',
+                            buttonCloseTitleHover: 'Закрыть',
+                        },
+                        conformationPopup: {
+                            cancel: 'Отмена',
+                        },
                     },
-                    header: {
-                        burgerTitleHover: 'Меню',
-                        placeName: 'Алматы',
-                        favouritesTitleHover: 'Избранное',
-                        searchTitleHover: 'Поиск',
-                        logoTitleHover: 'Bronfood',
-                        buttonCloseTitleHover: 'Закрыть',
-                    },
-                    conformationPopup:{
-                        cancel: "Отмена"
-                    }
                 },
             },
             kk: {
