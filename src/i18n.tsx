@@ -33,8 +33,30 @@ i18n
                             logoTitleHover: 'Bronfood',
                             buttonCloseTitleHover: 'Закрыть',
                         },
-                        conformationPopup: {
-                            cancel: 'Отмена',
+                        inputPhone: {
+                            required: 'Обязательное поле',
+                            invalidPhoneNumberFormat: 'Неверный ввод',
+                            phoneNumber: 'Телефон',
+                        },
+                    },
+                    pages: {
+                        signIn: {
+                            signInHeading: 'Вход',
+                            invalidCredentials: 'Телефон или пароль введен неверно, повторите попытку еще раз.',
+                            password: 'Пароль',
+                            name: 'Имя Фамилия',
+                            namePlaceholder: 'Владислав Иванов',
+                            forgotPassword: 'Забыли пароль?',
+                            loginButton: 'Войти',
+                            registartion: 'Регистрация',
+                        },
+                        signUp: {
+                            signUpHeading: 'Регистрация',
+                            phoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
+                            password: 'Пароль',
+                            name: 'Имя Фамилия',
+                            namePlaceholder: 'Владислав Иванов',
+                            registerButton: 'Регистрация',
                         },
                     },
                 },
