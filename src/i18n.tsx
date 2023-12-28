@@ -21,7 +21,6 @@ i18n
                 translation: {
                     components: {
                         guestNavigation: {
-                            signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
                         },
