@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../../Button/Button';
-import Form from '../../../Form/Form';
-import FormInputs from '../../../FormInputs/FormInputs';
-import Input from '../../../Input/Input';
-import Popup from '../../Popup/Popup';
+import Button from '../../components/Button/Button';
+import Form from '../../components/Form/Form';
+import FormInputs from '../../components/FormInputs/FormInputs';
+import Input from '../../components/Input/Input';
+import Popup from '../../components/Popups/Popup/Popup';
 import styles from './Profile.module.scss';
 import { useTranslation } from 'react-i18next';
 const Profile = () => {

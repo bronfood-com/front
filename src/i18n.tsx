@@ -19,71 +19,46 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    guestNavigation: {
-                        signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
-                        signUpAsABuyer: 'Зарегистрироваться как покупатель',
-                        signIn: 'Войти',
+                    components: {
+                        guestNavigation: {
+                            signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
+                            signUpAsABuyer: 'Зарегистрироваться как покупатель',
+                            signIn: 'Войти',
+                        },
+                        header: {
+                            burgerTitleHover: 'Меню',
+                            placeName: 'Алматы',
+                            favouritesTitleHover: 'Избранное',
+                            searchTitleHover: 'Поиск',
+                            logoTitleHover: 'Bronfood',
+                            buttonCloseTitleHover: 'Закрыть',
+                        },
+                        inputPhone: {
+                            required: 'Обязательное поле',
+                            invalidPhoneNumberFormat: 'Неверный ввод',
+                            phoneNumber: 'Телефон',
+                        },
                     },
-                    header: {
-                        burgerTitleHover: 'Меню',
-                        placeName: 'Алматы',
-                        favouritesTitleHover: 'Избранное',
-                        searchTitleHover: 'Поиск',
-                        logoTitleHover: 'Bronfood',
-                        buttonCloseTitleHover: 'Закрыть',
+                    pages: {
+                        signIn: {
+                            signInHeading: 'Вход',
+                            invalidCredentials: 'Телефон или пароль введен неверно, повторите попытку еще раз.',
+                            password: 'Пароль',
+                            name: 'Имя Фамилия',
+                            namePlaceholder: 'Владислав Иванов',
+                            forgotPassword: 'Забыли пароль?',
+                            loginButton: 'Войти',
+                            registartion: 'Регистрация',
+                        },
+                        signUp: {
+                            signUpHeading: 'Регистрация',
+                            phoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
+                            password: 'Пароль',
+                            name: 'Имя Фамилия',
+                            namePlaceholder: 'Владислав Иванов',
+                            registerButton: 'Регистрация',
+                        },
                     },
-                    input: {
-                        required: 'Обязательное поле',
-                        errorMessage:  'Неверный ввод',
-                    },
-
-                    customerNavigation: {
-                        editPersonalData: 'Редактировать личные данные',
-                        editBankData: 'Редактировать банковские данные',
-                        signOut: 'Выйти',
-                    },
-
-                    passwordSaved: {
-                        title: 'Ваш пароль сохранен!',
-                    },
-
-                    popupFeedbackThanks: {
-                        title: 'Спасибо за отзыв!'
-                    },
-
-                    popupSignupSuccess: {
-                        title: 'Спасибо за регистрацию!'
-                    },
-
-                    newPassword: {
-                        title:'Придумайте новый пароль',
-                        nameLabel: 'Новый пароль',
-                        nameLabelRepeat: 'Повторите пароль',
-                        button:'Сохранить'
-                    },
-
-                    passwordRecovery: {
-                        title: 'Восстановить пароль',
-                        phoneNumber: 'Телефон',
-                        placeholder: '+7 (***)',
-                        continue: 'Далее',
-                    },
-
-                    profile: {
-                        title: 'Профиль',
-                        placeholderUserName: 'Владислав Иванов',
-                        placeholderPhone: '+7 (***)',
-                        placeholderPassword:'******',
-                        placeholderRepeatPassword: '******',
-                        nameLabelUserName: 'Имя Фамилия',
-                        nameLabelPhone: 'Телефон',
-                        nameLabelPassword: 'Новый пароль',
-                        nameLabelRepeatPassword: 'Повторите пароль',
-                        continue: 'Далее',
-                    },
-
-
-
                 },
             },
             kk: {
