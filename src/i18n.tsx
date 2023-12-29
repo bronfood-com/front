@@ -21,7 +21,6 @@ i18n
                 translation: {
                     components: {
                         guestNavigation: {
-                            signUpAsACatering: 'Зарегистрироваться как заведение общественного питания',
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
                         },
@@ -37,6 +36,16 @@ i18n
                             required: 'Обязательное поле',
                             invalidPhoneNumberFormat: 'Неверный ввод',
                             phoneNumber: 'Телефон',
+                        },
+                        input: {
+                            required: 'Обязательное поле',
+                            errorMessage:  'Неверный ввод',
+                        },
+
+                        customerNavigation: {
+                            editPersonalData: 'Редактировать личные данные',
+                            editBankData: 'Редактировать банковские данные',
+                            signOut: 'Выйти',
                         },
                     },
                     pages: {
@@ -58,6 +67,43 @@ i18n
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
                         },
+                        passwordSaved: {
+                            title: 'Ваш пароль сохранен!',
+                        },
+
+                        popupFeedbackThanks: {
+                            title: 'Спасибо за отзыв!'
+                        },
+
+                        popupSignupSuccess: {
+                            title: 'Спасибо за регистрацию!'
+                        },
+
+                        newPassword: {
+                            title:'Придумайте новый пароль',
+                            nameLabel: 'Новый пароль',
+                            nameLabelRepeat: 'Повторите пароль',
+                            button:'Сохранить'
+                        },
+
+                        passwordRecovery: {
+                            title: 'Восстановить пароль',
+                            phoneNumber: 'Телефон',
+                            placeholder: '+7 (***)',
+                            continue: 'Далее',
+                        },
+
+                        profile: {
+                            title: 'Профиль',
+                            placeholderUserName: 'Владислав Иванов',
+                            placeholderPhone: '+7 (***)',
+                            nameLabelUserName: 'Имя Фамилия',
+                            nameLabelPhone: 'Телефон',
+                            nameLabelPassword: 'Новый пароль',
+                            nameLabelRepeatPassword: 'Повторите пароль',
+                            continue: 'Далее',
+                        },
+
                     },
                 },
             },

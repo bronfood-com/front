@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Header from './components/Header/Header';
-import PasswordSaved from './components/Popups/InfoPopup/PasswordSaved/PasswordSaved';
-import PopupFeedbackThanks from './components/Popups/InfoPopup/PopupFeedbackThanks/PopupFeedbackThanks';
-import PopupSignupSuccess from './components/Popups/InfoPopup/PopupSignupSuccess/PopupSignupSuccess';
-import NewPassword from './components/Popups/WithForm/NewPassword/NewPassword';
-import PasswordRecovery from './components/Popups/WithForm/PasswordRecovery/PasswordRecovery';
-import Profile from './components/Popups/WithForm/Profile/Profile';
+import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
+import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
+import PopupSignupSuccess from './pages/PopupSignupSuccess/PopupSignupSuccess';
+import NewPassword from './pages/NewPassword/NewPassword';
+import PasswordRecovery from './pages/PasswordRecovery/PasswordRecovery';
+import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import './index.scss';
