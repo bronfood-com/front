@@ -14,7 +14,8 @@ import styles from './SignUp.module.scss';
 
 const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const showError = !!errorMessage
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
     const {
@@ -25,7 +26,7 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        setErrorMessage(null)
+        setErrorMessage(null);
         const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
 
         if (res.errorMessage) {
@@ -45,7 +46,7 @@ const SignUp = () => {
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder="******" nameLabel={t('pages.signUp.password')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type={isPasswordVisible ? 'text' : 'password'} name="password" placeholder="******" nameLabel={t('pages.signUp.password')} register={register} errors={errors} pattern={regexPassword} togglePasswordVisability={() => setIsPasswordVisible(!isPasswordVisible)}></Input>
                 </FormInputs>
                 <Button>{t('pages.signUp.registerButton')}</Button>
             </Form>

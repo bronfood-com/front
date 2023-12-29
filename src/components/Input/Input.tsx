@@ -3,7 +3,8 @@ import styles from './Input.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
+import HidePasswordIcon from '../../vendor/images/icons/hide-password-icon.svg?react';
+import ShowPasswordIcon from '../../vendor/images/icons/show-password-icon.svg?react';
 
 interface Input {
     /**
@@ -34,12 +35,16 @@ interface Input {
      * RegExp for input validation
      */
     pattern: RegExp;
+    togglePasswordVisability?: () => void;
 }
 
 const Input: FC<Input> = (props) => {
     const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
+
+    const renderPasswordVisabilityIcon = () => (props.name === 'password' ? props.type === 'password' ? <HidePasswordIcon className={styles.input__hideIcon} onClick={props.togglePasswordVisability} /> : <ShowPasswordIcon className={styles.input__hideIcon} onClick={props.togglePasswordVisability} /> : null);
+
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
@@ -47,7 +52,7 @@ const Input: FC<Input> = (props) => {
             </label>
             <input
                 id={id}
-                className={`${styles.input__place}`}
+                className={styles.input__place}
                 type={props.type}
                 placeholder={props.placeholder}
                 {...props.register(props.name, {
@@ -58,6 +63,7 @@ const Input: FC<Input> = (props) => {
                     },
                 })}
             ></input>
+            {renderPasswordVisabilityIcon()}
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
         </div>
     );
