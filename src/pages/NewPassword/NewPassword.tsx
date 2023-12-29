@@ -16,8 +16,8 @@ const NewPassword = () => {
         <Popup title={t('pages.newPassword.title')}>
             <Form name="form-password-new" onSubmit={onSubmit}>
                 <FormInputs>
-                    <Input type="text" name="input_newPassword" placeholder="******" nameLabel={t('pages.newPassword.nameLabel')}></Input>
-                    <Input type="text" name="input_newPasswordDouble" placeholder="******" nameLabel={t('pages.newPassword.nameLabelRepeat')}></Input>
+                    <Input type="text" name="newPassword" placeholder="******" nameLabel={t('pages.newPassword.nameLabel')}></Input>
+                    <Input type="text" name="newPasswordDouble" placeholder="******" nameLabel={t('pages.newPassword.nameLabelRepeat')}></Input>
                 </FormInputs>
                 <Button>{t('pages.newPassword.button')}</Button>
             </Form>

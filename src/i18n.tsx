@@ -97,8 +97,6 @@ i18n
                             title: 'Профиль',
                             placeholderUserName: 'Владислав Иванов',
                             placeholderPhone: '+7 (***)',
-                            placeholderPassword:'******',
-                            placeholderRepeatPassword: '******',
                             nameLabelUserName: 'Имя Фамилия',
                             nameLabelPhone: 'Телефон',
                             nameLabelPassword: 'Новый пароль',
