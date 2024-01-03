@@ -58,6 +58,14 @@ i18n
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
                         },
+                        profile: {
+                            profileHeading: 'Профиль',
+                            name: 'Имя Фамилия',
+                            namePlaceholder: 'Владислав Иванов',
+                            phoneNumber: 'Телефон',
+                            password: 'Пароль',
+                            passwordRepeat: 'Повторите пароль',
+                        }
                     },
                 },
             },
