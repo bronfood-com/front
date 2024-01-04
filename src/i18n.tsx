@@ -39,7 +39,7 @@ i18n
                         },
                         input: {
                             required: 'Обязательное поле',
-                            errorMessage:  'Неверный ввод',
+                            errorMessage: 'Неверный ввод',
                         },
 
                         customerNavigation: {
@@ -72,18 +72,19 @@ i18n
                         },
 
                         popupFeedbackThanks: {
-                            title: 'Спасибо за отзыв!'
+                            title: 'Спасибо за отзыв!',
                         },
 
                         popupSignupSuccess: {
-                            title: 'Спасибо за регистрацию!'
+                            title: 'Спасибо за регистрацию!',
                         },
 
                         newPassword: {
-                            title:'Придумайте новый пароль',
+                            title: 'Придумайте новый пароль',
                             nameLabel: 'Новый пароль',
                             nameLabelRepeat: 'Повторите пароль',
-                            button:'Сохранить'
+                            button: 'Сохранить',
+                            passwordDontMatch: 'Пароль не совпадает',
                         },
 
                         passwordRecovery: {
@@ -103,7 +104,6 @@ i18n
                             nameLabelRepeatPassword: 'Повторите пароль',
                             continue: 'Далее',
                         },
-
                     },
                 },
             },

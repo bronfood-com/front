@@ -14,20 +14,23 @@ const NewPassword = () => {
     const {
         register,
         handleSubmit,
+        getValues,
         formState: { errors },
     } = useForm();
 
     const onSubmit: SubmitHandler<FieldValues> = async () => {
         navigate('/password_done');
-
     };
-
+    const validatePasswordMatch = (value:FieldValues) => {
+        const {newPassword} = getValues()
+        return newPassword === value || t('pages.newPassword.passwordDontMatch')
+    };
     return (
         <Popup title={t('pages.newPassword.title')}>
             <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
-                    <Input type="text" name="newPassword" placeholder="123456" nameLabel={t('pages.newPassword.nameLabel')}  register={register} errors={errors} pattern={regexPassword}></Input>
-                    <Input type="text" name="newPasswordDouble" placeholder="123456" nameLabel={t('pages.newPassword.nameLabelRepeat')}  register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="text" name="newPassword" placeholder="123456" nameLabel={t('pages.newPassword.nameLabel')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="text" name="confirmNewPassword" placeholder="123456" nameLabel={t('pages.newPassword.nameLabelRepeat')} register={register} errors={errors} pattern={regexPassword} validate={validatePasswordMatch}></Input>
                 </FormInputs>
                 <Button>{t('pages.newPassword.button')}</Button>
             </Form>
