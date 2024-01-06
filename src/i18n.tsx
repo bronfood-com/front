@@ -84,7 +84,7 @@ i18n
                             nameLabel: 'Новый пароль',
                             nameLabelRepeat: 'Повторите пароль',
                             button: 'Сохранить',
-                            passwordDontMatch: 'Пароль не совпадает',
+                            passwordDontMatch: 'Неверный ввод',
                         },
 
                         passwordRecovery: {
