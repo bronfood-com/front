@@ -4,7 +4,6 @@ import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-
 interface Input {
     /**
      * HTML type for the input
@@ -34,6 +33,10 @@ interface Input {
      * RegExp for input validation
      */
     pattern: RegExp;
+    /**
+     * Custom validation function
+     */
+    validate?: (value:FieldValues) => string | boolean;
 }
 
 const Input: FC<Input> = (props) => {
@@ -56,6 +59,7 @@ const Input: FC<Input> = (props) => {
                         value: props.pattern,
                         message: t('components.input.errorMessage'),
                     },
+                    validate: props.validate
                 })}
             ></input>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
