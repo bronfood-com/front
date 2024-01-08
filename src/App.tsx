@@ -15,7 +15,7 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
-    const [isLogin] = useState(false);
+    const [isLogin] = useState(true);
 
     return (
         <div>
