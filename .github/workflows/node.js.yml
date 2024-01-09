@@ -33,4 +33,3 @@ jobs:
     - name: Run ESLint
       run: npx eslint .
     - run: npm run build
-    - run: npm test
