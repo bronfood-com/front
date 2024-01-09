@@ -13,7 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-//
+console.log('123');
 function App() {
     const [isLogin] = useState(true);
 
