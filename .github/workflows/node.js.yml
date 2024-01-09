@@ -28,8 +28,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - name: Install lint
-      run: npm install eslint --save-dev
     - name: Run ESLint
-      run: npx eslint .
+      run: npm lint
     - run: npm run build
