@@ -2,19 +2,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
-import Input from '../../components/Input/Input';
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './SignIn.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { regexPassword } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { authApi } from '../../utils/api/auth';
-import { useSSR, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import InputPassword from '../../components/InputPassword/InputPassword';
 
 const SignIn = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const showError = !!errorMessage;
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -45,7 +43,9 @@ const SignIn = () => {
                 </div>
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type={isPasswordVisible ? 'text' : 'password'} name="password" placeholder="******" nameLabel={t('pages.signIn.password')} register={register} errors={errors} pattern={regexPassword} togglePasswordVisability={() => setIsPasswordVisible(!isPasswordVisible)}></Input>
+                    <InputPassword register={register} errors={errors}
+                    name='password'
+                    nameLabel={t('pages.signIn.password')}/>
                 </FormInputs>
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
