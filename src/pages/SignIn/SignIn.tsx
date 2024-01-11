@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 const SignIn = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const showError = !!errorMessage
+    const showError = !!errorMessage;
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -25,7 +25,7 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
-        setErrorMessage(null)
+        setErrorMessage(null);
         const res = await authApi.login({ phone: phoneNumber, password });
 
         if (res.errorMessage) {

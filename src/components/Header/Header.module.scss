@@ -1,11 +1,15 @@
 @import '../../styles/variables.scss';
 
 .header {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     padding: 25px 15px;
     border-radius: 0px 0px 15px 15px;
     box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
+    background-color: $background;
+    z-index: 999;
 
     &__container {
         display: flex;
@@ -55,7 +59,7 @@
     }
     &__menu {
         width: 100%;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: -100%;
         z-index: 10;

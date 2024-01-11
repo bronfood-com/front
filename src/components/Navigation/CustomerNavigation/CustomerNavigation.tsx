@@ -15,19 +15,19 @@ const CustomerNavigation: FC<CustomerNavigation> = (props) => {
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_customer}`}></div>
                 <Link to="/profile" className={styles.nav__link} onClick={props.handleItemMenuClick}>
-                {t('components.customerNavigation.editPersonalData')}
+                    {t('components.customerNavigation.editPersonalData')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_bankcard}`}></div>
                 <Link to="/" className={styles.nav__link}>
-                   {t('components.customerNavigation.editBankData')}
+                    {t('components.customerNavigation.editBankData')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_exit}`}></div>
                 <Link to="/" className={styles.nav__link} onClick={props.handleItemMenuClick}>
-                {t('components.customerNavigation.signOut')}
+                    {t('components.customerNavigation.signOut')}
                 </Link>
             </li>
         </ul>

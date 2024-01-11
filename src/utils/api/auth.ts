@@ -3,9 +3,8 @@ type PhoneNumber = string;
 interface LoginData {
     phone: PhoneNumber;
     password: string;
-
 }
-interface RegisterData{
+interface RegisterData {
     phone: PhoneNumber;
     password: string;
     isOwner: boolean;

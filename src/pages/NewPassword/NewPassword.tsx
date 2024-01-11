@@ -21,9 +21,9 @@ const NewPassword = () => {
     const onSubmit: SubmitHandler<FieldValues> = async () => {
         navigate('/password_done');
     };
-    const validatePasswordMatch = (value:FieldValues) => {
-        const {newPassword} = getValues()
-        return newPassword === value || t('pages.newPassword.passwordDontMatch')
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { newPassword } = getValues();
+        return newPassword === value || t('pages.newPassword.passwordDontMatch');
     };
     return (
         <Popup title={t('pages.newPassword.title')}>

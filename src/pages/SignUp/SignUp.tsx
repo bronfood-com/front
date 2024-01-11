@@ -14,7 +14,7 @@ import styles from './SignUp.module.scss';
 
 const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const showError = !!errorMessage
+    const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
     const {
@@ -25,7 +25,7 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        setErrorMessage(null)
+        setErrorMessage(null);
         const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
 
         if (res.errorMessage) {

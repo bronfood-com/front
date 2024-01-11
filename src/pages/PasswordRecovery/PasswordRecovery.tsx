@@ -22,7 +22,7 @@ const PasswordRecovery = () => {
         <Popup title={t('pages.passwordRecovery.title')}>
             <Form name="form-password-recovery" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
-                <InputPhone register={register} errors={errors}></InputPhone>
+                    <InputPhone register={register} errors={errors}></InputPhone>
                 </FormInputs>
                 <Button>{t('pages.passwordRecovery.continue')}</Button>
             </Form>

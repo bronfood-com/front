@@ -21,9 +21,9 @@ const Profile = () => {
     const onSubmit = () => {
         navigate('/');
     };
-    const validatePasswordMatch = (value:FieldValues) => {
-        const {password} = getValues()
-        return password === value || t('pages.newPassword.passwordDontMatch')
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { password } = getValues();
+        return password === value || t('pages.newPassword.passwordDontMatch');
     };
     return (
         <Popup title={t('pages.profile.title')}>
@@ -31,8 +31,8 @@ const Profile = () => {
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder='******' nameLabel={t('pages.profile.nameLabelPassword')} register={register} errors={errors} pattern={regexPassword}></Input>
-                    <Input type="password" name="passwordRepeat" placeholder='******' nameLabel={t('pages.profile.nameLabelRepeatPassword')} register={register} errors={errors} pattern={regexPassword} validate={validatePasswordMatch}></Input>
+                    <Input type="password" name="password" placeholder="******" nameLabel={t('pages.profile.nameLabelPassword')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <Input type="password" name="passwordRepeat" placeholder="******" nameLabel={t('pages.profile.nameLabelRepeatPassword')} register={register} errors={errors} pattern={regexPassword} validate={validatePasswordMatch}></Input>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
                 <Button>{t('pages.profile.continue')}</Button>

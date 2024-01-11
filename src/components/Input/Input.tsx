@@ -36,7 +36,7 @@ interface Input {
     /**
      * Custom validation function
      */
-    validate?: (value:FieldValues) => string | boolean;
+    validate?: (value: FieldValues) => string | boolean;
 }
 
 const Input: FC<Input> = (props) => {
@@ -59,7 +59,7 @@ const Input: FC<Input> = (props) => {
                         value: props.pattern,
                         message: t('components.input.errorMessage'),
                     },
-                    validate: props.validate
+                    validate: props.validate,
                 })}
             ></input>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
