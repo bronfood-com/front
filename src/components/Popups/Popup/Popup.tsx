@@ -23,7 +23,7 @@ const Popup: FC<Popup> = (props) => {
         navigate('/');
     };
     return (
-        <div className={styles.popup_background}>
+        <div className={styles.popup_overlay}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
                 {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
