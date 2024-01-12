@@ -24,15 +24,18 @@ interface InputPassword {
      * React Hook Forms error object
      */
     errors: FieldErrors;
+    /**
+     * Custom validation function
+     */
+    validate?: (value: FieldValues) => string | boolean;
 }
 
 const InputPassword: FC<InputPassword> = (props) => {
     const { t } = useTranslation();
-    const errorMessage = (props.errors.password?.message as string) || undefined;
+    const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
-
     const visibilityIcon = isPasswordVisible ? <HidePasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} /> : <ShowPasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} />;
 
     return (
@@ -44,13 +47,14 @@ const InputPassword: FC<InputPassword> = (props) => {
                 id={id}
                 className={styles.input__place}
                 type={isPasswordVisible ? 'password' : 'text'}
-                placeholder='123456'
+                placeholder="123456"
                 {...props.register(props.name, {
                     required: t('components.input.required'),
                     pattern: {
                         value: regexPassword,
                         message: t('components.input.errorMessage'),
                     },
+                    validate: props.validate,
                 })}
             ></input>
             {visibilityIcon}

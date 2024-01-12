@@ -103,6 +103,7 @@ i18n
                             nameLabelPassword: 'Новый пароль',
                             nameLabelRepeatPassword: 'Повторите пароль',
                             continue: 'Далее',
+                            passwordDontMatch: 'Неверный ввод',
                         },
                     },
                 },
