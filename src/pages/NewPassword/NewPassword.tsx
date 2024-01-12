@@ -4,19 +4,25 @@ import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
 import Popup from '../../components/Popups/Popup/Popup';
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import InputPassword from '../../components/InputPassword/InputPassword';
 
 const NewPassword = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
+        getValues,
         formState: { errors },
     } = useForm();
-    const navigate = useNavigate();
-    const onSubmit = () => {
+
+    const onSubmit: SubmitHandler<FieldValues> = async () => {
         navigate('/password_done');
+    };
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { newPassword } = getValues();
+        return newPassword === value || t('pages.newPassword.passwordDontMatch');
     };
     return (
         <Popup title={t('pages.newPassword.title')}>

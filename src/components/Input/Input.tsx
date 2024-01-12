@@ -33,6 +33,10 @@ interface Input {
      * RegExp for input validation
      */
     pattern: RegExp;
+    /**
+     * Custom validation function
+     */
+    validate?: (value:FieldValues) => string | boolean;
 }
 
 const Input: FC<Input> = (props) => {
@@ -56,6 +60,7 @@ const Input: FC<Input> = (props) => {
                         value: props.pattern,
                         message: t('components.input.errorMessage'),
                     },
+                    validate: props.validate
                 })}
             ></input>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
