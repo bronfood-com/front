@@ -7,8 +7,9 @@ import Popup from '../../components/Popups/Popup/Popup';
 import styles from './Profile.module.scss';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, useForm } from 'react-hook-form';
-import { regexClientName, regexPassword } from '../../utils/consts';
+import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
+import InputPassword from '../../components/InputPassword/InputPassword';
 const Profile = () => {
     const {
         register,
@@ -21,18 +22,19 @@ const Profile = () => {
     const onSubmit = () => {
         navigate('/');
     };
-    const validatePasswordMatch = (value:FieldValues) => {
-        const {password} = getValues()
-        return password === value || t('pages.newPassword.passwordDontMatch')
+
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { password } = getValues();
+        return password === value || t('pages.newPassword.passwordDontMatch');
     };
     return (
         <Popup title={t('pages.profile.title')}>
-            <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
+            <Form name="form-profile" onSubmit={handleSubmit(handleSubmit(onSubmit))}>
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder='******' nameLabel={t('pages.profile.nameLabelPassword')} register={register} errors={errors} pattern={regexPassword}></Input>
-                    <Input type="password" name="passwordRepeat" placeholder='******' nameLabel={t('pages.profile.nameLabelRepeatPassword')} register={register} errors={errors} pattern={regexPassword} validate={validatePasswordMatch}></Input>
+                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} validate={validatePasswordMatch} />
+                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
                 <Button>{t('pages.profile.continue')}</Button>

@@ -2,11 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
-import Input from '../../components/Input/Input';
 import Popup from '../../components/Popups/Popup/Popup';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { regexPassword } from '../../utils/consts';
+import InputPassword from '../../components/InputPassword/InputPassword';
 
 const NewPassword = () => {
     const { t } = useTranslation();
@@ -29,8 +28,8 @@ const NewPassword = () => {
         <Popup title={t('pages.newPassword.title')}>
             <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
-                    <Input type="text" name="newPassword" placeholder="123456" nameLabel={t('pages.newPassword.nameLabel')} register={register} errors={errors} pattern={regexPassword}></Input>
-                    <Input type="text" name="confirmNewPassword" placeholder="123456" nameLabel={t('pages.newPassword.nameLabelRepeat')} register={register} errors={errors} pattern={regexPassword} validate={validatePasswordMatch}></Input>
+                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} />
+                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} />
                 </FormInputs>
                 <Button>{t('pages.newPassword.button')}</Button>
             </Form>

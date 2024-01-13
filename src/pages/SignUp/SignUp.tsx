@@ -5,12 +5,13 @@ import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
 import Input from '../../components/Input/Input';
 import Popup from '../../components/Popups/Popup/Popup';
-import { regexPassword, regexClientName } from '../../utils/consts';
+import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../utils/api/auth';
 import { useState } from 'react';
 import styles from './SignUp.module.scss';
+import InputPassword from '../../components/InputPassword/InputPassword';
 
 const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -45,7 +46,7 @@ const SignUp = () => {
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <Input type="password" name="password" placeholder="******" nameLabel={t('pages.signUp.password')} register={register} errors={errors} pattern={regexPassword}></Input>
+                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
                 </FormInputs>
                 <Button>{t('pages.signUp.registerButton')}</Button>
             </Form>
