@@ -18,7 +18,7 @@ interface InputPhone {
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
 
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
 
