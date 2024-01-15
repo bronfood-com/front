@@ -49,10 +49,10 @@ const InputPassword: FC<InputPassword> = (props) => {
                 type={isPasswordVisible ? 'password' : 'text'}
                 placeholder="123456"
                 {...props.register(props.name, {
-                    required: t('components.input.required'),
+                    required: t('components.inputPassword.required'),
                     pattern: {
                         value: regexPassword,
-                        message: t('components.input.errorMessage'),
+                        message: t('components.inputPassword.errorMessage'),
                     },
                     validate: props.validate,
                 })}
