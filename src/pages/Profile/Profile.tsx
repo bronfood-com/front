@@ -24,17 +24,17 @@ const Profile = () => {
     };
 
     const validatePasswordMatch = (value: FieldValues) => {
-        const { password } = getValues();
-        return password === value || t('pages.newPassword.passwordDontMatch');
+        const { newPassword } = getValues();
+        return newPassword === value || t('pages.profile.passwordDontMatch');
     };
     return (
         <Popup title={t('pages.profile.title')}>
-            <Form name="form-profile" onSubmit={handleSubmit(handleSubmit(onSubmit))}>
+            <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} validate={validatePasswordMatch} />
-                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />
+                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} />
+                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} />
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
                 <Button>{t('pages.profile.continue')}</Button>

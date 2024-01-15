@@ -24,12 +24,13 @@ const NewPassword = () => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.newPassword.passwordDontMatch');
     };
+
     return (
         <Popup title={t('pages.newPassword.title')}>
             <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
                     <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} />
-                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} />
+                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />
                 </FormInputs>
                 <Button>{t('pages.newPassword.button')}</Button>
             </Form>

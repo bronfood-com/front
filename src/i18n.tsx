@@ -37,6 +37,10 @@ i18n
                             invalidPhoneNumberFormat: 'Неверный ввод',
                             phoneNumber: 'Телефон',
                         },
+                        inputPassword: {
+                            required: 'Обязательное поле',
+                            errorMessage: 'Неверный ввод',
+                        },
                         input: {
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
@@ -84,7 +88,7 @@ i18n
                             nameLabel: 'Новый пароль',
                             nameLabelRepeat: 'Повторите пароль',
                             button: 'Сохранить',
-                            passwordDontMatch: 'Неверный ввод',
+                            passwordDontMatch: 'Пароли не совпадают',
                         },
 
                         passwordRecovery: {
@@ -103,6 +107,7 @@ i18n
                             nameLabelPassword: 'Новый пароль',
                             nameLabelRepeatPassword: 'Повторите пароль',
                             continue: 'Далее',
+                            passwordDontMatch: 'Пароли не совпадают',
                         },
                     },
                 },
