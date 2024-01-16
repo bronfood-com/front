@@ -12,6 +12,12 @@
     "preview": "vite preview",
     "prettier": "npx prettier . --write"
   },
+  "lint-staged": {
+    "*.{ts, tsx, scss, json}": [
+      "npx prettier . --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@pbe/react-yandex-maps": "^1.2.5",
     "i18next": "^23.7.8",
