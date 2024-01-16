@@ -35,7 +35,7 @@ class AuthApi {
         if (phone && password && name) {
             return { status: 'success', data: { name: 'User', phone, isOwner } };
         } else {
-            return { status: 'error', errorMessage: "phoneNumberIsAlreadyUsed" };
+            return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
         }
     }
 

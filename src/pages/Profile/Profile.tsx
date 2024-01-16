@@ -31,7 +31,7 @@ const Profile = () => {
         <Popup title={t('pages.profile.title')}>
             <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>
+                    <Input type="text" name='username' placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>
                     <InputPhone register={register} errors={errors}></InputPhone>
                     <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} />
                     <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} />
