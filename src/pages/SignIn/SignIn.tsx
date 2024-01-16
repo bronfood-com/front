@@ -43,9 +43,7 @@ const SignIn = () => {
                 </div>
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors}
-                    name='password'
-                    nameLabel={t('pages.signIn.password')}/>
+                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
                 </FormInputs>
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
