@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import { useState } from 'react';
-import { userApi } from '../../utils/api/user';
+import { authApi } from '../../utils/api/auth';
 import styles from './NewPassword.module.scss';
 
 const NewPassword = () => {
@@ -25,7 +25,7 @@ const NewPassword = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { newPassword, newPasswordDouble } = data;
         setErrorMessage(null);
-        const res = await userApi.editPassword({ password: newPassword, confirmPassword: newPasswordDouble });
+        const res = await authApi.editPassword({ password: newPassword, confirmPassword: newPasswordDouble });
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
