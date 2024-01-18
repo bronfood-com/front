@@ -40,7 +40,7 @@ const InputPhone: FC<InputPhone> = (props) => {
                         message: t('components.inputPhone.invalidPhoneNumberFormat'),
                     },
                 })}
-                mask="+7 (999) 99-99-99"
+                mask="+7 (999) 999-99-99"
             ></InputMask>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
         </div>
