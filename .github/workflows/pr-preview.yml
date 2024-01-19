@@ -20,5 +20,5 @@ jobs:
         with:
           source-dir: ./dist/
           preview-branch: gh-pages
-          umbrella-dir: front/pr-preview
+          umbrella-dir: pr-preview
           action: auto
