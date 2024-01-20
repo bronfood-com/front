@@ -19,7 +19,6 @@ function App() {
 
     return (
         <div>
-            <h1>TEST TEST TEST</h1>
             <Header isLogin={isLogin} />
             <YandexMap></YandexMap>
             <Routes>
