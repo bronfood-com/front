@@ -1,25 +1,27 @@
-# .github/workflows/preview.yml
 name: Deploy PR previews
-concurrency: preview-${{ github.ref }}
+
 on:
+  push:
+    branches: [main, master]
   pull_request:
     types:
       - opened
       - reopened
       - synchronize
       - closed
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: ci-${{ github.ref }}
+
 jobs:
-  deploy-preview:
+  build-deploy-and-preview:
+    name: Deploy PR previews
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: npm i && npm run build
-        if: github.event.action != 'closed'
-      - run: ls -R ./dist/
-      - uses: rossjrw/pr-preview-action@v1
+      - name: Deploy PR previews
+        uses: chvmvd/build-deploy-and-preview-action@v1.2.0
         with:
-          source-dir: ./dist/
-          preview-branch: gh-pages
-          umbrella-dir: pr-preview
-          action: auto
           type: vite
