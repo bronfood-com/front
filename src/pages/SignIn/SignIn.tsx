@@ -10,9 +10,11 @@ import { authApi } from '../../utils/api/auth';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 const SignIn = () => {
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    // const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const { errorMessage, currentUser, signIn } = useCurrentUser();
     const showError = !!errorMessage;
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -23,15 +25,16 @@ const SignIn = () => {
     } = useForm();
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const { password, phoneNumber } = data;
-        setErrorMessage(null);
-        const res = await authApi.login({ phone: phoneNumber, password });
+        signIn(data);
+        // const { password, phoneNumber } = data;
+        // setErrorMessage(null);
+        // const res = await authApi.login({ phone: phoneNumber, password });
 
-        if (res.errorMessage) {
-            setErrorMessage(res.errorMessage);
-        } else {
-            navigate('/');
-        }
+        // if (res.errorMessage) {
+        //     setErrorMessage(res.errorMessage);
+        // } else {
+        //     navigate('/');
+        // }
     };
 
     return (
