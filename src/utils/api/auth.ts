@@ -7,14 +7,13 @@ interface LoginData {
 interface RegisterData {
     phone: PhoneNumber;
     password: string;
-    isOwner: boolean;
     name: string;
 }
 
-interface User {
+export interface User {
     phone: PhoneNumber;
     name: string;
-    isOwner: boolean;
+    isOwner?: boolean;
 }
 class AuthApi {
     async _wait(ms: number) {
@@ -30,10 +29,10 @@ class AuthApi {
         }
     }
 
-    async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async register({ name, phone, password }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone, isOwner } };
+            return { status: 'success', data: { name: 'User', phone } };
         } else {
             return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
         }
