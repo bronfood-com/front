@@ -9,11 +9,17 @@ import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
 import { authApi } from '../../utils/api/auth';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
+interface SignUp {
+    /**
+     * Handle closing infoPopup
+     */
+    openInfoPopup: () => void;
+}
 
-const SignUp = () => {
+const SignUp: FC<SignUp> = (props) => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const showError = !!errorMessage;
     const { t } = useTranslation();
@@ -32,7 +38,8 @@ const SignUp = () => {
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
-            navigate('/signup_done');
+            navigate('/');
+            props.openInfoPopup();
         }
     };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
@@ -16,6 +16,19 @@ import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
     const [isLogin] = useState(false);
+    const [isInfoPopupOpened, setIsInfoPopupOpened] = useState(false);
+
+    const openInfoPopup = () => {
+        setIsInfoPopupOpened(!isInfoPopupOpened)
+    }
+
+    useEffect(() => {
+        if(isInfoPopupOpened) {
+            setTimeout(() => {
+                setIsInfoPopupOpened(false)
+            }, 3000);
+        }
+    }, [isInfoPopupOpened]);
 
     return (
         <div>
@@ -24,14 +37,14 @@ function App() {
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signup" element={<SignUp openInfoPopup={openInfoPopup}/>} />
                 <Route path="/recovery_pass" element={<PasswordRecovery />} />
-                <Route path="/signup_done" element={<PopupSignupSuccess />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
                 <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
             </Routes>
+            <PopupSignupSuccess isOpened={isInfoPopupOpened} openInfoPopup={openInfoPopup}></PopupSignupSuccess>
         </div>
     );
 }
