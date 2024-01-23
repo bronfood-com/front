@@ -1,0 +1,35 @@
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.preloader {
+
+    position: absolute;
+    top: 40svh;
+    left: calc(50vw - 25px);
+
+    &__load {
+        margin: 0 auto;
+        box-sizing: border-box;
+        width: 50px;
+        animation: rotation 1s infinite linear;
+        height: 50px;
+        border: 12px solid #ee9505;
+        border-bottom: 12px solid #ffffff;
+        border-radius: 50%;
+    }
+
+    &__text {
+        font-size: 30px;
+        font-weight: 500;
+        color: #b24b29;
+        margin: 25px auto;
+
+    }
+}
