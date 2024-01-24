@@ -14,9 +14,9 @@ import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 interface SignUp {
     /**
-     * Handle closing infoPopup
+     * Handle open/closing infoPopup (add true or false)
      */
-    openInfoPopup: () => void;
+    handleSignupInfoPopup: (value: boolean) => void;
 }
 
 const SignUp: FC<SignUp> = (props) => {
@@ -39,7 +39,10 @@ const SignUp: FC<SignUp> = (props) => {
             setErrorMessage(res.errorMessage);
         } else {
             navigate('/');
-            props.openInfoPopup();
+            props.handleSignupInfoPopup(true);
+            setTimeout(() => {
+                props.handleSignupInfoPopup(false);
+            }, 3000);
         }
     };
 
