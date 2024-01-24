@@ -12,13 +12,6 @@
     padding: 30px 0;
     align-items: center;
 
-    &__title {
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 28px;
-        margin: 0 auto 30px;
-    }
-
     &__close {
         position: absolute;
         width: 35px;
@@ -27,6 +20,9 @@
         right: 5px;
         background-color: transparent;
         margin: 0 auto;
+        border: none;
+        padding: 0;
+        background-color: transparent;
 
         &:before {
             content: '';
@@ -49,12 +45,9 @@
             background: $grey;
             transform: rotate(45deg);
         }
-
-        &_info {
-            display: none;
-        }
     }
-    &_overlay {
+
+    &__overlay {
         position: absolute; //fixed --> without scroll
         top: 0;
         left: 0;
@@ -62,7 +55,12 @@
         min-height: 100vh;
         background-color: rgba(135, 133, 133, 0.75);
         backdrop-filter: blur(2.5px);
+
+        &_hide {
+            display: none;
+        }
     }
+
     &_hide {
         display: none;
     }

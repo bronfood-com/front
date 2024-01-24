@@ -1,8 +1,8 @@
-import InfoImage from '../../components/InfoImage/InfoImage';
+import InfoImage from '../../../InfoImage/InfoImage';
 import styles from './PopupSignupSuccess.module.scss';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoPopup from '../../components/Popups/InfoPopup/InfoPopup';
+import InfoPopup from '../InfoPopup';
 
 interface PopupSignupSuccessProps {
     /**
@@ -13,13 +13,16 @@ interface PopupSignupSuccessProps {
      * Handle closing infoPopup
      */
     openInfoPopup: () => void;
+    /**
+     * Has this info window close button?
+     */
+    hasCloseButton?: boolean;
 }
 
 const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
     const { t } = useTranslation();
-
     return (
-        <InfoPopup mode="info" isOpened={props.isOpened} openInfoPopup={props.openInfoPopup}>
+        <InfoPopup isOpened={props.isOpened} openInfoPopup={props.openInfoPopup}>
             <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </InfoPopup>

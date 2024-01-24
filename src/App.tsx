@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
-import PopupSignupSuccess from './pages/PopupSignupSuccess/PopupSignupSuccess';
+import PopupSignupSuccess from './components/Popups/InfoPopup/PopupSignupSuccess/PopupSignupSuccess';
 import NewPassword from './pages/NewPassword/NewPassword';
 import PasswordRecovery from './pages/PasswordRecovery/PasswordRecovery';
 import Profile from './pages/Profile/Profile';
@@ -19,13 +19,13 @@ function App() {
     const [isInfoPopupOpened, setIsInfoPopupOpened] = useState(false);
 
     const openInfoPopup = () => {
-        setIsInfoPopupOpened(!isInfoPopupOpened)
-    }
+        setIsInfoPopupOpened(!isInfoPopupOpened);
+    };
 
     useEffect(() => {
-        if(isInfoPopupOpened) {
+        if (isInfoPopupOpened) {
             setTimeout(() => {
-                setIsInfoPopupOpened(false)
+                setIsInfoPopupOpened(false);
             }, 3000);
         }
     }, [isInfoPopupOpened]);
@@ -37,7 +37,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp openInfoPopup={openInfoPopup}/>} />
+                <Route path="/signup" element={<SignUp openInfoPopup={openInfoPopup} />} />
                 <Route path="/recovery_pass" element={<PasswordRecovery />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />

@@ -11,10 +11,6 @@
     padding: 50px 0 55px;
     margin: 115px auto 20px;
 
-    &_info {
-        padding: 30px 0;
-        align-items: center;
-    }
     &__title {
         font-size: 20px;
         font-weight: 500;
@@ -51,10 +47,6 @@
             left: -4px;
             background: $grey;
             transform: rotate(45deg);
-        }
-
-        &_info {
-            display: none;
         }
     }
     &_overlay {
