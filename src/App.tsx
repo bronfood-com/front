@@ -22,6 +22,9 @@ function App() {
     const handleSignupInfoPopup = (value: boolean) => {
         setIsSignupInfoPopupOpen(value);
     };
+    const closeInfoPopup = () => {
+        setIsSignupInfoPopupOpen(false);
+    };
 
     return (
         <div>
@@ -30,14 +33,14 @@ function App() {
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/signup" element={<SignUp handleSignupInfoPopup={handleSignupInfoPopup}/>} />
+                <Route path="/signup" element={<SignUp handleSignupInfoPopup={handleSignupInfoPopup} />} />
                 <Route path="/recovery_pass" element={<PasswordRecovery />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
                 <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
             </Routes>
-            <PopupSignupSuccess isOpened={isSignupInfoPopupOpen} handleInfoPopup={handleSignupInfoPopup}></PopupSignupSuccess>
+            <PopupSignupSuccess isOpened={isSignupInfoPopupOpen} closeInfoPopup={closeInfoPopup}></PopupSignupSuccess>
         </div>
     );
 }

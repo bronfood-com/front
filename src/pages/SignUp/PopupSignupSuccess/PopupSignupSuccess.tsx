@@ -10,9 +10,9 @@ interface PopupSignupSuccessProps {
      */
     isOpened: boolean;
     /**
-     * Handle open/closing infoPopup (add true or false)
+     * Close infoPopup
      */
-    handleInfoPopup: (value: boolean) => void;
+    closeInfoPopup: () => void;
     /**
      * Has this info window close button?
      */
@@ -22,7 +22,7 @@ interface PopupSignupSuccessProps {
 const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
     const { t } = useTranslation();
     return (
-        <InfoPopup isOpened={props.isOpened} handleInfoPopup={props.handleInfoPopup}>
+        <InfoPopup isOpened={props.isOpened} closeInfoPopup={props.closeInfoPopup}>
             <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </InfoPopup>

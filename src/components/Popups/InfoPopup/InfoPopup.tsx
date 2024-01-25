@@ -11,9 +11,9 @@ interface InfoPopup {
      */
     isOpened: boolean;
     /**
-     * Handle open/closing infoPopup (add true or false)
+     * Close infoPopup
      */
-    handleInfoPopup: (value: boolean) => void;
+    closeInfoPopup: () => void;
     /**
      * Has this info window close button?
      */
@@ -21,14 +21,14 @@ interface InfoPopup {
 }
 
 const InfoPopup: FC<InfoPopup> = (props) => {
-    const handleCloseButton = () => {
-        props.handleInfoPopup(false);
+    const closeInfoPopup = () => {
+        props.closeInfoPopup();
     };
     return (
         <div className={`${styles.popup__overlay} ${props.isOpened ? '' : styles.popup__overlay_hide}`}>
             <div className={`${styles.popup} ${props.isOpened ? '' : styles.popup_hide}`}>
                 {props.children}
-                {props.hasCloseButton ? <button className={styles.popup__close} type="button" onClick={handleCloseButton}></button> : ''}
+                {props.hasCloseButton ? <button className={styles.popup__close} type="button" onClick={closeInfoPopup}></button> : ''}
             </div>
         </div>
     );
