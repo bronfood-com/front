@@ -3,6 +3,10 @@ import styles from './InfoPopup.module.scss';
 
 interface InfoPopup {
     /**
+     * Close window
+     */
+    closeInfoPopup: () => void;
+    /**
      * Elements that popup contains
      */
     children: ReactNode;
@@ -10,10 +14,6 @@ interface InfoPopup {
      * Is InfoPopup opened?
      */
     isOpened: boolean;
-    /**
-     * Close infoPopup
-     */
-    closeInfoPopup: () => void;
     /**
      * Has this info window close button?
      */

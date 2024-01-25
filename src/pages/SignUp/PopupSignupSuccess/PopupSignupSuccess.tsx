@@ -6,13 +6,14 @@ import InfoPopup from '../../../components/Popups/InfoPopup/InfoPopup';
 
 interface PopupSignupSuccessProps {
     /**
+     * Close window
+     */
+    closeInfoPopup: () => void;
+    /**
      * Is InfoPopup opened?
      */
     isOpened: boolean;
-    /**
-     * Close infoPopup
-     */
-    closeInfoPopup: () => void;
+
     /**
      * Has this info window close button?
      */
