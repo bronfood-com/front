@@ -1,21 +1,23 @@
 import { createContext, useContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { User, authApi } from '../utils/api/auth';
-import { useLocalStorage } from '../hooks/useLocalstorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
 type CurrentUserContent = {
     currentUser: User | null | undefined;
     errorMessage: string | null;
     signIn: (data: FieldValues) => void;
     signUp: (data: FieldValues) => void;
+    logout: () => void;
 };
-const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {} });
+const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {}, logout: () => {} });
 
 export const useCurrentUser = () => useContext(CurrentUserContext);
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const { getItem, setItem } = useLocalStorage();
+    const { getItem, setItem, removeItem } = useLocalStorage();
 
     useEffect(() => {
         const user = getItem('user');
@@ -49,5 +51,17 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp }}>{children}</CurrentUserContext.Provider>;
+    const logout = useCallback(async () => {
+        setErrorMessage(null);
+        const res = await authApi.loguOut();
+        if (res.status === 'success') {
+            console.log('first');
+            setCurrentUser(null);
+            removeItem('user');
+        } else {
+            return;
+        }
+    }, []);
+
+    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout }}>{children}</CurrentUserContext.Provider>;
 };

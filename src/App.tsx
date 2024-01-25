@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
@@ -13,13 +13,14 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
+import { useCurrentUser } from './contexts/CurrentUserContext';
 
 function App() {
-    const [isLogin] = useState(true);
+    const { currentUser } = useCurrentUser();
 
     return (
         <div>
-            <Header isLogin={isLogin} />
+            <Header isLogin={!!currentUser} />
             <YandexMap></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
@@ -29,8 +30,8 @@ function App() {
                 <Route path="/signup_done" element={<PopupSignupSuccess />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />
-                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
-                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
+                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={!!currentUser} />} />
+                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={!!currentUser} />} />
             </Routes>
         </div>
     );
