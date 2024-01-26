@@ -26,7 +26,6 @@ const SignUp = () => {
         formState: { errors },
     } = useForm();
 
-
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         setErrorMessage(null);
@@ -53,7 +52,7 @@ const SignUp = () => {
     return (
         <>
             {isInfoPopupOpen ? (
-                <PopupSignupSuccess isOpened={isInfoPopupOpen} closeInfoPopup={closeInfoPopup}></PopupSignupSuccess>
+                <PopupSignupSuccess isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupSignupSuccess>
             ) : (
                 <Popup title={t('pages.signUp.signUpHeading')}>
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>

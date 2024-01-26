@@ -3,9 +3,9 @@ import styles from './InfoPopup.module.scss';
 
 interface InfoPopup {
     /**
-     * Close window
+     * Works when info popup closes
      */
-    closeInfoPopup: () => void;
+    onCloseInfoPopup: () => void;
     /**
      * Elements that popup contains
      */
