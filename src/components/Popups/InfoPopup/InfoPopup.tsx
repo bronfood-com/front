@@ -22,7 +22,7 @@ interface InfoPopup {
 
 const InfoPopup: FC<InfoPopup> = (props) => {
     const closeInfoPopup = () => {
-        props.closeInfoPopup();
+        props.onCloseInfoPopup();
     };
     return (
         <div className={`${styles.popup__overlay} ${props.isOpened ? '' : styles.popup__overlay_hide}`}>
