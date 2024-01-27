@@ -6,7 +6,7 @@ import InfoPopup from '../../../components/Popups/InfoPopup/InfoPopup';
 
 interface PopupSignupSuccessProps {
     /**
-     * Works when info popup closes
+     * Fires when info popup closes
      */
     onCloseInfoPopup: () => void;
     /**

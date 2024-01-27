@@ -3,7 +3,7 @@ import styles from './InfoPopup.module.scss';
 
 interface InfoPopup {
     /**
-     * Works when info popup closes
+     * Fires when info popup closes
      */
     onCloseInfoPopup: () => void;
     /**
