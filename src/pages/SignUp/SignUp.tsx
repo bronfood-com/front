@@ -12,9 +12,12 @@ import { authApi } from '../../utils/api/auth';
 import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import Preloader from '../../components/Preloader/Preloader';
 
 const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -26,9 +29,10 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
+        setIsLoading(true);
         setErrorMessage(null);
         const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
-
+        setIsLoading(false);
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
@@ -37,7 +41,9 @@ const SignUp = () => {
     };
 
     return (
+
         <Popup title={t('pages.signUp.signUpHeading')}>
+             {isLoading && <Preloader />}
             <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
                 <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
