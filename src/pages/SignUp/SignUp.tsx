@@ -17,7 +17,6 @@ import Preloader from '../../components/Preloader/Preloader';
 const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
