@@ -12,8 +12,10 @@ import { authApi } from '../../utils/api/auth';
 import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 
 const SignUp = () => {
+    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const showError = !!errorMessage;
     const { t } = useTranslation();
@@ -32,25 +34,42 @@ const SignUp = () => {
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
-            navigate('/signup_done');
+            openInfoPopup();
+            setTimeout(() => {
+                closeInfoPopup();
+                navigate('/');
+            }, 3000);
         }
     };
 
+    const closeInfoPopup = () => {
+        setIsInfoPopupOpen(false);
+    };
+    const openInfoPopup = () => {
+        setIsInfoPopupOpen(true);
+    };
+
     return (
-        <Popup title={t('pages.signUp.signUpHeading')}>
-            <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                    <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
-                </div>
-                <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
-                    <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
-                </FormInputs>
-                <Button>{t('pages.signUp.registerButton')}</Button>
-            </Form>
-        </Popup>
+        <>
+            {isInfoPopupOpen ? (
+                <PopupSignupSuccess isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupSignupSuccess>
+            ) : (
+                <Popup title={t('pages.signUp.signUpHeading')}>
+                    <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
+                        <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
+                            <div className={styles.form__warning}></div>
+                            <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
+                        </div>
+                        <FormInputs>
+                            <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
+                            <InputPhone register={register} errors={errors}></InputPhone>
+                            <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
+                        </FormInputs>
+                        <Button>{t('pages.signUp.registerButton')}</Button>
+                    </Form>
+                </Popup>
+            )}
+        </>
     );
 };
 
