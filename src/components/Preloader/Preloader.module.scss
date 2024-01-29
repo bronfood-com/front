@@ -12,7 +12,8 @@
 
     position: absolute;
     top: 40svh;
-    left: calc(50vw - 25px);
+    left: calc(50% - 25px);
+    z-index: 11;
 
     &__load {
         margin: 0 auto;
@@ -25,11 +26,4 @@
         border-radius: 50%;
     }
 
-    &__text {
-        font-size: 30px;
-        font-weight: 500;
-        color: #b24b29;
-        margin: 25px auto;
-
-    }
 }
