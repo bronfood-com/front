@@ -20,7 +20,7 @@ class AuthApi {
         return new Promise((res) => setTimeout(res, ms));
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         if (phone && password) {
             return { status: 'success', data: { name: 'User', phone, isOwner: false } };
@@ -29,7 +29,7 @@ class AuthApi {
         }
     }
 
-    async register({ name, phone, password }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async register({ name, phone, password }: RegisterData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         if (phone && password && name) {
             return { status: 'success', data: { name: 'User', phone } };
