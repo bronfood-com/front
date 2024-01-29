@@ -1,7 +1,7 @@
-import { createContext, useContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { User, authApi } from '../utils/api/auth';
-import { useLocalStorage } from '../hooks/useLocalstorage';
+
 type CurrentUserContent = {
     currentUser: User | null | undefined;
     errorMessage: string | null;
@@ -10,15 +10,12 @@ type CurrentUserContent = {
 };
 const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {} });
 
-export const useCurrentUser = () => useContext(CurrentUserContext);
-
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const { getItem, setItem } = useLocalStorage();
 
     useEffect(() => {
-        const user = getItem('user');
+        const user = localStorage.getItem('user');
         if (user) {
             setCurrentUser(JSON.parse(user));
         }
@@ -28,11 +25,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         const { password, phoneNumber } = data;
         setErrorMessage(null);
         const res = await authApi.login({ phone: phoneNumber, password });
-        if (res.errorMessage) {
+        if (res.status === 'error') {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
         } else {
-            setItem('user', JSON.stringify(res.data));
+            localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
         }
     }, []);
@@ -41,7 +38,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         const { password, phoneNumber, name } = data;
         setErrorMessage(null);
         const res = await authApi.register({ name, phone: phoneNumber, password });
-        if (res.errorMessage) {
+        if (res.status === 'error') {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
         } else {
