@@ -1,5 +1,5 @@
-import Popup from '../../components/Popups/Popup/Popup';
-import InfoImage from '../../components/InfoImage/InfoImage';
+import Popup from '../../../components/Popups/Popup/Popup';
+import InfoImage from '../../../components/InfoImage/InfoImage';
 import styles from './PopupSignupSuccess.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';

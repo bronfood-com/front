@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Header from './components/Header/Header';
 import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
-import PopupSignupSuccess from './pages/PopupSignupSuccess/PopupSignupSuccess';
+import PopupSignupSuccess from './pages/SignUp/PopupSignupSuccess/PopupSignupSuccess';
 import NewPassword from './pages/NewPassword/NewPassword';
 import PasswordRecovery from './pages/PasswordRecovery/PasswordRecovery';
 import Profile from './pages/Profile/Profile';
