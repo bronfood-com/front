@@ -18,6 +18,7 @@ const PopupSignupSuccess = () => {
             <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </Popup>
+
     );
 };
 
