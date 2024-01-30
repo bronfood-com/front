@@ -34,7 +34,7 @@ const InputPassword: FC<InputPassword> = (props) => {
     const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
     const visibilityIcon = isPasswordVisible ? <HidePasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} /> : <ShowPasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} />;
 
@@ -47,7 +47,7 @@ const InputPassword: FC<InputPassword> = (props) => {
                 id={id}
                 className={styles.input__place}
                 type={isPasswordVisible ? 'password' : 'text'}
-                placeholder="123456"
+                placeholder={isPasswordVisible ? '******' : '123456'}
                 {...props.register(props.name, {
                     required: t('components.inputPassword.required'),
                     pattern: {
@@ -56,6 +56,7 @@ const InputPassword: FC<InputPassword> = (props) => {
                     },
                     validate: props.validate,
                 })}
+                autoComplete="off"
             ></input>
             {visibilityIcon}
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
