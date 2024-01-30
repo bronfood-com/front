@@ -65,11 +65,11 @@ const SignUp = () => {
                             <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
                         </div>
                         <fieldset className={styles.form__field} disabled={isLoading}>
-                        <FormInputs>
-                            <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
-                            <InputPhone register={register} errors={errors}></InputPhone>
-                            <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
-                        </FormInputs>
+                            <FormInputs>
+                                <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
+                                <InputPhone register={register} errors={errors}></InputPhone>
+                                <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
+                            </FormInputs>
                         </fieldset>
                         <Button disabled={isLoading}>{t('pages.signUp.registerButton')}</Button>
                     </Form>
@@ -80,4 +80,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
