@@ -7,8 +7,9 @@ type CurrentUserContent = {
     errorMessage: string | null;
     signIn: (data: FieldValues) => void;
     signUp: (data: FieldValues) => void;
+    logout: () => void;
 };
-const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {} });
+const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {}, logout: () => {} });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -46,5 +47,16 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp }}>{children}</CurrentUserContext.Provider>;
+    const logout = useCallback(async () => {
+        setErrorMessage(null);
+        const res = await authApi.loguOut();
+        if (res.status === 'success') {
+            setCurrentUser(null);
+            localStorage.removeItem('user');
+        } else {
+            return;
+        }
+    }, []);
+
+    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout }}>{children}</CurrentUserContext.Provider>;
 };

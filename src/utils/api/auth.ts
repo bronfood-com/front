@@ -38,9 +38,14 @@ class AuthApi {
         }
     }
 
-    async loguOut(): Promise<{ status: string }> {
+    async loguOut(): Promise<{ status: 'success' } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
-        return { status: 'success' };
+        const success = true;
+        if (success) {
+            return { status: 'success' };
+        } else {
+            return { status: 'error', errorMessage: 'serverError' };
+        }
     }
 }
 

@@ -5,15 +5,12 @@ import FormInputs from '../../components/FormInputs/FormInputs';
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './SignIn.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import InputPhone from '../../components/InputPhone/InputPhone';
-import { authApi } from '../../utils/api/auth';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 const SignIn = () => {
-    // const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { errorMessage, currentUser, signIn } = useCurrentUser();
     const showError = !!errorMessage;
     const navigate = useNavigate();
@@ -26,15 +23,9 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         signIn(data);
-        // const { password, phoneNumber } = data;
-        // setErrorMessage(null);
-        // const res = await authApi.login({ phone: phoneNumber, password });
-
-        // if (res.errorMessage) {
-        //     setErrorMessage(res.errorMessage);
-        // } else {
-        //     navigate('/');
-        // }
+        if (currentUser) {
+            navigate('/');
+        }
     };
 
     return (
