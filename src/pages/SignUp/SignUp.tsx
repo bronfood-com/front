@@ -12,9 +12,11 @@ import { authApi } from '../../utils/api/auth';
 import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import Preloader from '../../components/Preloader/Preloader';
 
 const SignUp = () => {
+    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const showError = !!errorMessage;
@@ -35,30 +37,47 @@ const SignUp = () => {
         if (res.errorMessage) {
             setErrorMessage(res.errorMessage);
         } else {
-            navigate('/signup_done');
+            openInfoPopup();
+            setTimeout(() => {
+                closeInfoPopup();
+                navigate('/');
+            }, 3000);
         }
     };
 
-    return (
+    const closeInfoPopup = () => {
+        setIsInfoPopupOpen(false);
+    };
+    const openInfoPopup = () => {
+        setIsInfoPopupOpen(true);
+    };
 
-        <Popup title={t('pages.signUp.signUpHeading')}>
-             {isLoading && <Preloader />}
-            <Form name="form-signup" onSubmit={handleSubmit(onSubmit)} >
-                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                    <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
-                </div>
-                <fieldset className={styles.form__field} disabled={isLoading}>
-                <FormInputs >
-                    <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
-                    <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
-                </FormInputs>
-                </fieldset>
-                <Button disabled={isLoading}>{t('pages.signUp.registerButton')}</Button>
-            </Form>
-        </Popup>
+    return (
+        <>
+            {isInfoPopupOpen ? (
+                <PopupSignupSuccess isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupSignupSuccess>
+            ) : (
+                <Popup title={t('pages.signUp.signUpHeading')}>
+                    {isLoading && <Preloader />}
+                    <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
+                        <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
+                            <div className={styles.form__warning}></div>
+                            <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
+                        </div>
+                        <fieldset className={styles.form__field} disabled={isLoading}>
+                        <FormInputs>
+                            <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
+                            <InputPhone register={register} errors={errors}></InputPhone>
+                            <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
+                        </FormInputs>
+                        </fieldset>
+                        <Button disabled={isLoading}>{t('pages.signUp.registerButton')}</Button>
+                    </Form>
+                </Popup>
+            )}
+        </>
     );
 };
 
 export default SignUp;
+

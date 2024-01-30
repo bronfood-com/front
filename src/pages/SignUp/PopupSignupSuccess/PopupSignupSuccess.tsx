@@ -1,24 +1,32 @@
-import Popup from '../../../components/Popups/Popup/Popup';
 import InfoImage from '../../../components/InfoImage/InfoImage';
 import styles from './PopupSignupSuccess.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import InfoPopup from '../../../components/Popups/InfoPopup/InfoPopup';
 
-const PopupSignupSuccess = () => {
+interface PopupSignupSuccessProps {
+    /**
+     * Fires when info popup closes
+     */
+    onCloseInfoPopup: () => void;
+    /**
+     * Is InfoPopup opened?
+     */
+    isOpened: boolean;
+
+    /**
+     * Has this info window close button?
+     */
+    hasCloseButton?: boolean;
+}
+
+const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    useEffect(() => {
-        setTimeout(() => {
-            navigate('/');
-        }, 3000);
-    }, [navigate]);
     return (
-        <Popup mode="info">
+        <InfoPopup isOpened={props.isOpened} onCloseInfoPopup={props.onCloseInfoPopup}>
             <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
-        </Popup>
-
+        </InfoPopup>
     );
 };
 

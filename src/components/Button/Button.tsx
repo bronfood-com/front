@@ -15,7 +15,7 @@ interface Button {
 const Button: FC<Button> = (props) => {
     const { disabled } = props;
     return (
-        <button type="submit" disabled={disabled} className={`${styles.button}  ${disabled ? styles.button_disabled : ''}`}>
+        <button type="submit" disabled={disabled} className={`${styles.button} ${disabled ? styles.button_disabled : ''}`}>
             {props.children}
         </button>
     );
