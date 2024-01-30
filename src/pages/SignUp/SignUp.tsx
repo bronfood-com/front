@@ -8,13 +8,12 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
-import { authApi } from '../../utils/api/auth';
-import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 const SignUp = () => {
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const { errorMessage, currentUser, signUp } = useCurrentUser();
     const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -26,12 +25,9 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        setErrorMessage(null);
-        const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
+        signUp({ phone: phoneNumber, password, name: username });
 
-        if (res.errorMessage) {
-            setErrorMessage(res.errorMessage);
-        } else {
+        if (currentUser) {
             navigate('/signup_done');
         }
     };
