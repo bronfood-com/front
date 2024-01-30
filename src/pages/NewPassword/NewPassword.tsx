@@ -6,8 +6,11 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import PopupPasswordSaved from './PopupPasswordSaved/PopupPasswordSaved';
+import { useState } from 'react';
 
 const NewPassword = () => {
+    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const {
@@ -18,23 +21,40 @@ const NewPassword = () => {
     } = useForm();
 
     const onSubmit: SubmitHandler<FieldValues> = async () => {
-        navigate('/password_done');
+        openInfoPopup();
+        setTimeout(() => {
+            closeInfoPopup();
+            navigate('/');
+        }, 3000);
     };
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.newPassword.passwordDontMatch');
     };
 
+    const closeInfoPopup = () => {
+        setIsInfoPopupOpen(false);
+    };
+    const openInfoPopup = () => {
+        setIsInfoPopupOpen(true);
+    };
+
     return (
-        <Popup title={t('pages.newPassword.title')}>
-            <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
-                <FormInputs>
-                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} />
-                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />
-                </FormInputs>
-                <Button>{t('pages.newPassword.button')}</Button>
-            </Form>
-        </Popup>
+        <>
+            {isInfoPopupOpen ? (
+                <PopupPasswordSaved isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupPasswordSaved>
+            ) : (
+                <Popup title={t('pages.newPassword.title')}>
+                    <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
+                        <FormInputs>
+                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} />
+                            <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />
+                        </FormInputs>
+                        <Button>{t('pages.newPassword.button')}</Button>
+                    </Form>
+                </Popup>
+            )}
+        </>
     );
 };
 
