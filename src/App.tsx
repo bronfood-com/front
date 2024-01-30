@@ -15,11 +15,11 @@ import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 
 function App() {
-    const { currentUser } = useCurrentUser();
+    const { isLogin } = useCurrentUser();
 
     return (
         <div>
-            <Header isLogin={!!currentUser} />
+            <Header isLogin={isLogin} />
             <YandexMap></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
@@ -29,8 +29,8 @@ function App() {
                 <Route path="/signup_done" element={<PopupSignupSuccess />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />
-                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={!!currentUser} />} />
-                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={!!currentUser} />} />
+                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
+                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
             </Routes>
         </div>
     );

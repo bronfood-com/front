@@ -1,16 +1,18 @@
-import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect, useContext } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { User, authApi } from '../utils/api/auth';
 
 type CurrentUserContent = {
-    currentUser: User | null | undefined;
+    currentUser: User | null;
     errorMessage: string | null;
+    isLogin: boolean;
     signIn: (data: FieldValues) => void;
     signUp: (data: FieldValues) => void;
     logout: () => void;
 };
-const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, signIn: () => {}, signUp: () => {}, logout: () => {} });
+const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => {}, signUp: () => {}, logout: () => {} });
 
+export const useCurrentUser = () => useContext(CurrentUserContext);
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,6 +23,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(JSON.parse(user));
         }
     }, []);
+
+    const isLogin = !!currentUser;
 
     const signIn = useCallback(async (data: FieldValues) => {
         const { password, phoneNumber } = data;
@@ -58,5 +62,5 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout }}>{children}</CurrentUserContext.Provider>;
+    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout, isLogin }}>{children}</CurrentUserContext.Provider>;
 };
