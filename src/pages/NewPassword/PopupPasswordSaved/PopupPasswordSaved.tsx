@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import InfoImage from '../../../components/InfoImage/InfoImage';
 import styles from './PopupPasswordSaved.module.scss';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoPopup from '../../../components/Popups/InfoPopup/InfoPopup';
 
@@ -22,12 +21,7 @@ interface PopupPasswordSaved {
 
 const PopupPasswordSaved: FC<PopupPasswordSaved> = (props) => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    useEffect(() => {
-        setTimeout(() => {
-            navigate('/');
-        }, 3000);
-    }, [navigate]);
+
     return (
         <InfoPopup isOpened={props.isOpened} onCloseInfoPopup={props.onCloseInfoPopup}>
             <div className={styles.block}>
