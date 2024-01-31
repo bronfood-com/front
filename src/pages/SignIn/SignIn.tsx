@@ -39,17 +39,17 @@ const SignIn = () => {
 
     return (
         <Popup title={t('pages.signIn.signInHeading')}>
-             {isLoading && <Preloader />}
+            {isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
                 <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                     <div className={styles.form__warning}></div>
                     <span className={styles.form__error}>{t(`pages.signIn.${errorMessage}`)}</span>
                 </div>
                 <fieldset className={styles.form__field} disabled={isLoading}>
-                <FormInputs>
-                    <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
-                </FormInputs>
+                    <FormInputs>
+                        <InputPhone register={register} errors={errors}></InputPhone>
+                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
+                    </FormInputs>
                 </fieldset>
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}

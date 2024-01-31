@@ -23,7 +23,7 @@ const NewPassword = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async () => {
         setIsLoading(true);
-        navigate('');
+        navigate('/password_done');
         setIsLoading(false);
     };
     const validatePasswordMatch = (value: FieldValues) => {

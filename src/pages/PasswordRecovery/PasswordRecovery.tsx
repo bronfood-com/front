@@ -23,16 +23,15 @@ const PasswordRecovery = () => {
         setIsLoading(true);
         navigate('/new_pass');
         setIsLoading(false);
-
     };
     return (
         <Popup title={t('pages.passwordRecovery.title')}>
-             {isLoading && <Preloader />}
+            {isLoading && <Preloader />}
             <Form name="form-password-recovery" onSubmit={handleSubmit(onSubmit)}>
-            <fieldset className={styles.form__field} disabled={isLoading}>
-                <FormInputs>
-                    <InputPhone register={register} errors={errors}></InputPhone>
-                </FormInputs>
+                <fieldset className={styles.form__field} disabled={isLoading}>
+                    <FormInputs>
+                        <InputPhone register={register} errors={errors}></InputPhone>
+                    </FormInputs>
                 </fieldset>
                 <Button disabled={isLoading}>{t('pages.passwordRecovery.continue')}</Button>
             </Form>
