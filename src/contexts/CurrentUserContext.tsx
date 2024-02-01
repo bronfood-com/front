@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect, useContext } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { User, authApi } from '../utils/api/auth';
 
@@ -10,9 +10,8 @@ type CurrentUserContent = {
     signUp: (data: FieldValues) => void;
     logout: () => void;
 };
-const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => {}, signUp: () => {}, logout: () => {} });
+export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => {}, signUp: () => {}, logout: () => {} });
 
-export const useCurrentUser = () => useContext(CurrentUserContext);
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);

@@ -3,7 +3,7 @@ import Navigation from '../Navigation/Navigation';
 import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 interface Header {
     /**
      * Login status. When true, the user is logged in

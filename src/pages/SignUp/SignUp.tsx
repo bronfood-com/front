@@ -12,7 +12,7 @@ import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const SignUp = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);

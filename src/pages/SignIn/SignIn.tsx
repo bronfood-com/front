@@ -8,7 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import InputPhone from '../../components/InputPhone/InputPhone';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const SignIn = () => {
     const { errorMessage, currentUser, signIn } = useCurrentUser();

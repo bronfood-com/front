@@ -11,7 +11,7 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-import { useCurrentUser } from './contexts/CurrentUserContext';
+import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const { isLogin } = useCurrentUser();
