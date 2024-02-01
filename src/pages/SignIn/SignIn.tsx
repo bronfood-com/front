@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import { useEffect } from 'react';
 
 const SignIn = () => {
     const { errorMessage, currentUser, signIn } = useCurrentUser();
@@ -21,11 +22,15 @@ const SignIn = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        signIn(data);
+    useEffect(() => {
         if (currentUser) {
             navigate('/');
         }
+    }, [currentUser, navigate]);
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const { password, phoneNumber } = data;
+        signIn({ phone: phoneNumber, password });
     };
 
     return (
