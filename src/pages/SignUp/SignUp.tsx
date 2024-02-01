@@ -13,10 +13,12 @@ import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import Preloader from '../../components/Preloader/Preloader';
 
 const SignUp = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const { errorMessage, currentUser, signUp } = useCurrentUser();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const showError = !!errorMessage;
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -28,8 +30,9 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
+        setIsLoading(true);
         signUp({ phone: phoneNumber, password, name: username });
-
+        setIsLoading(false);
         if (currentUser) {
             openInfoPopup();
             setTimeout(() => {
@@ -52,17 +55,20 @@ const SignUp = () => {
                 <PopupSignupSuccess isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupSignupSuccess>
             ) : (
                 <Popup title={t('pages.signUp.signUpHeading')}>
+                    {isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
                         <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
                             <div className={styles.form__warning}></div>
                             <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
                         </div>
-                        <FormInputs>
-                            <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
-                            <InputPhone register={register} errors={errors}></InputPhone>
-                            <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
-                        </FormInputs>
-                        <Button>{t('pages.signUp.registerButton')}</Button>
+                        <fieldset className={styles.form__field} disabled={isLoading}>
+                            <FormInputs>
+                                <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
+                                <InputPhone register={register} errors={errors}></InputPhone>
+                                <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
+                            </FormInputs>
+                        </fieldset>
+                        <Button disabled={isLoading}>{t('pages.signUp.registerButton')}</Button>
                     </Form>
                 </Popup>
             )}
