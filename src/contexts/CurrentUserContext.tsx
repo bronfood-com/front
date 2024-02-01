@@ -26,9 +26,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const isLogin = !!currentUser;
 
     const signIn = useCallback(async (data: FieldValues) => {
-        const { password, phoneNumber } = data;
+        const { password, phone } = data;
         setErrorMessage(null);
-        const res = await authApi.login({ phone: phoneNumber, password });
+        const res = await authApi.login({ phone, password });
         if (res.status === 'error') {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
@@ -38,17 +38,17 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    const signUp = useCallback(async (data: FieldValues) => {
-        const { password, phoneNumber, name } = data;
+    const signUp = async (data: FieldValues) => {
+        const { password, phone, name } = data;
         setErrorMessage(null);
-        const res = await authApi.register({ name, phone: phoneNumber, password });
+        const res = await authApi.register({ name, phone, password });
         if (res.status === 'error') {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
         } else {
             setCurrentUser(res.data);
         }
-    }, []);
+    };
 
     const logout = useCallback(async () => {
         setErrorMessage(null);

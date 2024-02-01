@@ -8,7 +8,7 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
@@ -28,11 +28,7 @@ const SignUp = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const { password, phoneNumber, username } = data;
-        setIsLoading(true);
-        signUp({ phone: phoneNumber, password, name: username });
-        setIsLoading(false);
+    useEffect(() => {
         if (currentUser) {
             openInfoPopup();
             setTimeout(() => {
@@ -40,6 +36,13 @@ const SignUp = () => {
                 navigate('/');
             }, 3000);
         }
+    }, [currentUser, navigate]);
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const { password, phoneNumber, username } = data;
+        setIsLoading(true);
+        signUp({ phone: phoneNumber, password, name: username });
+        setIsLoading(false);
     };
 
     const closeInfoPopup = () => {

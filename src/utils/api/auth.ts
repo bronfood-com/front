@@ -32,7 +32,7 @@ class AuthApi {
     async register({ name, phone, password }: RegisterData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone } };
+            return { status: 'success', data: { name: name, phone } };
         } else {
             return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
         }
