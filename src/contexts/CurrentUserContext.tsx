@@ -6,11 +6,11 @@ type CurrentUserContent = {
     currentUser: User | null;
     errorMessage: string | null;
     isLogin: boolean;
-    signIn: (data: FieldValues) => void;
-    signUp: (data: FieldValues) => void;
-    logout: () => void;
+    signIn: (data: FieldValues) => Promise<void>;
+    signUp: (data: FieldValues) => Promise<void>;
+    logout: () => Promise<void>;
 };
-export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => {}, signUp: () => {}, logout: () => {} });
+export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);

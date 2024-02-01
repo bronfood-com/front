@@ -41,7 +41,7 @@ const SignUp = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         setIsLoading(true);
-        signUp({ phone: phoneNumber, password, name: username });
+        await signUp({ phone: phoneNumber, password, name: username });
         setIsLoading(false);
     };
 
