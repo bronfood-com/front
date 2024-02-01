@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
@@ -12,7 +11,6 @@ import { useState } from 'react';
 const NewPassword = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -22,19 +20,13 @@ const NewPassword = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async () => {
         openInfoPopup();
-        setTimeout(() => {
-            closeInfoPopup();
-            navigate('/');
-        }, 3000);
     };
+
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.newPassword.passwordDontMatch');
     };
 
-    const closeInfoPopup = () => {
-        setIsInfoPopupOpen(false);
-    };
     const openInfoPopup = () => {
         setIsInfoPopupOpen(true);
     };
@@ -42,7 +34,7 @@ const NewPassword = () => {
     return (
         <>
             {isInfoPopupOpen ? (
-                <PopupPasswordSaved isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupPasswordSaved>
+                <PopupPasswordSaved isOpened={isInfoPopupOpen}></PopupPasswordSaved>
             ) : (
                 <Popup title={t('pages.newPassword.title')}>
                     <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>

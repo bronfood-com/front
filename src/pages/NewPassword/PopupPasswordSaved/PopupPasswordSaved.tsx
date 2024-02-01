@@ -8,7 +8,7 @@ interface PopupPasswordSaved {
     /**
      * Fires when info popup closes
      */
-    onCloseInfoPopup: () => void;
+    onCloseInfoPopup?: () => void;
     /**
      * Is InfoPopup opened?
      */
@@ -23,7 +23,7 @@ const PopupPasswordSaved: FC<PopupPasswordSaved> = (props) => {
     const { t } = useTranslation();
 
     return (
-        <InfoPopup isOpened={props.isOpened} onCloseInfoPopup={props.onCloseInfoPopup}>
+        <InfoPopup isOpened={props.isOpened}>
             <div className={styles.block}>
                 <div className={styles.block__success}></div>
                 <h2 className={styles.block__text}>{t('pages.passwordSaved.title')}</h2>
