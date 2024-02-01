@@ -14,7 +14,7 @@ interface EditPasswordData {
     password: string;
     confirmPassword: string;
 }
-interface User {
+export interface User {
     phone: PhoneNumber;
     name: string;
     isOwner?: boolean;
