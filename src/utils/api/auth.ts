@@ -11,6 +11,10 @@ interface RegisterData {
     name: string;
 }
 
+interface EditPasswordData {
+    password: string;
+    confirmPassword: string;
+}
 interface User {
     phone: PhoneNumber;
     name: string;
@@ -42,6 +46,15 @@ class AuthApi {
     async loguOut(): Promise<{ status: string }> {
         await this._wait(500);
         return { status: 'success' };
+    }
+
+    async editPassword({ password, confirmPassword }: EditPasswordData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+        await this._wait(500);
+        if (confirmPassword && password) {
+            return { status: 'success', data: { name: 'User', phone: '+7 999 99 99 99', isOwner: false } };
+        } else {
+            return { status: 'error', errorMessage: 'invalidCredentials' };
+        }
     }
 }
 
