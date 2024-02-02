@@ -7,9 +7,13 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupPasswordSaved from './PopupPasswordSaved/PopupPasswordSaved';
 import { useState } from 'react';
+import { authApi } from '../../utils/api/auth';
+import styles from './NewPassword.module.scss';
 
 const NewPassword = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const showError = !!errorMessage;
     const { t } = useTranslation();
     const {
         register,
@@ -18,8 +22,15 @@ const NewPassword = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit: SubmitHandler<FieldValues> = async () => {
-        openInfoPopup();
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        const { newPassword, newPasswordDouble } = data;
+        setErrorMessage(null);
+        const res = await authApi.editPassword({ password: newPassword, confirmPassword: newPasswordDouble });
+        if (res.errorMessage) {
+            setErrorMessage(res.errorMessage);
+        } else {
+            openInfoPopup();
+        }
     };
 
     const validatePasswordMatch = (value: FieldValues) => {
@@ -38,6 +49,10 @@ const NewPassword = () => {
             ) : (
                 <Popup title={t('pages.newPassword.title')}>
                     <Form name="form-password-new" onSubmit={handleSubmit(onSubmit)}>
+                        <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
+                            <div className={styles.form__warning}></div>
+                            <span className={styles.form__error}>{t(`pages.newPassword.${errorMessage}`)}</span>
+                        </div>
                         <FormInputs>
                             <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.newPassword.nameLabel')} />
                             <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswordMatch} />

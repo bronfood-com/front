@@ -9,4 +9,9 @@
     color: $white;
     font-weight: 600;
     margin-top: 25px;
+
+    &_disabled {
+        background: $button-grey;
+        color: $grey;
+    }
 }
