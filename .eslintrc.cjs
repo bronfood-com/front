@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -14,6 +16,6 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "no-console": "error",
+    "no-console": process.env.NODE_ENV === "production" ? "error" : "warn"
   },
 };
