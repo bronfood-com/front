@@ -1,10 +1,10 @@
 import InfoImage from '../../../components/InfoImage/InfoImage';
-import styles from './PopupSignupSuccess.module.scss';
+import styles from './PopupPasswordSaved.module.scss';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoPopup from '../../../components/Popups/InfoPopup/InfoPopup';
 
-interface PopupSignupSuccessProps {
+interface PopupPasswordSaved {
     /**
      * Fires when info popup closes
      */
@@ -13,21 +13,24 @@ interface PopupSignupSuccessProps {
      * Is InfoPopup opened?
      */
     isOpened: boolean;
-
     /**
      * Has this info window close button?
      */
     hasCloseButton?: boolean;
 }
 
-const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
+const PopupPasswordSaved: FC<PopupPasswordSaved> = (props) => {
     const { t } = useTranslation();
+
     return (
         <InfoPopup isOpened={props.isOpened}>
-            <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
-            <InfoImage mode="red_tube" />
+            <div className={styles.block}>
+                <div className={styles.block__success}></div>
+                <h2 className={styles.block__text}>{t('pages.passwordSaved.title')}</h2>
+                <InfoImage mode="red_tube"></InfoImage>
+            </div>
         </InfoPopup>
     );
 };
 
-export default PopupSignupSuccess;
+export default PopupPasswordSaved;
