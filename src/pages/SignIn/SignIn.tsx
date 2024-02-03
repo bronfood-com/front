@@ -26,7 +26,8 @@ const SignIn = () => {
         if (currentUser) {
             navigate('/');
         }
-    }, [currentUser, navigate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
