@@ -1,5 +1,4 @@
 import Header from './components/Header/Header';
-import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
 import NewPassword from './pages/NewPassword/NewPassword';
 import PasswordRecovery from './pages/PasswordRecovery/PasswordRecovery';
@@ -23,7 +22,6 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/recovery_pass" element={<PasswordRecovery />} />
                 <Route path="/new_pass" element={<NewPassword />} />
-                <Route path="/password_done" element={<PasswordSaved />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} />} />
             </Routes>
