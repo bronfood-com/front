@@ -10,6 +10,7 @@ type CurrentUserContent = {
     signUp: (data: FieldValues) => Promise<void>;
     logout: () => Promise<void>;
 };
+
 export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -46,6 +47,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
         } else {
+            localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
         }
     };

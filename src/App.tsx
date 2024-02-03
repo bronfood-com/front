@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div>
-            <Header isLogin={isLogin} />
+            <Header />
             <YandexMap></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
