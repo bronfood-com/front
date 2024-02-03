@@ -1,3 +1,6 @@
+/**
+ 10 digits sting, no space, brackets, or +
+ */
 type PhoneNumber = string;
 
 interface LoginData {
