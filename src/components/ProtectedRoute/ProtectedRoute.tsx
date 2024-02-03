@@ -1,19 +1,18 @@
 import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 export type ProtectedRouteProps = {
-    /**
-     * Login status. When true, the user is logged in
-     */
-    islogin: boolean;
     /**
      * Potect component
      */
     component: JSX.Element;
 };
 
-const ProtectedRoute: FC<ProtectedRouteProps> = ({ islogin, component }) => {
-    return islogin ? component : <Navigate to="/" />;
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ component }) => {
+    const { isLogin } = useCurrentUser();
+
+    return isLogin ? component : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

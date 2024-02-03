@@ -11,11 +11,8 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
-    const { isLogin } = useCurrentUser();
-
     return (
         <div>
             <Header />
@@ -27,8 +24,8 @@ function App() {
                 <Route path="/recovery_pass" element={<PasswordRecovery />} />
                 <Route path="/new_pass" element={<NewPassword />} />
                 <Route path="/password_done" element={<PasswordSaved />} />
-                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
-                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
+                <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
+                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} />} />
             </Routes>
         </div>
     );
