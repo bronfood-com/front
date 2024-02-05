@@ -52,7 +52,7 @@ const SignUp = () => {
                 <Popup title={t('pages.signUp.signUpHeading')}>
                     {isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {showError && <ErrorMessage message={t('pages.signUp.phoneNumberIsAlreadyUsed')} />}
+                        {showError && <ErrorMessage message={t(`pages.signUp.${errorMessage}`)} />}
                         <fieldset className={styles.form__field} disabled={isLoading}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>

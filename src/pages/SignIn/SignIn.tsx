@@ -38,7 +38,7 @@ const SignIn = () => {
     return (
         <Popup title={t('pages.signIn.signInHeading')}>
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {showError && <ErrorMessage message={t('pages.signIn.invalidCredentials')} />}
+                {showError && <ErrorMessage message={t(`pages.signIn.${errorMessage}`)} />}
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
                     <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
