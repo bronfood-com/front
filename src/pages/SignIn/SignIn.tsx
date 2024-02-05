@@ -22,6 +22,8 @@ const SignIn = () => {
         formState: { errors },
     } = useForm();
 
+    console.log('test')
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         setErrorMessage(null);
