@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 
 interface Popup {
     /**
@@ -26,6 +27,7 @@ const Popup: FC<Popup> = (props) => {
         <div className={styles.popup_overlay}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
                 {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
+                <ErrorMessage />
                 {props.children}
                 <button className={`${styles.popup__close} ${styles[`popup__close_${props.mode}`]} button`} type="button" onClick={handleCloseButton}></button>
             </div>
