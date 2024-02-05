@@ -5,7 +5,7 @@ interface ErrorMessage {
 }
 
 const ErrorMessage: FC<ErrorMessage> = (props) => {
-    const {message} = props
+    const { message } = props;
     return (
         <div className={styles.error}>
             <div className={styles.error__container}>
