@@ -8,7 +8,7 @@ interface PopupSignupSuccessProps {
     /**
      * Fires when info popup closes
      */
-    onCloseInfoPopup: () => void;
+    onCloseInfoPopup?: () => void;
     /**
      * Is InfoPopup opened?
      */
@@ -23,7 +23,7 @@ interface PopupSignupSuccessProps {
 const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
     const { t } = useTranslation();
     return (
-        <InfoPopup isOpened={props.isOpened} onCloseInfoPopup={props.onCloseInfoPopup}>
+        <InfoPopup isOpened={props.isOpened}>
             <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
             <InfoImage mode="red_tube" />
         </InfoPopup>

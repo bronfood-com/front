@@ -1,11 +1,12 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import styles from './InfoPopup.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface InfoPopup {
     /**
      * Fires when info popup closes
      */
-    onCloseInfoPopup: () => void;
+    onCloseInfoPopup?: () => void;
     /**
      * Elements that popup contains
      */
@@ -21,14 +22,20 @@ interface InfoPopup {
 }
 
 const InfoPopup: FC<InfoPopup> = (props) => {
-    const closeInfoPopup = () => {
-        props.onCloseInfoPopup();
-    };
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setTimeout(() => {
+            navigate('/');
+        }, 3000);
+      }, [navigate]);
+
     return (
         <div className={`${styles.popup__overlay} ${props.isOpened ? '' : styles.popup__overlay_hide}`}>
             <div className={`${styles.popup} ${props.isOpened ? '' : styles.popup_hide}`}>
                 {props.children}
-                {props.hasCloseButton ? <button className={styles.popup__close} type="button" onClick={closeInfoPopup}></button> : ''}
+                {props.hasCloseButton ? <button className={styles.popup__close} type="button" onClick={props.onCloseInfoPopup}></button> : ''}
             </div>
         </div>
     );

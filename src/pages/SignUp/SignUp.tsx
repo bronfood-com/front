@@ -1,5 +1,4 @@
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
@@ -21,7 +20,6 @@ const SignUp = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const showError = !!errorMessage;
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -38,16 +36,9 @@ const SignUp = () => {
             setErrorMessage(res.errorMessage);
         } else {
             openInfoPopup();
-            setTimeout(() => {
-                closeInfoPopup();
-                navigate('/');
-            }, 3000);
         }
     };
 
-    const closeInfoPopup = () => {
-        setIsInfoPopupOpen(false);
-    };
     const openInfoPopup = () => {
         setIsInfoPopupOpen(true);
     };
@@ -55,7 +46,7 @@ const SignUp = () => {
     return (
         <>
             {isInfoPopupOpen ? (
-                <PopupSignupSuccess isOpened={isInfoPopupOpen} onCloseInfoPopup={closeInfoPopup}></PopupSignupSuccess>
+                <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
             ) : (
                 <Popup title={t('pages.signUp.signUpHeading')}>
                     {isLoading && <Preloader />}

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Header from './components/Header/Header';
-import PasswordSaved from './pages/PasswordSaved/PasswordSaved';
 import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
@@ -22,7 +21,6 @@ function App() {
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/password_done" element={<PasswordSaved />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
                 <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
             </Routes>

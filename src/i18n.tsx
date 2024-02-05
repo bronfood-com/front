@@ -89,6 +89,7 @@ i18n
                             nameLabelRepeat: 'Повторите пароль',
                             button: 'Сохранить',
                             passwordDontMatch: 'Пароли не совпадают',
+                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
                         },
 
                         passwordRecovery: {
