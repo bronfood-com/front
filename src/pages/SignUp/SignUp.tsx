@@ -13,6 +13,7 @@ import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import Preloader from '../../components/Preloader/Preloader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const SignUp = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
@@ -51,10 +52,7 @@ const SignUp = () => {
                 <Popup title={t('pages.signUp.signUpHeading')}>
                     {isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                            <div className={styles.form__warning}></div>
-                            <span className={styles.form__error}>{t(`pages.signUp.${errorMessage}`)}</span>
-                        </div>
+                        {showError && <ErrorMessage message={t('pages.signUp.phoneNumberIsAlreadyUsed')} />}
                         <fieldset className={styles.form__field} disabled={isLoading}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>

@@ -10,6 +10,7 @@ import { authApi } from '../../utils/api/auth';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const SignIn = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -37,10 +38,7 @@ const SignIn = () => {
     return (
         <Popup title={t('pages.signIn.signInHeading')}>
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                    <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`pages.signIn.${errorMessage}`)}</span>
-                </div>
+                {showError && <ErrorMessage message={t('pages.signIn.invalidCredentials')} />}
                 <FormInputs>
                     <InputPhone register={register} errors={errors}></InputPhone>
                     <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
