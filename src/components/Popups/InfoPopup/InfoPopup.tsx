@@ -22,14 +22,12 @@ interface InfoPopup {
 }
 
 const InfoPopup: FC<InfoPopup> = (props) => {
-
     const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(() => {
             navigate('/');
         }, 3000);
-
     }, [navigate]);
 
     return (
