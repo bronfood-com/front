@@ -22,14 +22,13 @@ interface InfoPopup {
 }
 
 const InfoPopup: FC<InfoPopup> = (props) => {
-
     const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(() => {
             navigate('/');
         }, 3000);
-      }, [navigate]);
+    }, [navigate]);
 
     return (
         <div className={`${styles.popup__overlay} ${props.isOpened ? '' : styles.popup__overlay_hide}`}>
