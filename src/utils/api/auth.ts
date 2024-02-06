@@ -28,6 +28,9 @@ class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password) {
+            if (password === '12345') {
+                return { status: 'error', errorMessage: 'invalidCredentials' };
+            }
             return { status: 'success', data: { name: 'User', phone, isOwner: false } };
         } else {
             return { status: 'error', errorMessage: 'invalidCredentials' };
@@ -37,6 +40,9 @@ class AuthApi {
     async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password && name) {
+            if (name === 'fail') {
+                return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
+            }
             return { status: 'success', data: { name: 'User', phone, isOwner } };
         } else {
             return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
