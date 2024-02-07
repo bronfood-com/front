@@ -14,6 +14,6 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "no-console": "error",
+    "no-console": process.env.NODE_ENV === "production" ? "error" : "warn",
   },
 };
