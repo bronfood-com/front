@@ -7,6 +7,7 @@ import styles from './SignIn.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect, useState } from 'react';
@@ -44,10 +45,7 @@ const SignIn = () => {
         <Popup title={t('pages.signIn.signInHeading')}>
             {isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                    <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`pages.signIn.${errorMessage}`)}</span>
-                </div>
+                {showError && <ErrorMessage message={t(`pages.signIn.${errorMessage}`)} />}
                 <fieldset className={styles.form__field} disabled={isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
