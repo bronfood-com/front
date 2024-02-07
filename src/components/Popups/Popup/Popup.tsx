@@ -19,7 +19,7 @@ interface Popup {
 }
 
 const Popup: FC<Popup> = (props) => {
-    const {setErrorMessage} = useCurrentUser();
+    const { setErrorMessage } = useCurrentUser();
     const navigate = useNavigate();
     const handleCloseButton = () => {
         setErrorMessage(null);
