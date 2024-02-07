@@ -43,10 +43,6 @@ const SignIn = () => {
             {isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
                 {showError && <ErrorMessage message={t(`pages.signIn.${errorMessage}`)} />}
-                <FormInputs>
-                    <InputPhone register={register} errors={errors}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
-                </FormInputs>
                 <fieldset className={styles.form__field} disabled={isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
