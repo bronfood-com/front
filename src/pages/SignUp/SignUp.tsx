@@ -7,17 +7,17 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
-import { authApi } from '../../utils/api/auth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const SignUp = () => {
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const { errorMessage, currentUser, signUp } = useCurrentUser();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const showError = !!errorMessage;
     const { t } = useTranslation();
@@ -27,17 +27,17 @@ const SignUp = () => {
         formState: { errors },
     } = useForm();
 
+    useEffect(() => {
+        if (currentUser) {
+            openInfoPopup();
+        }
+    }, [currentUser]);
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         setIsLoading(true);
-        setErrorMessage(null);
-        const res = await authApi.register({ phone: phoneNumber, password, name: username, isOwner: false });
+        await signUp({ phone: phoneNumber, password, name: username });
         setIsLoading(false);
-        if (res.errorMessage) {
-            setErrorMessage(res.errorMessage);
-        } else {
-            openInfoPopup();
-        }
     };
 
     const openInfoPopup = () => {
