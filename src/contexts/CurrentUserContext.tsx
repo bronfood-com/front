@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { User, authApi } from '../utils/api/auth';
@@ -5,13 +6,14 @@ import { User, authApi } from '../utils/api/auth';
 type CurrentUserContent = {
     currentUser: User | null;
     errorMessage: string | null;
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>> | undefined
     isLogin: boolean;
     signIn: (data: FieldValues) => Promise<void>;
     signUp: (data: FieldValues) => Promise<void>;
     logout: () => Promise<void>;
 };
 
-export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
+export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, setErrorMessage: undefined,  isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -63,5 +65,5 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout, isLogin }}>{children}</CurrentUserContext.Provider>;
+    return <CurrentUserContext.Provider value={{ currentUser, errorMessage, setErrorMessage, signIn, signUp, logout, isLogin }}>{children}</CurrentUserContext.Provider>;
 };
