@@ -1,5 +1,5 @@
 /**
- 10 digits sting, no space, brackets, or +
+ 10 digits string, no space, brackets, or +
  */
 type PhoneNumber = string;
 
