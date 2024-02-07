@@ -9,3 +9,11 @@
     text-decoration: underline;
     margin: 10px 0 0 auto;
 }
+
+.form {
+    &__field {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+}
