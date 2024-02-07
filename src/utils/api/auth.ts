@@ -1,3 +1,6 @@
+/**
+ 10 digits string, no space, brackets, or +
+ */
 type PhoneNumber = string;
 
 interface LoginData {
@@ -7,7 +10,6 @@ interface LoginData {
 interface RegisterData {
     phone: PhoneNumber;
     password: string;
-    isOwner: boolean;
     name: string;
 }
 
@@ -15,17 +17,17 @@ interface EditPasswordData {
     password: string;
     confirmPassword: string;
 }
-interface User {
+export interface User {
     phone: PhoneNumber;
     name: string;
-    isOwner: boolean;
+    isOwner?: boolean;
 }
 class AuthApi {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         if (phone && password) {
             return { status: 'success', data: { name: 'User', phone, isOwner: false } };
@@ -34,24 +36,29 @@ class AuthApi {
         }
     }
 
-    async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async register({ name, phone, password }: RegisterData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone, isOwner } };
+            return { status: 'success', data: { name: name, phone } };
         } else {
             return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
         }
     }
 
-    async loguOut(): Promise<{ status: string }> {
+    async loguOut(): Promise<{ status: 'success' } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
-        return { status: 'success' };
+        const success = true;
+        if (success) {
+            return { status: 'success' };
+        } else {
+            return { status: 'error', errorMessage: 'serverError' };
+        }
     }
 
     async editPassword({ password, confirmPassword }: EditPasswordData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (confirmPassword && password) {
-            return { status: 'success', data: { name: 'User', phone: '+7 999 99 99 99', isOwner: false } };
+            return { status: 'success', data: { name: 'User', phone: '7999999999', isOwner: false } };
         } else {
             return { status: 'error', errorMessage: 'invalidCredentials' };
         }
