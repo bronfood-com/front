@@ -6,14 +6,14 @@ import { User, authApi } from '../utils/api/auth';
 type CurrentUserContent = {
     currentUser: User | null;
     errorMessage: string | null;
-    setErrorMessage: React.Dispatch<React.SetStateAction<string>> | undefined;
+    setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
     isLogin: boolean;
     signIn: (data: FieldValues) => Promise<void>;
     signUp: (data: FieldValues) => Promise<void>;
     logout: () => Promise<void>;
 };
 
-export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, setErrorMessage: undefined, isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
+export const CurrentUserContext = createContext<CurrentUserContent>({ currentUser: null, errorMessage: null, setErrorMessage: (state) => state, isLogin: false, signIn: () => Promise.resolve(), signUp: () => Promise.resolve(), logout: () => Promise.resolve() });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
