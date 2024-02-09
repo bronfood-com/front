@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 
 interface Popup {
     /**
@@ -19,10 +18,8 @@ interface Popup {
 }
 
 const Popup: FC<Popup> = (props) => {
-    const { setErrorMessage } = useCurrentUser();
     const navigate = useNavigate();
     const handleCloseButton = () => {
-        setErrorMessage(null);
         navigate('/');
     };
     return (

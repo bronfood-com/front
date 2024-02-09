@@ -10,14 +10,11 @@ import InputPassword from '../../components/InputPassword/InputPassword';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 
 const SignIn = () => {
-    const { errorMessage, currentUser, signIn } = useCurrentUser();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const showError = !!errorMessage;
+    const { currentUser, signIn } = useCurrentUser();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -36,17 +33,15 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
-        setIsLoading(true);
-        await signIn({ phone: phoneNumber, password });
-        setIsLoading(false);
+        await signIn.mutation({ phone: phoneNumber, password });
     };
 
     return (
         <Popup title={t('pages.signIn.signInHeading')}>
-            {isLoading && <Preloader />}
+            {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {showError && <ErrorMessage message={t(`pages.signIn.${errorMessage}`)} />}
-                <fieldset className={styles.form__field} disabled={isLoading}>
+                {!!signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
+                <fieldset className={styles.form__field} disabled={signIn.isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
@@ -55,7 +50,7 @@ const SignIn = () => {
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
                 </Link>
-                <Button disabled={isLoading}>{t('pages.signIn.loginButton')}</Button>
+                <Button disabled={signIn.isLoading}>{t('pages.signIn.loginButton')}</Button>
                 <Link to="/signup" className={`${styles.link_registration} link`}>
                     {t('pages.signIn.registartion')}
                 </Link>
