@@ -12,6 +12,10 @@ interface Popup {
      */
     mode?: 'info';
     /**
+     * Clear error message
+     */
+    clearErrorMessage?: () => void;
+    /**
      * Elements that popup contains
      */
     children: ReactNode;
@@ -20,6 +24,7 @@ interface Popup {
 const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
     const handleCloseButton = () => {
+        props.clearErrorMessage();
         navigate('/');
     };
     return (

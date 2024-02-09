@@ -37,7 +37,7 @@ const SignIn = () => {
     };
 
     return (
-        <Popup title={t('pages.signIn.signInHeading')}>
+        <Popup title={t('pages.signIn.signInHeading')} clearErrorMessage={signIn.clearErrorMessage}>
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
                 {!!signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
