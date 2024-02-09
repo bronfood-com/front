@@ -14,7 +14,7 @@ interface Popup {
     /**
      * Clear error message
      */
-    clearErrorMessage?: () => void;
+    clearErrorMessage: () => void;
     /**
      * Elements that popup contains
      */
