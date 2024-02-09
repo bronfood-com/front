@@ -7,20 +7,20 @@ type CurrentUserContent = {
     currentUser: User | null;
     isLogin: boolean;
     signIn: {
-        mutation: (data: FieldValues) => Promise<void>,
-        isLoading: boolean,
+        mutation: (data: FieldValues) => Promise<void>;
+        isLoading: boolean;
         errorMessage: string | null;
-    },
+    };
     signUp: {
-        mutation: (data: FieldValues) => Promise<void>,
-        isLoading: boolean,
+        mutation: (data: FieldValues) => Promise<void>;
+        isLoading: boolean;
         errorMessage: string | null;
-    },
+    };
     logout: {
-        mutation: () => Promise<void>,
-        isLoading: boolean,
+        mutation: () => Promise<void>;
+        isLoading: boolean;
         errorMessage: string | null;
-    }
+    };
 };
 
 export const CurrentUserContext = createContext<CurrentUserContent>({
@@ -40,7 +40,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         mutation: () => Promise.resolve(),
         isLoading: false,
         errorMessage: null,
-    }
+    },
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -67,11 +67,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         if (res.status === 'error') {
             setSignInErrorMessage(res.errorMessage);
             setCurrentUser(null);
-            setIsLoading(false)
+            setIsLoading(false);
         } else {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }, []);
 
@@ -105,23 +105,29 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    return <CurrentUserContext.Provider value={{
-        currentUser,
-        isLogin,
-        signIn: {
-            mutation: signIn,
-            isLoading,
-            errorMessage: signInErrorMessage
-        },
-        signUp: {
-            mutation: signUp,
-            isLoading,
-            errorMessage: signUpErrorMessage
-        },
-        logout: {
-            mutation: logout,
-            isLoading,
-            errorMessage: logoutErrorMessage
-        },
-    }}>{children}</CurrentUserContext.Provider>;
+    return (
+        <CurrentUserContext.Provider
+            value={{
+                currentUser,
+                isLogin,
+                signIn: {
+                    mutation: signIn,
+                    isLoading,
+                    errorMessage: signInErrorMessage,
+                },
+                signUp: {
+                    mutation: signUp,
+                    isLoading,
+                    errorMessage: signUpErrorMessage,
+                },
+                logout: {
+                    mutation: logout,
+                    isLoading,
+                    errorMessage: logoutErrorMessage,
+                },
+            }}
+        >
+            {children}
+        </CurrentUserContext.Provider>
+    );
 };
