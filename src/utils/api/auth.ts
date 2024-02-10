@@ -1,5 +1,8 @@
 import { API_URL } from '../consts';
 
+/**
+ 11 digits string, no space, brackets, or +
+ */
 type PhoneNumber = string;
 
 interface LoginData {
@@ -20,10 +23,10 @@ interface EditPasswordData {
     password: string;
     confirmPassword: string;
 }
-interface User {
+export interface User {
     phone: PhoneNumber;
-    fullname: string;
-    isOwner: boolean;
+    name: string;
+    isOwner?: boolean;
 }
 class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {

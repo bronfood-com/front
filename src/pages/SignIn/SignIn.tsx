@@ -5,16 +5,18 @@ import FormInputs from '../../components/FormInputs/FormInputs';
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './SignIn.module.scss';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import InputPhone from '../../components/InputPhone/InputPhone';
-import { authApi } from '../../utils/api/auth';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import InputPhone from '../../components/InputPhone/InputPhone';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 
 const SignIn = () => {
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const { errorMessage, currentUser, signIn } = useCurrentUser();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const showError = !!errorMessage;
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -24,27 +26,26 @@ const SignIn = () => {
         formState: { errors },
     } = useForm();
 
+    useEffect(() => {
+        if (currentUser) {
+            navigate('/');
+        }
+        // Doesnt pass ci build with navigate deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser]);
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         setIsLoading(true);
-        setErrorMessage(null);
-        const res = await authApi.login({ phone: phoneNumber, password });
+        await signIn({ phone: phoneNumber, password });
         setIsLoading(false);
-        if (res.errorMessage) {
-            setErrorMessage(res.errorMessage);
-        } else {
-            navigate('/');
-        }
     };
 
     return (
         <Popup title={t('pages.signIn.signInHeading')}>
             {isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                <div className={`${styles.form__notice} ${showError ? '' : styles.form__notice_invisible}`}>
-                    <div className={styles.form__warning}></div>
-                    <span className={styles.form__error}>{t(`pages.signIn.${errorMessage}`)}</span>
-                </div>
+                {showError && <ErrorMessage message={t(`pages.signIn.${errorMessage}`)} />}
                 <fieldset className={styles.form__field} disabled={isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>

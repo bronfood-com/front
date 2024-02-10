@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import Header from './components/Header/Header';
-import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -11,18 +9,15 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
-    const [isLogin] = useState(false);
-
     return (
         <div>
-            <Header isLogin={isLogin} />
+            <Header />
             <YandexMap></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/profile" element={<ProtectedRoute component={<Profile />} islogin={isLogin} />} />
-                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} islogin={isLogin} />} />
+                <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
             </Routes>
         </div>
     );
