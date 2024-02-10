@@ -42,13 +42,19 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const signUp = async (data: FieldValues) => {
         const { password, phone, name } = data;
         setErrorMessage(null);
-        const res = await authApi.register({ name, phone, password });
+        const res = await authApi.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
             setErrorMessage(res.errorMessage);
             setCurrentUser(null);
         } else {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
+            const result = await authApi.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
+            if (result.status === 'error') {
+                setErrorMessage(result.errorMessage);
+                setCurrentUser(null);
+            } else {
+                setCurrentUser(result.data);
+                localStorage.setItem('user', JSON.stringify(result.data));
+            }
         }
     };
 
