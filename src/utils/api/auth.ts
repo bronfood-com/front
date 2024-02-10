@@ -1,3 +1,5 @@
+import { API_URL } from '../consts';
+
 type PhoneNumber = string;
 
 interface LoginData {
@@ -8,50 +10,47 @@ interface RegisterData {
     phone: PhoneNumber;
     password: string;
     isOwner: boolean;
-    name: string;
+    fullname: string;
 }
-
+interface confirmRegisterPhoneData {
+    temp_data_code: string;
+    confirmation_code: string;
+}
 interface EditPasswordData {
     password: string;
     confirmPassword: string;
 }
 interface User {
     phone: PhoneNumber;
-    name: string;
+    fullname: string;
     isOwner: boolean;
 }
 class AuthApi {
-    async _wait(ms: number) {
-        return new Promise((res) => setTimeout(res, ms));
-    }
-
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
-        await this._wait(500);
-        if (phone && password) {
-            return { status: 'success', data: { name: 'User', phone, isOwner: false } };
-        } else {
-            return { status: 'error', errorMessage: 'invalidCredentials' };
-        }
+        const res = await fetch(`${API_URL}/client/request_to_signup/`, { method: 'POST', body: JSON.stringify({ phone, password }) });
+        const result = await res.json();
+        return result;
     }
 
-    async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
-        await this._wait(500);
-        if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone, isOwner } };
-        } else {
-            return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
-        }
+    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+        const res = await fetch(`${API_URL}/client/request_to_signup/`, { method: 'POST', body: JSON.stringify({ phone, password, fullname }) });
+        const result = await res.json();
+        return result;
+    }
+
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+        const res = await fetch(`${API_URL}/client/request_to_signup/`, { method: 'POST', body: JSON.stringify({ temp_data_code, confirmation_code }) });
+        const result = await res.json();
+        return result;
     }
 
     async loguOut(): Promise<{ status: string }> {
-        await this._wait(500);
         return { status: 'success' };
     }
 
     async editPassword({ password, confirmPassword }: EditPasswordData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
-        await this._wait(500);
         if (confirmPassword && password) {
-            return { status: 'success', data: { name: 'User', phone: '+7 999 99 99 99', isOwner: false } };
+            return { status: 'success', data: { fullname: 'User', phone: '+7 999 99 99 99', isOwner: false } };
         } else {
             return { status: 'error', errorMessage: 'invalidCredentials' };
         }
