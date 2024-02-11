@@ -52,7 +52,7 @@ const SignUp = () => {
                 <Popup title={t('pages.signUp.signUpHeading')} onClose={() => setIsErrorVisible(false)}>
                     {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
+                        {(isErrorVisible && signUp.errorMessage) && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
                         <fieldset className={styles.form__field} disabled={signUp.isLoading}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>

@@ -44,7 +44,7 @@ const SignIn = () => {
         <Popup title={t('pages.signIn.signInHeading')} onClose={() => setIsErrorVisible(false)}>
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
+                {(isErrorVisible && signIn.errorMessage) && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
                 <fieldset className={styles.form__field} disabled={signIn.isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
