@@ -32,22 +32,19 @@ const SignIn = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
 
-    useEffect(() => {
-        if (signIn.errorMessage) {
-            setIsErrorVisible(true);
-        }
-    }, [signIn.errorMessage]);
-
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
-        await signIn.mutation({ phone: phoneNumber, password });
+        const result = await signIn.mutation({ phone: phoneNumber, password });
+        if (!result) {
+            setIsErrorVisible(true);
+        }
     };
 
     return (
         <Popup title={t('pages.signIn.signInHeading')} onClose={() => setIsErrorVisible(false)}>
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
+                {(isErrorVisible && signIn.errorMessage) && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
                 <fieldset className={styles.form__field} disabled={signIn.isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>

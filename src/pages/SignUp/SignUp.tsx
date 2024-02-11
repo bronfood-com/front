@@ -16,6 +16,7 @@ import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const SignUp = () => {
+    const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const { currentUser, signUp } = useCurrentUser();
     const { t } = useTranslation();
@@ -33,7 +34,10 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        await signUp.mutation({ phone: phoneNumber, password, name: username });
+        const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
+        if (!result) {
+            setIsErrorVisible(true);
+        }
     };
 
     const openInfoPopup = () => {
@@ -45,10 +49,10 @@ const SignUp = () => {
             {isInfoPopupOpen ? (
                 <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
             ) : (
-                <Popup title={t('pages.signUp.signUpHeading')} onClose={signUp.clearErrorMessage}>
+                <Popup title={t('pages.signUp.signUpHeading')} onClose={() => setIsErrorVisible(false)}>
                     {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {!!signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
+                        {(isErrorVisible && signUp.errorMessage) && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
                         <fieldset className={styles.form__field} disabled={signUp.isLoading}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
