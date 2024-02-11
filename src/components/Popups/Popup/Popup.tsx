@@ -12,9 +12,9 @@ interface Popup {
      */
     mode?: 'info';
     /**
-     * Clear error message
+     * Handle close popup
      */
-    clearErrorMessage?: () => void;
+    onClose?: () => void;
     /**
      * Elements that popup contains
      */
@@ -24,8 +24,8 @@ interface Popup {
 const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
     const handleCloseButton = () => {
-        if (props.clearErrorMessage) {
-            props.clearErrorMessage();
+        if (props.onClose) {
+            props.onClose();
         }
         navigate('/');
     };

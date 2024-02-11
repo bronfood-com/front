@@ -10,10 +10,11 @@ import InputPassword from '../../components/InputPassword/InputPassword';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 
 const SignIn = () => {
+    const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { currentUser, signIn } = useCurrentUser();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -31,16 +32,22 @@ const SignIn = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
 
+    useEffect(() => {
+        if (signIn.errorMessage) {
+            setIsErrorVisible(true);
+        }
+    }, [signIn.errorMessage]);
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         await signIn.mutation({ phone: phoneNumber, password });
     };
 
     return (
-        <Popup title={t('pages.signIn.signInHeading')} clearErrorMessage={signIn.clearErrorMessage}>
+        <Popup title={t('pages.signIn.signInHeading')} onClose={() => setIsErrorVisible(false)}>
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {!!signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
+                {isErrorVisible && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
                 <fieldset className={styles.form__field} disabled={signIn.isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>

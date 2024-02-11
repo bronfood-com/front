@@ -9,19 +9,16 @@ type CurrentUserContent = {
         mutation: (data: FieldValues) => Promise<void>;
         isLoading: boolean;
         errorMessage: string | null;
-        clearErrorMessage: () => void;
     };
     signUp: {
         mutation: (data: FieldValues) => Promise<void>;
         isLoading: boolean;
         errorMessage: string | null;
-        clearErrorMessage: () => void;
     };
     logout: {
         mutation: () => Promise<void>;
         isLoading: boolean;
         errorMessage: string | null;
-        clearErrorMessage: () => void;
     };
 };
 
@@ -32,19 +29,16 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         mutation: () => Promise.resolve(),
         isLoading: false,
         errorMessage: null,
-        clearErrorMessage: () => {},
     },
     signUp: {
         mutation: () => Promise.resolve(),
         isLoading: false,
         errorMessage: null,
-        clearErrorMessage: () => {},
     },
     logout: {
         mutation: () => Promise.resolve(),
         isLoading: false,
         errorMessage: null,
-        clearErrorMessage: () => {},
     },
 });
 
@@ -63,10 +57,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     const isLogin = !!currentUser;
-
-    const clearSignInErrorMessage = () => setSignInErrorMessage(null);
-    const clearSignUpErrorMessage = () => setSignUpErrorMessage(null);
-    const clearLogoutErrorMessage = () => setLogoutErrorMessage(null);
 
     const signIn = useCallback(async (data: FieldValues) => {
         setIsLoading(true);
@@ -123,19 +113,16 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: signIn,
                     isLoading,
                     errorMessage: signInErrorMessage,
-                    clearErrorMessage: clearSignInErrorMessage,
                 },
                 signUp: {
                     mutation: signUp,
                     isLoading,
                     errorMessage: signUpErrorMessage,
-                    clearErrorMessage: clearSignUpErrorMessage,
                 },
                 logout: {
                     mutation: logout,
                     isLoading,
                     errorMessage: logoutErrorMessage,
-                    clearErrorMessage: clearLogoutErrorMessage,
                 },
             }}
         >
