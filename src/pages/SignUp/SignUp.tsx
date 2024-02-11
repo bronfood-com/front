@@ -35,7 +35,7 @@ const SignUp = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
-        if (!result) {
+        if (result !== null) {
             setIsErrorVisible(true);
         }
     };

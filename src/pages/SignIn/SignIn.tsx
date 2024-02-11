@@ -35,7 +35,7 @@ const SignIn = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         const result = await signIn.mutation({ phone: phoneNumber, password });
-        if (!result) {
+        if (result !== null) {
             setIsErrorVisible(true);
         }
     };
