@@ -1,5 +1,4 @@
 import Header from './components/Header/Header';
-import PopupFeedbackThanks from './pages/PopupFeedbackThanks/PopupFeedbackThanks';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -21,7 +20,6 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-                <Route path="/feedback_done" element={<ProtectedRoute component={<PopupFeedbackThanks />} />} />
             </Routes>
         </div>
     );
