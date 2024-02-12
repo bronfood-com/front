@@ -27,7 +27,7 @@ const CustomerNavigation: FC<CustomerNavigation> = (props) => {
                     to="/"
                     className={styles.nav__link}
                     onClick={(e) => {
-                        logout();
+                        logout.mutation();
                         props.handleItemMenuClick(e);
                     }}
                 >

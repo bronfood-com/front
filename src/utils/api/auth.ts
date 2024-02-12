@@ -51,7 +51,7 @@ class AuthApi {
         }
     }
 
-    async loguOut(): Promise<{ status: 'success' } | { status: 'error'; errorMessage: string }> {
+    async logout(): Promise<{ status: 'success' } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
         const success = true;
         if (success) {

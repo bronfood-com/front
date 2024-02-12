@@ -16,10 +16,9 @@ import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const SignUp = () => {
+    const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-    const { errorMessage, currentUser, signUp } = useCurrentUser();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const showError = !!errorMessage;
+    const { currentUser, signUp } = useCurrentUser();
     const { t } = useTranslation();
     const {
         register,
@@ -35,9 +34,10 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        setIsLoading(true);
-        await signUp({ phone: phoneNumber, password, name: username });
-        setIsLoading(false);
+        const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
+        if (result !== null) {
+            setIsErrorVisible(true);
+        }
     };
 
     const openInfoPopup = () => {
@@ -49,18 +49,18 @@ const SignUp = () => {
             {isInfoPopupOpen ? (
                 <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
             ) : (
-                <Popup title={t('pages.signUp.signUpHeading')}>
-                    {isLoading && <Preloader />}
+                <Popup title={t('pages.signUp.signUpHeading')} onClose={() => setIsErrorVisible(false)}>
+                    {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {showError && <ErrorMessage message={t(`pages.signUp.${errorMessage}`)} />}
-                        <fieldset className={styles.form__field} disabled={isLoading}>
+                        {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
+                        <fieldset className={styles.form__field} disabled={signUp.isLoading}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                                 <InputPhone register={register} errors={errors}></InputPhone>
                                 <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} />
                             </FormInputs>
                         </fieldset>
-                        <Button disabled={isLoading}>{t('pages.signUp.registerButton')}</Button>
+                        <Button disabled={signUp.isLoading}>{t('pages.signUp.registerButton')}</Button>
                     </Form>
                 </Popup>
             )}
