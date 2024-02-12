@@ -9,7 +9,7 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const Logout: FC = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const {currentUser, logout} = useCurrentUser();
+    const { currentUser, logout } = useCurrentUser();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -17,7 +17,7 @@ const Logout: FC = () => {
         if (result !== null) {
             setIsErrorVisible(true);
         }
-    }
+    };
     const handleCancel = () => navigate(-1);
     useEffect(() => {
         if (!currentUser) {
@@ -27,21 +27,16 @@ const Logout: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
     useEffect(() => {
-        const handleCloseByEsc = e => e.key === 'Escape' && handleCancel();
+        const handleCloseByEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleCancel();
         document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc)
-    })
+        return () => document.removeEventListener('keydown', handleCloseByEsc);
+    });
 
     return (
         <div className={styles.logout} onMouseDown={handleCancel}>
-            <ConfirmationPopup
-                title={t(`pages.logout.title`)}
-                confirmButtonText={t(`pages.logout.confirmButtonText`)}
-                onCancel={handleCancel}
-                onSubmit={handleLogout}
-            >
+            <ConfirmationPopup title={t(`pages.logout.title`)} confirmButtonText={t(`pages.logout.confirmButtonText`)} onCancel={handleCancel} onSubmit={handleLogout}>
                 {logout.isLoading && <Preloader />}
-                {(isErrorVisible && logout.errorMessage) && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
+                {isErrorVisible && logout.errorMessage && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
             </ConfirmationPopup>
         </div>
     );
