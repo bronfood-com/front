@@ -31,7 +31,7 @@ const Logout: FC = () => {
     });
 
     return (
-        <div className={styles.logout} onClick={handleCancel}>
+        <div className={styles.logout} onMouseDown={handleCancel}>
             <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={handleCancel} onSubmit={handleLogout}>
                 {logout.isLoading && <Preloader />}
                 {isErrorVisible && logout.errorMessage && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
