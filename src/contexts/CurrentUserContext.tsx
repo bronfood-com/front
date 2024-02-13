@@ -60,14 +60,18 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const logout = useCallback(async () => {
         setErrorMessage(null);
-        const res = await authApi.loguOut();
-        if (res.status === 'success') {
-            setCurrentUser(null);
-            localStorage.removeItem('user');
+        if (currentUser) {
+            const res = await authApi.loguOut(currentUser.auth_token);
+            if (res.status === 'success') {
+                setCurrentUser(null);
+                localStorage.removeItem('user');
+            } else {
+                return;
+            }
         } else {
             return;
         }
-    }, []);
+    }, [currentUser]);
 
     return <CurrentUserContext.Provider value={{ currentUser, errorMessage, signIn, signUp, logout, isLogin }}>{children}</CurrentUserContext.Provider>;
 };

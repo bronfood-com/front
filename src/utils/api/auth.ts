@@ -14,6 +14,7 @@ interface RegisterData {
     password: string;
     fullname: string;
 }
+
 interface confirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
@@ -44,7 +45,7 @@ class AuthApi {
     }
 
     async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
-        const res = await fetch(`${API_URL}/client/request_to_signup/`, {
+        const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -55,8 +56,15 @@ class AuthApi {
         return result;
     }
 
-    async loguOut(): Promise<{ status: string }> {
-        return { status: 'success' };
+    async loguOut(token: string): Promise<{ status: string }> {
+        const res = await fetch(`${API_URL}/client/signout/`, {
+            method: 'POST',
+            headers: {
+                authorization: `Token ${token}`,
+            },
+        });
+        const result = await res.json();
+        return result;
     }
 }
 
