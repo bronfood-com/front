@@ -75,8 +75,8 @@ i18n
                             registerButton: 'Регистрация',
                         },
                         logout: {
-                            title: 'Вы уверены, что хотите выйти?',
-                            confirmButtonText: 'Выйти',
+                            areYouSure: 'Вы уверены, что хотите выйти?',
+                            signout: 'Выйти',
                             serverError: 'Ошибка на сервере',
                         },
                         passwordSaved: {

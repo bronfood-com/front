@@ -23,18 +23,16 @@ const Logout: FC = () => {
         if (!currentUser) {
             navigate('/');
         }
-        // Doesnt pass ci build with navigate deps
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser]);
+    }, [currentUser, navigate]);
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleCancel();
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handleCancel();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
     });
 
     return (
-        <div className={styles.logout} onMouseDown={handleCancel}>
-            <ConfirmationPopup title={t(`pages.logout.title`)} confirmButtonText={t(`pages.logout.confirmButtonText`)} onCancel={handleCancel} onSubmit={handleLogout}>
+        <div className={styles.logout} onClick={handleCancel}>
+            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={handleCancel} onSubmit={handleLogout}>
                 {logout.isLoading && <Preloader />}
                 {isErrorVisible && logout.errorMessage && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
             </ConfirmationPopup>
