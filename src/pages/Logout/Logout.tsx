@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, MouseEvent } from 'react';
 import styles from './Logout.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +19,7 @@ const Logout: FC = () => {
         }
     };
     const handleCancel = () => navigate(-1);
-    const handleOverlayClick = (e) => {
+    const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             navigate(-1);
         }
