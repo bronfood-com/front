@@ -13,7 +13,7 @@ type ConfirmationPopupProps = {
 const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, children }) => {
     const { t } = useTranslation();
     return (
-        <div className={styles.confirmPopup} onMouseDown={(e) => e.stopPropagation()}>
+        <div className={styles.confirmPopup}>
             <h2 className={styles.confirmPopup__title}>{title}</h2>
             {children}
             <button className={styles.confirmPopup__close} onClick={onCancel}></button>
