@@ -20,10 +20,10 @@ const Logout: FC = () => {
     };
     const handleCancel = () => navigate(-1);
     const handleOverlayClick = (e) => {
-        if(e.target === e.currentTarget) {
+        if (e.target === e.currentTarget) {
             navigate(-1);
         }
-    }
+    };
     useEffect(() => {
         if (!currentUser) {
             navigate('/');
