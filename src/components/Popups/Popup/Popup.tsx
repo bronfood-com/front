@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, MouseEvent, KeyboardEvent } from 'react';
+import { FC, ReactNode, useEffect, MouseEvent} from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
 
