@@ -3,5 +3,43 @@
 .pageNotFound {
     display: flex;
     flex-direction: column;
-    padding: 140px 21px 177px 22px;
+    padding: 90px 21px 122px 22px;
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 69px;
+        font-weight: 500;
+        line-height: 1.28;
+        color: $orange;
+    }
+
+    &__icon {
+        width: 89px;
+        height: 89px;
+        background-image: url('./magnifier.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    &__message {
+        margin-top: 20px;
+        margin-bottom: 60px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: $black;
+    }
+}
+.button {
+    width: 100%;
+    height: 49px;
+    border-radius: 25px;
+    background: $orange;
+    border: none;
+    color: $white;
+    font-weight: 600;
+    margin-top: 25px;
 }

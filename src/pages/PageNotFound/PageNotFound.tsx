@@ -1,29 +1,22 @@
-//import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Button from '../../components/Button/Button';
-
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './PageNotFound.module.scss';
 
-import { useTranslation } from 'react-i18next';
-
-
 const PageNotFound = () => {
-
-
-  //  const navigate = useNavigate();
+    const navigate = useNavigate();
     const { t } = useTranslation();
 
     return (
-        <Popup >
+        <Popup>
             <div className={styles.pageNotFound}>
-                <h1>
-                    4<span></span>4
-                </h1>
-                <Link to='/'>
-                    <Button disabled={false}>{t('pages.pageNotFound.goBack')}</Button>
-                </Link>
-
+                <div className={styles.pageNotFound__error}>
+                    4
+                    <div className={styles.pageNotFound__icon}/>
+                    4
+                </div>
+                <p className={styles.pageNotFound__message}>{t('pages.pageNotFound.somethingWentWrong')}</p>
+                <button onClick={() => navigate('/')} className={styles.button}>{t('pages.pageNotFound.goBack')}</button>
             </div>
         </Popup>
     );
