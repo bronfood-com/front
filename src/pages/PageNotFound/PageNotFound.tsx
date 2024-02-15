@@ -12,7 +12,8 @@ const PageNotFound = () => {
             <div className={styles.pageNotFound}>
                 <div className={styles.pageNotFound__error}>
                     4
-                    <div className={styles.pageNotFound__icon} />4
+                    <div className={styles.pageNotFound__icon} />
+                    4
                 </div>
                 <p className={styles.pageNotFound__message}>{t('pages.pageNotFound.somethingWentWrong')}</p>
                 <button onClick={() => navigate('/')} className={styles.button}>

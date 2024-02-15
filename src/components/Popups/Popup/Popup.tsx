@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,8 +29,18 @@ const Popup: FC<Popup> = (props) => {
         }
         navigate('/');
     };
+    const handleOverlayClick = (e: MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            navigate(-1);
+        }
+    };
+    useEffect(() => {
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handleCloseButton();
+        document.addEventListener('keydown', handleCloseByEsc);
+        return () => document.removeEventListener('keydown', handleCloseByEsc);
+    });
     return (
-        <div className={styles.popup_overlay}>
+        <div className={styles.popup_overlay} onClick={handleOverlayClick}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
                 {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
