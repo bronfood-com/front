@@ -5,23 +5,24 @@ import SignUp from './pages/SignUp/SignUp';
 import Logout from './pages/Logout/Logout';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import './index.scss';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
+    const {pathname} = useLocation();
+    console.log(pathname);
     return (
         <div>
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-                <Route path="/" element={<Main />} />
+                <Route path={process.env.NODE_ENV === 'production' ? '/front/' : '/'} element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </div>
