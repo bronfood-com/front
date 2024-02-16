@@ -16,7 +16,7 @@ function App() {
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-                <Route path={process.env.NODE_ENV === "production" ? "/front/*" : "/"} element={<Main />} />
+                <Route path={process.env.NODE_ENV === 'production' ? '/front/*' : '/'} element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
