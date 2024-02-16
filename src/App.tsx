@@ -11,7 +11,7 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     console.log(pathname);
     return (
         <div>
