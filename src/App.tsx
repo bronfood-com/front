@@ -11,13 +11,14 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
-    console.log(process.env.PUBLIC_URL)
+    console.log(process.env.NODE_ENV);
+    const mainPath: string = process.env.NODE_ENV === 'production' ? "/pr-preview?/" : "/";
     return (
         <div>
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-                <Route path="/" element={<Main />} />
+                <Route path={mainPath} element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />

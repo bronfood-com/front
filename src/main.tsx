@@ -8,10 +8,10 @@ import { CurrentUserProvider } from './contexts/CurrentUserContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : ''}>
+        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/front/' : '/'}>
             <CurrentUserProvider>
                 <App />
             </CurrentUserProvider>
         </BrowserRouter>
-    </React.StrictMode>,
+    </React.StrictMode>
 );
