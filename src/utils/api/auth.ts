@@ -19,12 +19,14 @@ interface confirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
 }
+
 export interface User {
     phone: PhoneNumber;
     fullname: string;
     auth_token: string;
-    role: 'CLIENT';
+    role?: 'CLIENT';
 }
+
 class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
         const res = await fetch(`${API_URL}/signin/`, { method: 'POST', body: JSON.stringify({ phone, password }) });

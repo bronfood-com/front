@@ -1,3 +1,6 @@
+/**
+ 11 digits string, no space, brackets, or +
+ */
 type PhoneNumber = string;
 
 interface LoginData {
@@ -7,19 +10,20 @@ interface LoginData {
 interface RegisterData {
     phone: PhoneNumber;
     password: string;
-    isOwner: boolean;
-    name: string;
+    fullname: string;
 }
 
-interface EditPasswordData {
-    password: string;
-    confirmPassword: string;
+interface confirmRegisterPhoneData {
+    temp_data_code: string;
+    confirmation_code: string;
 }
-interface User {
+export interface User {
     phone: PhoneNumber;
-    name: string;
-    isOwner: boolean;
+    fullname: string;
+    auth_token: string;
+    role?: 'CLIENT';
 }
+
 class AuthApi {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
@@ -28,16 +32,25 @@ class AuthApi {
     async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
         await this._wait(500);
         if (phone && password) {
-            return { status: 'success', data: { name: 'User', phone, isOwner: false } };
+            return { status: 'success', data: { fullname: 'User', phone, auth_token: '84762854', role: 'CLIENT' } };
         } else {
             return { status: 'error', errorMessage: 'invalidCredentials' };
         }
     }
 
-    async register({ name, phone, password, isOwner }: RegisterData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; errorMessage: string }> {
         await this._wait(500);
-        if (phone && password && name) {
-            return { status: 'success', data: { name: 'User', phone, isOwner } };
+        if (phone && password && fullname) {
+            return { status: 'success', data: { temp_data_code: '1111' } };
+        } else {
+            return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
+        }
+    }
+
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
+        await this._wait(500);
+        if (temp_data_code && confirmation_code) {
+            return { status: 'success', data: { phone: '777777777', fullname: 'Юзверь', auth_token: 'dfjhgg74wf' } };
         } else {
             return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
         }
@@ -46,15 +59,6 @@ class AuthApi {
     async loguOut(): Promise<{ status: string }> {
         await this._wait(500);
         return { status: 'success' };
-    }
-
-    async editPassword({ password, confirmPassword }: EditPasswordData): Promise<{ status: 'success' | 'error'; data?: User; errorMessage?: string }> {
-        await this._wait(500);
-        if (confirmPassword && password) {
-            return { status: 'success', data: { name: 'User', phone: '+7 999 99 99 99', isOwner: false } };
-        } else {
-            return { status: 'error', errorMessage: 'invalidCredentials' };
-        }
     }
 }
 
