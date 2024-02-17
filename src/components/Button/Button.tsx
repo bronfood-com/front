@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, MouseEventHandler, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
 interface Button {
@@ -10,12 +10,16 @@ interface Button {
      * Active button
      */
     disabled?: boolean;
+    /**
+     * Click event handler
+     */
+    onClick?: MouseEventHandler;
 }
 
 const Button: FC<Button> = (props) => {
-    const { disabled } = props;
+    const { disabled, onClick } = props;
     return (
-        <button type="submit" disabled={disabled} className={`${styles.button} ${disabled ? styles.button_disabled : ''}`}>
+        <button type="submit" onClick={onClick} disabled={disabled} className={`${styles.button} ${disabled ? styles.button_disabled : ''}`}>
             {props.children}
         </button>
     );
