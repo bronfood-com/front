@@ -12,7 +12,7 @@ import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
     console.log(process.env.NODE_ENV);
-    const mainPath: string = process.env.NODE_ENV === 'production' ? "/pr-preview?/" : "/";
+    const mainPath: string = process.env.NODE_ENV === 'production' ? '/pr-preview/*' : '/';
     return (
         <div>
             <Header />
