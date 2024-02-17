@@ -16,6 +16,7 @@ function App() {
             <Header />
             <YandexMap></YandexMap>
             <Routes>
+                <Route path={process.env.NODE_ENV === 'production' ? '/pr-preview/*' : ''} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
