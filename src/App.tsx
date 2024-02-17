@@ -16,7 +16,14 @@ function App() {
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-                <Route path="/" element={<Main />} />
+                {
+                    process.env.NODE_ENV === "production" ?
+                    (<>
+                        <Route path="/" element={<Main />} />
+                        <Route path="/pr-preview/*" element={<Main />} />
+                    </>) :
+                    <Route path="/" element={<Main />} />
+                }
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
