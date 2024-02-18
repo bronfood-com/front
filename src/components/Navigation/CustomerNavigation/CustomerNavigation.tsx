@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import styles from '../Navigation.module.scss';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 interface CustomerNavigation {
     /**
      * Click on menu item redirects to link and close menu
@@ -11,7 +10,6 @@ interface CustomerNavigation {
 }
 const CustomerNavigation: FC<CustomerNavigation> = (props) => {
     const { t } = useTranslation();
-    const { logout } = useCurrentUser();
 
     return (
         <ul className={`${styles.nav__menu} ${styles.nav__menu_user}`}>
@@ -24,10 +22,9 @@ const CustomerNavigation: FC<CustomerNavigation> = (props) => {
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_exit}`}></div>
                 <Link
-                    to="/"
+                    to="/logout"
                     className={styles.nav__link}
                     onClick={(e) => {
-                        logout();
                         props.handleItemMenuClick(e);
                     }}
                 >

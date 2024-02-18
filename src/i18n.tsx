@@ -51,6 +51,9 @@ i18n
                             editBankData: 'Редактировать банковские данные',
                             signOut: 'Выйти',
                         },
+                        confirmationPopup: {
+                            cancel: 'Отмена',
+                        },
                     },
                     pages: {
                         signIn: {
@@ -70,6 +73,11 @@ i18n
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
+                        },
+                        logout: {
+                            areYouSure: 'Вы уверены, что хотите выйти?',
+                            signout: 'Выйти',
+                            serverError: 'Ошибка на сервере',
                         },
                         passwordSaved: {
                             title: 'Ваш пароль сохранен!',

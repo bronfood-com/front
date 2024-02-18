@@ -56,12 +56,12 @@ class MockAuthApi {
         }
     }
 
-    async loguOut(token: string): Promise<{ status: string }> {
+    async loguOut(token: string): Promise<{ status: string; error_message: string } | { status: string }> {
         await this._wait(500);
         if (token) {
             return { status: 'success' };
         }
-        return { status: 'error' };
+        return { status: 'error', error_message: 'noUser' };
     }
 }
 
