@@ -24,12 +24,12 @@ export interface User {
     role?: 'CLIENT';
 }
 
-class AuthApi {
+class MockAuthApi {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success' | 'error'; data?: User; error_message?: string }> {
+    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         if (phone && password) {
             return { status: 'success', data: { fullname: 'User', phone, auth_token: '84762854', role: 'CLIENT' } };
@@ -56,10 +56,13 @@ class AuthApi {
         }
     }
 
-    async loguOut(): Promise<{ status: string }> {
+    async loguOut(token: string): Promise<{ status: string }> {
         await this._wait(500);
-        return { status: 'success' };
+        if (token) {
+            return { status: 'success' };
+        }
+        return { status: 'error' };
     }
 }
 
-export const authApi = new AuthApi();
+export const mockAuthApi = new MockAuthApi();

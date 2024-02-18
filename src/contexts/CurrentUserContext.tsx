@@ -1,6 +1,7 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { User, authApi } from '../utils/api/auth';
+import { User } from '../utils/api/auth';
+import { mockAuthApi } from '../utils/api/mockAuth';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -29,7 +30,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const signIn = async (data: FieldValues) => {
         const { password, phone } = data;
         setErrorMessage(null);
-        const res = await authApi.login({ phone, password });
+        const res = await mockAuthApi.login({ phone, password });
         if (res.status === 'error') {
             setErrorMessage(res.error_message);
             setCurrentUser(null);
@@ -42,12 +43,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const signUp = async (data: FieldValues) => {
         const { password, phone, name } = data;
         setErrorMessage(null);
-        const res = await authApi.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
+        const res = await mockAuthApi.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
             setErrorMessage(res.error_message);
             setCurrentUser(null);
         } else {
-            const result = await authApi.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
+            const result = await mockAuthApi.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
             if (result.status === 'error') {
                 setErrorMessage(result.error_message);
                 setCurrentUser(null);
@@ -61,7 +62,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const logout = useCallback(async () => {
         setErrorMessage(null);
         if (currentUser) {
-            const res = await authApi.loguOut(currentUser.auth_token);
+            const res = await mockAuthApi.loguOut(currentUser.auth_token);
             if (res.status === 'success') {
                 setCurrentUser(null);
                 localStorage.removeItem('user');
