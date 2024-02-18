@@ -20,6 +20,11 @@ type CurrentUserContent = {
         isLoading: boolean;
         errorMessage: string | null;
     };
+    updateUser: {
+        mutation: (data: FieldValues) => Promise<void>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
 };
 
 export const CurrentUserContext = createContext<CurrentUserContent>({
@@ -40,6 +45,11 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         isLoading: false,
         errorMessage: null,
     },
+    updateUser: {
+        mutation: () => Promise.resolve(),
+        isLoading: false,
+        errorMessage: null,
+    },
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -48,6 +58,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
     const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -104,6 +115,22 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
+    const updateUser = async (data: FieldValues) => {
+        setIsLoading(true);
+        setUpdateUserErrorMessage(null);
+        const { password, confirmPassword, phone, name } = data;
+        const res = await authApi.updateUser({ password, confirmPassword, phone, name });
+        if (res.status === 'error') {
+            setUpdateUserErrorMessage(res.errorMessage);
+            setCurrentUser(null);
+            setIsLoading(false);
+        } else {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            setCurrentUser(res.data);
+            setIsLoading(false);
+        }
+    };
+
     return (
         <CurrentUserContext.Provider
             value={{
@@ -123,6 +150,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: logout,
                     isLoading,
                     errorMessage: logoutErrorMessage,
+                },
+                updateUser: {
+                    mutation: updateUser,
+                    isLoading,
+                    errorMessage: updateUserErrorMessage,
                 },
             }}
         >

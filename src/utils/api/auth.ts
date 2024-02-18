@@ -17,6 +17,14 @@ interface EditPasswordData {
     password: string;
     confirmPassword: string;
 }
+
+interface UpdateUserData {
+    phone: PhoneNumber;
+    password: string;
+    name: string;
+    confirmPassword: string;
+}
+
 export interface User {
     phone: PhoneNumber;
     name: string;
@@ -65,6 +73,20 @@ class AuthApi {
         await this._wait(500);
         if (confirmPassword && password) {
             return { status: 'success', data: { name: 'User', phone: '7999999999', isOwner: false } };
+        } else {
+            return { status: 'error', errorMessage: 'invalidCredentials' };
+        }
+    }
+
+    async updateUser({ name, phone, password, confirmPassword }: UpdateUserData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
+        await this._wait(500);
+        if (phone && password && name && confirmPassword) {
+            if (name === 'fail') {
+                return { status: 'error', errorMessage: 'phoneNumberIsAlreadyUsed' };
+            } else if (password === '12345') {
+                return { status: 'error', errorMessage: 'invalidCredentials' };
+            }
+            return { status: 'success', data: { name: 'User', phone, isOwner: false } };
         } else {
             return { status: 'error', errorMessage: 'invalidCredentials' };
         }
