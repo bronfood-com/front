@@ -28,13 +28,13 @@ export interface User {
 }
 
 class AuthApi {
-    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
+    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/signin/`, { method: 'POST', body: JSON.stringify({ phone, password }) });
         const result = await res.json();
         return result;
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; errorMessage: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/request_to_signup/`, {
             method: 'POST',
             headers: {
@@ -46,7 +46,7 @@ class AuthApi {
         return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; errorMessage: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {

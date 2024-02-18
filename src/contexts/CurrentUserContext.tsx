@@ -26,30 +26,30 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const isLogin = !!currentUser;
 
-    const signIn = useCallback(async (data: FieldValues) => {
+    const signIn = async (data: FieldValues) => {
         const { password, phone } = data;
         setErrorMessage(null);
         const res = await authApi.login({ phone, password });
         if (res.status === 'error') {
-            setErrorMessage(res.errorMessage);
+            setErrorMessage(res.error_message);
             setCurrentUser(null);
         } else {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
         }
-    }, []);
+    };
 
     const signUp = async (data: FieldValues) => {
         const { password, phone, name } = data;
         setErrorMessage(null);
         const res = await authApi.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
-            setErrorMessage(res.errorMessage);
+            setErrorMessage(res.error_message);
             setCurrentUser(null);
         } else {
             const result = await authApi.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
             if (result.status === 'error') {
-                setErrorMessage(result.errorMessage);
+                setErrorMessage(result.error_message);
                 setCurrentUser(null);
             } else {
                 setCurrentUser(result.data);
