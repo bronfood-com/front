@@ -28,7 +28,7 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-                <Route path="*" element={<PageNotFound />} />
+                <Route path="/404" element={<PageNotFound />} />
             </Routes>
         </div>
     );
