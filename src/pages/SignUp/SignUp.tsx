@@ -51,7 +51,13 @@ const SignUp = () => {
             {isInfoPopupOpen ? (
                 <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
             ) : (
-                <Popup title={t('pages.signUp.signUpHeading')} onClose={() => {navigate('/'); setIsErrorVisible(false)}}>
+                <Popup
+                    title={t('pages.signUp.signUpHeading')}
+                    onClose={() => {
+                        navigate('/');
+                        setIsErrorVisible(false);
+                    }}
+                >
                     {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
                         {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
