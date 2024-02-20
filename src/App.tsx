@@ -16,19 +16,12 @@ function App() {
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-                {process.env.NODE_ENV === 'production' ? (
-                    <>
-                        <Route path={'/'} element={<Main />} />
-                        <Route path={'/pr-preview/*'} element={<Main />} />
-                    </>
-                ) : (
-                    <Route path="/" element={<Main />} />
-                )}
+                <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-                <Route path="/404" element={<PageNotFound />} />
+                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
         </div>
     );
