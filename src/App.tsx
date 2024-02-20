@@ -18,8 +18,8 @@ function App() {
             <Routes>
                 {process.env.NODE_ENV === 'production' ? (
                     <>
-                        <Route path="/" element={<Main />} />
-                        <Route path="/pr-preview/*" element={<Main />} />
+                        <Route path={process.env.PUBLIC_URL + '/'} element={<Main />} />
+                        <Route path={process.env.PUBLIC_URL + '/pr-preview/*'} element={<Main />} />
                     </>
                 ) : (
                     <Route path="/" element={<Main />} />
