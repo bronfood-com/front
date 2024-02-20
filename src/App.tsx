@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
-const publicUrl = 'https://bronfood-com.github.io'
+const publicUrl = 'https://bronfood-com.github.io';
 
 function App() {
     return (
