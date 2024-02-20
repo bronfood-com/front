@@ -16,7 +16,6 @@ function App() {
             <Header />
             <YandexMap></YandexMap>
             <Routes>
-
                 {process.env.NODE_ENV === 'production' ? (
                     <>
                         <Route path={'/'} element={<Main />} />
