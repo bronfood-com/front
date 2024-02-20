@@ -8,14 +8,16 @@ const PageNotFound = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     return (
-        <Popup>
+        <Popup onClose={() => navigate('/')}>
             <div className={styles.pageNotFound}>
                 <div className={styles.pageNotFound__error}>
                     4
                     <div className={styles.pageNotFound__icon} />4
                 </div>
                 <p className={styles.pageNotFound__message}>{t('pages.pageNotFound.somethingWentWrong')}</p>
-                <Button type="button" onClick={() => navigate('/')}>{t('pages.pageNotFound.goBack')}</Button>
+                <Button type="button" onClick={() => navigate('/')}>
+                    {t('pages.pageNotFound.goBack')}
+                </Button>
             </div>
         </Popup>
     );

@@ -1,6 +1,5 @@
 import { FC, ReactNode, useEffect, MouseEvent } from 'react';
 import styles from './Popup.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 interface Popup {
     /**
@@ -14,7 +13,7 @@ interface Popup {
     /**
      * Handle close popup
      */
-    onClose?: () => void;
+    onClose: () => void;
     /**
      * Elements that popup contains
      */
@@ -22,20 +21,16 @@ interface Popup {
 }
 
 const Popup: FC<Popup> = (props) => {
-    const navigate = useNavigate();
     const handleCloseButton = () => {
-        if (props.onClose) {
-            props.onClose();
-        }
-        navigate('/');
+        props.onClose();
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
-            navigate('/');
+            props.onClose();
         }
     };
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handleCloseButton();
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && props.onClose();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
     });
