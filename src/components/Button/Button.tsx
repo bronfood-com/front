@@ -1,21 +1,16 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
-interface Button {
+interface Button extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Text on button
      */
     children?: ReactNode;
-    /**
-     * Active button
-     */
-    disabled?: boolean;
 }
 
-const Button: FC<Button> = (props) => {
-    const { disabled } = props;
+const Button: FC<Button> = ({ ...props }) => {
     return (
-        <button type="submit" disabled={disabled} className={`${styles.button} ${disabled ? styles.button_disabled : ''}`}>
+        <button {...props} className={`${styles.button} ${props.disabled ? styles.button_disabled : ''}`}>
             {props.children}
         </button>
     );

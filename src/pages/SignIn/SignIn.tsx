@@ -41,7 +41,13 @@ const SignIn = () => {
     };
 
     return (
-        <Popup title={t('pages.signIn.signInHeading')} onClose={() => setIsErrorVisible(false)}>
+        <Popup
+            title={t('pages.signIn.signInHeading')}
+            onClose={() => {
+                navigate('/');
+                setIsErrorVisible(false);
+            }}
+        >
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
                 {isErrorVisible && signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}

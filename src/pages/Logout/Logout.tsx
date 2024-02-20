@@ -18,10 +18,10 @@ const Logout: FC = () => {
             setIsErrorVisible(true);
         }
     };
-    const handleCancel = () => navigate(-1);
+    const handleCancel = () => navigate('/');
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
-            navigate(-1);
+            navigate('/');
         }
     };
     useEffect(() => {

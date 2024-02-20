@@ -28,7 +28,7 @@ const Profile = () => {
         return newPassword === value || t('pages.profile.passwordDontMatch');
     };
     return (
-        <Popup title={t('pages.profile.title')}>
+        <Popup onClose={() => navigate('/')} title={t('pages.profile.title')}>
             <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName}></Input>

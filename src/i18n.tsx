@@ -79,6 +79,10 @@ i18n
                             signout: 'Выйти',
                             serverError: 'Ошибка на сервере',
                         },
+                        pageNotFound: {
+                            goBack: 'Вернуться на главную',
+                            somethingWentWrong: 'Кажется что-то пошло не так...',
+                        },
                         passwordSaved: {
                             title: 'Ваш пароль сохранен!',
                         },

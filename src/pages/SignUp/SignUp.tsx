@@ -14,8 +14,10 @@ import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
     const { currentUser, signUp } = useCurrentUser();
@@ -49,7 +51,13 @@ const SignUp = () => {
             {isInfoPopupOpen ? (
                 <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
             ) : (
-                <Popup title={t('pages.signUp.signUpHeading')} onClose={() => setIsErrorVisible(false)}>
+                <Popup
+                    title={t('pages.signUp.signUpHeading')}
+                    onClose={() => {
+                        navigate('/');
+                        setIsErrorVisible(false);
+                    }}
+                >
                     {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
                         {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
