@@ -10,6 +10,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
+const publicUrl = 'https://bronfood-com.github.io'
+
 function App() {
     return (
         <div>
@@ -18,8 +20,8 @@ function App() {
             <Routes>
                 {process.env.NODE_ENV === 'production' ? (
                     <>
-                        <Route path={process.env.PUBLIC_URL + '/'} element={<Main />} />
-                        <Route path={process.env.PUBLIC_URL + '/pr-preview/*'} element={<Main />} />
+                        <Route path={publicUrl + '/'} element={<Main />} />
+                        <Route path={publicUrl + '/pr-preview/*'} element={<Main />} />
                     </>
                 ) : (
                     <Route path="/" element={<Main />} />
