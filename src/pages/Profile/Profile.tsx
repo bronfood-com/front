@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import Form from '../../components/Form/Form';
 import FormInputs from '../../components/FormInputs/FormInputs';
@@ -14,18 +13,24 @@ import InputPassword from '../../components/InputPassword/InputPassword';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const { updateUser } = useCurrentUser();
+    const { currentUser, updateUser } = useCurrentUser();
     const {
         register,
         handleSubmit,
         formState: { errors },
         getValues,
     } = useForm();
-
+    const navigate = useNavigate();
     const { t } = useTranslation();
+    useEffect(() => {
+        if (!currentUser) {
+            navigate('/');
+        }
+    }, [currentUser, navigate]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, confirmPassword, phoneNumber, username } = data;
@@ -33,8 +38,10 @@ const Profile = () => {
 
         if (result !== null) {
             setIsErrorVisible(true);
+            localStorage.setItem('user', JSON.stringify(data));
         }
     };
+
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
         return newPassword === value || t('pages.profile.passwordDontMatch');
