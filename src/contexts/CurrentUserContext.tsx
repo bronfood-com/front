@@ -100,7 +100,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setLogoutErrorMessage(null);
         if (currentUser) {
             setIsLoading(true);
-            const res = await mockAuthApi.loguOut(currentUser.auth_token);
+            const res = await mockAuthApi.logOut(currentUser.auth_token);
             if (res.status === 'success') {
                 setCurrentUser(null);
                 localStorage.removeItem('user');

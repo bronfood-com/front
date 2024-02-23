@@ -64,7 +64,7 @@ class AuthApi {
         return result;
     }
 
-    async loguOut(token: string): Promise<{ status: string }> {
+    async logOut(token: string): Promise<{ status: string }> {
         const res = await fetch(`${API_URL}/client/signout/`, {
             method: 'POST',
             headers: {
