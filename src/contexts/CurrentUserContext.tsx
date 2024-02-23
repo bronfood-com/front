@@ -88,9 +88,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             if (result.status === 'error') {
                 setSignUpErrorMessage(result.error_message);
                 setCurrentUser(null);
+                setIsLoading(false);
             } else {
                 setCurrentUser(result.data);
                 localStorage.setItem('user', JSON.stringify(result.data));
+                setIsLoading(false);
             }
         }
     };
