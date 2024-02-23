@@ -15,7 +15,11 @@ interface RegisterData {
     fullname: string;
 }
 
-interface confirmRegisterPhoneData {
+/*
+temp_data_code: Temporary code that the server assign to the user in db during registration
+confirmation_code: 4-digit code that user shoud enter to confirm registration
+*/
+interface СonfirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
 }
@@ -28,6 +32,8 @@ export interface User {
 }
 
 class AuthApi {
+    /* contracts https://www.notion.so/Api-Auth-b7317228f7134259a5089a7d05e79bb2 */
+
     async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/signin/`, { method: 'POST', body: JSON.stringify({ phone, password }) });
         const result = await res.json();
@@ -46,7 +52,7 @@ class AuthApi {
         return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: confirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {

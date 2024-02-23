@@ -12,7 +12,10 @@ interface RegisterData {
     password: string;
     fullname: string;
 }
-
+/*
+temp_data_code: Temporary code that the server assign to the user in db during registration
+confirmation_code: 4-digit code that user shoud enter to confirm registration
+*/
 interface confirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
