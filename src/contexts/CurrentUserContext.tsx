@@ -1,7 +1,6 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { User } from '../utils/api/auth';
-import { mockAuthApi } from '../utils/api/mockAuth';
+import { authService, User } from '../utils/api/authService';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -63,7 +62,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignInErrorMessage(null);
         const { password, phone } = data;
-        const res = await mockAuthApi.login({ phone, password });
+        const res = await authService.login({ phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
             setSignInErrorMessage(res.error_message);
             setCurrentUser(null);
@@ -79,13 +78,13 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignUpErrorMessage(null);
         const { password, phone, name } = data;
-        const res = await mockAuthApi.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
+        const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
             setSignUpErrorMessage(res.error_message);
             setCurrentUser(null);
             setIsLoading(false);
         } else {
-            const result = await mockAuthApi.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
+            const result = await authService.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
             if (result.status === 'error') {
                 setSignUpErrorMessage(result.error_message);
                 setCurrentUser(null);
@@ -98,17 +97,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const logout = useCallback(async () => {
         setLogoutErrorMessage(null);
+        setIsLoading(true);
         if (currentUser) {
-            setIsLoading(true);
-            const res = await mockAuthApi.logOut(currentUser.auth_token);
-            if (res.status === 'success') {
-                setCurrentUser(null);
-                localStorage.removeItem('user');
-                setIsLoading(false);
-            } else {
-                setIsLoading(false);
-                setLogoutErrorMessage(res.error_message);
-            }
+            await authService.logOut();
+            setCurrentUser(null);
+            localStorage.removeItem('user');
+            setIsLoading(false);
         } else {
             return;
         }

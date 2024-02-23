@@ -1,42 +1,28 @@
+import { AuthService } from './authService';
+import { User, LoginData, RegisterData, СonfirmRegisterPhoneData } from './authService';
 import { API_URL } from '../consts';
 
-/**
- 11 digits string, no space, brackets, or +
- */
-type PhoneNumber = string;
-
-interface LoginData {
-    phone: PhoneNumber;
-    password: string;
-}
-interface RegisterData {
-    phone: PhoneNumber;
-    password: string;
-    fullname: string;
-}
-
-/*
-temp_data_code: Temporary code that the server assign to the user in db during registration
-confirmation_code: 4-digit code that user shoud enter to confirm registration
-*/
-interface СonfirmRegisterPhoneData {
-    temp_data_code: string;
-    confirmation_code: string;
-}
-
-export interface User {
-    phone: PhoneNumber;
-    fullname: string;
-    auth_token: string;
-    role?: 'CLIENT';
-}
-
-class AuthApi {
+export class AuthServiceReal implements AuthService {
     /* contracts https://www.notion.so/Api-Auth-b7317228f7134259a5089a7d05e79bb2 */
 
+    getToken() {
+        return localStorage.getItem('token');
+    }
+
     async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
-        const res = await fetch(`${API_URL}/signin/`, { method: 'POST', body: JSON.stringify({ phone, password }) });
-        const result = await res.json();
+        const res = await fetch(`${API_URL}/signin/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ phone, password }),
+        });
+        const resultWithToken = await res.json();
+        const { auth_token } = resultWithToken.data;
+        const result = { ...resultWithToken };
+        localStorage.setItem('token', auth_token);
+
+        delete result.data.auth_token;
         return result;
     }
 
@@ -60,20 +46,23 @@ class AuthApi {
             },
             body: JSON.stringify({ temp_data_code, confirmation_code }),
         });
-        const result = await res.json();
+        const resultWithToken = await res.json();
+        const { auth_token } = resultWithToken.data;
+        const result = { ...resultWithToken };
+        localStorage.setItem('token', auth_token);
+
+        delete result.data.auth_token;
         return result;
     }
 
-    async logOut(token: string): Promise<{ status: string }> {
-        const res = await fetch(`${API_URL}/client/signout/`, {
+    async logOut() {
+        const token = this.getToken();
+        await fetch(`${API_URL}/client/signout/`, {
             method: 'POST',
             headers: {
                 authorization: `Token ${token}`,
             },
         });
-        const result = await res.json();
-        return result;
+        localStorage.removeItem('token');
     }
 }
-
-export const authApi = new AuthApi();
