@@ -28,13 +28,9 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                     <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
                 <ul>
-                    {
-                        list.map(card =>
-                            <li key={card}>
-                                {card}
-                            </li>
-                        )
-                    }
+                    {list.map((card) => (
+                        <li key={card}>{card}</li>
+                    ))}
                 </ul>
             </div>
         </div>
