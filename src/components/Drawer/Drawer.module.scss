@@ -1,0 +1,78 @@
+@import '../../styles/variables.scss';
+
+.drawer {
+    position: fixed;
+    z-index: map-get($zIndexes, menu);
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $background;
+    transition: transform 0.5s ease-out;
+    border-radius: 35px 35px 0px 0px;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    &__line_container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        cursor: pointer;
+    }
+    &__line {
+        width: 70px;
+        height: 0px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border: 2px solid;
+        border-radius: 2px;
+    }
+    &__line_active {
+        border-color: $orange;
+    }
+    &__line_disabled {
+        border-color: $grey;
+    }
+    &__title_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: 19px;
+        padding-bottom: 28px;
+    }
+    &__title {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: $black;
+    }
+    &__icon {
+        width: 35px;
+        height: 35px;
+        border: none;
+        background-image: url('./filter.svg');
+        background-color: $background;
+        cursor: pointer;
+    }
+  }
+
+  .drawer.up {
+    bottom: 0;
+    transform: translateY(95%);
+  }
+
+  .drawer.down {
+    top: 0;
+    transform: translateY(-100%);
+  }
+
+  .drawer.open {
+    transform: translateY(50%);
+  }
