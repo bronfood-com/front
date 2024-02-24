@@ -122,6 +122,9 @@ i18n
                             continue: 'Далее',
                             passwordDontMatch: 'Пароли не совпадают',
                         },
+                        restaurants: {
+                            title: 'Выберите заведение',
+                        },
                     },
                 },
             },

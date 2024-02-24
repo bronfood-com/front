@@ -61,18 +61,18 @@
         background-color: $background;
         cursor: pointer;
     }
-  }
+}
 
-  .drawer.up {
+.drawer.up {
     bottom: 0;
     transform: translateY(95%);
-  }
+}
 
-  .drawer.down {
+.drawer.down {
     top: 0;
     transform: translateY(-100%);
-  }
+}
 
-  .drawer.open {
+.drawer.open {
     transform: translateY(50%);
-  }
+}

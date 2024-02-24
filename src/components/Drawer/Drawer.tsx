@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import styles from './Drawer.module.scss'
+import styles from './Drawer.module.scss';
 
 enum DrawerDirection {
     up = 'up',
@@ -10,33 +10,35 @@ enum DrawerDirection {
 type Props = {
     isOpen: boolean;
     title: string;
-    children: ReactNode;
+    list: ReactNode[];
     direction?: DrawerDirection;
-    onClick: () => void;
+    toggleDrawer: () => void;
+    openFilter: () => void;
 };
 
-const Drawer = ({
-    isOpen,
-    title,
-    children,
-    direction = DrawerDirection.up,
-    onClick,
-}: Props) => {
-
+const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter }: Props) => {
     return (
         <div className={`${styles.drawer} ${styles[direction]} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
-                <button type='button' className={styles.drawer__line_container} onClick={onClick}>
+                <button onClick={toggleDrawer} type="button" className={styles.drawer__line_container}>
                     <div className={`${styles.drawer__line} ${isOpen ? styles.drawer__line_active : styles.drawer__line_disabled}`} />
                 </button>
                 <div className={styles.drawer__title_container}>
                     <p className={styles.drawer__title}>{title}</p>
-                    <button className={styles.drawer__icon}/>
+                    <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
-                {children}
+                <ul>
+                    {
+                        list.map(card =>
+                            <li key={card}>
+                                {card}
+                            </li>
+                        )
+                    }
+                </ul>
             </div>
         </div>
     );
 };
 
-export default Drawer
+export default Drawer;
