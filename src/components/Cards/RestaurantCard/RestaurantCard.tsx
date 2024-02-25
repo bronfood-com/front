@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
 
 function RestaurantCard({ card, onClick }: { card: Restaurant; onClick: () => void }) {
+    const [inFocus, setInFocus] = useState(false);
     return (
-        <div className={styles.card} onClick={() => onClick()}>
+        <div className={`${styles.card} ${inFocus ? styles.card__active : ''}`} onClick={() => onClick()} onMouseEnter={() => setInFocus(true)} onMouseLeave={() => setInFocus(false)}>
             <div className={styles.card__container}>
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>

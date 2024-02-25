@@ -2,8 +2,13 @@
 
 .card {
     width: 100%;
+    border-radius: 20px;
+    border: 1px solid $line;
     cursor: pointer;
 
+    &__active {
+        border-color: $orange;
+    }
     &__container {
         display: flex;
     }

@@ -30,7 +30,7 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                 </div>
                 <ul className={styles.drawer__list}>
                     {list.map((card) => (
-                        <li key={card.id} className={styles.drawer__list_item}>
+                        <li key={card.id}>
                             <RestaurantCard onClick={openListItem} card={card} />
                         </li>
                     ))}
