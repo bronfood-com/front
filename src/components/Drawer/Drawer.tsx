@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
 import RestaurantCard from '../Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
+import { Restaurant } from '../../pages/Restaurants/MockRestaurantsList';
 
 enum DrawerDirection {
     up = 'up',
@@ -10,7 +10,7 @@ enum DrawerDirection {
 type Props = {
     isOpen: boolean;
     title: string;
-    list: ReactNode[];
+    list: Restaurant[];
     direction?: DrawerDirection;
     toggleDrawer: () => void;
     openFilter: () => void;
@@ -29,7 +29,7 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                 </div>
                 <ul className={styles.drawer__list}>
                     {list.map((card) => (
-                        <li key={card.title}>
+                        <li key={card.id}>
                             <RestaurantCard card={card} />
                         </li>
                     ))}
