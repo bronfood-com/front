@@ -123,7 +123,7 @@ i18n
                             passwordDontMatch: 'Пароли не совпадают',
                         },
                         restaurants: {
-                            title: 'Выберите заведение',
+                            selectPlace: 'Выберите заведение',
                         },
                     },
                 },

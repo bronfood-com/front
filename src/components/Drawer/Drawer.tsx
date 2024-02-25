@@ -7,7 +7,7 @@ enum DrawerDirection {
     down = 'down',
 }
 
-type Props = {
+type DrawerProps = {
     isOpen: boolean;
     title: string;
     list: Restaurant[];
@@ -17,7 +17,7 @@ type Props = {
     openListItem: () => void;
 };
 
-const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter, openListItem }: Props) => {
+const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter, openListItem }: DrawerProps) => {
     return (
         <div className={`${styles.drawer} ${styles[direction]} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
@@ -30,7 +30,7 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                 </div>
                 <ul className={styles.drawer__list}>
                     {list.map((card) => (
-                        <li key={card.id}>
+                        <li key={card.id} className={styles.drawer__list_item}>
                             <RestaurantCard onClick={openListItem} card={card} />
                         </li>
                     ))}

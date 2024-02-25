@@ -68,6 +68,13 @@
         flex-direction: column;
         row-gap: 15px;
     }
+    &__list_item {
+        border-radius: 20px;
+        border: 1px solid $line;
+    }
+    &__list_item:hover {
+        border-color: $orange;
+    }
 }
 
 .drawer.up {
