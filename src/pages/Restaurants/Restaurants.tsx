@@ -7,9 +7,7 @@ function Restaurants() {
     const { t } = useTranslation();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const handleRestaurantClick = () => {
-
-    }
+    const handleRestaurantClick = () => {};
     return <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openFilter={() => setIsFilterOpen(!isFilterOpen)} openListItem={handleRestaurantClick} title={t('pages.restaurants.title')} list={restaurants} />;
 }
 

@@ -1,7 +1,7 @@
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
 
-function RestaurantCard({ card, onClick }: { card: Restaurant, onClick: () => void }) {
+function RestaurantCard({ card, onClick }: { card: Restaurant; onClick: () => void }) {
     return (
         <div className={styles.card} onClick={() => onClick()}>
             <div className={styles.card__container}>
