@@ -9,9 +9,14 @@ function Restaurants() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     return (
-        <>
-            <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openFilter={() => setIsFilterOpen(!isFilterOpen)} title={t('pages.restaurants.title')} list={restaurants} />
-        </>
+        <Drawer
+            isOpen={isDrawerOpen}
+            toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
+            openFilter={() => setIsFilterOpen(!isFilterOpen)}
+            title={t('pages.restaurants.title')}
+            list={restaurants}
+        >
+        </Drawer>
     );
 }
 
