@@ -14,9 +14,10 @@ type Props = {
     direction?: DrawerDirection;
     toggleDrawer: () => void;
     openFilter: () => void;
+    openListItem: () => void;
 };
 
-const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter }: Props) => {
+const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter, openListItem }: Props) => {
     return (
         <div className={`${styles.drawer} ${styles[direction]} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
@@ -30,7 +31,7 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                 <ul className={styles.drawer__list}>
                     {list.map((card) => (
                         <li key={card.id}>
-                            <RestaurantCard card={card} />
+                            <RestaurantCard onClick={openListItem} card={card} />
                         </li>
                     ))}
                 </ul>

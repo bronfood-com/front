@@ -1,9 +1,9 @@
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
 
-function RestaurantCard({ card }: { card: Restaurant }) {
+function RestaurantCard({ card, onClick }: { card: Restaurant, onClick: () => void }) {
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={() => onClick()}>
             <div className={styles.card__container}>
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>
