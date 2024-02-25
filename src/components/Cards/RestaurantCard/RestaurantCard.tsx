@@ -1,7 +1,7 @@
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
 
-function RestaurantCard({ card }: {card: Restaurant}) {
+function RestaurantCard({ card }: { card: Restaurant }) {
     return (
         <div className={styles.card}>
             <div className={styles.card__container}>

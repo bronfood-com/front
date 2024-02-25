@@ -9,7 +9,7 @@ export type Restaurant = {
     rating: number;
     address: string;
     workingTime: string;
-}
+};
 
 export const restaurants: Restaurant[] = [
     {
