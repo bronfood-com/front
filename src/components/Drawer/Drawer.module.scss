@@ -61,6 +61,11 @@
         background-color: $background;
         cursor: pointer;
     }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+    }
 }
 
 .drawer.up {

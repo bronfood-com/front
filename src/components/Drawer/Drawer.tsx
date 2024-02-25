@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-
+import RestaurantCard from '../Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 
 enum DrawerDirection {
@@ -27,10 +27,14 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                     <p className={styles.drawer__title}>{title}</p>
                     <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
-                <ul>
-                    {list.map((card) => (
-                        <li key={card}>{card}</li>
-                    ))}
+                <ul className={styles.drawer__list}>
+                    {
+                        list.map(card =>
+                            <li key={card.title}>
+                                <RestaurantCard card={card} />
+                            </li>
+                        )
+                    }
                 </ul>
             </div>
         </div>
