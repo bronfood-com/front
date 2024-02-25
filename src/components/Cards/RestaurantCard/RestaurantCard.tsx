@@ -1,10 +1,10 @@
-import styles from './RestaurantCard.module.scss'
+import styles from './RestaurantCard.module.scss';
 
-function RestaurantCard({card}) {
+function RestaurantCard({ card }) {
     return (
         <div className={styles.card}>
             <div className={styles.card__container}>
-                <div className={styles.card__image} style={{backgroundImage: `url(${card.image})`}} />
+                <div className={styles.card__image} style={{ backgroundImage: `url(${card.image})` }} />
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
                         <p className={styles.card__title}>{card.title}</p>
@@ -22,7 +22,7 @@ function RestaurantCard({card}) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default RestaurantCard
+export default RestaurantCard;

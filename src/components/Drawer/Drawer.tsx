@@ -28,13 +28,11 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                     <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
                 <ul className={styles.drawer__list}>
-                    {
-                        list.map(card =>
-                            <li key={card.title}>
-                                <RestaurantCard card={card} />
-                            </li>
-                        )
-                    }
+                    {list.map((card) => (
+                        <li key={card.title}>
+                            <RestaurantCard card={card} />
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
