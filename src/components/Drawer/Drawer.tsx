@@ -1,4 +1,3 @@
-
 import RestaurantCard from '../Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 import { Restaurant } from '../../pages/Restaurants/MockRestaurantsList';
@@ -19,8 +18,6 @@ type DrawerProps = {
 };
 
 const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter, openListItem }: DrawerProps) => {
-
-
     return (
         <div className={`${styles.drawer} ${styles[direction]} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
