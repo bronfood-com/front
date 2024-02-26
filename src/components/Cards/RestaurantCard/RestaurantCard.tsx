@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
 
-function RestaurantCard({ card, onClick, container }: { card: Restaurant; onClick: () => void, container: RefObject<Element> }) {
+function RestaurantCard({ card, onClick, container }: { card: Restaurant; onClick: () => void; container: RefObject<Element> }) {
     const ref = useRef(null);
     const isInView = useInView(ref, {
         amount: 'all',
