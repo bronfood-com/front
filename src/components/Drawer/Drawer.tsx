@@ -1,3 +1,4 @@
+
 import RestaurantCard from '../Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 import { Restaurant } from '../../pages/Restaurants/MockRestaurantsList';
@@ -18,6 +19,8 @@ type DrawerProps = {
 };
 
 const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDrawer, openFilter, openListItem }: DrawerProps) => {
+
+
     return (
         <div className={`${styles.drawer} ${styles[direction]} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
@@ -28,10 +31,10 @@ const Drawer = ({ isOpen, title, list, direction = DrawerDirection.up, toggleDra
                     <p className={styles.drawer__title}>{title}</p>
                     <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
-                <ul className={styles.drawer__list}>
+                <ul id="list" className={styles.drawer__list}>
                     {list.map((card) => (
                         <li key={card.id}>
-                            <RestaurantCard onClick={openListItem} card={card} />
+                            <RestaurantCard onClick={openListItem} card={card} inFocus={inFocus} />
                         </li>
                     ))}
                 </ul>
