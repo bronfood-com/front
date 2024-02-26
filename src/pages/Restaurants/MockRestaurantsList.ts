@@ -52,12 +52,4 @@ export const restaurants: Restaurant[] = [
         address: 'пр. Мира 36',
         workingTime: '12:00 - 01.00',
     },
-    {
-        id: '6',
-        photo: image3,
-        name: 'Moon',
-        rating: 5.0,
-        address: 'пр. Мира 36',
-        workingTime: '12:00 - 01.00',
-    },
 ];
