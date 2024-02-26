@@ -38,8 +38,7 @@ export interface AuthService {
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 
-    logOut: () => void;
-    getToken: () => string | null;
+    logOut: () => Promise<void>;
 }
 
 // export const authService = new AuthServiceReal();
