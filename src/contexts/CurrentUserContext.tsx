@@ -1,6 +1,6 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { User, authApi } from '../utils/api/auth';
+import { authService, User } from '../utils/api/authService';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -62,9 +62,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignInErrorMessage(null);
         const { password, phone } = data;
-        const res = await authApi.login({ phone, password });
+        const res = await authService.login({ phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
-            setSignInErrorMessage(res.errorMessage);
+            setSignInErrorMessage(res.error_message);
             setCurrentUser(null);
             setIsLoading(false);
         } else {
@@ -78,31 +78,37 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignUpErrorMessage(null);
         const { password, phone, name } = data;
-        const res = await authApi.register({ name, phone, password });
+        const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
-            setSignUpErrorMessage(res.errorMessage);
+            setSignUpErrorMessage(res.error_message);
             setCurrentUser(null);
             setIsLoading(false);
         } else {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
-            setIsLoading(false);
+            const result = await authService.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
+            if (result.status === 'error') {
+                setSignUpErrorMessage(result.error_message);
+                setCurrentUser(null);
+                setIsLoading(false);
+            } else {
+                setCurrentUser(result.data);
+                localStorage.setItem('user', JSON.stringify(result.data));
+                setIsLoading(false);
+            }
         }
     };
 
     const logout = useCallback(async () => {
         setLogoutErrorMessage(null);
         setIsLoading(true);
-        const res = await authApi.logout();
-        if (res.status === 'success') {
+        if (currentUser) {
+            await authService.logOut();
             setCurrentUser(null);
             localStorage.removeItem('user');
             setIsLoading(false);
         } else {
-            setIsLoading(false);
-            setLogoutErrorMessage(res.errorMessage);
+            return;
         }
-    }, []);
+    }, [currentUser]);
 
     return (
         <CurrentUserContext.Provider
