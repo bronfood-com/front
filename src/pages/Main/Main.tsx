@@ -11,9 +11,7 @@ const Main = () => {
             }
         };
         checkLocalStorage();
-        // useEffect needed on first render only
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [navigate]);
     return <></>;
 };
 
