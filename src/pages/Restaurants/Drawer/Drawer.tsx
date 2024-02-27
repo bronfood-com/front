@@ -4,7 +4,7 @@ import { Restaurant } from '../MockRestaurantsList';
 import { useRef } from 'react';
 
 enum DrawerDirection {
-    up = 'up'
+    up = 'up',
 }
 
 type DrawerProps = {
