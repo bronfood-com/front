@@ -7,10 +7,10 @@ const Main = () => {
         const checkLocalStorage = () => {
             const user = localStorage.getItem('user');
             if (user) {
-            navigate('/restaurants')
+                navigate('/restaurants');
             }
-          }
-          checkLocalStorage();
+        };
+        checkLocalStorage();
     }, [navigate]);
     return <></>;
 };
