@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const Main = () => {
     const navigate = useNavigate();
+    const {isLogin} = useCurrentUser();
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (user) {
+        if (isLogin) {
             navigate('/restaurants');
         }
-    }, [navigate]);
+    }, [isLogin, navigate]);
     return <></>;
 };
 
