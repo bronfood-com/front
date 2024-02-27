@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Drawer from '../../components/Drawer/Drawer';
+import Drawer from './Drawer/Drawer';
 import { restaurants } from './MockRestaurantsList';
 
 function Restaurants() {

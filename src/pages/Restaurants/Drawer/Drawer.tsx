@@ -1,11 +1,10 @@
-import RestaurantCard from '../Cards/RestaurantCard/RestaurantCard';
+import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
-import { Restaurant } from '../../pages/Restaurants/MockRestaurantsList';
+import { Restaurant } from '../MockRestaurantsList';
 import { useRef } from 'react';
 
 enum DrawerDirection {
-    up = 'up',
-    down = 'down',
+    up = 'up'
 }
 
 type DrawerProps = {

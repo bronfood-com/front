@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .drawer {
     position: fixed;
@@ -62,7 +62,7 @@
         cursor: pointer;
     }
     &__list {
-        height: 300px;
+        height: 280px;
         overflow: scroll;
         display: flex;
         flex-direction: column;
@@ -73,11 +73,6 @@
 .drawer.up {
     bottom: 0;
     transform: translateY(95%);
-}
-
-.drawer.down {
-    top: 0;
-    transform: translateY(-100%);
 }
 
 .drawer.open {
