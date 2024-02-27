@@ -4,7 +4,7 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const Main = () => {
     const navigate = useNavigate();
-    const {isLogin} = useCurrentUser();
+    const { isLogin } = useCurrentUser();
     useEffect(() => {
         if (isLogin) {
             navigate('/restaurants');
