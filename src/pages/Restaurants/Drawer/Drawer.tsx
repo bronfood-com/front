@@ -24,7 +24,7 @@ const Drawer = ({ isOpen, title, list, toggleDrawer, openFilter, openListItem }:
                     <p className={styles.drawer__title}>{title}</p>
                     <button onClick={openFilter} className={styles.drawer__icon} />
                 </div>
-                <ul ref={container}  className={styles.drawer__list}>
+                <ul ref={container} className={styles.drawer__list}>
                     {list.map((card) => (
                         <li key={card.id} className={styles.drawer__list_item}>
                             <RestaurantCard onClick={openListItem} card={card} container={container} />
