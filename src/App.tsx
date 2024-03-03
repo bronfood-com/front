@@ -24,7 +24,7 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
-                    <Route path="/filter" element={<ProtectedRoute component={<Filter />} />} />
+                    <Route path="filter" element={<ProtectedRoute component={<Filter />} />} />
                 </Route>
                 <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
