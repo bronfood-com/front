@@ -9,7 +9,6 @@ function Restaurants() {
     const navigate = useNavigate();
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
     const handleFilterClick = () => {
-
         navigate('filter');
     };
     const handleRestaurantClick = () => {};
