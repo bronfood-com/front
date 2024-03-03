@@ -12,11 +12,12 @@ function Restaurants() {
         navigate('filter');
     };
     const handleRestaurantClick = () => {};
-    return;
-    <>
-        <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openFilter={handleFilterClick} openListItem={handleRestaurantClick} title={t('pages.restaurants.selectPlace')} list={restaurants} />;
-        <Outlet />
-    </>;
+    return (
+        <>
+            <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openFilter={handleFilterClick} openListItem={handleRestaurantClick} title={t('pages.restaurants.selectPlace')} list={restaurants} />;
+            <Outlet />
+        </>
+    );
 }
 
 export default Restaurants;
