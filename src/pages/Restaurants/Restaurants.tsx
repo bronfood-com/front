@@ -5,7 +5,7 @@ import { mockRestaurants } from './MockRestaurantsList';
 
 function Restaurants() {
     const { t } = useTranslation();
-    const restaurants = mockRestaurants
+    const restaurants = mockRestaurants;
     const options = useMemo(() => {
         let id = 1;
         const array = [];
