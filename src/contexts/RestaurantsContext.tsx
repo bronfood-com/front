@@ -52,7 +52,7 @@ type RestaurantsContext = {
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsOnMap: mockRestaurants,
-    restaurantsFiltered: mockRestaurants,
+    restaurantsFiltered: [],
     drawer: {
         isOpen: true,
         toggle: () => {},
@@ -89,10 +89,11 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const options = useMemo(() => {
         let id = 1;
         const array: Array<Option> = [];
-        restaurantsOnMap.forEach((restaurant: Restaurant) => {
-            restaurant.meals.forEach((meal) => {
+        restaurantsOnMap.forEach(async (restaurant: Restaurant) => {
+            await restaurant.meals.forEach((meal) => {
                 array.push({ id: id++, name: meal.name });
             });
+            array.push({ id: id++, name: restaurant.name });
         });
         return array;
     }, [restaurantsOnMap]);
@@ -112,6 +113,20 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         setRestaurantsOnMap(mockRestaurants);
         setRestaurantsFiltered(mockRestaurants);
     }, []);
+    useEffect(() => {
+        if (restaurantsOnMap.length > 0) {
+            const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
+            const filtered = restaurantsOnMap.filter((restaurant) => {
+                const isFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
+                if (isFound) {
+                    return restaurant;
+                } else {
+                    return;
+                }
+            });
+            setRestaurantsFiltered(filtered);
+        }
+    }, [restaurantsOnMap, selectedOptions]);
     return (
         <RestaurantsContext.Provider
             value={{

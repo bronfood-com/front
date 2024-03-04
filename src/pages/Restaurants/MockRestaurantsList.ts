@@ -61,7 +61,7 @@ export const mockRestaurants: Restaurant[] = [
     {
         id: '4',
         photo: image1,
-        name: 'Jahu',
+        name: 'Ready',
         rating: 4.8,
         address: 'ул. Березовая 21',
         workingTime: '09:00 - 22.00',
@@ -79,7 +79,7 @@ export const mockRestaurants: Restaurant[] = [
     {
         id: '5',
         photo: image3,
-        name: 'Moon',
+        name: 'Bar',
         rating: 5.0,
         address: 'пр. Мира 36',
         workingTime: '12:00 - 01.00',
