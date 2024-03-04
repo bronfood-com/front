@@ -5,7 +5,7 @@ import OptionElement from './Option/Option';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Option } from '../../../contexts/RestaurantsContext';
 
-const OptionList = ({ options, selected, action }: { options: Option[], selected: boolean, action: (option: Option) => void }) => {
+const OptionList = ({ options, selected, action }: { options: Option[]; selected: boolean; action: (option: Option) => void }) => {
     return (
         <ul className={`${styles.filter__options} ${!selected && styles.filter__options_nowrap}`}>
             {options.map((option) => (
