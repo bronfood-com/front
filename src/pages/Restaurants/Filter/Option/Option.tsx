@@ -6,7 +6,7 @@ type OptionProps = {
     action: () => void;
 };
 
-const Option = (props: OptionProps) => {
+const OptionElement = (props: OptionProps) => {
     return (
         <div onClick={!props.selected ? props.action : undefined} className={`${styles.option} ${props.selected ? styles.option_selected : ''}`}>
             <p className={styles.option__text}>{props.text}</p>
@@ -15,4 +15,4 @@ const Option = (props: OptionProps) => {
     );
 };
 
-export default Option;
+export default OptionElement;

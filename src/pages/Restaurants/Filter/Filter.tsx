@@ -1,15 +1,16 @@
-import { useEffect, MouseEvent, useState, useId } from 'react';
+import { useEffect, MouseEvent, useState, useId, ChangeEvent } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
-import Option from './Option/Option';
+import OptionElement from './Option/Option';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { Option } from '../../../contexts/RestaurantsContext';
 
-const OptionList = ({ options, selected, action }) => {
+const OptionList = ({ options, selected, action }: { options: Option[], selected: boolean, action: (option: Option) => void }) => {
     return (
         <ul className={`${styles.filter__options} ${!selected && styles.filter__options_nowrap}`}>
             {options.map((option) => (
                 <li key={option.id}>
-                    <Option text={option.name} selected={selected} action={() => action(option)} />
+                    <OptionElement text={option.name} selected={selected} action={() => action(option)} />
                 </li>
             ))}
         </ul>
@@ -18,10 +19,10 @@ const OptionList = ({ options, selected, action }) => {
 
 const Filter = () => {
     const { options, filter } = useRestaurants();
-    const [suggestedOptions, setSuggestedOptions] = useState([]);
+    const [suggestedOptions, setSuggestedOptions] = useState<Option[]>([]);
     const { t } = useTranslation();
     const id = useId();
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const userInput = e.target.value;
         if (userInput) {
             const linked = options.all.filter((opt) => opt.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
@@ -32,11 +33,11 @@ const Filter = () => {
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
-            navigate('/restaurants');
+            filter.close();
         }
     };
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && navigate('/restaurants');
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && filter.close();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
     });

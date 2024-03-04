@@ -1,26 +1,7 @@
 import image1 from './MockImages/image1.png';
 import image2 from './MockImages/image2.png';
 import image3 from './MockImages/image3.png';
-
-export type Restaurant = {
-    id: string;
-    photo: string;
-    name: string;
-    rating: number;
-    address: string;
-    workingTime: string;
-    meals: Meal[];
-    type: 'fastFood' | 'cafe' | 'cafeBar';
-};
-
-export type Meal = {
-    id: string;
-    name: string;
-    photo: string;
-    price: number;
-    type: 'food' | 'drink' | 'dessert';
-    features?: Features;
-};
+import { Restaurant } from '../../contexts/RestaurantsContext';
 
 export const mockRestaurants: Restaurant[] = [
     {

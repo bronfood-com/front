@@ -1,16 +1,15 @@
 import { createContext, FC, useState, PropsWithChildren, useMemo, useEffect } from 'react';
 import { mockRestaurants } from '../pages/Restaurants/MockRestaurantsList';
 
-type Meal = {
+export type Meal = {
     id: string;
     name: string;
     photo: string;
     price: number;
     type: 'food' | 'drink' | 'dessert';
-    features?: Features;
 };
 
-type Restaurant = {
+export type Restaurant = {
     id: string;
     photo: string;
     name: string;
@@ -21,8 +20,8 @@ type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
-type Option = {
-    id: string;
+export type Option = {
+    id: number;
     name: string;
 };
 
@@ -46,8 +45,8 @@ type RestaurantsContext = {
     options: {
         all: Option[];
         selectedOptions: Option[];
-        addOption: () => void;
-        deleteOption: () => void;
+        addOption: (option: Option) => void;
+        deleteOption: (option: Option) => void;
     };
 };
 
@@ -56,55 +55,58 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: mockRestaurants,
     drawer: {
         isOpen: true,
-        toggle: undefined,
+        toggle: () => {},
     },
     filter: {
         isOpen: false,
-        open: undefined,
-        close: undefined,
+        open: () => {},
+        close: () => {},
     },
     restaurant: {
         isOpen: false,
-        open: undefined,
-        close: undefined,
+        open: () => {},
+        close: () => {},
     },
     options: {
         all: [],
         selectedOptions: [],
-        addOption: undefined,
-        deleteOption: undefined,
+        addOption: () => {},
+        deleteOption: () => {},
     },
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurantsOnMap, setRestaurantsOnMap] = useState([]);
-    const [restaurantsFiltered, setRestaurantsFiltered] = useState([]);
+    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
+    const [restaurantsFiltered, setRestaurantsFiltered] = useState<Restaurant[]>([]);
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-    const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isRestaurantOpen, setIsRestaurentOpen] = useState(false);
+    const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
     const openFilter = () => setIsFilterOpen(true);
     const closeFilter = () => setIsFilterOpen(false);
+    const openRestaurant = () => setIsRestaurentOpen(true);
+    const closeRestaurant = () => setIsRestaurentOpen(false);
     const options = useMemo(() => {
         let id = 1;
-        const array = [];
-        restaurantsOnMap.forEach((restaurant) => {
+        const array: Array<Option> = [];
+        restaurantsOnMap.forEach((restaurant: Restaurant) => {
             restaurant.meals.forEach((meal) => {
                 array.push({ id: id++, name: meal.name });
             });
         });
         return array;
     }, [restaurantsOnMap]);
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const addOption = (option) => {
-        const isDouble = selectedOptions.find((opt) => opt.id === option.id);
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+    const addOption = (option: Option) => {
+        const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
             return;
         } else {
             setSelectedOptions([...selectedOptions, option]);
         }
     };
-    const deleteOption = (option) => {
-        setSelectedOptions(selectedOptions.filter((opt) => opt.id !== option.id));
+    const deleteOption = (option: Option) => {
+        setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
     useEffect(() => {
         setRestaurantsOnMap(mockRestaurants);
@@ -125,9 +127,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     close: closeFilter,
                 },
                 restaurant: {
-                    isOpen: false,
-                    open: undefined,
-                    close: undefined,
+                    isOpen: isRestaurantOpen,
+                    open: openRestaurant,
+                    close: closeRestaurant,
                 },
                 options: {
                     all: options,
