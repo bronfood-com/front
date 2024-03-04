@@ -110,8 +110,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
     useEffect(() => {
-        if(restaurantsOnMap.length === 0) {
-            return
+        if (restaurantsOnMap.length === 0) {
+            return;
         } else if (selectedOptions.length === 0) {
             setRestaurantsFiltered(restaurantsOnMap);
         } else {
@@ -126,7 +126,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 }
             });
             setRestaurantsFiltered(filtered);
-        }}, [restaurantsOnMap, selectedOptions]);
+        }
+    }, [restaurantsOnMap, selectedOptions]);
     useEffect(() => {
         setRestaurantsOnMap(mockRestaurants);
         setRestaurantsFiltered(mockRestaurants);

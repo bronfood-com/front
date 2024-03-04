@@ -11,7 +11,7 @@ function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; i
         margin: '-10% 0px -10% 0px',
     });
     return (
-        <div ref={ref} className={`${styles.card} ${(isInView || isTheOnlyOne) ? styles.card__active : ''}`}>
+        <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>
