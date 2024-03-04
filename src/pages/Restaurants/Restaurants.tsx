@@ -1,21 +1,26 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import Drawer from './Drawer/Drawer';
-import { restaurants } from './MockRestaurantsList';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { mockRestaurants } from './MockRestaurantsList';
 
 function Restaurants() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const restaurants = mockRestaurants
+    const options = useMemo(() => {
+        let id = 1;
+        const array = [];
+        restaurants.forEach((restaurant) => {
+            restaurant.meals.forEach((meal) => {
+                array.push({ id: id++, name: meal.name });
+            });
+        });
+        return array;
+    }, [restaurants]);
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-    const handleFilterClick = () => {
-        navigate('filter');
-    };
     const handleRestaurantClick = () => {};
     return (
         <>
-            <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openFilter={handleFilterClick} openListItem={handleRestaurantClick} title={t('pages.restaurants.selectPlace')} list={restaurants} />;
-            <Outlet />
+            <Drawer isOpen={isDrawerOpen} toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)} openListItem={handleRestaurantClick} title={t('pages.restaurants.selectPlace')} list={restaurants} options={options}></Drawer>;
         </>
     );
 }

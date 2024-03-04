@@ -1,19 +1,22 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 import { Restaurant } from '../MockRestaurantsList';
+import Filter from '../Filter/Filter';
 
 type DrawerProps = {
     isOpen: boolean;
     title: string;
     list: Restaurant[];
+    options: [];
     toggleDrawer: () => void;
-    openFilter: () => void;
     openListItem: () => void;
 };
 
-const Drawer = ({ isOpen, title, list, toggleDrawer, openFilter, openListItem }: DrawerProps) => {
+const Drawer = ({ isOpen, title, list, options, toggleDrawer, openListItem }: DrawerProps) => {
     const container = useRef(null);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState([]);
     return (
         <div className={`${styles.drawer} ${styles.up} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
@@ -22,7 +25,7 @@ const Drawer = ({ isOpen, title, list, toggleDrawer, openFilter, openListItem }:
                 </button>
                 <div className={styles.drawer__title_container}>
                     <p className={styles.drawer__title}>{title}</p>
-                    <button onClick={openFilter} className={styles.drawer__icon} />
+                    <button onClick={() => setIsFilterOpen(true)} className={styles.drawer__icon} />
                 </div>
                 <ul ref={container} className={styles.drawer__list}>
                     {list.map((card) => (
@@ -32,6 +35,7 @@ const Drawer = ({ isOpen, title, list, toggleDrawer, openFilter, openListItem }:
                     ))}
                 </ul>
             </div>
+            {isFilterOpen && <Filter options={options} close={() => setIsFilterOpen(false)} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />}
         </div>
     );
 };
