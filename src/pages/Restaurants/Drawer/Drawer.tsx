@@ -6,7 +6,7 @@ import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 
 const Drawer = () => {
-    const {drawer, filter, restaurantsFiltered} = useRestaurants();
+    const { drawer, filter, restaurantsFiltered } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
     return (

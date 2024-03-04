@@ -22,33 +22,33 @@ type Restaurant = {
 };
 
 type Option = {
-    id: string,
-    name: string,
-}
+    id: string;
+    name: string;
+};
 
 type RestaurantsContext = {
     restaurantsOnMap: Restaurant[] | [];
     restaurantsFiltered: Restaurant[] | [];
     drawer: {
-        isOpen: boolean,
-        toggle: () => void,
+        isOpen: boolean;
+        toggle: () => void;
     };
     filter: {
-        isOpen: boolean,
-        open: () => void,
-        close: () => void,
+        isOpen: boolean;
+        open: () => void;
+        close: () => void;
     };
     restaurant: {
-        isOpen: boolean,
-        open: () => void,
-        close: () => void,
+        isOpen: boolean;
+        open: () => void;
+        close: () => void;
     };
     options: {
-        all: Option[],
-        selectedOptions: Option[],
+        all: Option[];
+        selectedOptions: Option[];
         addOption: () => void;
         deleteOption: () => void;
-    }
+    };
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
@@ -73,7 +73,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
         selectedOptions: [],
         addOption: undefined,
         deleteOption: undefined,
-    }
+    },
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -134,7 +134,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     selectedOptions,
                     addOption,
                     deleteOption,
-                }
+                },
             }}
         >
             {children}

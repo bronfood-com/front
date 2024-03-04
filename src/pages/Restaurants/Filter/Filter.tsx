@@ -17,7 +17,7 @@ const OptionList = ({ options, selected, action }) => {
 };
 
 const Filter = () => {
-    const {options, filter} = useRestaurants();
+    const { options, filter } = useRestaurants();
     const [suggestedOptions, setSuggestedOptions] = useState([]);
     const { t } = useTranslation();
     const id = useId();
