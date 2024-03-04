@@ -1,8 +1,8 @@
 import { useEffect, MouseEvent, useState, useId } from 'react';
 import styles from './Filter.module.scss';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Option from './Option/Option';
+import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 
 const OptionList = ({ options, selected, action }) => {
     return (
@@ -16,26 +16,15 @@ const OptionList = ({ options, selected, action }) => {
     );
 };
 
-const Filter = ({ options, close, selectedOptions, setSelectedOptions }) => {
+const Filter = () => {
+    const {options, filter} = useRestaurants();
     const [suggestedOptions, setSuggestedOptions] = useState([]);
     const { t } = useTranslation();
     const id = useId();
-    const navigate = useNavigate();
-    const selectOption = (option) => {
-        const isDouble = selectedOptions.find((opt) => opt.id === option.id);
-        if (isDouble) {
-            return;
-        } else {
-            setSelectedOptions([...selectedOptions, option]);
-        }
-    };
-    const deleteOption = (option) => {
-        setSelectedOptions(selectedOptions.filter((opt) => opt.id !== option.id));
-    };
     const handleChange = (e) => {
         const userInput = e.target.value;
         if (userInput) {
-            const linked = options.filter((opt) => opt.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
+            const linked = options.all.filter((opt) => opt.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
             setSuggestedOptions(linked);
         } else {
             setSuggestedOptions([]);
@@ -55,7 +44,7 @@ const Filter = ({ options, close, selectedOptions, setSelectedOptions }) => {
         <div className={styles.filter_overlay} onClick={handleOverlayClick}>
             <div className={styles.filter}>
                 <div className={styles.filter__title_container}>
-                    <button className={styles.filter__icon_back} type="button" onClick={close} />
+                    <button className={styles.filter__icon_back} type="button" onClick={filter.close} />
                     <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t('pages.filter.filters')}</p>
                 </div>
                 <div className={styles.filter__search_container}>
@@ -68,8 +57,8 @@ const Filter = ({ options, close, selectedOptions, setSelectedOptions }) => {
                             <input id={id} onChange={handleChange} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
-                            <OptionList options={suggestedOptions} selected={false} action={selectOption} />
-                            <OptionList options={selectedOptions} selected={true} action={deleteOption} />
+                            <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
+                            <OptionList options={options.selectedOptions} selected={true} action={options.deleteOption} />
                         </div>
                     </div>
                 </div>
