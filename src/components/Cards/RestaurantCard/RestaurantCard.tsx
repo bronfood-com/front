@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../contexts/RestaurantsContext';
 
-function RestaurantCard({ card, container }: { card: Restaurant; container: RefObject<Element> }) {
+function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
     const ref = useRef(null);
     const isInView = useInView(ref, {
         amount: 'all',
@@ -11,7 +11,7 @@ function RestaurantCard({ card, container }: { card: Restaurant; container: RefO
         margin: '-10% 0px -10% 0px',
     });
     return (
-        <div ref={ref} className={`${styles.card} ${isInView ? styles.card__active : ''}`}>
+        <div ref={ref} className={`${styles.card} ${(isInView || isTheOnlyOne) ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>

@@ -51,7 +51,7 @@ type RestaurantsContext = {
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
-    restaurantsOnMap: mockRestaurants,
+    restaurantsOnMap: [],
     restaurantsFiltered: [],
     drawer: {
         isOpen: true,
@@ -110,23 +110,27 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
     useEffect(() => {
-        setRestaurantsOnMap(mockRestaurants);
-        setRestaurantsFiltered(mockRestaurants);
-    }, []);
-    useEffect(() => {
-        if (restaurantsOnMap.length > 0) {
+        if(restaurantsOnMap.length === 0) {
+            return
+        } else if (selectedOptions.length === 0) {
+            setRestaurantsFiltered(restaurantsOnMap);
+        } else {
             const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
             const filtered = restaurantsOnMap.filter((restaurant) => {
-                const isFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
-                if (isFound) {
+                const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
+                const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
+                if (isMealFound || isRestaurantFound) {
                     return restaurant;
                 } else {
                     return;
                 }
             });
             setRestaurantsFiltered(filtered);
-        }
-    }, [restaurantsOnMap, selectedOptions]);
+        }}, [restaurantsOnMap, selectedOptions]);
+    useEffect(() => {
+        setRestaurantsOnMap(mockRestaurants);
+        setRestaurantsFiltered(mockRestaurants);
+    }, []);
     return (
         <RestaurantsContext.Provider
             value={{

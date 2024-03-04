@@ -22,7 +22,7 @@ const Drawer = () => {
                 <ul ref={container} className={styles.drawer__list}>
                     {restaurantsFiltered.map((card) => (
                         <li key={card.id} className={styles.drawer__list_item}>
-                            <RestaurantCard card={card} container={container} />
+                            <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
                         </li>
                     ))}
                 </ul>
