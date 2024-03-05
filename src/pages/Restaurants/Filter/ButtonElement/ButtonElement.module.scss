@@ -1,0 +1,28 @@
+@import '../../../../styles/variables.scss';
+
+.button_element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 38px;
+    border-radius: 35px;
+    background: $button-grey;
+    border: none;
+    padding-inline: 0;
+    padding-block: 0;
+
+    &_text {
+        padding: 9px 16px 9px 16px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: $black;
+    }
+    &_text_active {
+        color: $white;
+    }
+    &_active {
+        background: $orange;
+    }
+}

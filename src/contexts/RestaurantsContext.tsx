@@ -25,6 +25,12 @@ export type Option = {
     name: string;
 };
 
+export type VenueType = {
+    id: number;
+    name: string;
+    selected: boolean;
+};
+
 type RestaurantsContext = {
     restaurantsOnMap: Restaurant[] | [];
     restaurantsFiltered: Restaurant[] | [];
@@ -47,6 +53,10 @@ type RestaurantsContext = {
         selectedOptions: Option[];
         addOption: (option: Option) => void;
         deleteOption: (option: Option) => void;
+    };
+    venueTypes: {
+        types: VenueType[];
+        toggleType: (type: string) => void;
     };
 };
 
@@ -72,6 +82,10 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
         selectedOptions: [],
         addOption: () => {},
         deleteOption: () => {},
+    },
+    venueTypes: {
+        types: [],
+        toggleType: () => {},
     },
 });
 
@@ -109,6 +123,25 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteOption = (option: Option) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
+    const types = useMemo(() => {
+        let id = 1;
+        const array: Array<string> = [];
+        restaurantsOnMap.forEach((restaurant: Restaurant) => array.push(restaurant.type));
+        const uniqueTypes = array.filter((type, i, ar) => ar.indexOf(type) === i);
+        return uniqueTypes.map((type) => {
+            return { id: id++, name: type, selected: false };
+        });
+    }, [restaurantsOnMap]);
+    const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
+    const toggleType = (venue: VenueType) => {
+        setVenueTypes(
+            venueTypes.map((type) => {
+                if (type.id === venue.id) {
+                    return { ...type, selected: !type.selected };
+                } else return type;
+            }),
+        );
+    };
     useEffect(() => {
         if (restaurantsOnMap.length === 0) {
             return;
@@ -116,10 +149,12 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             setRestaurantsFiltered(restaurantsOnMap);
         } else {
             const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
+            const typeNames = selectedVenueTypes.map((type) => type.toLowerCase());
             const filtered = restaurantsOnMap.filter((restaurant) => {
                 const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
                 const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
-                if (isMealFound || isRestaurantFound) {
+                const isTypeFound = typeNames.includes(restaurant.type.toLowerCase());
+                if (isMealFound || isRestaurantFound || isTypeFound) {
                     return restaurant;
                 } else {
                     return;
@@ -127,11 +162,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             });
             setRestaurantsFiltered(filtered);
         }
-    }, [restaurantsOnMap, selectedOptions]);
+    }, [restaurantsOnMap, selectedOptions, venueTypes]);
     useEffect(() => {
         setRestaurantsOnMap(mockRestaurants);
         setRestaurantsFiltered(mockRestaurants);
     }, []);
+    useEffect(() => {
+        setVenueTypes(types);
+    }, [types]);
     return (
         <RestaurantsContext.Provider
             value={{
@@ -156,6 +194,10 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     selectedOptions,
                     addOption,
                     deleteOption,
+                },
+                venueTypes: {
+                    types: venueTypes,
+                    toggleType,
                 },
             }}
         >

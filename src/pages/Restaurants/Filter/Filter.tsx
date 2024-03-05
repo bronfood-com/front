@@ -1,9 +1,10 @@
 import { useEffect, MouseEvent, useState, useId, ChangeEvent } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
-import OptionElement from './Option/Option';
+import OptionElement from './OptionElement/OptionElement';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Option } from '../../../contexts/RestaurantsContext';
+import ButtonElement from './ButtonElement/ButtonElement';
 
 const OptionList = ({ options, selected, action }: { options: Option[]; selected: boolean; action: (option: Option) => void }) => {
     return (
@@ -18,10 +19,11 @@ const OptionList = ({ options, selected, action }: { options: Option[]; selected
 };
 
 const Filter = () => {
-    const { options, filter } = useRestaurants();
+    const { options, venueTypes, filter } = useRestaurants();
     const [suggestedOptions, setSuggestedOptions] = useState<Option[]>([]);
     const { t } = useTranslation();
-    const id = useId();
+    const textId = useId();
+    const buttonId = useId();
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const userInput = e.target.value;
         if (userInput) {
@@ -49,19 +51,33 @@ const Filter = () => {
                     <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t('pages.filter.filters')}</p>
                 </div>
                 <div className={styles.filter__search_container}>
-                    <label htmlFor={id} className={styles.filter__text}>
+                    <label htmlFor={textId} className={styles.filter__text}>
                         {t('pages.filter.enterSearchString')}
                     </label>
                     <div className={styles.filter__options_container}>
                         <div className={styles.filter__input_container}>
                             <div className={styles.filter__icon_search} />
-                            <input id={id} onChange={handleChange} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
+                            <input id={textId} onChange={handleChange} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
                             <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
                             <OptionList options={options.selectedOptions} selected={true} action={options.deleteOption} />
                         </div>
                     </div>
+                </div>
+                <div className={styles.filter__search_container}>
+                    <label htmlFor={buttonId} className={styles.filter__text}>
+                        {t('pages.filter.chooseTypeOfVenue')}
+                    </label>
+                    <ul className={`${styles.filter__types}`}>
+                        {venueTypes.types.map((type) => {
+                            return (
+                                <li key={type.id}>
+                                    <ButtonElement text={t(`pages.filter.${type.name}`)} turnOn={() => venueTypes.toggleType(type)} turnOff={() => venueTypes.toggleType(type)} />
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
             </div>
         </div>

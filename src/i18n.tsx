@@ -132,7 +132,7 @@ i18n
                             chooseTypeOfVenue: 'Выберите тип заведения',
                             fastFood: 'Фаст фуд',
                             cafe: 'Кафе',
-                            coffeeHouse: 'Кофейня',
+                            cafeBar: 'Кофейня',
                         },
                     },
                 },

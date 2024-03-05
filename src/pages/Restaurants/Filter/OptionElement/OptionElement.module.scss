@@ -9,6 +9,7 @@
     border-radius: 15px;
     background: $button-grey;
     border: none;
+    cursor: pointer;
 
     &__text {
         padding: 5px;
@@ -32,5 +33,6 @@
     }
     &_selected {
         background: $orange-pale;
+        cursor: default;
     }
 }
