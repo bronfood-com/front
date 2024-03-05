@@ -56,7 +56,7 @@ type RestaurantsContext = {
     };
     venueTypes: {
         types: VenueType[];
-        toggleType: (type: string) => void;
+        toggleType: (venue: VenueType) => void;
     };
 };
 
