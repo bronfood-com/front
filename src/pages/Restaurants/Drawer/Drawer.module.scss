@@ -62,7 +62,7 @@
         cursor: pointer;
     }
     &__list {
-        height: 280px;
+        height: 360px;
         overflow-y: scroll;
         display: flex;
         flex-direction: column;
@@ -80,5 +80,5 @@
 }
 
 .drawer.open {
-    transform: translateY(50%);
+    transform: translateY(40%);
 }
