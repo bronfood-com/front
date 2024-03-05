@@ -26,7 +26,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (currentUser) {
-            navigate('/');
+            navigate('/restaurants');
         }
         // Doesnt pass ci build with navigate deps
         // eslint-disable-next-line react-hooks/exhaustive-deps
