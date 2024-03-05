@@ -73,7 +73,7 @@ const Filter = () => {
                         {venueTypes.types.map((type) => {
                             return (
                                 <li key={type.id}>
-                                    <ButtonElement text={t(`pages.filter.${type.name}`)} turnOn={() => venueTypes.toggleType(type)} turnOff={() => venueTypes.toggleType(type)} />
+                                    <ButtonElement text={t(`pages.filter.${type.name}`)} isActive={type.selected} action={() => venueTypes.toggleType(type)} />
                                 </li>
                             );
                         })}

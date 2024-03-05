@@ -95,6 +95,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isRestaurantOpen, setIsRestaurentOpen] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+    const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
     const openFilter = () => setIsFilterOpen(true);
     const closeFilter = () => setIsFilterOpen(false);
@@ -111,7 +113,15 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         });
         return array;
     }, [restaurantsOnMap]);
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+    const types = useMemo(() => {
+        let id = 1;
+        const array: Array<string> = [];
+        restaurantsOnMap.forEach((restaurant: Restaurant) => array.push(restaurant.type));
+        const uniqueTypes = array.filter((type, i, ar) => ar.indexOf(type) === i);
+        return uniqueTypes.map((type) => {
+            return { id: id++, name: type, selected: false };
+        });
+    }, [restaurantsOnMap]);
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -123,18 +133,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteOption = (option: Option) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
-    const types = useMemo(() => {
-        let id = 1;
-        const array: Array<string> = [];
-        restaurantsOnMap.forEach((restaurant: Restaurant) => array.push(restaurant.type));
-        const uniqueTypes = array.filter((type, i, ar) => ar.indexOf(type) === i);
-        return uniqueTypes.map((type) => {
-            return { id: id++, name: type, selected: false };
-        });
-    }, [restaurantsOnMap]);
-    const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
     const toggleType = (venue: VenueType) => {
-        setVenueTypes(
+        setVenueTypes((venueTypes) =>
             venueTypes.map((type) => {
                 if (type.id === venue.id) {
                     return { ...type, selected: !type.selected };
@@ -143,13 +143,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         );
     };
     useEffect(() => {
+        const isTypeSelected = venueTypes.some((type) => type.selected);
         if (restaurantsOnMap.length === 0) {
             return;
-        } else if (selectedOptions.length === 0) {
+        } else if (selectedOptions.length === 0 && !isTypeSelected) {
             setRestaurantsFiltered(restaurantsOnMap);
         } else {
             const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
-            const typeNames = selectedVenueTypes.map((type) => type.toLowerCase());
+            const typeNames = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : null));
             const filtered = restaurantsOnMap.filter((restaurant) => {
                 const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
                 const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
