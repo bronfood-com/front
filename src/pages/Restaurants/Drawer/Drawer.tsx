@@ -17,7 +17,7 @@ const Drawer = () => {
                 </button>
                 <div className={styles.drawer__title_container}>
                     <p className={styles.drawer__title}>{t('pages.restaurants.selectPlace')}</p>
-                    <button onClick={() => filter.open()} className={styles.drawer__icon} />
+                    <button onClick={filter.open} className={styles.drawer__icon} />
                 </div>
                 <ul ref={container} className={styles.drawer__list}>
                     {restaurantsFiltered.map((card) => (
