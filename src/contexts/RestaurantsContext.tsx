@@ -77,7 +77,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [venueTypes, setVenueTypes] = useState<VenueType[]>(types);
     const isTypeSelected: boolean = venueTypes.some((type) => type.selected);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
-    const typeNames: string[] = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : null));
+    const typeNames: string[] = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : ''));
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
