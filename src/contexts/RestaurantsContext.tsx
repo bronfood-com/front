@@ -75,9 +75,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>(mockRestaurants);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [venueTypes, setVenueTypes] = useState<VenueType[]>(types);
-    const isTypeSelected = venueTypes.some(type => type.selected);
-    const optionNames = selectedOptions.map(option => option.name.toLowerCase());
-    const typeNames = venueTypes.map(type => type.selected ? type.name.toLowerCase() : null);
+    const isTypeSelected = venueTypes.some((type) => type.selected);
+    const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
+    const typeNames = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : null));
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -100,7 +100,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const restaurantsFiltered = restaurantsOnMap.filter((restaurant) => {
         if (selectedOptions.length === 0 && !isTypeSelected) {
-            return restaurant
+            return restaurant;
         } else {
             const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
             const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
@@ -111,7 +111,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 return;
             }
         }
-    })
+    });
     useEffect(() => {
         setRestaurantsOnMap(mockRestaurants);
     }, []);
