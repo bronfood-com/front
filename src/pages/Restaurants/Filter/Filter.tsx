@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Option } from '../../../contexts/RestaurantsContext';
-import ButtonElement from './ButtonElement/ButtonElement';
+import Chip from './Chip/Chip';
 
 type OptionListTypes = {
     options: Option[];
@@ -74,7 +74,7 @@ const Filter = ({ close }: { close: () => void }) => {
                         {venueTypes.types.map((type) => {
                             return (
                                 <li key={type.id}>
-                                    <ButtonElement text={t(`pages.filter.${type.name}`)} isActive={type.selected} action={() => venueTypes.toggleType(type)} />
+                                    <Chip text={t(`pages.filter.${type.name}`)} isActive={type.selected} action={() => venueTypes.toggleType(type)} />
                                 </li>
                             );
                         })}

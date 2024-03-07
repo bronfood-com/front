@@ -1,12 +1,12 @@
-import styles from './ButtonElement.module.scss';
+import styles from './Chip.module.scss';
 
-type ButtonElementProps = {
+type ChipProps = {
     text: string;
     isActive: boolean;
     action: () => void;
 };
 
-const ButtonElement = (props: ButtonElementProps) => {
+const Chip = (props: ChipProps) => {
     return (
         <label className={`${styles.button_element} ${props.isActive ? styles.button_element_active : ''}`}>
             <input className={styles.button_element_input} type="checkbox" defaultChecked={false} onChange={props.action} />
@@ -15,4 +15,4 @@ const ButtonElement = (props: ButtonElementProps) => {
     );
 };
 
-export default ButtonElement;
+export default Chip;
