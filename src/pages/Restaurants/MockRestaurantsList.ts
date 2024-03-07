@@ -95,3 +95,23 @@ export const mockRestaurants: Restaurant[] = [
         type: 'cafeBar',
     },
 ];
+
+let id = 1;
+
+export const options = mockRestaurants
+    .map(({ meals, name }) => {
+        return meals.map((meal) => {
+            return [
+                { id: id++, name: meal.name },
+                { id: id++, name },
+            ];
+        });
+    })
+    .flat(2);
+
+export const types = mockRestaurants
+    .map(({ type }) => type)
+    .filter((type, i, ar) => ar.indexOf(type) === i)
+    .map((type) => {
+        return { id: id++, name: type };
+    });

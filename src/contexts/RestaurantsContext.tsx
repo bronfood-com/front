@@ -1,5 +1,5 @@
-import { createContext, FC, useState, PropsWithChildren, useMemo, useEffect } from 'react';
-import { mockRestaurants } from '../pages/Restaurants/MockRestaurantsList';
+import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { mockRestaurants, options, types } from '../pages/Restaurants/MockRestaurantsList';
 
 export type Meal = {
     id: string;
@@ -33,9 +33,9 @@ export type VenueType = {
 
 type RestaurantsContext = {
     /** List of restaurants currently on map  */
-    restaurantsOnMap: Restaurant[] | [];
+    restaurantsOnMap: Restaurant[];
     /** List of restaurants filtered with user selected options */
-    restaurantsFiltered: Restaurant[] | [];
+    restaurantsFiltered: Restaurant[];
     /** Options' states and controls. Options come from user's input */
     options: {
         /** List of all options available */
@@ -72,30 +72,11 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
+    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>(mockRestaurants);
     const [restaurantsFiltered, setRestaurantsFiltered] = useState<Restaurant[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
-    const options = useMemo(() => {
-        let id = 1;
-        const array: Array<Option> = [];
-        restaurantsOnMap.forEach(async (restaurant: Restaurant) => {
-            await restaurant.meals.forEach((meal) => {
-                array.push({ id: id++, name: meal.name });
-            });
-            array.push({ id: id++, name: restaurant.name });
-        });
-        return array;
-    }, [restaurantsOnMap]);
-    const types = useMemo(() => {
-        let id = 1;
-        const array: Array<string> = [];
-        restaurantsOnMap.forEach((restaurant: Restaurant) => array.push(restaurant.type));
-        const uniqueTypes = array.filter((type, i, ar) => ar.indexOf(type) === i);
-        return uniqueTypes.map((type) => {
-            return { id: id++, name: type, selected: false };
-        });
-    }, [restaurantsOnMap]);
+
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -144,7 +125,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
     useEffect(() => {
         setVenueTypes(types);
-    }, [types]);
+    }, []);
     return (
         <RestaurantsContext.Provider
             value={{
