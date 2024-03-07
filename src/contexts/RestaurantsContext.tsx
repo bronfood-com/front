@@ -73,10 +73,11 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>(mockRestaurants);
-    const [restaurantsFiltered, setRestaurantsFiltered] = useState<Restaurant[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-    const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
-
+    const [venueTypes, setVenueTypes] = useState<VenueType[]>(types);
+    const isTypeSelected = venueTypes.some(type => type.selected);
+    const optionNames = selectedOptions.map(option => option.name.toLowerCase());
+    const typeNames = venueTypes.map(type => type.selected ? type.name.toLowerCase() : null);
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -97,34 +98,22 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             }),
         );
     };
-    useEffect(() => {
-        const isTypeSelected = venueTypes.some((type) => type.selected);
-        if (restaurantsOnMap.length === 0) {
-            return;
-        } else if (selectedOptions.length === 0 && !isTypeSelected) {
-            setRestaurantsFiltered(restaurantsOnMap);
+    const restaurantsFiltered = restaurantsOnMap.filter((restaurant) => {
+        if (selectedOptions.length === 0 && !isTypeSelected) {
+            return restaurant
         } else {
-            const optionNames = selectedOptions.map((option) => option.name.toLowerCase());
-            const typeNames = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : null));
-            const filtered = restaurantsOnMap.filter((restaurant) => {
-                const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
-                const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
-                const isTypeFound = typeNames.includes(restaurant.type.toLowerCase());
-                if (isMealFound || isRestaurantFound || isTypeFound) {
-                    return restaurant;
-                } else {
-                    return;
-                }
-            });
-            setRestaurantsFiltered(filtered);
+            const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
+            const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
+            const isTypeFound = typeNames.includes(restaurant.type.toLowerCase());
+            if (isMealFound || isRestaurantFound || isTypeFound) {
+                return restaurant;
+            } else {
+                return;
+            }
         }
-    }, [restaurantsOnMap, selectedOptions, venueTypes]);
+    })
     useEffect(() => {
         setRestaurantsOnMap(mockRestaurants);
-        setRestaurantsFiltered(mockRestaurants);
-    }, []);
-    useEffect(() => {
-        setVenueTypes(types);
     }, []);
     return (
         <RestaurantsContext.Provider
