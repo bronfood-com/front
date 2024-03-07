@@ -17,7 +17,7 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
         <ul className={`${styles.filter__options} ${!selected && styles.filter__options_nowrap}`}>
             {options.map((option) => (
                 <li key={option.id}>
-                    <OptionElement text={option.name} selected={selected} action={() => action(option)} />
+                    <OptionElement text={option.name} selected={selected} onClick={() => action(option)} />
                 </li>
             ))}
         </ul>
@@ -74,7 +74,7 @@ const Filter = ({ close }: { close: () => void }) => {
                         {venueTypes.types.map((type) => {
                             return (
                                 <li key={type.id}>
-                                    <Chip text={t(`pages.filter.${type.name}`)} isActive={type.selected} action={() => venueTypes.toggleType(type)} />
+                                    <Chip text={t(`pages.filter.${type.name}`)} isActive={type.selected} onClick={() => venueTypes.toggleType(type)} />
                                 </li>
                             );
                         })}
