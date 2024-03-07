@@ -6,7 +6,13 @@ import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestauran
 import { Option } from '../../../contexts/RestaurantsContext';
 import ButtonElement from './ButtonElement/ButtonElement';
 
-const OptionList = ({ options, selected, action }: { options: Option[]; selected: boolean; action: (option: Option) => void }) => {
+type OptionListTypes = {
+    options: Option[];
+    selected: boolean;
+    action: (option: Option) => void
+};
+
+const OptionList = ({ options, selected, action }: OptionListTypes) => {
     return (
         <ul className={`${styles.filter__options} ${!selected && styles.filter__options_nowrap}`}>
             {options.map((option) => (
@@ -18,8 +24,8 @@ const OptionList = ({ options, selected, action }: { options: Option[]; selected
     );
 };
 
-const Filter = () => {
-    const { options, venueTypes, filter } = useRestaurants();
+const Filter = ({ close }: { close: () => void }) => {
+    const { options, venueTypes } = useRestaurants();
     const [suggestedOptions, setSuggestedOptions] = useState<Option[]>([]);
     const { t } = useTranslation();
     const textId = useId();
@@ -35,11 +41,11 @@ const Filter = () => {
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
-            filter.close();
+            close();
         }
     };
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && filter.close();
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && close();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
     });
@@ -47,7 +53,7 @@ const Filter = () => {
         <div className={styles.filter_overlay} onClick={handleOverlayClick}>
             <div className={styles.filter}>
                 <div className={styles.filter__title_container}>
-                    <button className={styles.filter__icon_back} type="button" onClick={filter.close} />
+                    <button className={styles.filter__icon_back} type="button" onClick={close} />
                     <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t('pages.filter.filters')}</p>
                 </div>
                 <div className={styles.filter__search_container}>

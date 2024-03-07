@@ -32,30 +32,26 @@ export type VenueType = {
 };
 
 type RestaurantsContext = {
+    /** List of restaurants currently on map  */
     restaurantsOnMap: Restaurant[] | [];
+    /** List of restaurants filtered with user selected options */
     restaurantsFiltered: Restaurant[] | [];
-    drawer: {
-        isOpen: boolean;
-        toggle: () => void;
-    };
-    filter: {
-        isOpen: boolean;
-        open: () => void;
-        close: () => void;
-    };
-    restaurant: {
-        isOpen: boolean;
-        open: () => void;
-        close: () => void;
-    };
+    /** Options' states and controls. Options come from user's input */
     options: {
+        /** List of all options available */
         all: Option[];
+        /** List of options selected by user */
         selectedOptions: Option[];
+        /** Add option to the list of selected options */
         addOption: (option: Option) => void;
+        /** Remove option from the list of selected options */
         deleteOption: (option: Option) => void;
     };
+    /** Types of venues state and control */
     venueTypes: {
+        /** All types of venues found on map */
         types: VenueType[];
+        /** Select / deselect venue's type */
         toggleType: (venue: VenueType) => void;
     };
 };
@@ -63,20 +59,6 @@ type RestaurantsContext = {
 export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsOnMap: [],
     restaurantsFiltered: [],
-    drawer: {
-        isOpen: true,
-        toggle: () => {},
-    },
-    filter: {
-        isOpen: false,
-        open: () => {},
-        close: () => {},
-    },
-    restaurant: {
-        isOpen: false,
-        open: () => {},
-        close: () => {},
-    },
     options: {
         all: [],
         selectedOptions: [],
@@ -92,16 +74,8 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
     const [restaurantsFiltered, setRestaurantsFiltered] = useState<Restaurant[]>([]);
-    const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [isRestaurantOpen, setIsRestaurentOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [venueTypes, setVenueTypes] = useState<VenueType[]>([]);
-    const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
-    const openFilter = () => setIsFilterOpen(true);
-    const closeFilter = () => setIsFilterOpen(false);
-    const openRestaurant = () => setIsRestaurentOpen(true);
-    const closeRestaurant = () => setIsRestaurentOpen(false);
     const options = useMemo(() => {
         let id = 1;
         const array: Array<Option> = [];
@@ -176,20 +150,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             value={{
                 restaurantsOnMap,
                 restaurantsFiltered,
-                drawer: {
-                    isOpen: isDrawerOpen,
-                    toggle: toggleDrawer,
-                },
-                filter: {
-                    isOpen: isFilterOpen,
-                    open: openFilter,
-                    close: closeFilter,
-                },
-                restaurant: {
-                    isOpen: isRestaurantOpen,
-                    open: openRestaurant,
-                    close: closeRestaurant,
-                },
                 options: {
                     all: options,
                     selectedOptions,
