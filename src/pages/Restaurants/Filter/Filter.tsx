@@ -9,7 +9,7 @@ import ButtonElement from './ButtonElement/ButtonElement';
 type OptionListTypes = {
     options: Option[];
     selected: boolean;
-    action: (option: Option) => void
+    action: (option: Option) => void;
 };
 
 const OptionList = ({ options, selected, action }: OptionListTypes) => {
