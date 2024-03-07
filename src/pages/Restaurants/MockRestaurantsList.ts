@@ -113,5 +113,5 @@ export const types = mockRestaurants
     .map(({ type }) => type)
     .filter((type, i, ar) => ar.indexOf(type) === i)
     .map((type) => {
-        return { id: id++, name: type };
+        return { id: id++, name: type, selected: false };
     });
