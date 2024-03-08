@@ -2,56 +2,130 @@ import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react
 import { mockRestaurants, options, types } from '../pages/Restaurants/MockRestaurantsList';
 
 export type Meal = {
+    /**
+     * Meal's id
+     */
     id: string;
+    /**
+     * Meal's name
+     */
     name: string;
+    /**
+     * Link to meal's image
+     */
     photo: string;
+    /**
+     * Meal's price
+     */
     price: number;
+    /**
+     * Meal's type
+     */
     type: 'food' | 'drink' | 'dessert';
 };
 
 export type Restaurant = {
+    /**
+     * Venue's id
+     */
     id: string;
+    /**
+     * Link to venue's image
+     */
     photo: string;
+    /**
+     * Venue's name
+     */
     name: string;
+    /**
+     * Venue's rating
+     */
     rating: number;
+    /**
+     * Venue's address
+     */
     address: string;
+    /**
+     * Venue's open hours
+     */
     workingTime: string;
+    /**
+     * List of venue's meals available for order
+     */
     meals: Meal[];
+    /**
+     * Venue's type
+     */
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
 export type Option = {
+    /**
+     * Option's id. Option may be either a meal's name or a venue's name
+     */
     id: number;
+    /**
+     * Option's name
+     */
     name: string;
 };
 
 export type VenueType = {
+    /**
+     * Type's id.
+     */
     id: number;
+    /**
+     * Type of venue. Not to be confused with venue's name
+     */
     name: string;
+    /**
+     * Indicates whether type has been selected by user. True / false
+     */
     selected: boolean;
 };
 
 type RestaurantsContext = {
-    /** List of restaurants currently on map  */
+    /**
+     * List of restaurants currently on map
+     */
     restaurantsOnMap: Restaurant[];
-    /** List of restaurants filtered with user selected options */
+    /**
+     * List of restaurants filtered with user selected options
+     */
     restaurantsFiltered: Restaurant[];
-    /** Options' states and controls. Options come from user's input */
+    /**
+     * Options' states and controls. Options come from user's input
+     */
     options: {
-        /** List of all options available */
+        /**
+         * List of all options available
+         */
         all: Option[];
-        /** List of options selected by user */
+        /**
+         * List of options selected by user
+         */
         selectedOptions: Option[];
-        /** Add option to the list of selected options */
+        /**
+         * Add option to the list of selected options
+         */
         addOption: (option: Option) => void;
-        /** Remove option from the list of selected options */
+        /**
+         * Remove option from the list of selected options
+         */
         deleteOption: (option: Option) => void;
     };
-    /** Types of venues state and control */
+    /**
+     * Types of venues state and control
+     */
     venueTypes: {
-        /** All types of venues found on map */
+        /**
+         * All types of venues found on map
+         */
         types: VenueType[];
-        /** Select / deselect venue's type */
+        /**
+         * Select / deselect venue's type
+         */
         toggleType: (venue: VenueType) => void;
     };
 };

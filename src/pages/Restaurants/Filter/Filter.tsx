@@ -7,8 +7,18 @@ import { Option } from '../../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
 
 type OptionListTypes = {
+    /**
+     * List of options to be rendered
+     */
     options: Option[];
+    /**
+     * Indicates whether option has been selected by user
+     */
     selected: boolean;
+    /**
+     * Fires when user clicks on option. Sets option selected or deselected
+     * @param {Option} option
+     */
     action: (option: Option) => void;
 };
 

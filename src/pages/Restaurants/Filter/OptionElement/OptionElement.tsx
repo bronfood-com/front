@@ -1,8 +1,17 @@
 import styles from './OptionElement.module.scss';
 
 type OptionProps = {
+    /**
+     * Indicates whether option has been selected by user. True / false
+     */
     selected: boolean;
+    /**
+     * Text displayed on HTML element
+     */
     text: string;
+    /**
+     * Fires when user clicks on option. Sets option selected or deselected
+     */
     onClick: () => void;
 };
 

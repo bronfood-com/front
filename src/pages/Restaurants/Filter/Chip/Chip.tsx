@@ -1,8 +1,17 @@
 import styles from './Chip.module.scss';
 
 type ChipProps = {
+    /**
+     * Text displayed on HTML element
+     */
     text: string;
+    /**
+     * Indicates whether venue's type has been selected by user. True / false
+     */
     isActive: boolean;
+    /**
+     * Fires when user clicks on venue's type. Sets type selected or deselected
+     */
     onClick: () => void;
 };
 
