@@ -35,7 +35,7 @@ type RestaurantsContext = {
      */
     restaurantsFiltered: Restaurant[];
     /**
-     * Determines whether restaurants are loading
+     * Indicates whether restaurants are loading
      */
     isLoading: boolean;
     /**
