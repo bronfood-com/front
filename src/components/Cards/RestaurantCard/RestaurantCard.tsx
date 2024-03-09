@@ -8,7 +8,7 @@ function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; i
     const isInView = useInView(ref, {
         amount: 'all',
         root: container,
-        margin: '-10% 0px -10% 0px',
+        margin: '-18% 0px -18% 0px',
     });
     return (
         <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
