@@ -26,7 +26,7 @@ const Chip = (props: ChipProps) => {
         } else {
             props.add();
         }
-    }
+    };
     return (
         <label className={`${styles.button_element} ${props.isActive ? styles.button_element_active : ''}`}>
             <input className={styles.button_element_input} type="checkbox" defaultChecked={false} onChange={handleChange} />

@@ -155,8 +155,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const restaurantsOnMap: Restaurant[] = mockRestaurants;
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
-    const optionNames: string[] = selectedOptions.map(option => option.name.toLowerCase());
-    const typeNames: string[] = selectedVenueTypes.map(type => type.name.toLowerCase());
+    const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
+    const typeNames: string[] = selectedVenueTypes.map((type) => type.name.toLowerCase());
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {

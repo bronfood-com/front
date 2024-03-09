@@ -96,12 +96,12 @@ export const mockRestaurants: Restaurant[] = [
     },
 ];
 
-const  increment = (function(n) {
-    return function() {
+const increment = (function (n) {
+    return function () {
         n += 1;
-        return n
-    }
-}(0));
+        return n;
+    };
+})(0);
 
 export const options = mockRestaurants
     .map(({ meals, name }) => {
