@@ -96,14 +96,19 @@ export const mockRestaurants: Restaurant[] = [
     },
 ];
 
-let id = 1;
+const  increment = (function(n) {
+    return function() {
+        n += 1;
+        return n
+    }
+}(0));
 
 export const options = mockRestaurants
     .map(({ meals, name }) => {
         return meals.map((meal) => {
             return [
-                { id: id++, name: meal.name },
-                { id: id++, name },
+                { id: increment(), name: meal.name },
+                { id: increment(), name },
             ];
         });
     })
@@ -113,5 +118,5 @@ export const types = mockRestaurants
     .map(({ type }) => type)
     .filter((type, i, ar) => ar.indexOf(type) === i)
     .map((type) => {
-        return { id: id++, name: type, selected: false };
+        return { id: increment(), name: type, selected: false };
     });

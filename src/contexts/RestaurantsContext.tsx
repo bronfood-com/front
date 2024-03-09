@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { mockRestaurants, options, types } from '../pages/Restaurants/MockRestaurantsList';
 
 export type Meal = {
@@ -79,10 +79,6 @@ export type VenueType = {
      * Type of venue. Not to be confused with venue's name
      */
     name: string;
-    /**
-     * Indicates whether type has been selected by user. True / false
-     */
-    selected: boolean;
 };
 
 type RestaurantsContext = {
@@ -116,17 +112,25 @@ type RestaurantsContext = {
         deleteOption: (option: Option) => void;
     };
     /**
-     * Types of venues state and control
+     * Types of venues states and control
      */
     venueTypes: {
         /**
          * All types of venues found on map
          */
-        types: VenueType[];
+        all: VenueType[];
         /**
-         * Select / deselect venue's type
+         * List of venue types selected by user
          */
-        toggleType: (venue: VenueType) => void;
+        selectedVenueTypes: VenueType[];
+        /**
+         * Add venue type to the list of selected venue types
+         */
+        addVenueType: (venueType: VenueType) => void;
+        /**
+         * Remove venue type from the list of selected venue types
+         */
+        deleteVenueType: (venueType: VenueType) => void;
     };
 };
 
@@ -140,18 +144,19 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
         deleteOption: () => {},
     },
     venueTypes: {
-        types: [],
-        toggleType: () => {},
+        all: [],
+        selectedVenueTypes: [],
+        addVenueType: () => {},
+        deleteVenueType: () => {},
     },
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>(mockRestaurants);
+    const restaurantsOnMap: Restaurant[] = mockRestaurants;
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-    const [venueTypes, setVenueTypes] = useState<VenueType[]>(types);
-    const isTypeSelected: boolean = venueTypes.some((type) => type.selected);
-    const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
-    const typeNames: string[] = venueTypes.map((type) => (type.selected ? type.name.toLowerCase() : ''));
+    const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
+    const optionNames: string[] = selectedOptions.map(option => option.name.toLowerCase());
+    const typeNames: string[] = selectedVenueTypes.map(type => type.name.toLowerCase());
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -163,17 +168,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteOption = (option: Option) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
     };
-    const toggleType = (venue: VenueType) => {
-        setVenueTypes((venueTypes) =>
-            venueTypes.map((type) => {
-                if (type.id === venue.id) {
-                    return { ...type, selected: !type.selected };
-                } else return type;
-            }),
-        );
+    const addVenueType = (venueType: VenueType) => {
+        setSelectedVenueTypes([...selectedVenueTypes, venueType]);
+    };
+    const deleteVenueType = (venueType: VenueType) => {
+        setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
     const restaurantsFiltered: Restaurant[] = restaurantsOnMap.filter((restaurant) => {
-        if (selectedOptions.length === 0 && !isTypeSelected) {
+        if (selectedOptions.length === 0 && selectedVenueTypes.length === 0) {
             return restaurant;
         } else {
             const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
@@ -186,9 +188,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             }
         }
     });
-    useEffect(() => {
-        setRestaurantsOnMap(mockRestaurants);
-    }, []);
     return (
         <RestaurantsContext.Provider
             value={{
@@ -201,8 +200,10 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     deleteOption,
                 },
                 venueTypes: {
-                    types: venueTypes,
-                    toggleType,
+                    all: types,
+                    selectedVenueTypes,
+                    addVenueType,
+                    deleteVenueType,
                 },
             }}
         >

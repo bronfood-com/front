@@ -81,10 +81,11 @@ const Filter = ({ close }: { close: () => void }) => {
                         {t('pages.filter.chooseTypeOfVenue')}
                     </label>
                     <ul className={`${styles.filter__types}`}>
-                        {venueTypes.types.map((type) => {
+                        {venueTypes.all.map((type) => {
+                            const isActive = venueTypes.selectedVenueTypes.includes(type);
                             return (
                                 <li key={type.id}>
-                                    <Chip text={t(`pages.filter.${type.name}`)} isActive={type.selected} onClick={() => venueTypes.toggleType(type)} />
+                                    <Chip text={t(`pages.filter.${type.name}`)} isActive={isActive} add={() => venueTypes.addVenueType(type)} delete={() => venueTypes.deleteVenueType(type)} />
                                 </li>
                             );
                         })}
