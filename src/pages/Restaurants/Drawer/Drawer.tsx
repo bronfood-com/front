@@ -4,11 +4,12 @@ import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantC
 import styles from './Drawer.module.scss';
 import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import Preloader from '../../../components/Preloader/Preloader';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered } = useRestaurants();
+    const { restaurantsFiltered, isLoading } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
     return (
@@ -21,6 +22,7 @@ const Drawer = () => {
                     <p className={styles.drawer__title}>{t('pages.restaurants.selectPlace')}</p>
                     <button onClick={() => setIsFilterOpen(true)} type="button" className={styles.drawer__icon} />
                 </div>
+                {isLoading && <Preloader />}
                 <ul ref={container} className={styles.drawer__list}>
                     {restaurantsFiltered.map((card) => (
                         <li key={card.id} className={styles.drawer__list_item}>
