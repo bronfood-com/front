@@ -1,4 +1,4 @@
-import { RestaurantsServiceMock } from "./restaurantsServiceMock";
+import { RestaurantsServiceMock } from './restaurantsServiceMock';
 // import { AuthServiceReal } from './authServiceReal';
 
 export type Meal = {

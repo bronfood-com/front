@@ -131,9 +131,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             const res = await restaurantsService.getRestaurantsFromMap();
             setRestaurantsOnMap(res.data);
             setIsLoading(false);
-        }
+        };
         fetchData();
-    }, [])
+    }, []);
     return (
         <RestaurantsContext.Provider
             value={{
