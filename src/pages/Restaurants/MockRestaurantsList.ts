@@ -1,7 +1,7 @@
 import image1 from './MockImages/image1.png';
 import image2 from './MockImages/image2.png';
 import image3 from './MockImages/image3.png';
-import { Restaurant } from '../../contexts/RestaurantsContext';
+import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 export const mockRestaurants: Restaurant[] = [
     {
