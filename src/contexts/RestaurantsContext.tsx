@@ -174,20 +174,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteVenueType = (venueType: VenueType) => {
         setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
-    const restaurantsFiltered: Restaurant[] = restaurantsOnMap.filter((restaurant) => {
-        if (selectedOptions.length === 0 && selectedVenueTypes.length === 0) {
-            return restaurant;
-        } else {
-            const isMealFound = restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase()));
-            const isRestaurantFound = optionNames.includes(restaurant.name.toLowerCase());
-            const isTypeFound = typeNames.includes(restaurant.type.toLowerCase());
-            if (isMealFound || isRestaurantFound || isTypeFound) {
-                return restaurant;
-            } else {
-                return;
-            }
-        }
-    });
+    const restaurantsFiltered: Restaurant[] =
+        selectedOptions.length === 0 && selectedVenueTypes.length === 0 ?
+        restaurantsOnMap :
+        restaurantsOnMap.filter((restaurant) =>
+            restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) ||
+            optionNames.includes(restaurant.name.toLowerCase()) ||
+            typeNames.includes(restaurant.type.toLowerCase())
+        );
     return (
         <RestaurantsContext.Provider
             value={{
