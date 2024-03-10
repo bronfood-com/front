@@ -128,7 +128,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         const fetchRestaurants = async () => {
             setIsLoading(true);
-            const res = await restaurantsService.getRestaurantsFromMap();
+            const res = await restaurantsService.getRestaurants();
             if (res.status === 'error') {
                 setRestaurantsOnMap([]);
                 setIsLoading(false);

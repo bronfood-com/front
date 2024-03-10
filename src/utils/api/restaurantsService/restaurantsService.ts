@@ -1,5 +1,5 @@
 import { RestaurantsServiceMock } from './restaurantsServiceMock';
-// import { AuthServiceReal } from './authServiceReal';
+// import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
 export type Meal = {
     /**
@@ -60,8 +60,8 @@ export type Restaurant = {
 };
 
 export interface RestaurantsService {
-    getRestaurantsFromMap: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
+    getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
 }
 
-// export const authService = new AuthServiceReal();
+// export const restaurantsService = new RestaurantsServiceReal();
 export const restaurantsService = new RestaurantsServiceMock();

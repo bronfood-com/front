@@ -10,7 +10,7 @@ export class RestaurantsServiceMock implements RestaurantsService {
         return 'token';
     }
 
-    async getRestaurantsFromMap(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
+    async getRestaurants(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
         const token = this.getToken();
         if (token) {
