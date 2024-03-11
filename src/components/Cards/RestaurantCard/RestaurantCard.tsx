@@ -1,9 +1,9 @@
 import { RefObject, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
-import { Restaurant } from '../../../pages/Restaurants/MockRestaurantsList';
+import { Restaurant } from '../../../contexts/RestaurantsContext';
 
-function RestaurantCard({ card, onClick, container }: { card: Restaurant; onClick: () => void; container: RefObject<Element> }) {
+function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
     const ref = useRef(null);
     const isInView = useInView(ref, {
         amount: 'all',
@@ -11,7 +11,7 @@ function RestaurantCard({ card, onClick, container }: { card: Restaurant; onClic
         margin: '-10% 0px -10% 0px',
     });
     return (
-        <div ref={ref} className={`${styles.card} ${isInView ? styles.card__active : ''}`} onClick={() => onClick()}>
+        <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>
