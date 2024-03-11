@@ -1,5 +1,5 @@
-import { AuthService } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData } from './authService';
+import { AuthService, PhoneNumber } from './authService';
+import { User, LoginData, RegisterData, СonfirmPhoneData } from './authService';
 
 export class AuthServiceMock implements AuthService {
     async _wait(ms: number) {
@@ -29,7 +29,26 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+        await this._wait(500);
+        if (temp_data_code && confirmation_code) {
+            localStorage.setItem('token', '23423434');
+            return { status: 'success', data: { phone: '777777777', fullname: 'Юзверь' } };
+        } else {
+            return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
+        }
+    }
+
+    async restorePassword(phone: PhoneNumber): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+        await this._wait(500);
+        if (phone) {
+            return { status: 'success', data: { temp_data_code: '1111' } };
+        } else {
+            return { status: 'error', error_message: 'UserWithThatPhoneNotFound' };
+        }
+    }
+
+    async confirmRestorePasswordPhone({ temp_data_code, confirmation_code }: СonfirmPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         if (temp_data_code && confirmation_code) {
             localStorage.setItem('token', '23423434');
