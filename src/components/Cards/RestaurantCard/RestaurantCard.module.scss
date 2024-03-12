@@ -58,17 +58,17 @@
         width: 19px;
     }
     &__icon_star {
-        background-image: url(./svg/star.svg);
+        background-image: url(./../../../vendor/images/icons/restaurant/star.svg);
     }
     &__feature {
         display: flex;
         gap: 6px;
     }
     &__icon_placemark {
-        background-image: url(./svg/placemark.svg);
+        background-image: url(./../../../vendor/images/icons/restaurant/placemark.svg);
     }
     &__icon_clock {
-        background-image: url(./svg/clock.svg);
+        background-image: url(./../../../vendor/images/icons/restaurant/clock.svg);
     }
     &__feature_title {
         font-size: 13px;

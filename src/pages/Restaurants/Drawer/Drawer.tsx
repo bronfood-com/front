@@ -5,6 +5,7 @@ import styles from './Drawer.module.scss';
 import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import Preloader from '../../../components/Preloader/Preloader';
+import { Link } from 'react-router-dom';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -26,7 +27,9 @@ const Drawer = () => {
                 <ul ref={container} className={styles.drawer__list}>
                     {restaurantsFiltered.map((card) => (
                         <li key={card.id} className={styles.drawer__list_item}>
-                            <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
+                            <Link to={`/restaurants/${card.id}`}>
+                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
+                            </Link>
                         </li>
                     ))}
                 </ul>
