@@ -1,6 +1,6 @@
 import styles from './RestaurantDescription.module.scss';
 
-function RestaurantDescription({name, address, workingTime, rating, reviews}) {
+function RestaurantDescription({ name, address, workingTime, rating, reviews }) {
     return (
         <div className={styles.restaurant_description}>
             <h1 className={styles.restaurant_description__name}>{name}</h1>
@@ -14,7 +14,7 @@ function RestaurantDescription({name, address, workingTime, rating, reviews}) {
                     <p className={styles.restaurant_description__feature_title}>{workingTime}</p>
                 </div>
             </div>
-            <div className={styles. restaurant_description__rating_container}>
+            <div className={styles.restaurant_description__rating_container}>
                 <span className={styles.restaurant_description__rating}>{rating.toFixed(1)}</span>
                 <div className={`${styles.restaurant_description__icon} ${styles.restaurant_description__icon_star} ${styles.restaurant_description__icon_large}`} />
                 <span className={styles.restaurant_description__reviews}>{reviews}</span>

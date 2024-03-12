@@ -15,13 +15,7 @@ function Restaurant() {
     return (
         <RestaurantPopup close={close}>
             <RestaurantImage image={restaurant?.photo} />
-            <RestaurantDescription
-                name={restaurant?.name}
-                address={restaurant?.address}
-                workingTime={restaurant?.workingTime}
-                rating={restaurant?.rating}
-                reviews="(123+)"
-            />
+            <RestaurantDescription name={restaurant?.name} address={restaurant?.address} workingTime={restaurant?.workingTime} rating={restaurant?.rating} reviews="(123+)" />
         </RestaurantPopup>
     );
 }
