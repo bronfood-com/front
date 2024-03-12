@@ -5,8 +5,8 @@ import RestaurantImage from './RestaurantImage/RestaurantImage';
 
 function Restaurant() {
     const params = useParams();
-    const {restaurantsFiltered} = useRestaurants();
-    const restaurant = restaurantsFiltered.find(restaurant => restaurant.id === params.restaurantId)
+    const { restaurantsFiltered } = useRestaurants();
+    const restaurant = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const navigate = useNavigate();
     const close = () => {
         navigate('/restaurants');
@@ -15,7 +15,7 @@ function Restaurant() {
         <RestaurantPopup close={close}>
             <RestaurantImage image={restaurant?.photo} />
         </RestaurantPopup>
-    )
+    );
 }
 
 export default Restaurant;
