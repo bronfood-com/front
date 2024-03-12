@@ -1,12 +1,13 @@
-import image1 from './MockImages/image1.png';
-import image2 from './MockImages/image2.png';
-import image3 from './MockImages/image3.png';
+import image1 from './MockImages/image1.png'
+import image2 from './MockImages/image2.png'
+import image3 from './MockImages/image3.png'
+import image4 from './MockImages/image4.png'
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 export const mockRestaurants: Restaurant[] = [
     {
         id: '1',
-        photo: image1,
+        photo: image3,
         name: 'Jahu',
         rating: 4.8,
         address: 'ул. Березовая 21',
@@ -42,7 +43,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '3',
-        photo: image3,
+        photo: image4,
         name: 'Moon',
         rating: 5.0,
         address: 'пр. Мира 36',
