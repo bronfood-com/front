@@ -1,10 +1,10 @@
 import { useEffect, MouseEvent } from 'react';
-import styles from './RestaurantPopup.module.scss'
+import styles from './RestaurantPopup.module.scss';
 
-const RestaurantPopup = ({close, children}) => {
+const RestaurantPopup = ({ close, children }) => {
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
-         close();
+            close();
         }
     };
     useEffect(() => {
@@ -14,9 +14,7 @@ const RestaurantPopup = ({close, children}) => {
     });
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
-            <div className={styles.restaurant_popup}>
-               {children}
-            </div>
+            <div className={styles.restaurant_popup}>{children}</div>
         </div>
     );
 };
