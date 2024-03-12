@@ -1,63 +1,7 @@
-import { createContext, FC, useState, PropsWithChildren } from 'react';
-import { mockRestaurants, options, types } from '../pages/Restaurants/MockRestaurantsList';
-
-export type Meal = {
-    /**
-     * Meal's id
-     */
-    id: string;
-    /**
-     * Meal's name
-     */
-    name: string;
-    /**
-     * Link to meal's image
-     */
-    photo: string;
-    /**
-     * Meal's price
-     */
-    price: number;
-    /**
-     * Meal's type
-     */
-    type: 'food' | 'drink' | 'dessert';
-};
-
-export type Restaurant = {
-    /**
-     * Venue's id
-     */
-    id: string;
-    /**
-     * Link to venue's image
-     */
-    photo: string;
-    /**
-     * Venue's name
-     */
-    name: string;
-    /**
-     * Venue's rating
-     */
-    rating: number;
-    /**
-     * Venue's address
-     */
-    address: string;
-    /**
-     * Venue's open hours
-     */
-    workingTime: string;
-    /**
-     * List of venue's meals available for order
-     */
-    meals: Meal[];
-    /**
-     * Venue's type
-     */
-    type: 'fastFood' | 'cafe' | 'cafeBar';
-};
+import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { options, types } from '../pages/Restaurants/MockRestaurantsList';
+import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
+import { restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
 
 export type Option = {
     /**
@@ -90,6 +34,10 @@ type RestaurantsContext = {
      * List of restaurants filtered with user selected options
      */
     restaurantsFiltered: Restaurant[];
+    /**
+     * Indicates whether restaurants are loading
+     */
+    isLoading: boolean;
     /**
      * Options' states and controls. Options come from user's input
      */
@@ -137,6 +85,7 @@ type RestaurantsContext = {
 export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsOnMap: [],
     restaurantsFiltered: [],
+    isLoading: false,
     options: {
         all: [],
         selectedOptions: [],
@@ -152,7 +101,8 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const restaurantsOnMap: Restaurant[] = mockRestaurants;
+    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
@@ -175,11 +125,26 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+            setIsLoading(true);
+            const res = await restaurantsService.getRestaurants();
+            if (res.status === 'error') {
+                setRestaurantsOnMap([]);
+                setIsLoading(false);
+            } else {
+                setRestaurantsOnMap(res.data);
+                setIsLoading(false);
+            }
+        };
+        fetchRestaurants();
+    }, []);
     return (
         <RestaurantsContext.Provider
             value={{
                 restaurantsOnMap,
                 restaurantsFiltered,
+                isLoading,
                 options: {
                     all: options,
                     selectedOptions,
