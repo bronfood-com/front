@@ -1,5 +1,5 @@
-import { AuthService } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData } from './authService';
+import { AuthService, PhoneNumber } from './authService';
+import { User, LoginData, RegisterData, ConfirmPhoneData, NewPasswordData } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -38,7 +38,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {
@@ -52,6 +52,72 @@ export class AuthServiceReal implements AuthService {
         localStorage.setItem('token', auth_token);
 
         delete result.data.auth_token;
+        return result;
+    }
+
+    async changePasswordRequest(phone: PhoneNumber): Promise<
+        | {
+              status: 'success';
+              data: {
+                  temp_data_code: string;
+              };
+          }
+        | { status: 'error'; error_message: string }
+    > {
+        const token = this.getToken();
+        const res = await fetch(`${API_URL}/change_password/request/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+            body: JSON.stringify({ phone }),
+        });
+        const result = await res.json();
+        return result;
+    }
+
+    async setNewPassword({ password, password_confirm, temp_data_code }: NewPasswordData): Promise<
+        | {
+              status: 'success';
+              data: {
+                  temp_data_code: string;
+              };
+          }
+        | { status: 'error'; error_message: string }
+    > {
+        const token = this.getToken();
+        const res = await fetch(`${API_URL}/change_password/request/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+            body: JSON.stringify({ password, password_confirm, temp_data_code }),
+        });
+        const result = await res.json();
+        return result;
+    }
+
+    async confirmChangePassword({ temp_data_code, confirmation_code }: ConfirmPhoneData): Promise<
+        | {
+              status: 'success';
+              data: {
+                  message: 'Password updated';
+              };
+          }
+        | { status: 'error'; error_message: string }
+    > {
+        const token = this.getToken();
+        const res = await fetch(`${API_URL}/change_password/request/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+            body: JSON.stringify({ temp_data_code, confirmation_code }),
+        });
+        const result = await res.json();
         return result;
     }
 
