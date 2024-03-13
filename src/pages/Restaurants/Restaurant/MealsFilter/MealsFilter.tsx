@@ -10,19 +10,19 @@ type MealsFilterProps = {
     deleteType: (type: MealType) => void;
 };
 
-function MealsFilter({types, selectedTypes, addType, deleteType }: MealsFilterProps) {
+function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterProps) {
     const { t } = useTranslation();
     return (
-    <ul className={`${styles.meals_filter}`}>
-        {types.map((type) => {
-            const isActive = selectedTypes.includes(type);
-            return (
-                <li key={type}>
-                    <Chip text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
-                </li>
-            );
-        })}
-    </ul>
+        <ul className={`${styles.meals_filter}`}>
+            {types.map((type) => {
+                const isActive = selectedTypes.includes(type);
+                return (
+                    <li key={type}>
+                        <Chip text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
+                    </li>
+                );
+            })}
+        </ul>
     );
 }
 

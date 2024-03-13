@@ -1,7 +1,7 @@
 import { RestaurantsServiceMock } from './restaurantsServiceMock';
 // import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
-export type MealType = 'food' | 'drink' | 'dessert'
+export type MealType = 'food' | 'drink' | 'dessert';
 
 export type Meal = {
     /**

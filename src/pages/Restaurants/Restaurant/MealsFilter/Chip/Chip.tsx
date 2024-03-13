@@ -1,7 +1,7 @@
 import styles from './Chip.module.scss';
-import food from '../../../../../vendor/images/restaurant/food.png'
-import drink from '../../../../../vendor/images/restaurant/drink.png'
-import dessert from '../../../../../vendor/images/restaurant/desert.png'
+import food from '../../../../../vendor/images/restaurant/food.png';
+import drink from '../../../../../vendor/images/restaurant/drink.png';
+import dessert from '../../../../../vendor/images/restaurant/desert.png';
 
 type ChipProps = {
     /**
@@ -37,7 +37,7 @@ const Chip = (props: ChipProps) => {
     return (
         <label className={`${styles.chip} ${props.isActive ? styles.chip_active : ''}`}>
             <input className={styles.chip_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
-            <div className={styles.chip_icon} style={{backgroundImage: `url(${props.icon === 'food' ? food : props.icon === 'drink' ? drink : dessert  })`}} />
+            <div className={styles.chip_icon} style={{ backgroundImage: `url(${props.icon === 'food' ? food : props.icon === 'drink' ? drink : dessert})` }} />
             <span className={`${styles.chip_text} ${props.isActive ? styles.chip_text_active : ''}`}>{props.text}</span>
         </label>
     );

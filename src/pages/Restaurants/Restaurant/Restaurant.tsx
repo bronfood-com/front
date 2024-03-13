@@ -27,9 +27,7 @@ function Restaurant() {
         setSelectedMealTypes(selectedMealTypes.filter((type: MealType) => type !== mealType));
     };
     if (restaurant) {
-        const types = restaurant.meals
-            .map(({ type }) => type)
-            .filter((type, i, ar) => ar.indexOf(type) === i)
+        const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         return (
             <RestaurantPopup close={close} onClick={addToFavourites}>
                 <RestaurantImage image={restaurant.photo} />
