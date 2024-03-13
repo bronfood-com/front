@@ -1,8 +1,14 @@
-import { useEffect, MouseEvent } from 'react';
+import { useEffect, MouseEvent, ReactNode } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import ButtonRound from '../../../../components/ButtonRound/ButtonRound';
 
-const RestaurantPopup = ({ close, children }) => {
+type RestaurantPopupProps = {
+    close: () => void;
+    openFavourites: () => void;
+    children?: ReactNode;
+}
+
+const RestaurantPopup = ({ close, openFavourites, children }: RestaurantPopupProps) => {
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -16,7 +22,7 @@ const RestaurantPopup = ({ close, children }) => {
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                <ButtonRound onClick={() => {}} backgroundColor="white" icon="favourite" position={{ top: '15px', right: '69px' }} />
+                <ButtonRound onClick={() => openFavourites()} backgroundColor="white" icon="favourite" position={{ top: '15px', right: '69px' }} />
                 <ButtonRound onClick={() => close()} backgroundColor="white" icon="close" position={{ top: '15px', right: '16px' }} />
                 {children}
             </div>

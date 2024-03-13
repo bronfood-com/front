@@ -1,6 +1,14 @@
 import styles from './RestaurantDescription.module.scss';
 
-function RestaurantDescription({ name, address, workingTime, rating, reviews }) {
+type RestaurantDescriptionProps = {
+    name: string;
+    address: string;
+    workingTime: string;
+    rating: number;
+    reviews: string;
+}
+
+function RestaurantDescription({ name, address, workingTime, rating, reviews }: RestaurantDescriptionProps) {
     return (
         <div className={styles.restaurant_description}>
             <h1 className={styles.restaurant_description__name}>{name}</h1>
