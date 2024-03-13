@@ -6,7 +6,7 @@ type RestaurantPopupProps = {
     close: () => void;
     openFavourites: () => void;
     children?: ReactNode;
-}
+};
 
 const RestaurantPopup = ({ close, openFavourites, children }: RestaurantPopupProps) => {
     const handleOverlayClick = (e: MouseEvent) => {

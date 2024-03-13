@@ -6,7 +6,7 @@ type RestaurantDescriptionProps = {
     workingTime: string;
     rating: number;
     reviews: string;
-}
+};
 
 function RestaurantDescription({ name, address, workingTime, rating, reviews }: RestaurantDescriptionProps) {
     return (
