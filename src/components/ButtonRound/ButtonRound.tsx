@@ -25,7 +25,7 @@ interface ButtonRound extends ButtonHTMLAttributes<HTMLButtonElement> {
     };
 }
 
-const ButtonRound: FC<ButtonRound> = ({ position = { top: 0, right: 0, bottom: 0, left: 0 }, backgroundColor = 'white', icon = 'close', ...props }) => {
+const ButtonRound: FC<ButtonRound> = ({ backgroundColor = 'white', icon = 'close', position = { top: 0, right: 0, bottom: 0, left: 0 }, ...props }) => {
     return (
         <button
             {...props}
@@ -33,7 +33,7 @@ const ButtonRound: FC<ButtonRound> = ({ position = { top: 0, right: 0, bottom: 0
             className={`${styles.button_round}`}
             style={{
                 backgroundColor: backgroundColor,
-                backgroundImage: `url(${icon === 'close' ? close : icon === 'add' ? add : icon === 'favourite' ? favourite : icon === 'arrow-back' ? arrowBack : ''})`,
+                backgroundImage: `url(${icon === 'close' ? close : icon === 'add' ? add : icon === 'favourite' ? favourite : arrowBack})`,
                 opacity: `${backgroundColor === 'white' ? '85%' : '100%'}`,
                 width: `${backgroundColor === 'white' ? '43px' : '41px'}`,
                 top: position.top,

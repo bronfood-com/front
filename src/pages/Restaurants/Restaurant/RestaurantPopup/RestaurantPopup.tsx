@@ -4,11 +4,11 @@ import ButtonRound from '../../../../components/ButtonRound/ButtonRound';
 
 type RestaurantPopupProps = {
     close: () => void;
-    openFavourites: () => void;
+    onClick: () => void;
     children?: ReactNode;
 };
 
-const RestaurantPopup = ({ close, openFavourites, children }: RestaurantPopupProps) => {
+const RestaurantPopup = ({ close, onClick, children }: RestaurantPopupProps) => {
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -22,7 +22,7 @@ const RestaurantPopup = ({ close, openFavourites, children }: RestaurantPopupPro
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                <ButtonRound onClick={() => openFavourites()} backgroundColor="white" icon="favourite" position={{ top: '15px', right: '69px' }} />
+                <ButtonRound onClick={() => onClick()} backgroundColor="white" icon="favourite" position={{ top: '15px', right: '69px' }} />
                 <ButtonRound onClick={() => close()} backgroundColor="white" icon="close" position={{ top: '15px', right: '16px' }} />
                 {children}
             </div>
