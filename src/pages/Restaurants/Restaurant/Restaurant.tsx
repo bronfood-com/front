@@ -14,7 +14,7 @@ function Restaurant() {
     };
     const openFavourites = () => {
         // navigate to favourite restaurants page
-    }
+    };
     return (
         <RestaurantPopup close={close} openFavourites={openFavourites}>
             <RestaurantImage image={restaurant?.photo} />

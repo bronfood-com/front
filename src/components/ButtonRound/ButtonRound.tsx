@@ -1,9 +1,9 @@
 import { FC, ButtonHTMLAttributes } from 'react';
 import styles from './ButtonRound.module.scss';
-import close from '../../vendor/images/icons/restaurant/close.svg'
-import add from '../../vendor/images/icons/restaurant/add.svg'
-import favourite from '../../vendor/images/icons/restaurant/favorite.svg'
-import arrowBack from '../../vendor/images/icons/restaurant/arrow-back.svg'
+import close from '../../vendor/images/icons/restaurant/close.svg';
+import add from '../../vendor/images/icons/restaurant/add.svg';
+import favourite from '../../vendor/images/icons/restaurant/favorite.svg';
+import arrowBack from '../../vendor/images/icons/restaurant/arrow-back.svg';
 
 interface ButtonRound extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
@@ -22,26 +22,26 @@ interface ButtonRound extends ButtonHTMLAttributes<HTMLButtonElement> {
         right?: string;
         bottom?: string;
         left?: string;
-    }
+    };
 }
 
-const ButtonRound: FC<ButtonRound> = ({ position = {top: 0, right: 0, bottom: 0, left: 0}, backgroundColor = 'white', icon = 'close', ...props }) => {
+const ButtonRound: FC<ButtonRound> = ({ position = { top: 0, right: 0, bottom: 0, left: 0 }, backgroundColor = 'white', icon = 'close', ...props }) => {
     return (
-        <button {...props} type="button" className={`${styles.button_round}`} style={{
-            backgroundColor: backgroundColor,
-            backgroundImage: `url(${
-                icon === 'close' ? close :
-                icon === 'add' ? add :
-                icon === 'favourite' ? favourite :
-                icon === 'arrow-back' ? arrowBack : ''
-            })`,
-            opacity: `${backgroundColor === 'white' ? '85%' : '100%'}`,
-            width: `${backgroundColor === 'white' ? '43px' : '41px'}`,
-            top: position.top,
-            right: position.right,
-            bottom: position.bottom,
-            left: position.left
-        }} />
+        <button
+            {...props}
+            type="button"
+            className={`${styles.button_round}`}
+            style={{
+                backgroundColor: backgroundColor,
+                backgroundImage: `url(${icon === 'close' ? close : icon === 'add' ? add : icon === 'favourite' ? favourite : icon === 'arrow-back' ? arrowBack : ''})`,
+                opacity: `${backgroundColor === 'white' ? '85%' : '100%'}`,
+                width: `${backgroundColor === 'white' ? '43px' : '41px'}`,
+                top: position.top,
+                right: position.right,
+                bottom: position.bottom,
+                left: position.left,
+            }}
+        />
     );
 };
 

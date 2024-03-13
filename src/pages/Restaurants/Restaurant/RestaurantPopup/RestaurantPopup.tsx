@@ -16,8 +16,8 @@ const RestaurantPopup = ({ close, children }) => {
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                <ButtonRound onClick={() => {}} backgroundColor="white" icon="favourite" position={{top: '15px', right: '69px'}} />
-                <ButtonRound onClick={() => close()} backgroundColor="white" icon="close" position={{top: '15px', right: '16px'}} />
+                <ButtonRound onClick={() => {}} backgroundColor="white" icon="favourite" position={{ top: '15px', right: '69px' }} />
+                <ButtonRound onClick={() => close()} backgroundColor="white" icon="close" position={{ top: '15px', right: '16px' }} />
                 {children}
             </div>
         </div>
