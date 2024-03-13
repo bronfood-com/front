@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+
+.button_round {
+    position: absolute;
+    height: 41px;
+    border-radius: 50%;
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

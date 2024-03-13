@@ -1,5 +1,6 @@
 import { useEffect, MouseEvent } from 'react';
 import styles from './RestaurantPopup.module.scss';
+import ButtonRound from '../../../../components/ButtonRound/ButtonRound';
 
 const RestaurantPopup = ({ close, children }) => {
     const handleOverlayClick = (e: MouseEvent) => {
@@ -14,7 +15,11 @@ const RestaurantPopup = ({ close, children }) => {
     });
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
-            <div className={styles.restaurant_popup}>{children}</div>
+            <div className={styles.restaurant_popup}>
+                <ButtonRound onClick={() => {}} backgroundColor="white" icon="favourite" position={{top: '15px', right: '69px'}} />
+                <ButtonRound onClick={() => close()} backgroundColor="white" icon="close" position={{top: '15px', right: '16px'}} />
+                {children}
+            </div>
         </div>
     );
 };

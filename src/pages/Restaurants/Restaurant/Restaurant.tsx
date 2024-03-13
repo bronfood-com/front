@@ -12,8 +12,11 @@ function Restaurant() {
     const close = () => {
         navigate('/restaurants');
     };
+    const openFavourites = () => {
+        // navigate to favourite restaurants page
+    }
     return (
-        <RestaurantPopup close={close}>
+        <RestaurantPopup close={close} openFavourites={openFavourites}>
             <RestaurantImage image={restaurant?.photo} />
             <RestaurantDescription name={restaurant?.name} address={restaurant?.address} workingTime={restaurant?.workingTime} rating={restaurant?.rating} reviews="(123+)" />
         </RestaurantPopup>
