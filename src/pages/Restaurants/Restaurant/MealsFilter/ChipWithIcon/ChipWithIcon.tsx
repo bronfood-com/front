@@ -1,4 +1,4 @@
-import styles from './ChipWithIcon.module.scss'
+import styles from './ChipWithIcon.module.scss';
 import food from '../../../../../vendor/images/restaurant/food.png';
 import drink from '../../../../../vendor/images/restaurant/drink.png';
 import dessert from '../../../../../vendor/images/restaurant/desert.png';

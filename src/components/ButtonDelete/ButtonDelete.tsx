@@ -39,16 +39,9 @@ const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close',
             type="button"
             className={`${styles.button_delete}`}
             style={{
+                border: icon === 'delete' && isActive ? '1px solid #F05252' : '',
                 backgroundColor: !isActive ? '#fff' : icon === 'delete' ? '#F052524D' : '#F5F5F5',
-                backgroundImage: `url(${
-                    icon === 'close' ? close :
-                    icon === 'edit' ? edit :
-                    icon === 'back' ? back :
-                    icon === 'favorite' && !isActive ? favorite :
-                    icon === 'favorite' && isActive ? favoriteActive :
-                    icon === 'delete' && !isActive ? delete_default :
-                    icon === 'delete' && isActive ? deleteActive : ''
-                })`,
+                backgroundImage: `url(${icon === 'close' ? close : icon === 'edit' ? edit : icon === 'back' ? back : icon === 'favorite' && !isActive ? favorite : icon === 'favorite' && isActive ? favoriteActive : icon === 'delete' && !isActive ? delete_default : icon === 'delete' && isActive ? deleteActive : ''})`,
                 opacity,
                 top: position.top,
                 right: position.right,
