@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { MealType } from '../../../utils/api/restaurantsService/restaurantsService';
 
 function Restaurant() {
+    const [isLiked, setIsLiked] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
     const params = useParams();
@@ -17,7 +18,8 @@ function Restaurant() {
     const close = () => {
         navigate('/restaurants');
     };
-    const addToFavourites = () => {
+    const toggleFavorite = () => {
+        setIsLiked(!isLiked);
         // add to favourites logic
     };
     const addMealType = (mealType: MealType) => {
@@ -29,7 +31,7 @@ function Restaurant() {
     if (restaurant) {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         return (
-            <RestaurantPopup close={close} onClick={addToFavourites}>
+            <RestaurantPopup close={close} onClick={toggleFavorite} isLiked={isLiked}>
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />

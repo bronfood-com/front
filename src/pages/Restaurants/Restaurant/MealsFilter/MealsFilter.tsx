@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import styles from './MealsFilter.module.scss';
-import Chip from './Chip/Chip';
+import ChipWithIcon from './ChipWithIcon/ChipWithIcon';
 import { MealType } from '../../../../utils/api/restaurantsService/restaurantsService';
 
 type MealsFilterProps = {
@@ -18,7 +18,7 @@ function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterP
                 const isActive = selectedTypes.includes(type);
                 return (
                     <li key={type}>
-                        <Chip text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
+                        <ChipWithIcon text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
                     </li>
                 );
             })}

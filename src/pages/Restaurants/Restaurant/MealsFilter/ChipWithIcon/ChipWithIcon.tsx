@@ -1,9 +1,9 @@
-import styles from './Chip.module.scss';
+import styles from './ChipWithIcon.module.scss'
 import food from '../../../../../vendor/images/restaurant/food.png';
 import drink from '../../../../../vendor/images/restaurant/drink.png';
 import dessert from '../../../../../vendor/images/restaurant/desert.png';
 
-type ChipProps = {
+type ChipWithIconProps = {
     /**
      * Text displayed on HTML element
      */
@@ -26,7 +26,7 @@ type ChipProps = {
     delete: () => void;
 };
 
-const Chip = (props: ChipProps) => {
+const ChipWithIcon = (props: ChipWithIconProps) => {
     const handleChange = () => {
         if (props.isActive) {
             props.delete();
@@ -35,12 +35,12 @@ const Chip = (props: ChipProps) => {
         }
     };
     return (
-        <label className={`${styles.chip} ${props.isActive ? styles.chip_active : ''}`}>
-            <input className={styles.chip_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
-            <div className={styles.chip_icon} style={{ backgroundImage: `url(${props.icon === 'food' ? food : props.icon === 'drink' ? drink : dessert})` }} />
-            <span className={`${styles.chip_text} ${props.isActive ? styles.chip_text_active : ''}`}>{props.text}</span>
+        <label className={`${styles.chip_with_icon} ${props.isActive ? styles.chip_with_icon_active : ''}`}>
+            <input className={styles.chip_with_icon_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
+            <div className={styles.chip_with_icon_icon} style={{ backgroundImage: `url(${props.icon === 'food' ? food : props.icon === 'drink' ? drink : dessert})` }} />
+            <span className={`${styles.chip_with_icon_text} ${props.isActive ? styles.chip_with_icon_text_active : ''}`}>{props.text}</span>
         </label>
     );
 };
 
-export default Chip;
+export default ChipWithIcon;
