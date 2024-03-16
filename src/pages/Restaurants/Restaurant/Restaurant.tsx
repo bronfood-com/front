@@ -4,7 +4,7 @@ import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestauran
 import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
 import MealsList from './MealsList/MealsList';
-import { Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
+import { Meal, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
 import MealsFilter from './MealsFilter/MealsFilter';
 import { useState } from 'react';
 import { MealType } from '../../../utils/api/restaurantsService/restaurantsService';
@@ -31,12 +31,13 @@ function Restaurant() {
     };
     if (restaurant) {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
+        const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type.toLowerCase()));
         return (
             <RestaurantPopup close={close} onClick={toggleFavorite} isLiked={isLiked}>
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                <MealsList meals={restaurant.meals} />
+                <MealsList meals={mealsFiltered} />
             </RestaurantPopup>
         );
     }

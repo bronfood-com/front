@@ -10,6 +10,15 @@
     background-repeat: no-repeat;
     cursor: pointer;
 
+    &__background_white {
+        background-color: $white;
+    }
+    &__background_red {
+        background-color: $red30;
+    }
+    &__background_grey {
+        background-color: $button-grey;
+    }
     &__icon_close {
         background-image: url(./../../vendor/images/icons/button-delete/close.svg);
     }
@@ -30,5 +39,8 @@
     }
     &__icon_delete_active {
         background-image: url(./../../vendor/images/icons/button-delete/delete_active.svg);
+    }
+    &_outlined {
+        border: 1px solid $red;
     }
 }
