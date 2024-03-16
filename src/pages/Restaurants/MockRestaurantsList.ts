@@ -1,11 +1,11 @@
-import image1 from './MockImages/image1.png'
-import image2 from './MockImages/image2.png'
-import image3 from './MockImages/image3.png'
-import image4 from './MockImages/image4.png'
-import meal1 from './MockImages/meal1.png'
-import drink1 from './MockImages/drink1.png'
-import dessert1 from './MockImages/dessert1.png'
-import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService'
+import image1 from './MockImages/image1.png';
+import image2 from './MockImages/image2.png';
+import image3 from './MockImages/image3.png';
+import image4 from './MockImages/image4.png';
+import meal1 from './MockImages/meal1.png';
+import drink1 from './MockImages/drink1.png';
+import dessert1 from './MockImages/dessert1.png';
+import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 export const mockRestaurants: Restaurant[] = [
     {

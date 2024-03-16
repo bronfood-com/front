@@ -25,13 +25,7 @@ interface ButtonHeaderProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     opacity?: string;
 }
 
-const ButtonHeader: FC<ButtonHeaderProps> = ({
-    isActive = false,
-    icon = 'close',
-    position = { top: '0px', right: '0px', bottom: '0px', left: '0px' },
-    opacity = '100%',
-    ...props
-}) => {
+const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close', position = { top: '0px', right: '0px', bottom: '0px', left: '0px' }, opacity = '100%', ...props }) => {
     return (
         <button
             {...props}

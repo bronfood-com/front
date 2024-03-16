@@ -25,22 +25,15 @@ interface ButtonDeleteProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     opacity?: string;
 }
 
-const ButtonDelete: FC<ButtonDeleteProps> = ({
-    isActive = false,
-    icon = 'close',
-    position = { top: '0px', right: '0px', bottom: '0px', left: '0px' },
-    opacity = '100%',
-    ...props
-}) => {
+const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close', position = { top: '0px', right: '0px', bottom: '0px', left: '0px' }, opacity = '100%', ...props }) => {
     return (
         <button
             {...props}
             className={`
                 ${styles.button_delete}
-                ${styles[`button_delete__icon_${isActive && (icon === 'delete' || icon === 'favorite') ? `${icon}_active` : icon }`]}
-                ${(isActive && icon === 'delete') ? styles.button_delete_outlined : ''}
-                ${!isActive ? styles.button_delete__background_white :
-                icon === 'delete' ? styles.button_delete__background_red : styles.button_delete__background_grey}
+                ${styles[`button_delete__icon_${isActive && (icon === 'delete' || icon === 'favorite') ? `${icon}_active` : icon}`]}
+                ${isActive && icon === 'delete' ? styles.button_delete_outlined : ''}
+                ${!isActive ? styles.button_delete__background_white : icon === 'delete' ? styles.button_delete__background_red : styles.button_delete__background_grey}
             `}
             style={{
                 opacity,
