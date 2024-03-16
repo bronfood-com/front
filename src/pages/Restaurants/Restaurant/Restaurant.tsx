@@ -31,7 +31,7 @@ function Restaurant() {
     };
     if (restaurant) {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
-        const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type.toLowerCase()));
+        const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
         return (
             <RestaurantPopup close={close} onClick={toggleFavorite} isLiked={isLiked}>
                 <RestaurantImage image={restaurant.photo} />
