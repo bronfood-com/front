@@ -33,6 +33,7 @@ const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close',
                 ${styles.button_header}
                 ${styles[`button_header__icon_${icon}`]}
                 ${isActive ? styles.button_header_active : ''}
+                ${icon === 'close' ? styles.button_header_wide : ''}
             `}
             style={{
                 opacity,

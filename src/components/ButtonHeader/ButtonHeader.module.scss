@@ -21,4 +21,8 @@
     &_active {
         background-color: $button-active;
     }
+    &_wide {
+        width: 58px;
+        border-radius: 20px;
+    }
 }
