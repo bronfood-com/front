@@ -1,7 +1,7 @@
 import { FC, ButtonHTMLAttributes } from 'react';
-import styles from './ButtonDelete.module.scss';
+import styles from './ButtonHeader.module.scss';
 
-interface ButtonDeleteProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonHeaderProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Button's state
      */
@@ -9,7 +9,7 @@ interface ButtonDeleteProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Icon inside button
      */
-    icon?: 'close' | 'edit' | 'back' | 'favorite' | 'delete';
+    icon?: 'close' | 'add';
     /**
      * Button's position relative to closest positioned parent
      */
@@ -25,17 +25,16 @@ interface ButtonDeleteProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     opacity?: string;
 }
 
-const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close', position = { top: 0, right: 0, bottom: 0, left: 0 }, opacity = '100%', ...props }) => {
+const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close', position = { top: 0, right: 0, bottom: 0, left: 0 }, opacity = '100%', ...props }) => {
     return (
         <button
             {...props}
             className={`
-                ${styles.button_delete}
-                ${styles[`button_delete__icon_${isActive ? `${icon}_active` : icon}`]}
+                ${styles.button_header}
+                ${styles[`button_header__icon_${icon}`]}
+                ${isActive ? styles.button_header_active : ''}
             `}
             style={{
-                border: icon === 'delete' && isActive ? '1px solid #F05252' : '',
-                backgroundColor: !isActive ? '#fff' : icon === 'delete' ? '#F052524D' : '#F5F5F5',
                 opacity,
                 top: position.top,
                 right: position.right,
@@ -46,4 +45,4 @@ const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close',
     );
 };
 
-export default ButtonDelete;
+export default ButtonHeader;

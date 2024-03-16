@@ -3,6 +3,7 @@ import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
+import MealsList from './MealsList/MealsList';
 import { Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
 import MealsFilter from './MealsFilter/MealsFilter';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ function Restaurant() {
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
+                <MealsList meals={restaurant.meals} />
             </RestaurantPopup>
         );
     }

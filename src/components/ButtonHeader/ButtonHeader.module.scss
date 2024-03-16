@@ -1,0 +1,24 @@
+@import '../../styles/variables.scss';
+
+.button_header {
+    position: absolute;
+    height: 41px;
+    width: 41px;
+    border-radius: 50%;
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $orange;
+    color: $white;
+    cursor: pointer;
+
+    &__icon_close {
+        background-image: url(./../../vendor/images/icons/button-header/close.svg);
+    }
+    &__icon_add {
+        background-image: url(./../../vendor/images/icons/button-header/add.svg);
+    }
+    &_active {
+        background-color: $button-active;
+    }
+}

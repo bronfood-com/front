@@ -1,7 +1,9 @@
-import image1 from './MockImages/image1.png';
-import image2 from './MockImages/image2.png';
-import image3 from './MockImages/image3.png';
-import image4 from './MockImages/image4.png';
+import image1 from './MockImages/image1.png'
+import image2 from './MockImages/image2.png'
+import image3 from './MockImages/image3.png'
+import image4 from './MockImages/image4.png'
+import meal1 from './MockImages/meal1.png'
+import drink1 from './MockImages/drink1.png'
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 export const mockRestaurants: Restaurant[] = [
@@ -15,24 +17,52 @@ export const mockRestaurants: Restaurant[] = [
         meals: [
             {
                 id: '1',
-                name: 'Брауни',
-                photo: '',
-                price: 1,
-                type: 'dessert',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
             },
             {
                 id: '2',
-                name: 'Куриный донер',
-                photo: '',
-                price: 2,
+                name: 'Говяжий донер',
+                photo: meal1,
+                price: 1350,
                 type: 'food',
             },
             {
                 id: '3',
-                name: 'Капуччино',
-                photo: '',
-                price: 2,
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '4',
+                name: 'Американо',
+                photo: drink1,
+                price: 200,
                 type: 'drink',
+            },
+            {
+                id: '5',
+                name: 'Говяжий донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '6',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '7',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
             },
         ],
         type: 'cafe',
