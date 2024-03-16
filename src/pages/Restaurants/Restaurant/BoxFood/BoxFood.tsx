@@ -10,12 +10,7 @@ function BoxFood({ card }: { card: Meal }) {
                 <div className={styles.boxfood__description}>
                     <p className={styles.boxfood__name}>{card.name}</p>
                     <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
-                    <ButtonHeader
-                        type="button"
-                        icon="add"
-                        position={{ right: '10px', bottom: '15px' }}
-                        opacity="100%"
-                    />
+                    <ButtonHeader type="button" icon="add" position={{ right: '10px', bottom: '15px' }} opacity="100%" />
                 </div>
             </div>
         </div>

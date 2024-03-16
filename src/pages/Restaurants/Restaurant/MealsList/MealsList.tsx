@@ -2,7 +2,7 @@ import styles from './MealsList.module.scss';
 import { Link } from 'react-router-dom';
 import BoxFood from '../BoxFood/BoxFood';
 
-const MealsList = ({meals}) => {
+const MealsList = ({ meals }) => {
     return (
         <ul className={styles.meals_list}>
             {meals.map((meal) => (

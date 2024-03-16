@@ -23,19 +23,8 @@ const RestaurantPopup = ({ close, onClick, isLiked, children }: RestaurantPopupP
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                <Button
-                    type="button"
-                    onClick={() => onClick()}
-                    isActive={isLiked}
-                    icon="favorite"
-                    position={{ top: '15px', right: '69px' }}
-                    opacity="85%" />
-                <Button
-                    type="button"
-                    onClick={() => close()}
-                    icon="close"
-                    position={{ top: '15px', right: '16px' }}
-                    opacity="85%" />
+                <Button type="button" onClick={() => onClick()} isActive={isLiked} icon="favorite" position={{ top: '15px', right: '69px' }} opacity="85%" />
+                <Button type="button" onClick={() => close()} icon="close" position={{ top: '15px', right: '16px' }} opacity="85%" />
                 {children}
             </div>
         </div>
