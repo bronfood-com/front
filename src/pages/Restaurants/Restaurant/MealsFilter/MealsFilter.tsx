@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styles from './MealsFilter.module.scss';
-import ChipWithIcon from './ChipWithIcon/ChipWithIcon';
 import { MealType } from '../../../../utils/api/restaurantsService/restaurantsService';
+import ChipWithIcon from './ChipWithIcon/ChipWithIcon';
 
 type MealsFilterProps = {
     types: MealType[];

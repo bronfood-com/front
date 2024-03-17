@@ -27,6 +27,15 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+    &_food {
+        background-image: url(./../../../../../vendor/images/restaurant/food.png);
+    }
+    &_drink {
+        background-image: url(./../../../../../vendor/images/restaurant/drink.png);
+    }
+    &_dessert {
+        background-image: url(./../../../../../vendor/images/restaurant/desert.png);
+    }
     &_text {
         padding: 10px 10px 10px 2px;
         font-size: 14px;

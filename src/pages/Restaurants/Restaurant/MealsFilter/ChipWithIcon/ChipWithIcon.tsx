@@ -1,7 +1,4 @@
 import styles from './ChipWithIcon.module.scss';
-import food from '../../../../../vendor/images/restaurant/food.png';
-import drink from '../../../../../vendor/images/restaurant/drink.png';
-import dessert from '../../../../../vendor/images/restaurant/desert.png';
 
 type ChipWithIconProps = {
     /**
@@ -17,11 +14,11 @@ type ChipWithIconProps = {
      */
     isActive: boolean;
     /**
-     * Fires when user clicks on venue's type. Sets type selected
+     * Fires when user clicks on meal's type. Sets type selected
      */
     add: () => void;
     /**
-     * Fires when user clicks on venue's type. Sets type deselected
+     * Fires when user clicks on meal's type. Sets type deselected
      */
     delete: () => void;
 };
@@ -37,7 +34,7 @@ const ChipWithIcon = (props: ChipWithIconProps) => {
     return (
         <label className={`${styles.chip_with_icon} ${props.isActive ? styles.chip_with_icon_active : ''}`}>
             <input className={styles.chip_with_icon_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
-            <div className={styles.chip_with_icon_icon} style={{ backgroundImage: `url(${props.icon === 'food' ? food : props.icon === 'drink' ? drink : dessert})` }} />
+            <div className={`${styles.chip_with_icon_icon} ${styles[`chip_with_icon_${props.icon}`]}`} />
             <span className={`${styles.chip_with_icon_text} ${props.isActive ? styles.chip_with_icon_text_active : ''}`}>{props.text}</span>
         </label>
     );

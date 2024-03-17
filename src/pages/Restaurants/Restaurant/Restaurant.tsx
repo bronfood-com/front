@@ -1,13 +1,12 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { Meal, MealType, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
+import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
 import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
 import MealsList from './MealsList/MealsList';
-import { Meal, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
 import MealsFilter from './MealsFilter/MealsFilter';
-import { useState } from 'react';
-import { MealType } from '../../../utils/api/restaurantsService/restaurantsService';
 
 function Restaurant() {
     const [isLiked, setIsLiked] = useState(false);

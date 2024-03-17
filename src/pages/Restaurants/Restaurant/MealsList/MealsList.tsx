@@ -1,6 +1,6 @@
 import styles from './MealsList.module.scss';
-import BoxFood from '../BoxFood/BoxFood';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
+import BoxFood from '../BoxFood/BoxFood';
 
 const MealsList = ({ meals }: { meals: Meal[] }) => {
     return (
