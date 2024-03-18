@@ -5,7 +5,7 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    max-width: 375px;
     height: fit-content;
     background-color: $background;
     box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
@@ -15,6 +15,8 @@
 
     &_overlay {
         position: absolute;
+        display: flex;
+        justify-content: center;
         top: 0;
         left: 0;
         width: 100%;
