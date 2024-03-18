@@ -1,7 +1,7 @@
-import image1 from './MockImages/image1.png';
-import image2 from './MockImages/image2.png';
-import image3 from './MockImages/image3.png';
-import image4 from './MockImages/image4.png';
+import restaurant1 from './MockImages/restaurant1.png';
+import restaurant2 from './MockImages/restaurant2.png';
+import restaurant3 from './MockImages/restaurant3.png';
+import restaurant4 from './MockImages/restaurant4.png';
 import meal1 from './MockImages/meal1.png';
 import drink1 from './MockImages/drink1.png';
 import dessert1 from './MockImages/dessert1.png';
@@ -10,7 +10,7 @@ import { Restaurant } from '../../utils/api/restaurantsService/restaurantsServic
 export const mockRestaurants: Restaurant[] = [
     {
         id: '1',
-        photo: image3,
+        photo: restaurant3,
         name: 'Jahu',
         rating: 4.8,
         address: 'ул. Березовая 21',
@@ -70,7 +70,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '2',
-        photo: image2,
+        photo: restaurant2,
         name: 'Boom',
         rating: 4.9,
         address: 'ул. Морозова 56/1',
@@ -88,7 +88,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '3',
-        photo: image4,
+        photo: restaurant4,
         name: 'Moon',
         rating: 5.0,
         address: 'пр. Мира 36',
@@ -106,7 +106,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '4',
-        photo: image1,
+        photo: restaurant1,
         name: 'Ready',
         rating: 4.8,
         address: 'ул. Березовая 21',
@@ -124,7 +124,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '5',
-        photo: image3,
+        photo: restaurant3,
         name: 'Bar',
         rating: 5.0,
         address: 'пр. Мира 36',
