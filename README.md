@@ -1,3 +1,5 @@
+[https://bronfood-com.github.io/front/](https://bronfood-com.github.io/front/) - Превью-билд из main бранча
+
 # Бронфут.ком - фронтенд
 
 # Требования
@@ -12,14 +14,14 @@ npm 7+
 
     `npm install` или `yarn install`
 
-# Установка докер контейнера с  бекендом 
+# Установка докер контейнера с бекендом
 
 1.  Склонировать репозиторий
- `git clone https://github.com/bronfood-com/backend `
+    `git clone https://github.com/bronfood-com/backend `
 
-2. Для запуска необходимо изменить .env: В поле DB_HOST нужно установить значение db
-3. `docker-compose -f infra/docker-compose.django_db.yml up -d`
-   
+2.  Для запуска необходимо изменить .env: В поле DB_HOST нужно установить значение db
+3.  `docker-compose -f infra/docker-compose.django_db.yml up -d`
+
 # Скрипты
 
 - Дев сервер  
