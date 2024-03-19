@@ -25,4 +25,3 @@ jobs:
         uses: chvmvd/build-deploy-and-preview-action@v1.2.0
         with:
           type: vite
-          pr-preview: false
