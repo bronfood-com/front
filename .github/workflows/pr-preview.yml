@@ -25,4 +25,4 @@ jobs:
         uses: chvmvd/build-deploy-and-preview-action@v1.2.0
         with:
           type: vite
-          custom-url: https://bronfood-com.github.io/front
+          pr-preview: false
