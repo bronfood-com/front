@@ -1,6 +1,6 @@
 import { useEffect, MouseEvent, ReactNode } from 'react';
 import styles from './RestaurantPopup.module.scss';
-import Button from '../../../../components/ButtonDelete/ButtonDelete';
+import Button from '../../../../components/ButtonA/ButtonA';
 
 type RestaurantPopupProps = {
     close: () => void;

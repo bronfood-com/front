@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-.button_header {
+.button_b {
     position: absolute;
     height: 41px;
     width: 41px;
@@ -13,10 +13,10 @@
     cursor: pointer;
 
     &__icon_close {
-        background-image: url(./../../vendor/images/icons/button-header/close.svg);
+        background-image: url(./../../vendor/images/icons/buttonB/close.svg);
     }
     &__icon_add {
-        background-image: url(./../../vendor/images/icons/button-header/add.svg);
+        background-image: url(./../../vendor/images/icons/buttonB/add.svg);
     }
     &_active {
         background-color: $button-active;
