@@ -7,6 +7,7 @@ const Main = () => {
         const checkLocalStorage = () => {
             const user = localStorage.getItem('user');
             if (user) {
+                console.log('navigate');
                 navigate('/restaurants');
             }
         };
