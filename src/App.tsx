@@ -16,10 +16,10 @@ import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const navigate = useNavigate();
-    const {currentUser} = useCurrentUser();
+    const { currentUser } = useCurrentUser();
     useEffect(() => {
-        if(currentUser) {
-            navigate('/restaurants')
+        if (currentUser) {
+            navigate('/restaurants');
         }
     }, [currentUser, navigate]);
     return (
