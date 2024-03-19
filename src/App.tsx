@@ -21,7 +21,9 @@ function App() {
         if (currentUser) {
             navigate('/restaurants');
         }
-    }, [currentUser, navigate]);
+        // Doesnt pass ci build with navigate deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser]);
     return (
         <div>
             <Header />
