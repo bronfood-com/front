@@ -12,18 +12,16 @@ import './index.scss';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
+import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const navigate = useNavigate();
+    const {currentUser} = useCurrentUser();
     useEffect(() => {
-        const checkLocalStorage = () => {
-            const user = localStorage.getItem('user');
-            if (user) {
-                navigate('/restaurants');
-            }
-        };
-        checkLocalStorage();
-    }, [navigate]);
+        if(currentUser) {
+            navigate('/restaurants')
+        }
+    }, [currentUser, navigate]);
     return (
         <div>
             <Header />
