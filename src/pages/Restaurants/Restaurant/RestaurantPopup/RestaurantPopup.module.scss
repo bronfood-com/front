@@ -24,4 +24,17 @@
         background-color: rgba(135, 133, 133, 0.75);
         backdrop-filter: blur(2.5px);
     }
+    &_button {
+        position: absolute;
+        width: 43px;
+        height: 41px;
+        opacity: 85%;
+        top: 15px;
+        &_favorite {
+            right: 69px;
+        }
+        &_close {
+            right: 16px;
+        }
+    }
 }

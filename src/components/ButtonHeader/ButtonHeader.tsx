@@ -10,22 +10,9 @@ interface ButtonHeaderProps extends ButtonHTMLAttributes<HTMLButtonElement> {
      * Icon inside button
      */
     icon?: 'close' | 'add';
-    /**
-     * Button's position relative to closest positioned parent
-     */
-    position?: {
-        top?: string;
-        right?: string;
-        bottom?: string;
-        left?: string;
-    };
-    /**
-     * Button's opacity
-     */
-    opacity?: string;
 }
 
-const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close', position = { top: '0px', right: '0px', bottom: '0px', left: '0px' }, opacity = '100%', ...props }) => {
+const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close', ...props }) => {
     return (
         <button
             {...props}
@@ -35,13 +22,6 @@ const ButtonHeader: FC<ButtonHeaderProps> = ({ isActive = false, icon = 'close',
                 ${isActive ? styles.button_header_active : ''}
                 ${icon === 'close' ? styles.button_header_wide : ''}
             `}
-            style={{
-                opacity,
-                top: position.top,
-                right: position.right,
-                bottom: position.bottom,
-                left: position.left,
-            }}
         />
     );
 };

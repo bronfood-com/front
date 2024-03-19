@@ -10,22 +10,9 @@ interface ButtonDeleteProps extends ButtonHTMLAttributes<HTMLButtonElement> {
      * Icon inside button
      */
     icon?: 'close' | 'edit' | 'back' | 'favorite' | 'delete';
-    /**
-     * Button's position relative to closest positioned parent
-     */
-    position?: {
-        top?: string;
-        right?: string;
-        bottom?: string;
-        left?: string;
-    };
-    /**
-     * Button's opacity
-     */
-    opacity?: string;
 }
 
-const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close', position = { top: '0px', right: '0px', bottom: '0px', left: '0px' }, opacity = '100%', ...props }) => {
+const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close', ...props }) => {
     return (
         <button
             {...props}
@@ -35,13 +22,6 @@ const ButtonDelete: FC<ButtonDeleteProps> = ({ isActive = false, icon = 'close',
                 ${isActive && icon === 'delete' ? styles.button_delete_outlined : ''}
                 ${!isActive ? styles.button_delete__background_white : icon === 'delete' ? styles.button_delete__background_red : styles.button_delete__background_grey}
             `}
-            style={{
-                opacity,
-                top: position.top,
-                right: position.right,
-                bottom: position.bottom,
-                left: position.left,
-            }}
         />
     );
 };

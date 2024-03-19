@@ -1,5 +1,5 @@
 import styles from './BoxFood.module.scss';
-import ButtonHeader from '../../../../components/ButtonHeader/ButtonHeader';
+import Button from '../../../../components/ButtonHeader/ButtonHeader';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
 
 function BoxFood({ card }: { card: Meal }) {
@@ -10,7 +10,9 @@ function BoxFood({ card }: { card: Meal }) {
                 <div className={styles.boxfood__description}>
                     <p className={styles.boxfood__name}>{card.name}</p>
                     <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
-                    <ButtonHeader type="button" icon="add" position={{ right: '10px', bottom: '15px' }} opacity="100%" />
+                    <div className={styles.boxfood__button}>
+                        <Button type="button" icon="add" />
+                    </div>
                 </div>
             </div>
         </div>

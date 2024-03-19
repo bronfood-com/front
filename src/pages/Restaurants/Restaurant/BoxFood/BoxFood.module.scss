@@ -36,4 +36,11 @@
         line-height: 1.4;
         color: $black;
     }
+    &__button {
+        position: absolute;
+        width: 41px;
+        height: 41px;
+        bottom: 15px;
+        right: 10px;
+    }
 }
