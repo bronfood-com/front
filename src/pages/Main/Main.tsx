@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
     const navigate = useNavigate();
+    console.log('Main');
     useEffect(() => {
         const checkLocalStorage = () => {
             const user = localStorage.getItem('user');
