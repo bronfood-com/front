@@ -7,12 +7,22 @@ import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Restaurants from './pages/Restaurants/Restaurants';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import './index.scss';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 
 function App() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const checkLocalStorage = () => {
+            const user = localStorage.getItem('user');
+            if (user) {
+                navigate('/restaurants');
+            }
+        };
+        checkLocalStorage();
+    }, [navigate]);
     return (
         <div>
             <Header />
