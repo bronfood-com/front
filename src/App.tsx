@@ -24,6 +24,7 @@ function App() {
         }
         // Navigate included in dependency array makes Restaurant component open for just 0.1 sec. when a restaurant card is clicked
         // and then close. Change of route apparently re-runs effect and redirects back to /restaurants.
+        // https://github.com/remix-run/react-router/issues/7634
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
     return (
