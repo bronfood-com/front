@@ -17,11 +17,13 @@ import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 function App() {
     const navigate = useNavigate();
     const { currentUser } = useCurrentUser();
+
     useEffect(() => {
         if (currentUser) {
             navigate('/restaurants');
         }
-        // Doesnt pass ci build with navigate deps
+        // Navigate included in dependency array makes Restaurant component open for just 0.1 sec. when a restaurant card is clicked
+        // and then close. Change of route apparently re-runs effect and redirects back to /restaurants.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
     return (
