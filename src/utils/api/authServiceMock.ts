@@ -1,5 +1,5 @@
 import { AuthService } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData } from './authService';
+import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
 
 export class AuthServiceMock implements AuthService {
     async _wait(ms: number) {
@@ -44,6 +44,20 @@ export class AuthServiceMock implements AuthService {
         const token = this.getToken();
         if (token) {
             localStorage.removeItem('token');
+        }
+    }
+
+    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: UpdateUser } | { status: 'error'; error_message: string }> {
+        await this._wait(500);
+        if (phone && password && fullname && confirmPassword) {
+            return { status: 'success', data: {
+                fullname: fullname,
+                phone: phone,
+                password: password,
+                confirmPassword: confirmPassword
+            } };
+        } else {
+            return { status: 'error', error_message: 'invalidCredentials' };
         }
     }
 }

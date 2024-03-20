@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './Input.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
@@ -37,6 +37,10 @@ interface Input {
      * Custom validation function
      */
     validate?: (value: FieldValues) => string | boolean;
+    /**
+     * Input Value
+     */
+    value?: string;
 }
 
 const Input: FC<Input> = (props) => {
@@ -44,6 +48,11 @@ const Input: FC<Input> = (props) => {
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
 
+    //*change input
+    const [inputValue, setInputValue] = useState(props.value)
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value)
+    }
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
@@ -61,7 +70,10 @@ const Input: FC<Input> = (props) => {
                         message: t('components.input.errorMessage'),
                     },
                     validate: props.validate,
+
                 })}
+                onChange={handleInputChange}
+                value={inputValue}
             ></input>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
         </div>

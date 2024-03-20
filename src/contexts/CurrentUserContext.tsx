@@ -20,6 +20,11 @@ type CurrentUserContent = {
         isLoading: boolean;
         errorMessage: string | null;
     };
+    updateUser: {
+        mutation: (data: FieldValues) => Promise<void>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
 };
 
 export const CurrentUserContext = createContext<CurrentUserContent>({
@@ -40,6 +45,11 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         isLoading: false,
         errorMessage: null,
     },
+    updateUser: {
+        mutation: () => Promise.resolve(),
+        isLoading: false,
+        errorMessage: null,
+    },
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -47,8 +57,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
     const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
+    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
     useEffect(() => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -110,6 +120,22 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [currentUser]);
 
+    const updateUser = async (data: FieldValues) => {
+        setIsLoading(true);
+        setUpdateUserErrorMessage(null);
+        const { password, confirmPassword, phone, fullname } = data;
+        const res = await authService.updateUser({ password: password, confirmPassword: confirmPassword, phone: phone, fullname: fullname });
+        if (res.status === 'error') {
+            setUpdateUserErrorMessage(res.error_message);
+            setIsLoading(false);
+        } else {
+            const user = { phone, fullname };
+            setCurrentUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+            setIsLoading(false);
+        }
+    };
+
     return (
         <CurrentUserContext.Provider
             value={{
@@ -129,6 +155,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: logout,
                     isLoading,
                     errorMessage: logoutErrorMessage,
+                },
+                updateUser: {
+                    mutation: updateUser,
+                    isLoading,
+                    errorMessage: updateUserErrorMessage,
                 },
             }}
         >

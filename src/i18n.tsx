@@ -121,7 +121,9 @@ i18n
                             nameLabelRepeatPassword: 'Повторите пароль',
                             continue: 'Далее',
                             passwordDontMatch: 'Пароли не совпадают',
+                            errorMessage: 'Не удалось изменить данные'
                         },
+                        
                     },
                 },
             },

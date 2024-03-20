@@ -1,5 +1,5 @@
 import { AuthService } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData } from './authService';
+import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -65,4 +65,19 @@ export class AuthServiceReal implements AuthService {
         });
         localStorage.removeItem('token');
     }
+
+
+    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: UpdateUser } | { status: 'error'; error_message: string }> {
+        const res = await fetch(`${API_URL}/client/profile/update_request/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ fullname, phone, password, confirmPassword }),
+        });
+
+
+        return res;
+    }
+
 }
