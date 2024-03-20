@@ -1,6 +1,8 @@
 import { RestaurantsServiceMock } from './restaurantsServiceMock';
 // import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
+export type MealType = 'food' | 'drink' | 'dessert';
+
 export type Meal = {
     /**
      * Meal's id
@@ -21,7 +23,7 @@ export type Meal = {
     /**
      * Meal's type
      */
-    type: 'food' | 'drink' | 'dessert';
+    type: MealType;
 };
 
 export type Restaurant = {

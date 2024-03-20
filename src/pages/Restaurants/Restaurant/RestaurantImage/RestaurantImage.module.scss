@@ -1,0 +1,14 @@
+@import '../../../../styles/variables.scss';
+
+.restaurant_image {
+    height: 180px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 25px 25px 0 0;
+
+    &__container {
+        width: 100%;
+    }
+}

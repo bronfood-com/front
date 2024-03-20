@@ -1,12 +1,16 @@
-import image1 from './MockImages/image1.png';
-import image2 from './MockImages/image2.png';
-import image3 from './MockImages/image3.png';
+import restaurant1 from './MockImages/restaurant1.png';
+import restaurant2 from './MockImages/restaurant2.png';
+import restaurant3 from './MockImages/restaurant3.png';
+import restaurant4 from './MockImages/restaurant4.png';
+import meal1 from './MockImages/meal1.png';
+import drink1 from './MockImages/drink1.png';
+import dessert1 from './MockImages/dessert1.png';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 export const mockRestaurants: Restaurant[] = [
     {
         id: '1',
-        photo: image1,
+        photo: restaurant3,
         name: 'Jahu',
         rating: 4.8,
         address: 'ул. Березовая 21',
@@ -14,17 +18,59 @@ export const mockRestaurants: Restaurant[] = [
         meals: [
             {
                 id: '1',
-                name: 'Брауни',
-                photo: '',
-                price: 1,
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '2',
+                name: 'Говяжий донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '3',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '4',
+                name: 'Американо',
+                photo: drink1,
+                price: 200,
+                type: 'drink',
+            },
+            {
+                id: '5',
+                name: 'Говяжий донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
+            },
+            {
+                id: '6',
+                name: 'Пуддинг',
+                photo: dessert1,
+                price: 350,
                 type: 'dessert',
+            },
+            {
+                id: '7',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
             },
         ],
         type: 'cafe',
     },
     {
         id: '2',
-        photo: image2,
+        photo: restaurant2,
         name: 'Boom',
         rating: 4.9,
         address: 'ул. Морозова 56/1',
@@ -42,7 +88,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '3',
-        photo: image3,
+        photo: restaurant4,
         name: 'Moon',
         rating: 5.0,
         address: 'пр. Мира 36',
@@ -60,7 +106,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '4',
-        photo: image1,
+        photo: restaurant1,
         name: 'Ready',
         rating: 4.8,
         address: 'ул. Березовая 21',
@@ -78,7 +124,7 @@ export const mockRestaurants: Restaurant[] = [
     },
     {
         id: '5',
-        photo: image3,
+        photo: restaurant3,
         name: 'Bar',
         rating: 5.0,
         address: 'пр. Мира 36',
@@ -87,7 +133,7 @@ export const mockRestaurants: Restaurant[] = [
             {
                 id: '1',
                 name: 'Капуччино',
-                photo: '',
+                photo: drink1,
                 price: 1,
                 type: 'drink',
             },

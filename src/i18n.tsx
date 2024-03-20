@@ -134,6 +134,11 @@ i18n
                             cafe: 'Кафе',
                             cafeBar: 'Кофейня',
                         },
+                        restaurant: {
+                            food: 'Еда',
+                            drink: 'Напитки',
+                            dessert: 'Десерты',
+                        },
                     },
                 },
             },
