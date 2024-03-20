@@ -27,10 +27,10 @@ const InputPhone: FC<InputPhone> = (props) => {
     const id = useId();
 
     //*change input
-    const [inputValue, setInputValue] = useState(props.value)
+    const [inputValue, setInputValue] = useState(props.value);
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value)
-    }
+        setInputValue(e.target.value);
+    };
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>

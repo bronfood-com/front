@@ -66,7 +66,6 @@ export class AuthServiceReal implements AuthService {
         localStorage.removeItem('token');
     }
 
-
     async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: UpdateUser } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
@@ -76,8 +75,8 @@ export class AuthServiceReal implements AuthService {
             body: JSON.stringify({ fullname, phone, password, confirmPassword }),
         });
 
+        const result = await res.json();
 
-        return res;
+        return result;
     }
-
 }

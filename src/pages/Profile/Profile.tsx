@@ -51,7 +51,13 @@ const Profile = () => {
     };
 
     return (
-        <Popup title={t('pages.profile.title')} onClose={() => { navigate('/'); setIsErrorVisible(false)}}>
+        <Popup
+            title={t('pages.profile.title')}
+            onClose={() => {
+                navigate('/');
+                setIsErrorVisible(false);
+            }}
+        >
             <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                 {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={t(`pages.profile.errorMessage}`)} />}
                 <FormInputs>
