@@ -2,15 +2,15 @@
 
 .restaurant_popup {
     position: fixed;
+    top: 122px;
     bottom: 0px;
     display: flex;
     flex-direction: column;
     max-width: 375px;
-    height: fit-content;
     background-color: $background;
     box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
     border-radius: 25px 25px 0px 0px;
-    margin: 122px auto 0px;
+    margin: 0px auto;
     z-index: map-get($zIndexes, menu);
 
     &_overlay {
