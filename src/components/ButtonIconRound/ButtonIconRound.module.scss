@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-.button_a {
+.button_icon_round {
     position: absolute;
     height: 41px;
     width: 43px;
@@ -20,25 +20,25 @@
         background-color: $button-grey;
     }
     &__icon_close {
-        background-image: url(./../../vendor/images/icons/buttonA/close.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/close.svg);
     }
     &__icon_edit {
-        background-image: url(./../../vendor/images/icons/buttonA/edit.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/edit.svg);
     }
     &__icon_back {
-        background-image: url(./../../vendor/images/icons/buttonA/back.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/back.svg);
     }
     &__icon_favorite {
-        background-image: url(./../../vendor/images/icons/buttonA/favorite.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/favorite.svg);
     }
     &__icon_favorite_active {
-        background-image: url(./../../vendor/images/icons/buttonA/favorite_active.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/favorite_active.svg);
     }
     &__icon_delete {
-        background-image: url(./../../vendor/images/icons/buttonA/delete.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/delete.svg);
     }
     &__icon_delete_active {
-        background-image: url(./../../vendor/images/icons/buttonA/delete_active.svg);
+        background-image: url(./../../vendor/images/icons/buttonIconRound/delete_active.svg);
     }
     &_outlined {
         border: 1px solid $red;

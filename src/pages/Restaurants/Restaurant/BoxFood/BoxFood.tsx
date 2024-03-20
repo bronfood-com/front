@@ -1,5 +1,5 @@
 import styles from './BoxFood.module.scss';
-import Button from '../../../../components/ButtonB/ButtonB';
+import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
 
 function BoxFood({ card }: { card: Meal }) {
