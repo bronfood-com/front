@@ -18,7 +18,6 @@ function App() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
-
     useEffect(() => {
         if (currentUser && pathname === '/') {
             navigate('/restaurants');
