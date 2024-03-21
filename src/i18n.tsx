@@ -119,7 +119,7 @@ i18n
                             nameLabelPhone: 'Телефон',
                             nameLabelPassword: 'Новый пароль',
                             nameLabelRepeatPassword: 'Повторите пароль',
-                            continue: 'Далее',
+                            save: 'Сохранить',
                             passwordDontMatch: 'Пароли не совпадают',
                             errorMessage: 'Не удалось изменить данные',
                         },

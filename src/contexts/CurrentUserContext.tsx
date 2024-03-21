@@ -123,16 +123,19 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
-        const { password, confirmPassword, phone, fullname } = data;
-        const res = await authService.updateUser({ password: password, confirmPassword: confirmPassword, phone: phone, fullname: fullname });
+        const { phone, fullname } = data;
+        const res = await authService.updateUser({ phone: phone, fullname: fullname });
         if (res.status === 'error') {
             setUpdateUserErrorMessage(res.error_message);
             setIsLoading(false);
         } else {
-            const user = { phone, fullname };
-            setCurrentUser(user);
-            localStorage.setItem('user', JSON.stringify(user));
-            setIsLoading(false);
+            const result = await authService.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
+            if (result.status === 'error') {
+                setUpdateUserErrorMessage(result.error_message);
+                setIsLoading(false);
+            } else {
+                setIsLoading(false);
+            }
         }
     };
 

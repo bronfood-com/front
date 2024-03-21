@@ -18,8 +18,6 @@ export interface RegisterData {
 export interface UpdateUser {
     fullname: string;
     phone: PhoneNumber;
-    password: string;
-    confirmPassword: string;
 }
 /*
  temp_data_code: Temporary code that the server assign to the user in db during registration
@@ -45,7 +43,7 @@ export interface AuthService {
 
     logOut: () => Promise<void>;
 
-    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
 }
 
 // export const authService = new AuthServiceReal();

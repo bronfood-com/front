@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
-import InputPassword from '../../components/InputPassword/InputPassword';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -18,7 +17,6 @@ const Profile = () => {
         register,
         handleSubmit,
         formState: { errors },
-        getValues,
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -42,12 +40,7 @@ const Profile = () => {
             setIsErrorVisible(true);
         }
 
-        navigate('/');
-    };
-
-    const validatePasswordMatch = (value: FieldValues) => {
-        const { newPassword } = getValues();
-        return newPassword === value || t('pages.profile.passwordDontMatch');
+        location.reload();
     };
 
     return (
@@ -63,11 +56,9 @@ const Profile = () => {
                 <FormInputs>
                     <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
                     <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                    <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} />
-                    <InputPassword register={register} errors={errors} name="newPasswordDouble" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} />
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button>{t('pages.profile.continue')}</Button>
+                <Button>{t('pages.profile.save')}</Button>
             </Form>
         </Popup>
     );
