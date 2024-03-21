@@ -19,7 +19,8 @@ function App() {
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
     useEffect(() => {
-        const path = process.env.NODE_ENV === 'production' ? '/front/*' : '/';
+        console.log(pathname);
+        const path = process.env.NODE_ENV === 'production' ? '/front/pr-preview/pr-63/' : '/';
         if (currentUser && pathname === path) {
             navigate('/restaurants');
         }
