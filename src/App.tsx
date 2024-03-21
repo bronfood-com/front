@@ -16,7 +16,7 @@ import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const navigate = useNavigate();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
 
     useEffect(() => {
