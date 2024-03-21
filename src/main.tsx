@@ -6,7 +6,7 @@ import './i18n.tsx';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { CurrentUserProvider } from './contexts/CurrentUserContext.tsx';
 
-const router = createBrowserRouter([{ path: '*', element: <App />, basename: `${process.env.NODE_ENV === 'production' ? '/front/' : ''}` }]);
+const router = createBrowserRouter([{ path: '*', element: <App /> }], { basename: `${process.env.NODE_ENV === 'production' ? '/front/' : ''}` });
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <CurrentUserProvider>
