@@ -19,8 +19,9 @@ function App() {
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
     useEffect(() => {
+        // Enable redirect to /restaurants in PR preview
         const regex = /\/pr-preview\/pr-\d\d\//i;
-        if (currentUser && regex.test(pathname)) {
+        if (currentUser && (regex.test(pathname) || pathname === '/')) {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
                     <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />
                 </Route>
-                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '/df'} element={<PageNotFound />} />
+                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
         </div>
     );
