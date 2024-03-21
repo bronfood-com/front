@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
@@ -16,13 +16,14 @@ import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const navigate = useNavigate();
+    const {pathname} = useLocation();
     const { currentUser } = useCurrentUser();
 
     useEffect(() => {
-        if (currentUser) {
+        if (currentUser && pathname === '/') {
             navigate('/restaurants');
         }
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, pathname]);
     return (
         <div>
             <Header />
