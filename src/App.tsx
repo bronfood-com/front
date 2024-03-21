@@ -19,7 +19,7 @@ function App() {
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
     useEffect(() => {
-    if (currentUser && (pathname === '/' || pathname === `/pr-preview/pr-${/[0-9]*/}/`)) {
+        if (currentUser && (pathname === '/' || pathname === `/pr-preview/pr-${/[0-9]*/}/`)) {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
