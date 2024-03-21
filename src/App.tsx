@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
@@ -16,17 +16,15 @@ import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
-
     useEffect(() => {
-        if (currentUser) {
+        // Enable redirect to /restaurants in PR preview
+        const regex = /\/pr-preview\/pr-\d\d\//i;
+        if (currentUser && (regex.test(pathname) || pathname === '/')) {
             navigate('/restaurants');
         }
-        // Navigate included in dependency array makes Restaurant component open for just 0.1 sec. when a restaurant card is clicked
-        // and then close. Change of route apparently re-runs effect and redirects back to /restaurants.
-        // https://github.com/remix-run/react-router/issues/7634
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser]);
+    }, [currentUser, navigate, pathname]);
     return (
         <div>
             <Header />
