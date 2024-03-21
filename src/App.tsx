@@ -19,7 +19,8 @@ function App() {
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
     useEffect(() => {
-        if (currentUser && (pathname === '/' || pathname === `/pr-preview/pr-${/[0-9]*/}/`)) {
+        const regex = /\/pr-preview\/pr-\d\d\//i;
+        if (currentUser && regex.test(pathname)) {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
@@ -36,7 +37,7 @@ function App() {
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
                     <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />
                 </Route>
-                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
+                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '/df'} element={<PageNotFound />} />
             </Routes>
         </div>
     );
