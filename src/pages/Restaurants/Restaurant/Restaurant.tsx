@@ -9,7 +9,6 @@ import MealsList from './MealsList/MealsList';
 import MealsFilter from './MealsFilter/MealsFilter';
 
 function Restaurant() {
-    const [isLiked, setIsLiked] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
     const params = useParams();
@@ -17,10 +16,6 @@ function Restaurant() {
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const close = () => {
         navigate('/restaurants');
-    };
-    const toggleFavorite = () => {
-        setIsLiked(!isLiked);
-        // add to favourites logic
     };
     const addMealType = (mealType: MealType) => {
         setSelectedMealTypes([...selectedMealTypes, mealType]);
@@ -32,7 +27,7 @@ function Restaurant() {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
         return (
-            <RestaurantPopup close={close} onClick={toggleFavorite} isLiked={isLiked}>
+            <RestaurantPopup close={close}>
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
