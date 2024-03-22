@@ -15,7 +15,7 @@
         padding-left: 15px;
         padding-right: 15px;
     }
-    &__line_container {
+    &__tab_container {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -25,19 +25,17 @@
         box-shadow: none;
         cursor: pointer;
     }
-    &__line {
-        width: 70px;
-        height: 0px;
-        margin-top: 12px;
-        margin-bottom: 12px;
-        border: 2px solid;
-        border-radius: 2px;
-    }
-    &__line_active {
-        border-color: $orange;
-    }
-    &__line_disabled {
-        border-color: $grey;
+    &__tab {
+        width: 100px;
+        height: 35px;
+        background-repeat: no-repeat;
+        background-position: center;
+        &_active {
+            background-image: url('./arrow-down.svg');
+        }
+        &_disabled {
+            background-image: url('./arrow-up.svg');
+        }
     }
     &__title_container {
         display: flex;

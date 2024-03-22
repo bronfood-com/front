@@ -16,8 +16,8 @@ const Drawer = () => {
     return (
         <div className={`${styles.drawer} ${styles.up} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
-                <button onClick={() => setIsOpen(!isOpen)} type="button" className={styles.drawer__line_container}>
-                    <div className={`${styles.drawer__line} ${isOpen ? styles.drawer__line_active : styles.drawer__line_disabled}`} />
+                <button onClick={() => setIsOpen(!isOpen)} type="button" className={styles.drawer__tab_container}>
+                    <div className={`${styles.drawer__tab} ${isOpen ? styles.drawer__tab_active : styles.drawer__tab_disabled}`} />
                 </button>
                 <div className={styles.drawer__title_container}>
                     <p className={styles.drawer__title}>{t('pages.restaurants.selectPlace')}</p>
