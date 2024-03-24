@@ -1,12 +1,12 @@
 @import '../../styles/variables.scss';
 
 .button_icon_square {
-    position: absolute;
     height: 35px;
     width: 35px;
     border: none;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: $white;
     cursor: pointer;
 
     &_close {

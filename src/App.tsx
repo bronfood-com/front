@@ -8,6 +8,7 @@ import Logout from './pages/Logout/Logout';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Restaurants from './pages/Restaurants/Restaurants';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
+import Basket from './pages/Basket/Basket';
 import './index.scss';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
                     <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />
                 </Route>
+                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
         </div>
