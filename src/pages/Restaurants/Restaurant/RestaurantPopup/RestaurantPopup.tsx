@@ -12,7 +12,7 @@ const RestaurantPopup = ({ close, children }: RestaurantPopupProps) => {
     const navigate = useNavigate();
     const openBasket = () => {
         navigate('/basket');
-    }
+    };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();

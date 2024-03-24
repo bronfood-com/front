@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 type BasketDescriptionProps = {
     cookingTime: number;
-    children: React.ReactNode
+    children: React.ReactNode;
 };
 
-function BasketDescription({cookingTime, children }: BasketDescriptionProps) {
-    const {t} = useTranslation();
+function BasketDescription({ cookingTime, children }: BasketDescriptionProps) {
+    const { t } = useTranslation();
     return (
         <div className={styles.basket}>
             <h1 className={styles.basket__name}>{t(`pages.basket.cart`)}</h1>

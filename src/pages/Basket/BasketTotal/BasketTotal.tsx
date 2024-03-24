@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 import styles from './BasketTotal.module.scss';
 import Button from '../../../components/Button/Button';
 
-function BasketTotal({sum}) {
-    const {t} = useTranslation();
+function BasketTotal({ sum }) {
+    const { t } = useTranslation();
     return (
         <div className={styles.basket_total}>
             <div className={styles.basket_total__title}>

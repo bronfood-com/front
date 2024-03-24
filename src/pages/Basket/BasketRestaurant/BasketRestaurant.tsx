@@ -2,7 +2,7 @@ import styles from './BasketRestaurant.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 import ButtonIconSquare from '../../../components/ButtonIconSquare/ButtonIconSquare';
 
-function BasketRestaurant({ restaurant }: { restaurant: Restaurant}) {
+function BasketRestaurant({ restaurant }: { restaurant: Restaurant }) {
     return (
         <div className={styles.basket_restaurant}>
             <div className={styles.basket_restaurant__container}>
@@ -15,7 +15,7 @@ function BasketRestaurant({ restaurant }: { restaurant: Restaurant}) {
                     </div>
                 </div>
             </div>
-            <ButtonIconSquare icon='delete' />
+            <ButtonIconSquare icon="delete" />
         </div>
     );
 }
