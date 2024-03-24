@@ -59,6 +59,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+
     useEffect(() => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -134,6 +136,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 setUpdateUserErrorMessage(result.error_message);
                 setIsLoading(false);
             } else {
+                setCurrentUser(result.data);
+                localStorage.setItem('user', JSON.stringify(result.data));
                 setIsLoading(false);
             }
         }

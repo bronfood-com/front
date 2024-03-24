@@ -44,15 +44,14 @@ interface Input {
 }
 
 const Input: FC<Input> = (props) => {
+    const [inputValue, setInputValue] = useState(props.value);
     const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
-
-    //*change input
-    const [inputValue, setInputValue] = useState(props.value);
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
+
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>

@@ -10,7 +10,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 const Profile = () => {
     const {
@@ -24,24 +24,24 @@ const Profile = () => {
     const { currentUser } = useCurrentUser();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { updateUser } = useCurrentUser();
-
-    const fullname = currentUser?.fullname;
-    const phoneNumber = currentUser?.phone;
+    const [fullname, setFullname] = useState(currentUser?.fullname);
+    const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
             phone: data.phoneNumber,
             fullname: data.username,
-            password: data.newPassword,
-            confirmPassword: data.newPasswordDouble,
         });
 
         if (result !== null) {
             setIsErrorVisible(true);
         }
-
-        location.reload();
     };
+
+    useEffect(() => {
+        setFullname(currentUser?.fullname);
+        setPhoneNumber(currentUser?.phone);
+    }, [currentUser]);
 
     return (
         <Popup
