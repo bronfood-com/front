@@ -16,9 +16,17 @@
         cursor: pointer;
         &_minus {
             background-image: url('../../vendor/images/icons/counter/minus.svg');
+            &_active {
+                background-color: $orange;
+                background-image: url('../../vendor/images/icons/counter/minus_active.svg');
+            }
         }
         &_plus {
             background-image: url('../../vendor/images/icons/counter/plus.svg');
+            &_active {
+                background-color: $orange;
+                background-image: url('../../vendor/images/icons/counter/plus_active.svg');
+            }
         }
     }
     &__count {
