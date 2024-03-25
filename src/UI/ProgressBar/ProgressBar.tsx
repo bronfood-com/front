@@ -2,15 +2,15 @@ import { FC, useEffect, useState } from "react";
 import styles from "./ProgressBar.module.scss";
 
 type ProgressBarProps = {
-    duration: number; // Продолжительность в миллисекундах
+    duration: number;
 }
 
 const ProgressBar: FC<ProgressBarProps> = ({ duration }) => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const intervalTime = duration; // Использование пропса для установки длительности
-        const updateInterval = 10; // Вы можете настроить это значение по желанию
+        const intervalTime = duration;
+        const updateInterval = 10;
 
         const totalUpdates = intervalTime / updateInterval;
         const progressStep = 1 / totalUpdates;
@@ -27,7 +27,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ duration }) => {
         }, updateInterval);
 
         return () => clearInterval(interval);
-    }, [duration]); // Добавьте duration в массив зависимостей, чтобы эффект перезапускался при изменении длительности
+    }, [duration]);
 
     const progressBarWidth = `${progress * 100}%`;
 
