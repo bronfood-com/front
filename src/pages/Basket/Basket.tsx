@@ -1,10 +1,9 @@
-import BasketPopup from './BasketPopup/BasketPopup'
-import BasketDescription from './BasketDescription/BasketDescription'
-import BasketRestaurant from './BasketRestaurant/BasketRestaurant'
-import BasketTotal from './BasketTotal/BasketTotal'
-import BasketMealsList from './BasketMealsList/BasketMealsList'
-import { mockRestaurants } from '../Restaurants/MockRestaurantsList'
-
+import BasketPopup from './BasketPopup/BasketPopup';
+import BasketDescription from './BasketDescription/BasketDescription';
+import BasketRestaurant from './BasketRestaurant/BasketRestaurant';
+import BasketTotal from './BasketTotal/BasketTotal';
+import BasketMealsList from './BasketMealsList/BasketMealsList';
+import { mockRestaurants } from '../Restaurants/MockRestaurantsList';
 
 function Basket() {
     const restaurant = mockRestaurants[0];
