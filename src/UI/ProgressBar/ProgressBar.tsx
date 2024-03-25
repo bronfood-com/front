@@ -2,31 +2,32 @@ import { FC, useEffect, useState } from "react";
 import styles from "./ProgressBar.module.scss";
 
 type ProgressBarProps = {
-    duration?: number;
+    duration: number; // Продолжительность в миллисекундах
 }
 
-const ProgressBar: FC<ProgressBarProps> = ({ duration = 120 }) => { // По умолчанию 2 минуты
+const ProgressBar: FC<ProgressBarProps> = ({ duration }) => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const startTime = Date.now();
-        const endTime = startTime + duration * 1000;
+        const intervalTime = duration; // Использование пропса для установки длительности
+        const updateInterval = 10; // Вы можете настроить это значение по желанию
+
+        const totalUpdates = intervalTime / updateInterval;
+        const progressStep = 1 / totalUpdates;
 
         const interval = setInterval(() => {
-            const currentTime = Date.now();
-            const elapsedTime = currentTime - startTime;
-            const newProgress = elapsedTime / (duration * 1000);
-
-            setProgress(newProgress);
-
-            if (currentTime >= endTime) {
-                clearInterval(interval);
-                setProgress(1);
-            }
-        }, 1000 / 60);
+            setProgress((currentProgress) => {
+                const updatedProgress = currentProgress + progressStep;
+                if (updatedProgress >= 1) {
+                    clearInterval(interval);
+                    return 1;
+                }
+                return updatedProgress;
+            });
+        }, updateInterval);
 
         return () => clearInterval(interval);
-    }, [duration]);
+    }, [duration]); // Добавьте duration в массив зависимостей, чтобы эффект перезапускался при изменении длительности
 
     const progressBarWidth = `${progress * 100}%`;
 
@@ -34,7 +35,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ duration = 120 }) => { // По ум
         <div className={styles.progressBar}>
             <div
                 className={styles.progressBar__line}
-                style={{ width: progressBarWidth, transition: `width ${duration}s linear` }}
+                style={{ width: progressBarWidth }}
             ></div>
         </div>
     );

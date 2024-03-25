@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-import WaitingStatusScreen from './components/WaitingStatusScreen/WaitingStatusScreen';
+import WaitingStatusScreen from './components/WaitingStatusScreen/WaitingStatusModal';
 
 function App() {
     return (

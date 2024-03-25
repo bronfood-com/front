@@ -54,6 +54,11 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                         },
+                        waitingStatusModal: {
+                            title: 'Ожидайте подтверждения заказа',
+                            subtitle: 'Приготовление начнётся с момента подтверждения',
+                            subtitleNote: 'Ожидайте код заказа',
+                        },
                     },
                     pages: {
                         signIn: {
