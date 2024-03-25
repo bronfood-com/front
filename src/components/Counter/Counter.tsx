@@ -8,19 +8,9 @@ function Counter({ count, setCount }: { count: number; setCount: Dispatch<SetSta
     const decrement = () => (count < 1 ? setCount(count) : setCount(count - 1));
     return (
         <div className={`${styles.counter}`}>
-            <div
-                onClick={decrement}
-                onMouseDown={() => setIsMinusActive(true)}
-                onMouseUp={() => setIsMinusActive(false)}
-                className={`${styles.counter__icon} ${isMinusActive ? styles.counter__icon_minus_active : styles.counter__icon_minus}`}
-            />
+            <div onClick={decrement} onMouseDown={() => setIsMinusActive(true)} onMouseUp={() => setIsMinusActive(false)} className={`${styles.counter__icon} ${isMinusActive ? styles.counter__icon_minus_active : styles.counter__icon_minus}`} />
             <span className={styles.counter__count}>{count}</span>
-            <div
-                onClick={increment}
-                onMouseDown={() => setIsPlusActive(true)}
-                onMouseUp={() => setIsPlusActive(false)}
-                className={`${styles.counter__icon} ${isPlusActive ? styles.counter__icon_plus_active : styles.counter__icon_plus}`}
-            />
+            <div onClick={increment} onMouseDown={() => setIsPlusActive(true)} onMouseUp={() => setIsPlusActive(false)} className={`${styles.counter__icon} ${isPlusActive ? styles.counter__icon_plus_active : styles.counter__icon_plus}`} />
         </div>
     );
 }
