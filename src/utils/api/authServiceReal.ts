@@ -66,7 +66,7 @@ export class AuthServiceReal implements AuthService {
         localStorage.removeItem('token');
     }
 
-    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
             headers: {

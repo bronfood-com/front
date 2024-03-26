@@ -43,7 +43,7 @@ export interface AuthService {
 
     logOut: () => Promise<void>;
 
-    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 }
 
 // export const authService = new AuthServiceReal();

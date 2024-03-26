@@ -26,6 +26,7 @@ const Profile = () => {
     const { updateUser } = useCurrentUser();
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
@@ -43,6 +44,11 @@ const Profile = () => {
         setPhoneNumber(currentUser?.phone);
     }, [currentUser]);
 
+
+    const handleChangeValue = () => {
+        setIsButtonDisabled(false);
+    };
+
     return (
         <Popup
             title={t('pages.profile.title')}
@@ -52,13 +58,13 @@ const Profile = () => {
             }}
         >
             <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={t(`pages.profile.errorMessage}`)} />}
+                {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
                 <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
-                    <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
+                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname} changeValue={handleChangeValue}></Input>
+                    <InputPhone register={register} errors={errors} value={phoneNumber} changeValue={handleChangeValue}></InputPhone>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button>{t('pages.profile.save')}</Button>
+                <Button disabled={isButtonDisabled}>{t('pages.profile.save')}</Button>
             </Form>
         </Popup>
     );
