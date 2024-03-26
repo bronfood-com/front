@@ -1,0 +1,35 @@
+@import '../../styles/variables.scss';
+
+.orderTimeCounter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: $light-gray;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 21px;
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    &__time {
+        color: $light-gray;
+        font-size: 15px;
+        font-style: normal;
+        background-image: url('../../vendor/images/icons/clock-icon.svg');
+        background-repeat: no-repeat;
+        background-position: left center;
+        font-weight: 500;
+        line-height: 21px;
+
+        &_number {
+            font-weight: 600;
+        }
+    }
+}

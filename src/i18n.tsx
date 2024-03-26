@@ -54,10 +54,16 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                         },
-                        waitingStatusModal: {
+                        waitingConfirmModal: {
                             title: 'Ожидайте подтверждения заказа',
                             subtitle: 'Приготовление начнётся с момента подтверждения',
                             subtitleNote: 'Ожидайте код заказа',
+                        },
+                        waitingOrderModal: {
+                            title: 'Код заказа',
+                            promoCode: 'NHG347',
+                            subtitle: 'Приготовление начнётся с момента подтверждения',
+                            subtitleNote: 'Вы можете отменить заказ в течении ',
                         },
                     },
                     pages: {

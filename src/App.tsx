@@ -9,14 +9,16 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-import WaitingStatusScreen from './components/WaitingStatusScreen/WaitingStatusModal';
+// import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/WaitingConfirmOrderModal';
+import WaitingOrderModal from './components/WaitingOrderModal/WaitingOrderModal';
 
 function App() {
     return (
         <div>
             {/* <Header /> */}
             <YandexMap></YandexMap>
-            <WaitingStatusScreen />
+            {/* <WaitingConfirmOrderModal /> */}
+            <WaitingOrderModal />
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
