@@ -14,14 +14,6 @@ npm 7+
 
     `npm install` или `yarn install`
 
-# Установка докер контейнера с бекендом
-
-1.  Склонировать репозиторий
-    `git clone https://github.com/bronfood-com/backend `
-
-2.  Для запуска необходимо изменить .env: В поле DB_HOST нужно установить значение db
-3.  `docker-compose -f infra/docker-compose.django_db.yml up -d`
-
 # Скрипты
 
 - Дев сервер  
@@ -44,6 +36,14 @@ npm 7+
 ## editorconfig
 
 Нужно установить плагин editorconfig для IDE. Чтобы проверить работает он или нет: в любом файле удалить последнюю пустую строку и нажать Ctrl+S. Если editorconfig работает, то пустая строка должна появиться опять. Если не появилась, то это значит, что editorconfig не работает, и надо его чинить. Это важно чинить, иначе будет много мерж-конфликтов.
+
+# Установка докер контейнера с бекендом
+
+1.  Склонировать репозиторий
+    `git clone https://github.com/bronfood-com/backend `
+
+2.  Для запуска необходимо изменить .env: В поле DB_HOST нужно установить значение db
+3.  `docker-compose -f infra/docker-compose.django_db.yml up -d`
 
 # Styleguide
 
