@@ -1,0 +1,65 @@
+@import '../../styles/variables.scss';
+
+.orderListArticle {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $line;
+    border-radius: 24px;
+
+    &__header {
+        display: flex;
+        width: 100%;
+        padding: 0 0 8px 8px;
+    }
+
+    &__total {
+        color: $black;
+        font-size: 17px;
+        line-height: 23.8px;
+        font-weight: 500;
+        display: flex;
+    }
+
+    &__list {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    &__figure {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__image {
+        display: flex;
+        border-radius: 10px;
+        width: 65px;
+        height: 47px;
+        object-fit: cover;
+    }
+
+    &__caption {
+        color: $black;
+        font-size: 13px;
+        line-height: 15.85px;
+        font-weight: 400;
+        max-width: 65px;
+        color: #282828;
+    }
+
+    &__price {
+        color: $black;
+    }
+}

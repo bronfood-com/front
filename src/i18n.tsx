@@ -64,7 +64,13 @@ i18n
                             promoCode: 'NHG347',
                             subtitle: 'Приготовление начнётся с момента подтверждения',
                             subtitleNote: 'Вы можете отменить заказ в течении ',
+                            subtitleNoteMinutes: 'минут',
+                            buttonTitle: 'Отменить заказ',
                         },
+                        orderTimeCounter: {
+                            minutes: 'мин.',
+                            subtitle: 'Ваш заказ уже готовят',
+                        }
                     },
                     pages: {
                         signIn: {

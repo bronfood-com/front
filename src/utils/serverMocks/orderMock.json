@@ -1,0 +1,29 @@
+{
+    "total": 1550,
+    "items": [
+        {
+            "id": "1",
+            "name": "Кофе",
+            "imageUrl": "https://img.freepik.com/free-photo/cup-of-coffee-with-a-heart-drawn-in-foam_1286-70.jpg",
+            "price": 500
+        },
+        {
+            "id": "2",
+            "name": "Куриный донер",
+            "imageUrl": "https://n1s1.hsmedia.ru/3c/dc/e9/3cdce98972d303d894d358dd2d7c99b2/600x600_1_4648ca4fc99af15851f05e82573d9606@1200x1200_0xxfj54Yu3_8163172447602658436.png",
+            "price": 1000
+        },
+        {
+            "id": "3",
+            "name": "Дуриный корнер",
+            "imageUrl": "https://uk.eatplanted.com/cdn/shop/articles/IMG_6361.jpg?v=1689776707",
+            "price": 300
+        },
+        {
+            "id": "4",
+            "name": "Кофейный кофе",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        }
+    ]
+}
