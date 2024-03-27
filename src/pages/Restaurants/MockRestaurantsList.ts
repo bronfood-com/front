@@ -160,7 +160,6 @@ export const options = mockRestaurants
     })
     .flat(2);
 
-export const types = ['fastFood', 'cafe', 'cafeBar' ]
-    .map((type) => {
-        return { id: increment(), name: type, selected: false };
-    });
+export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
+    return { id: increment(), name: type, selected: false };
+});
