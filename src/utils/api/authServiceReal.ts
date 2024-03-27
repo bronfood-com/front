@@ -78,5 +78,4 @@ export class AuthServiceReal implements AuthService {
         const result = await res.json();
         return result;
     }
-
 }
