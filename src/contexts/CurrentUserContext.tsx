@@ -136,8 +136,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             } else {
                 setUpdateUserErrorMessage(t(`pages.error.server`));
             }
-            setUpdateUserErrorMessage(t(`pages.error.validation`));
-
             setIsLoading(false);
         } else {
             setCurrentUser({ phone, fullname });

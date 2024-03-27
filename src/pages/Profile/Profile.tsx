@@ -12,6 +12,7 @@ import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Preloader from '../../components/Preloader/Preloader';
 const Profile = () => {
     const {
         register,
@@ -21,12 +22,10 @@ const Profile = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const { currentUser } = useCurrentUser();
+    const { currentUser, updateUser } = useCurrentUser();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const { updateUser } = useCurrentUser();
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
@@ -44,11 +43,6 @@ const Profile = () => {
         setPhoneNumber(currentUser?.phone);
     }, [currentUser]);
 
-
-    const handleChangeValue = () => {
-        setIsButtonDisabled(false);
-    };
-
     return (
         <Popup
             title={t('pages.profile.title')}
@@ -57,14 +51,16 @@ const Profile = () => {
                 setIsErrorVisible(false);
             }}
         >
+            {updateUser.isLoading && <Preloader />}
+
             <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                 {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
                 <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname} changeValue={handleChangeValue}></Input>
-                    <InputPhone register={register} errors={errors} value={phoneNumber} changeValue={handleChangeValue}></InputPhone>
+                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
+                    <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
                 </FormInputs>
                 <div className={styles.profile__button_space}></div>
-                <Button disabled={isButtonDisabled}>{t('pages.profile.save')}</Button>
+                <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
             </Form>
         </Popup>
     );

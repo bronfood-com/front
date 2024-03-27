@@ -19,11 +19,6 @@ interface InputPhone {
      * Input Value
      */
     value?: string;
-    /**
-     * Change button available if input edited
-     */
-    changeValue?: () => void;
-
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
@@ -34,7 +29,6 @@ const InputPhone: FC<InputPhone> = (props) => {
     const id = useId();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
-        props.changeValue?.()
     };
 
     return (

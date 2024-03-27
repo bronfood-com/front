@@ -41,10 +41,6 @@ interface Input {
      * Input Value
      */
     value?: string;
-    /**
-     * Change button available if input edited
-     */
-    changeValue?: () => void;
 }
 
 const Input: FC<Input> = (props) => {
@@ -54,7 +50,6 @@ const Input: FC<Input> = (props) => {
     const id = useId();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
-        props.changeValue?.();
     };
 
     return (
