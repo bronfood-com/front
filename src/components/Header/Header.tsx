@@ -24,7 +24,9 @@ const Header = () => {
                 </div>
                 <div className={styles.header__buttons}>
                     {isLogin ? <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
-                    <button title={t('components.header.searchTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
+                    <Link to="/basket">
+                        <button title={t('components.header.basketTitleHover')} className={`${styles.header__basket} ${styles.header__icon}`} />
+                    </Link>
                 </div>
             </div>
             <div className={`${styles.header__menu} ${isMenuActive ? styles.header__menu_active : ''}`}>

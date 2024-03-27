@@ -24,6 +24,7 @@
     &__icon {
         width: 35px;
         height: 35px;
+        cursor: pointer;
     }
     &__favorite {
         position: absolute;
@@ -37,8 +38,8 @@
     &__burger {
         background-image: url(../../vendor/images/icons/burger-menu-icon.svg);
     }
-    &__search {
-        background-image: url(../../vendor/images/icons/search-icon.svg);
+    &__basket {
+        background-image: url(../../vendor/images/icons/basket.svg);
     }
     &__close {
         background-image: url(../../vendor/images/icons/close-icon.svg);

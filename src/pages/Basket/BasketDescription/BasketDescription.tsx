@@ -10,7 +10,7 @@ function BasketDescription({ cookingTime, children }: BasketDescriptionProps) {
     const { t } = useTranslation();
     return (
         <div className={styles.basket}>
-            <h1 className={styles.basket__name}>{t(`pages.basket.cart`)}</h1>
+            <h1 className={styles.basket__name}>{t(`pages.basket.basket`)}</h1>
             {children}
             <div className={styles.basket__cooking_time}>
                 <p className={styles.basket__cooking_time__text}>{t(`pages.basket.cookingTime`)}</p>

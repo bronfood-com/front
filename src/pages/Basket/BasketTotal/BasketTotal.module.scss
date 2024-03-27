@@ -1,8 +1,10 @@
 @import '../../../styles/variables.scss';
 
 .basket_total {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    padding: 35px 0 25px 0;
+    margin: 35px 0 25px 0;
 
     &__title {
         display: flex;
@@ -14,6 +16,9 @@
         font-weight: 500;
         line-height: 1.4;
         color: $black;
+    }
+    &__sum {
+        font-size: 20px;
     }
     &__button {
         width: 100%;

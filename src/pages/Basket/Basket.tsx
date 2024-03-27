@@ -4,16 +4,21 @@ import BasketRestaurant from './BasketRestaurant/BasketRestaurant';
 import BasketTotal from './BasketTotal/BasketTotal';
 import BasketMealsList from './BasketMealsList/BasketMealsList';
 import { mockRestaurants } from '../Restaurants/MockRestaurantsList';
+import { useNavigate } from 'react-router-dom';
 
 function Basket() {
+    const navigate = useNavigate();
     const restaurant = mockRestaurants[0];
+    const sum = restaurant.meals.reduce((acc, current) => acc + current.price, 0);
+    const goBack = () => navigate(`/restaurants/${restaurant.id}`);
+    const close = () => navigate('/restaurants');
     return (
-        <BasketPopup close={close}>
+        <BasketPopup close={close} goBack={goBack}>
             <BasketDescription cookingTime={15}>
                 <BasketRestaurant restaurant={restaurant} />
             </BasketDescription>
             <BasketMealsList meals={restaurant.meals} />
-            <BasketTotal sum={1550} />
+            <BasketTotal sum={sum} />
         </BasketPopup>
     );
 }

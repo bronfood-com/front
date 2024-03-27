@@ -28,7 +28,15 @@
     }
     &_button {
         position: absolute;
-        top: 15px;
-        right: 15px;
+        width: 35px;
+        height: 35px;
+        &_back {
+            top: 15px;
+            left: 15px;
+        }
+        &_close {
+            top: 15px;
+            right: 15px;
+        }
     }
 }
