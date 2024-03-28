@@ -1,0 +1,53 @@
+@import '../../../../../styles/variables.scss';
+
+.chip_with_icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 41px;
+    border: 1px solid $line;
+    border-radius: 35px;
+    padding-inline: 0;
+    padding-block: 0;
+    user-select: none;
+    cursor: pointer;
+
+    &_input {
+        z-index: -1;
+        opacity: 0;
+        display: block;
+        width: 0;
+        height: 0;
+    }
+    &_icon {
+        width: 39px;
+        height: 39px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    &_food {
+        background-image: url(./../../../../../vendor/images/restaurant/food.png);
+    }
+    &_drink {
+        background-image: url(./../../../../../vendor/images/restaurant/drink.png);
+    }
+    &_dessert {
+        background-image: url(./../../../../../vendor/images/restaurant/desert.png);
+    }
+    &_text {
+        padding: 10px 10px 10px 2px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: $black;
+    }
+    &_text_active {
+        color: $white;
+    }
+    &_active {
+        background-color: $orange;
+        border: 1px solid $orange;
+    }
+}

@@ -46,5 +46,5 @@ export interface AuthService {
     updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 }
 
-// export const authService = new AuthServiceReal();
 export const authService = new AuthServiceMock();
+// export const authService = new AuthServiceReal();

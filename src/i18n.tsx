@@ -128,6 +128,23 @@ i18n
                             validation: 'Данные заполненые неверно.',
                             duplicate: 'Такой номер телефона уже зарегистрирован',
                         },
+                        restaurants: {
+                            selectPlace: 'Выберите заведение',
+                        },
+                        filter: {
+                            filters: 'Фильтры',
+                            enterSearchString: 'Введите в поиске название блюда, продукта или заведение',
+                            placeholder: 'Заведение, продукты, блюда',
+                            chooseTypeOfVenue: 'Выберите тип заведения',
+                            fastFood: 'Фаст фуд',
+                            cafe: 'Кафе',
+                            cafeBar: 'Кофейня',
+                        },
+                        restaurant: {
+                            food: 'Еда',
+                            drink: 'Напитки',
+                            dessert: 'Десерты',
+                        },
                     },
                 },
             },
