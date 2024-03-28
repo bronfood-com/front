@@ -4,7 +4,7 @@ import BoxFood from '../BoxFood/BoxFood';
 
 const MealsList = ({ meals }: { meals: Meal[] }) => {
     return (
-        <ul className={`${styles.meals_list} ${meals.length === 1 ? styles.meals_list_short : ""}`}>
+        <ul className={`${styles.meals_list} ${meals.length === 1 ? styles.meals_list_short : ''}`}>
             {meals.map((meal) => (
                 <li key={meal.id}>
                     <BoxFood card={meal} />
