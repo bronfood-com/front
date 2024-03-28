@@ -5,8 +5,44 @@
     overflow-y: scroll;
     padding: 15px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(165px, 1fr));
     grid-template-rows: auto;
     column-gap: 15px;
     row-gap: 15px;
+}
+
+@media (max-width: 346px) {
+    .meals_list {
+        grid-template-columns: repeat(2, minmax(155px, 1fr));
+    }
+}
+
+@media (max-width: 336px) {
+    .meals_list {
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 326px) {
+    .meals_list {
+        grid-template-columns: repeat(2, minmax(145px, 1fr));
+    }
+}
+
+@media (max-width: 316px) {
+    .meals_list {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+    }
+}
+
+@media (max-width: 306px) {
+    .meals_list {
+        grid-template-columns: repeat(2, minmax(135px, 1fr));
+    }
+}
+
+@media (max-width: 296px) {
+    .meals_list {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
