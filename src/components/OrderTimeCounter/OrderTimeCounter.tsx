@@ -29,11 +29,12 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ estimatedTime }) => {
     return (
         <div className={containerStyles.container}>
             <div className={styles.orderTimeCounter__container}>
-                <p className={styles.orderTimeCounter__time}>
-                    <span className={`${styles.orderTimeCounter__time_number} ${containerStyles.number}`}>
+                <div className={styles.orderTimeCounter__time}>
+                    <span className={styles.orderTimeCounter__image} />
+                    <p className={`${styles.orderTimeCounter__time_number} ${containerStyles.number}`}>
                         {formattedTime}
-                    </span>
-                </p>
+                    </p>
+                </div>
                 <div className={styles.orderTimeCounter__separator}>
                     <ProgressBar estimatedTime={estimatedTime} barColor={roundedRemainingTime < 0 ? "#F05252" : "#FF8F0B"} />
                 </div>

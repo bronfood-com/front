@@ -39,17 +39,17 @@
         color: $light-gray;
         font-size: 15px;
         font-style: normal;
-        background-repeat: no-repeat;
-        background-position: left;
-        background-size: 28px 28px;
+
+
         font-weight: 500;
         line-height: 21px;
-        max-width: 120px;
 
         &_number {
             color: $orange;
             font-size: 15px;
             line-height: 28px;
+            display: flex;
+            margin: 0 0 0 10px;
         }
     }
 
@@ -69,7 +69,9 @@
     @include orderTimeCounterBase;
     background-image: linear-gradient(to left, #FAEBD5 0%, #FFD696 50%, #FFAE30 100%);
 
-    &__time {
+    &__image {
+        display: flex;
+        width: 28px;
         background-image: url('../../vendor/images/icons/clock-icon.svg');
 
         .timeExpired {
