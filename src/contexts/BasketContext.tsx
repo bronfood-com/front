@@ -49,7 +49,7 @@ export const BasketContext = createContext<BasketContext>({
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-   /*  const [restaurant, setRestaurant] = useState<Restaurant>({});
+    /*  const [restaurant, setRestaurant] = useState<Restaurant>({});
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
