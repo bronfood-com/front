@@ -15,7 +15,10 @@ export interface RegisterData {
     password: string;
     fullname: string;
 }
-
+export interface UpdateUser {
+    fullname: string;
+    phone: PhoneNumber;
+}
 /*
  temp_data_code: Temporary code that the server assign to the user in db during registration
  confirmation_code: 4-digit code that user shoud enter to confirm registration
@@ -39,6 +42,8 @@ export interface AuthService {
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 
     logOut: () => Promise<void>;
+
+    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 }
 
 // export const authService = new AuthServiceReal();
