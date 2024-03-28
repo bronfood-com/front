@@ -1,6 +1,7 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { authService, User } from '../utils/api/authService';
+import { useTranslation } from 'react-i18next';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -17,6 +18,11 @@ type CurrentUserContent = {
     };
     logout: {
         mutation: () => Promise<void>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
+    updateUser: {
+        mutation: (data: FieldValues) => Promise<void>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -40,13 +46,20 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         isLoading: false,
         errorMessage: null,
     },
+    updateUser: {
+        mutation: () => Promise.resolve(),
+        isLoading: false,
+        errorMessage: null,
+    },
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const { t } = useTranslation();
     const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
     const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
+    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -110,6 +123,27 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [currentUser]);
 
+    const updateUser = async (data: FieldValues) => {
+        setIsLoading(true);
+        setUpdateUserErrorMessage(null);
+        const { phone, fullname } = data;
+        const res = await authService.updateUser({ phone: phone, fullname: fullname });
+        if (res.status === 'error') {
+            if (res.error_message === 'ValidationError') {
+                setUpdateUserErrorMessage(t(`pages.error.validation`));
+            } else if (res.error_message === 'Duplicate') {
+                setUpdateUserErrorMessage(t(`pages.error.duplicate`));
+            } else {
+                setUpdateUserErrorMessage(t(`pages.error.server`));
+            }
+            setIsLoading(false);
+        } else {
+            setCurrentUser({ phone, fullname });
+            localStorage.setItem('user', JSON.stringify({ phone, fullname }));
+            setIsLoading(false);
+        }
+    };
+
     return (
         <CurrentUserContext.Provider
             value={{
@@ -129,6 +163,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: logout,
                     isLoading,
                     errorMessage: logoutErrorMessage,
+                },
+                updateUser: {
+                    mutation: updateUser,
+                    isLoading,
+                    errorMessage: updateUserErrorMessage,
                 },
             }}
         >

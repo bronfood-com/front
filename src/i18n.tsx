@@ -119,8 +119,14 @@ i18n
                             nameLabelPhone: 'Телефон',
                             nameLabelPassword: 'Новый пароль',
                             nameLabelRepeatPassword: 'Повторите пароль',
-                            continue: 'Далее',
+                            save: 'Сохранить',
                             passwordDontMatch: 'Пароли не совпадают',
+                            errorMessage: 'Не удалось изменить данные',
+                        },
+                        error: {
+                            server: 'Сервер не отвечает. Попробуйте позже',
+                            validation: 'Данные заполненые неверно.',
+                            duplicate: 'Такой номер телефона уже зарегистрирован',
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',

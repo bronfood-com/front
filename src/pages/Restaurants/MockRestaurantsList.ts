@@ -152,17 +152,15 @@ const increment = (function (n) {
 export const options = mockRestaurants
     .map(({ meals, name }) => {
         return meals.map((meal) => {
-            return [
-                { id: increment(), name: meal.name },
-                { id: increment(), name },
-            ];
+            return [meal.name, name];
         });
     })
-    .flat(2);
-
-export const types = mockRestaurants
-    .map(({ type }) => type)
-    .filter((type, i, ar) => ar.indexOf(type) === i)
-    .map((type) => {
-        return { id: increment(), name: type, selected: false };
+    .flat(2)
+    .filter((option, i, ar) => ar.indexOf(option) === i)
+    .map((option) => {
+        return { id: increment(), name: option };
     });
+
+export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
+    return { id: increment(), name: type, selected: false };
+});
