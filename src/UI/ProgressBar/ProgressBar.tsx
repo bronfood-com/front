@@ -2,41 +2,37 @@ import { FC, useEffect, useState } from "react";
 import styles from "./ProgressBar.module.scss";
 
 type ProgressBarProps = {
-    duration: number;
-}
+    estimatedTime: number; // указыввать в минутах
+    barColor?: string;
+};
 
-const ProgressBar: FC<ProgressBarProps> = ({ duration }) => {
+const ProgressBar: FC<ProgressBarProps> = ({ estimatedTime, barColor = '#ff8f0b' }) => {
     const [progress, setProgress] = useState(0);
+    const totalMilliseconds = estimatedTime * 60 * 1000;
 
     useEffect(() => {
-        const intervalTime = duration;
-        const updateInterval = 10;
+        let start: number | null = null;
 
-        const totalUpdates = intervalTime / updateInterval;
-        const progressStep = 1 / totalUpdates;
+        const step = (timestamp: number) => {
+            if (!start) start = timestamp;
+            const elapsed = timestamp - start;
+            if (elapsed < totalMilliseconds) {
+                setProgress((elapsed / totalMilliseconds) * 100);
+                requestAnimationFrame(step);
+            } else {
+                setProgress(100);
+            }
+        };
 
-        const interval = setInterval(() => {
-            setProgress((currentProgress) => {
-                const updatedProgress = currentProgress + progressStep;
-                if (updatedProgress >= 1) {
-                    clearInterval(interval);
-                    return 1;
-                }
-                return updatedProgress;
-            });
-        }, updateInterval);
+        requestAnimationFrame(step);
 
-        return () => clearInterval(interval);
-    }, [duration]);
+    }, [estimatedTime, totalMilliseconds]);
 
-    const progressBarWidth = `${progress * 100}%`;
+    const barStyle = { width: `${progress}%`, backgroundColor: barColor };
 
     return (
         <div className={styles.progressBar}>
-            <div
-                className={styles.progressBar__line}
-                style={{ width: progressBarWidth }}
-            ></div>
+            <div className={styles.progressBar__line} style={barStyle}></div>
         </div>
     );
 };

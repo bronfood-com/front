@@ -1,5 +1,5 @@
 {
-    "total": 1550,
+    "total": 9550,
     "items": [
         {
             "id": "1",
@@ -20,8 +20,44 @@
             "price": 300
         },
         {
-            "id": "4",
-            "name": "Кофейный кофе",
+            "id": "5",
+            "name": "Чаек с конфетами",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "6",
+            "name": "Кальян и блинчик",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "7",
+            "name": "Сигара и пряник",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "8",
+            "name": "Вэйп и смузи",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "9",
+            "name": "Папироса и мороженое",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "10",
+            "name": "Трубка и сладкая вата",
+            "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
+            "price": 300
+        },
+        {
+            "id": "11",
+            "name": "Сигарета и монпасье",
             "imageUrl": "https://kbeonline.id/wp-content/uploads/2023/10/3655907751.webp",
             "price": 300
         }

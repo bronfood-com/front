@@ -1,0 +1,37 @@
+@import '../../styles/variables.scss';
+
+
+.orderListItem {
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: calc(25% - 8px);
+    }
+
+    &__figure {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__image {
+        display: flex;
+        border-radius: 10px;
+        width: 65px;
+        height: 47px;
+        object-fit: cover;
+    }
+
+    &__caption {
+        color: $black;
+        font-size: 13px;
+        line-height: 15.85px;
+        font-weight: 400;
+        width: 65px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

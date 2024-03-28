@@ -1,4 +1,4 @@
-// import Header from './components/Header/Header';
+import Header from './components/Header/Header';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -9,17 +9,17 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-// import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/WaitingConfirmOrderModal';
+import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/WaitingConfirmOrderModal';
 import WaitingOrderModal from './components/WaitingOrderModal/WaitingOrderModal';
 
 function App() {
     return (
         <div>
-            {/* <Header /> */}
-            <YandexMap></YandexMap>
-            {/* <WaitingConfirmOrderModal /> */}
-            <WaitingOrderModal />
+            <Header />
+            <YandexMap />
             <Routes>
+                <Route path='/waiting-confirm-order' element={<WaitingConfirmOrderModal />} />
+                <Route path='/waiting-order' element={<WaitingOrderModal onCancelOrder={() => console.log('cancel')}/>} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />

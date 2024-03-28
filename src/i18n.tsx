@@ -63,13 +63,15 @@ i18n
                             title: 'Код заказа',
                             promoCode: 'NHG347',
                             subtitle: 'Приготовление начнётся с момента подтверждения',
-                            subtitleNote: 'Вы можете отменить заказ в течении ',
+                            subtitleNote: 'Вы можете отменить заказ в течение ',
                             subtitleNoteMinutes: 'минут',
                             buttonTitle: 'Отменить заказ',
                         },
                         orderTimeCounter: {
                             minutes: 'мин.',
-                            subtitle: 'Ваш заказ уже готовят',
+                            preparing: 'Ваш заказ уже готовят',
+                            delayed: 'Ваш заказ скоро будет готов',
+                            ready: 'Ваш заказ уже готов',
                         }
                     },
                     pages: {
