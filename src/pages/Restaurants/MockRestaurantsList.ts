@@ -156,9 +156,9 @@ export const options = mockRestaurants
         });
     })
     .flat(2)
-    .filter((type, i, ar) => ar.indexOf(type) === i)
-    .map((element) => {
-        return { id: increment(), name: element };
+    .filter((option, i, ar) => ar.indexOf(option) === i)
+    .map((option) => {
+        return { id: increment(), name: option };
     });
 
 export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
