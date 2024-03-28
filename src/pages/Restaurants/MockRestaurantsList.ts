@@ -78,10 +78,10 @@ export const mockRestaurants: Restaurant[] = [
         meals: [
             {
                 id: '1',
-                name: 'Брауни с мороженым',
-                photo: '',
-                price: 1,
-                type: 'dessert',
+                name: 'Куриный донер',
+                photo: meal1,
+                price: 1350,
+                type: 'food',
             },
         ],
         type: 'cafe',
@@ -95,11 +95,11 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '12:00 - 01.00',
         meals: [
             {
-                id: '1',
-                name: 'Сырники без глютена',
-                photo: '',
-                price: 1,
-                type: 'food',
+                id: '4',
+                name: 'Американо',
+                photo: drink1,
+                price: 200,
+                type: 'drink',
             },
         ],
         type: 'cafe',
@@ -113,11 +113,11 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '09:00 - 22.00',
         meals: [
             {
-                id: '1',
-                name: 'Пирог без глютена',
-                photo: '',
-                price: 1,
-                type: 'food',
+                id: '6',
+                name: 'Пуддинг',
+                photo: dessert1,
+                price: 350,
+                type: 'dessert',
             },
         ],
         type: 'fastFood',
