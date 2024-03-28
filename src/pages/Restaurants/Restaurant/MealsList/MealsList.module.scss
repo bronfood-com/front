@@ -2,11 +2,11 @@
 
 .meals_list {
     height: 360px;
-    overflow-y: auto;
+    overflow: auto;
     flex-grow: 1;
     padding: 15px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(165px, 1fr));
+    grid-template-columns: minmax(165px, 1fr) 1fr;
     grid-template-rows: auto;
     column-gap: 15px;
     row-gap: 15px;
