@@ -152,13 +152,12 @@ const increment = (function (n) {
 export const options = mockRestaurants
     .map(({ meals, name }) => {
         return meals.map((meal) => {
-            return [
-                { id: increment(), name: meal.name },
-                { id: increment(), name },
-            ];
+            return [meal.name, name];
         });
     })
-    .flat(2);
+    .flat(2)
+    .filter((type, i, ar) => ar.indexOf(type) === i)
+    .map(element => {return {id: increment(), name: element}});
 
 export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
     return { id: increment(), name: type, selected: false };
