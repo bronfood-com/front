@@ -157,7 +157,9 @@ export const options = mockRestaurants
     })
     .flat(2)
     .filter((type, i, ar) => ar.indexOf(type) === i)
-    .map(element => {return {id: increment(), name: element}});
+    .map((element) => {
+        return { id: increment(), name: element };
+    });
 
 export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
     return { id: increment(), name: type, selected: false };
