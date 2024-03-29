@@ -1,9 +1,5 @@
-import { createContext, FC, PropsWithChildren } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Restaurant, Meal } from '../utils/api/restaurantsService/restaurantsService';
-
-/* interface RestaurantInBasket extends Restaurant {
-
-} */
 
 interface MealInBasket extends Meal {
     /**
@@ -24,7 +20,15 @@ type BasketContext = {
     /**
      * Indicates whether basket is loading content
      */
-    isLoading: boolean;
+    /* isLoading: boolean; */
+    /**
+     * Add restaurant to basket
+     */
+    addRestaurant: (restaurant: Restaurant) => void;
+    /**
+     * Delete restaurant from basket
+     */
+    deleteRestaurant: () => void;
     /**
      * Increment quantity of meals by 1
      */
@@ -42,33 +46,49 @@ type BasketContext = {
 export const BasketContext = createContext<BasketContext>({
     restaurant: {},
     meals: [],
-    isLoading: false,
+    /* isLoading: false, */
+    addRestaurant: () => {},
+    deleteRestaurant: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
     sum: null,
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    /*  const [restaurant, setRestaurant] = useState<Restaurant>({});
-    const addOption = (option: Option) => {
-        const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
-        if (isDouble) {
-            return;
+    const [restaurant, setRestaurant] = useState<Restaurant>({});
+    const [meals, setMeals] = useState<MealInBasket>([]);
+    /* const [isLoading, setIsLoading] = useState(false); */
+    const addRestaurant = (restaurant: Restaurant) => setRestaurant(restaurant);
+    const deleteRestaurant = () => setRestaurant({});
+    const increment = (function (n) {
+        return function () {
+            n += 1;
+            return n;
+        };
+    })(0);
+    const decrement = (function (n) {
+        return function () {
+            n -= 1;
+            return n;
+        };
+    })(0);
+    const addMeal = (newMeal: MealInBasket) => {
+        const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
+        if (isAlreadyInBasket) {
+            setMeals([...meals, {...newMeal, quantity: increment()}]);
         } else {
-            setSelectedOptions([...selectedOptions, option]);
+            setMeals([...meals, newMeal]);
         }
     };
-    const deleteOption = (option: Option) => {
-        setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
+    const deleteMeal = (mealToDelete: MealInBasket) => {
+        const isMoreThanOne = meals.find((meal: MealInBasket) => (meal.id === newMeal.id) && (meal.quantity > 1));
+        if (isMoreThanOne) {
+            setMeals([...meals, {...mealToDelete, quantity: decrement()}]);
+        } else {
+            setMeals(meals.filter((meal: MealInBasket) => meal.id !== mealToDelete.id));
+        }
     };
-    const addVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes([...selectedVenueTypes, venueType]);
-    };
-    const deleteVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
-    };
-    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchRestaurants = async () => {
             setIsLoading(true);
             const res = await restaurantsService.getRestaurants();
@@ -87,9 +107,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             value={{
                 restaurant,
                 meals: [],
-                isLoading: false,
-                addMeal: () => {},
-                deleteMeal: () => {},
+                /* isLoading, */
+                addRestaurant,
+                deleteRestaurant,
+                addMeal,
+                deleteMeal,
                 sum: null,
             }}
         >
