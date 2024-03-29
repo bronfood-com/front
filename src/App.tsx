@@ -19,7 +19,7 @@ function App() {
             <YandexMap />
             <Routes>
                 <Route path='/waiting-confirm-order' element={<WaitingConfirmOrderModal />} />
-                <Route path='/waiting-order' element={<WaitingOrderModal onCancelOrder={() => console.log('cancel')}/>} />
+                <Route path='/waiting-order' element={<WaitingOrderModal onCancelOrder={() => console.log('cancel order')}/>} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />

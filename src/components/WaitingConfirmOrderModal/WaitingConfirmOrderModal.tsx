@@ -6,6 +6,7 @@ import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import styles from './WaitingConfirmOrderModal.module.scss';
 
 const WaitingConfirmOrderModal: FC = () => {
+    const waitingTime = 2;
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const WaitingConfirmOrderModal: FC = () => {
             <h2 className={styles.waitingConfirmOrderModal__title}>{t('components.waitingConfirmModal.title')}</h2>
             <p className={styles.waitingConfirmOrderModal__subtitle}>{t('components.waitingConfirmModal.subtitle')}</p>
             <img src={waitingImg} alt="waiting image" className={styles.waitingConfirmOrderModal__img} />
-            <ProgressBar estimatedTime={2} />
+            <ProgressBar estimatedTime={waitingTime} />
             <p className={styles.waitingConfirmOrderModal__subtitleNote}>{t('components.waitingConfirmModal.subtitleNote')}</p>
         </div>
     );

@@ -23,14 +23,15 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ estimatedTime }) => {
     const statusMessage = t(getStatusMessageKey());
     const containerStyles = useMemo(() => ({
         container: roundedRemainingTime < 0 ? styles.orderTimeCounterExpiredBorder : styles.orderTimeCounter,
-        number: roundedRemainingTime < 0 ? styles.timeExpired : ''
+        number: roundedRemainingTime < 0 ? styles.timeExpired : '',
+        image: roundedRemainingTime < 0 ? styles.imageExpired : '',
     }), [roundedRemainingTime]);
 
     return (
         <div className={containerStyles.container}>
             <div className={styles.orderTimeCounter__container}>
                 <div className={styles.orderTimeCounter__time}>
-                    <span className={styles.orderTimeCounter__image} />
+                    <span className={`${styles.orderTimeCounter__image} ${containerStyles.image}`}/>
                     <p className={`${styles.orderTimeCounter__time_number} ${containerStyles.number}`}>
                         {formattedTime}
                     </p>

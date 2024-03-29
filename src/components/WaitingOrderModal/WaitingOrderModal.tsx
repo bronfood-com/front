@@ -14,6 +14,7 @@ type WaitingOrderModalProps = {
 const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     const { t } = useTranslation();
     const cancellationPeriod = 3 * 60; // 3 минуты для отмены заказа
+    const orderPrepPeriod = 20; // 20 минут для приготовления заказа
 
     const { remainingTime, canCancel } = useCancellationTimer(cancellationPeriod);
 
@@ -23,7 +24,7 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
         <div className={styles.waitingOrderModal}>
             <h2 className={styles.waitingOrderModal__title}>{t('components.waitingOrderModal.title')}</h2>
             <h1 className={styles.waitingOrderModal__promocode}>{t('components.waitingOrderModal.promoCode')}</h1>
-            <OrderTimeCounter estimatedTime={15} />
+            <OrderTimeCounter estimatedTime={orderPrepPeriod} />
             <div className={styles.waitingOrderModal__separator}>
                 <OrderListArticle order={mockData}/>
             </div>

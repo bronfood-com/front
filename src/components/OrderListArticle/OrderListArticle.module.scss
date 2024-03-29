@@ -21,7 +21,7 @@
         line-height: 23.8px;
         font-weight: 500;
         display: flex;
-        padding: 3px 0 5px 5px;
+        padding: 3px 0 7px 5px;
     }
 
     &__list {
@@ -32,6 +32,7 @@
         max-height: 100px;
         overflow-y: auto;
         border-radius: 5px;
+        padding: 0 0 0 2px;
     }
 
     &__price {

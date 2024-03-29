@@ -40,7 +40,6 @@
         font-size: 15px;
         font-style: normal;
 
-
         font-weight: 500;
         line-height: 21px;
 
@@ -53,8 +52,14 @@
         }
     }
 
+    &__image {
+        display: flex;
+        width: 28px;
+        background-image: url('../../vendor/images/icons/clock-icon.svg');
+    }
+
     &__separator {
-        margin: 15.3px 0;
+        margin: 13px 0 13px 0;
     }
 
     &__subtitle {
@@ -70,13 +75,14 @@
     background-image: linear-gradient(to left, #FAEBD5 0%, #FFD696 50%, #FFAE30 100%);
 
     &__image {
-        display: flex;
-        width: 28px;
-        background-image: url('../../vendor/images/icons/clock-icon.svg');
+        &.imageExpired {
+            background-image: url('../../vendor/images/icons/clock-icon-red.svg');
+        }
+    }
 
+    &__time {
         .timeExpired {
             color: $red;
-            background-image: url('../../vendor/images/icons/clock-icon-red.svg');
         }
     }
 }
