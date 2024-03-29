@@ -3,13 +3,12 @@ import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { useTranslation } from 'react-i18next';
 import styles from './OrderTimeCounter.module.scss';
 import { useCountdown } from '../../utils/hooks/useCountdown/useCountdown';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services/store';
 
-type OrderTimeCounterProps = {
-    estimatedTime: number;
-};
-
-const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ estimatedTime }) => {
+const OrderTimeCounter: FC = () => {
     const { t } = useTranslation();
+    const estimatedTime = useSelector((state: RootState) => state.orderTime.estimatedTime);
     const roundedRemainingTime = useCountdown(estimatedTime);
     const minutesSuffix = t('components.orderTimeCounter.minutes');
 
@@ -37,7 +36,7 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ estimatedTime }) => {
                     </p>
                 </div>
                 <div className={styles.orderTimeCounter__separator}>
-                    <ProgressBar estimatedTime={estimatedTime} barColor={roundedRemainingTime < 0 ? "#F05252" : "#FF8F0B"} />
+                    <ProgressBar barColor={roundedRemainingTime < 0 ? "#F05252" : "#FF8F0B"} />
                 </div>
                 <p className={styles.orderTimeCounter__subtitle}>
                     {statusMessage}
