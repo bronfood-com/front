@@ -25,10 +25,10 @@ function App() {
                 <Route path='/confirm-cancelling' element={
                     <ConfirmationPopup
                         title='Вы уверены, что хотите отменить заказ?'
-                        confirmButtonText='Отмена'
+                        confirmButtonText='Да'
                         onCancel={() => navigate('/waiting-order')}
                         onSubmit={function (): void {
-                            throw new Error('function not implemented');
+                            throw new Error('функция сабмита не реализована');
                         }}
                         children={undefined}
                         />
