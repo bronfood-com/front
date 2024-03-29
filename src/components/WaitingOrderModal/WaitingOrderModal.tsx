@@ -6,6 +6,7 @@ import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import mockData from '../../utils/serverMocks/orderMock.json';
 import { formatTime } from '../../utils/serviceFuncs/formatTime';
 import { useCancellationTimer } from '../../utils/hooks/useCancellationTimer/useCancallationTimer';
+import { useNavigate } from 'react-router-dom';
 
 type WaitingOrderModalProps = {
     onCancelOrder: () => void;
@@ -13,12 +14,18 @@ type WaitingOrderModalProps = {
 
 const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const cancellationPeriod = 3 * 60; // 3 минуты для отмены заказа
     const orderPrepPeriod = 20; // 20 минут для приготовления заказа
 
     const { remainingTime, canCancel } = useCancellationTimer(cancellationPeriod);
 
     const formattedCancellationTime = useMemo(() => formatTime(remainingTime), [remainingTime]);
+
+    const handleCancelOrder = () => {
+        onCancelOrder();
+        navigate('/confirm-cancelling', { replace: true });
+    }
 
     return (
         <div className={styles.waitingOrderModal}>
@@ -40,7 +47,7 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
                     <button
                         className={styles.waitingOrderModal__button}
                         type='button'
-                        onClick={onCancelOrder}
+                        onClick={handleCancelOrder}
                     >
                         {t('components.waitingOrderModal.buttonTitle')}
                     </button>

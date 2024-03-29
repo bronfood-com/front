@@ -23,6 +23,7 @@ const WaitingConfirmOrderModal: FC = () => {
             <h2 className={styles.waitingConfirmOrderModal__title}>{t('components.waitingConfirmModal.title')}</h2>
             <p className={styles.waitingConfirmOrderModal__subtitle}>{t('components.waitingConfirmModal.subtitle')}</p>
             <img src={waitingImg} alt="waiting image" className={styles.waitingConfirmOrderModal__img} />
+            <span className={styles.waitingConfirmOrderModal__separator} />
             <ProgressBar estimatedTime={waitingTime} />
             <p className={styles.waitingConfirmOrderModal__subtitleNote}>{t('components.waitingConfirmModal.subtitleNote')}</p>
         </div>

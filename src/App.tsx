@@ -11,13 +11,29 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/WaitingConfirmOrderModal';
 import WaitingOrderModal from './components/WaitingOrderModal/WaitingOrderModal';
+import ConfirmationPopup from './components/Popups/ConfirmationPopup/ConfirmationPopup';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+    const navigate = useNavigate();
+
     return (
         <div>
             <Header />
             <YandexMap />
             <Routes>
+                <Route path='/confirm-cancelling' element={
+                    <ConfirmationPopup
+                        title='Вы уверены, что хотите отменить заказ?'
+                        confirmButtonText='Отмена'
+                        onCancel={() => navigate('/waiting-order')}
+                        onSubmit={function (): void {
+                            throw new Error('function not implemented');
+                        }}
+                        children={undefined}
+                        />
+                }
+                />
                 <Route path='/waiting-confirm-order' element={<WaitingConfirmOrderModal />} />
                 <Route path='/waiting-order' element={<WaitingOrderModal onCancelOrder={() => console.log('cancel order')}/>} />
                 <Route path="/" element={<Main />} />
