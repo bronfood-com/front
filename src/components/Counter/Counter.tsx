@@ -1,11 +1,15 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import styles from './Counter.module.scss';
 
-function Counter({ count, setCount }: { count: number; setCount: Dispatch<SetStateAction<number>> }) {
+type CounterProps = {
+    count: number;
+    increment: () => void;
+    decrement: () => void;
+};
+
+function Counter({ count, increment, decrement }: CounterProps) {
     const [isMinusActive, setIsMinusActive] = useState(false);
     const [isPlusActive, setIsPlusActive] = useState(false);
-    const increment = () => setCount(count + 1);
-    const decrement = () => (count < 1 ? setCount(count) : setCount(count - 1));
     return (
         <div className={`${styles.counter}`}>
             <div onClick={decrement} onMouseDown={() => setIsMinusActive(true)} onMouseUp={() => setIsMinusActive(false)} className={`${styles.counter__icon} ${isMinusActive ? styles.counter__icon_minus_active : styles.counter__icon_minus}`} />

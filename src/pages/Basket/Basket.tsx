@@ -3,22 +3,27 @@ import BasketDescription from './BasketDescription/BasketDescription';
 import BasketRestaurant from './BasketRestaurant/BasketRestaurant';
 import BasketTotal from './BasketTotal/BasketTotal';
 import BasketMealsList from './BasketMealsList/BasketMealsList';
-import { mockRestaurants } from '../Restaurants/MockRestaurantsList';
 import { useNavigate } from 'react-router-dom';
+import { useBasket } from '../../utils/hooks/useBasket/useBasket';
+import BasketEmpty from './BasketEmpty/BasketEmpty';
 
 function Basket() {
     const navigate = useNavigate();
-    const restaurant = mockRestaurants[0];
-    const sum = restaurant.meals.reduce((acc, current) => acc + current.price, 0);
-    const goBack = () => navigate(`/restaurants/${restaurant.id}`);
-    const close = () => navigate('/restaurants');
+    const { isEmpty, emptyBasket, restaurant, meals, sum } = useBasket();
+    const close = () => navigate(-1);
     return (
-        <BasketPopup close={close} goBack={goBack}>
-            <BasketDescription cookingTime={15}>
-                <BasketRestaurant restaurant={restaurant} />
-            </BasketDescription>
-            <BasketMealsList meals={restaurant.meals} />
-            <BasketTotal sum={sum} />
+        <BasketPopup close={close}>
+            {isEmpty ? (
+                <BasketEmpty />
+            ) : (
+                <>
+                    <BasketDescription cookingTime={15}>
+                        <BasketRestaurant restaurant={restaurant} emptyBasket={emptyBasket} />
+                    </BasketDescription>
+                    <BasketMealsList meals={meals} />
+                    <BasketTotal sum={sum} />
+                </>
+            )}
         </BasketPopup>
     );
 }

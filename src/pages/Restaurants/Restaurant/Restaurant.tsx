@@ -31,7 +31,7 @@ function Restaurant() {
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                <MealsList meals={mealsFiltered} />
+                <MealsList meals={mealsFiltered} restaurant={restaurant} />
             </RestaurantPopup>
         );
     }

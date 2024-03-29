@@ -1,7 +1,7 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Restaurant, Meal } from '../utils/api/restaurantsService/restaurantsService';
 
-interface MealInBasket extends Meal {
+export interface MealInBasket extends Meal {
     /**
      * Quantity of particular meal
      */
@@ -10,9 +10,17 @@ interface MealInBasket extends Meal {
 
 type BasketContext = {
     /**
+     * Indicates whether basket is empty
+     */
+    isEmpty: boolean;
+    /**
+     * Removes restaurant and all meals from basket
+     */
+    emptyBasket: () => void;
+    /**
      * Restaurant which meals are in basket
      */
-    restaurant: Restaurant;
+    restaurant: Restaurant | null;
     /**
      * List of meals in basket
      */
@@ -22,13 +30,9 @@ type BasketContext = {
      */
     /* isLoading: boolean; */
     /**
-     * Add restaurant to basket
+     * Add restaurant and meal to basket
      */
-    addRestaurant: (restaurant: Restaurant) => void;
-    /**
-     * Delete restaurant from basket
-     */
-    deleteRestaurant: () => void;
+    addToBasket: (newRestaurant: Restaurant, newMeal: Meal) => void;
     /**
      * Increment quantity of meals by 1
      */
@@ -44,49 +48,65 @@ type BasketContext = {
 };
 
 export const BasketContext = createContext<BasketContext>({
-    restaurant: {},
+    isEmpty: true,
+    emptyBasket: () => {},
+    restaurant: null,
     meals: [],
     /* isLoading: false, */
-    addRestaurant: () => {},
-    deleteRestaurant: () => {},
+    addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
     sum: null,
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurant, setRestaurant] = useState<Restaurant>({});
+    const [restaurant, setRestaurant] = useState<Restaurant>(null);
     const [meals, setMeals] = useState<MealInBasket>([]);
+    const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
+    const isEmpty = restaurant ? false : true;
+    const emptyBasket = () => {
+        setRestaurant(null);
+        setMeals([]);
+    };
     /* const [isLoading, setIsLoading] = useState(false); */
-    const addRestaurant = (restaurant: Restaurant) => setRestaurant(restaurant);
-    const deleteRestaurant = () => setRestaurant({});
-    const increment = (function (n) {
-        return function () {
-            n += 1;
-            return n;
-        };
-    })(0);
-    const decrement = (function (n) {
-        return function () {
-            n -= 1;
-            return n;
-        };
-    })(0);
+    const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
+        if (restaurant && restaurant.id === newRestaurant.id) {
+            addMeal(newMeal);
+        } else {
+            setRestaurant(newRestaurant);
+            setMeals([{ ...newMeal, quantity: 1 }]);
+        }
+    };
     const addMeal = (newMeal: MealInBasket) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
-            setMeals([...meals, { ...newMeal, quantity: increment() }]);
+            setMeals(
+                meals.map((meal) => {
+                    if (meal.id === newMeal.id) {
+                        return { ...meal, quantity: meal.quantity + 1 };
+                    } else {
+                        return meal;
+                    }
+                }),
+            );
         } else {
-            setMeals([...meals, newMeal]);
+            setMeals([...meals, { ...newMeal, quantity: 1 }]);
         }
     };
     const deleteMeal = (mealToDelete: MealInBasket) => {
-        const isMoreThanOne = meals.find((meal: MealInBasket) => meal.id === newMeal.id && meal.quantity > 1);
-        if (isMoreThanOne) {
-            setMeals([...meals, { ...mealToDelete, quantity: decrement() }]);
-        } else {
-            setMeals(meals.filter((meal: MealInBasket) => meal.id !== mealToDelete.id));
-        }
+        setMeals(
+            meals.map((meal) => {
+                if (meal.id === mealToDelete.id) {
+                    if (mealToDelete.quantity > 1) {
+                        return { ...meal, quantity: meal.quantity - 1 };
+                    } else {
+                        return { ...meal, quantity: 0 };
+                    }
+                } else {
+                    return meal;
+                }
+            }),
+        );
     };
     /* useEffect(() => {
         const fetchRestaurants = async () => {
@@ -105,14 +125,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <BasketContext.Provider
             value={{
+                isEmpty,
+                emptyBasket,
                 restaurant,
-                meals: [],
+                meals,
                 /* isLoading, */
-                addRestaurant,
-                deleteRestaurant,
+                addToBasket,
                 addMeal,
                 deleteMeal,
-                sum: null,
+                sum,
             }}
         >
             {children}

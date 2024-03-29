@@ -1,8 +1,10 @@
 import styles from './BoxFood.module.scss';
 import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
-import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { Meal, Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
-function BoxFood({ card }: { card: Meal }) {
+function BoxFood({ card, restaurant }: { card: Meal; restaurant: Restaurant }) {
+    const { addToBasket } = useBasket();
     return (
         <div className={`${styles.boxfood}`}>
             <div className={styles.boxfood__container}>
@@ -11,7 +13,7 @@ function BoxFood({ card }: { card: Meal }) {
                     <p className={styles.boxfood__name}>{card.name}</p>
                     <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
                     <div className={styles.boxfood__button}>
-                        <Button type="button" icon="add" />
+                        <Button onClick={() => addToBasket(restaurant, card)} type="button" icon="add" />
                     </div>
                 </div>
             </div>

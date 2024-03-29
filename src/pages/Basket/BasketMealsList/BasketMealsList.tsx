@@ -1,8 +1,8 @@
 import styles from './BasketMealsList.module.scss';
-import { Meal } from '../../../utils/api/restaurantsService/restaurantsService';
 import BasketMeal from '../BasketMeal/BasketMeal';
+import { MealInBasket } from '../../../contexts/BasketContext';
 
-const BasketMealsList = ({ meals }: { meals: Meal[] }) => {
+const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
     return (
         <ul className={styles.basket_meals_list}>
             {meals.map((meal) => (

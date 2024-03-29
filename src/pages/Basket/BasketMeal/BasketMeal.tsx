@@ -1,10 +1,10 @@
 import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
-import { Meal } from '../../../utils/api/restaurantsService/restaurantsService';
-import { useState } from 'react';
+import { MealInBasket } from '../../../contexts/BasketContext';
+import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
-function BasketMeal({ card }: { card: Meal }) {
-    const [count, setCount] = useState(1);
+function BasketMeal({ card }: { card: MealInBasket }) {
+    const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
             <div className={styles.basket_meal__container}>
@@ -14,7 +14,7 @@ function BasketMeal({ card }: { card: Meal }) {
                     <span className={styles.basket_meal__price}>{`${card.price.toFixed(0)} ₸`}</span>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} setCount={setCount} />
+                    <Counter count={card.quantity} increment={() => addMeal(card)} decrement={() => deleteMeal(card)} />
                 </div>
             </div>
         </div>
