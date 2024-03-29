@@ -5,7 +5,6 @@ import BasketTotal from './BasketTotal/BasketTotal';
 import BasketMealsList from './BasketMealsList/BasketMealsList';
 import { mockRestaurants } from '../Restaurants/MockRestaurantsList';
 import { useNavigate } from 'react-router-dom';
-import { BasketProvider } from '../../contexts/BasketContext';
 
 function Basket() {
     const navigate = useNavigate();
@@ -14,15 +13,13 @@ function Basket() {
     const goBack = () => navigate(`/restaurants/${restaurant.id}`);
     const close = () => navigate('/restaurants');
     return (
-        <BasketProvider>
-            <BasketPopup close={close} goBack={goBack}>
-                <BasketDescription cookingTime={15}>
-                    <BasketRestaurant restaurant={restaurant} />
-                </BasketDescription>
-                <BasketMealsList meals={restaurant.meals} />
-                <BasketTotal sum={sum} />
-            </BasketPopup>
-        </BasketProvider>
+        <BasketPopup close={close} goBack={goBack}>
+            <BasketDescription cookingTime={15}>
+                <BasketRestaurant restaurant={restaurant} />
+            </BasketDescription>
+            <BasketMealsList meals={restaurant.meals} />
+            <BasketTotal sum={sum} />
+        </BasketPopup>
     );
 }
 
