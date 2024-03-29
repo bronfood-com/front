@@ -23,7 +23,6 @@ function Basket() {
                 <BasketTotal sum={sum} />
             </BasketPopup>
         </BasketProvider>
-
     );
 }
 

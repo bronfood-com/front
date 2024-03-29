@@ -75,15 +75,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const addMeal = (newMeal: MealInBasket) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
-            setMeals([...meals, {...newMeal, quantity: increment()}]);
+            setMeals([...meals, { ...newMeal, quantity: increment() }]);
         } else {
             setMeals([...meals, newMeal]);
         }
     };
     const deleteMeal = (mealToDelete: MealInBasket) => {
-        const isMoreThanOne = meals.find((meal: MealInBasket) => (meal.id === newMeal.id) && (meal.quantity > 1));
+        const isMoreThanOne = meals.find((meal: MealInBasket) => meal.id === newMeal.id && meal.quantity > 1);
         if (isMoreThanOne) {
-            setMeals([...meals, {...mealToDelete, quantity: decrement()}]);
+            setMeals([...meals, { ...mealToDelete, quantity: decrement() }]);
         } else {
             setMeals(meals.filter((meal: MealInBasket) => meal.id !== mealToDelete.id));
         }
