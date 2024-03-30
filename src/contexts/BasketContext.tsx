@@ -45,6 +45,10 @@ type BasketContext = {
      * Total price of all meals in basket
      */
     sum: number;
+    /**
+     * Quantity of meals in basket
+     */
+    total: number;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -57,12 +61,14 @@ export const BasketContext = createContext<BasketContext>({
     addMeal: () => {},
     deleteMeal: () => {},
     sum: null,
+    total: null,
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant>(null);
     const [meals, setMeals] = useState<MealInBasket>([]);
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
+    const total = meals.length;
     const isEmpty = restaurant ? false : true;
     const emptyBasket = () => {
         setRestaurant(null);
@@ -134,6 +140,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 sum,
+                total,
             }}
         >
             {children}

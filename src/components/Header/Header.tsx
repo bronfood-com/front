@@ -4,12 +4,13 @@ import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const Header = () => {
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
-
+    const { total } = useBasket();
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };
@@ -25,7 +26,12 @@ const Header = () => {
                 <div className={styles.header__buttons}>
                     {isLogin ? <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
                     <Link to="/basket">
-                        <button title={t('components.header.basketTitleHover')} className={`${styles.header__basket} ${styles.header__icon}`} />
+                        <div className={styles.header__basket}>
+                            <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
+                            {
+                                total ? <span className={styles.header__chip}>{total}</span> : null
+                            }
+                        </div>
                     </Link>
                 </div>
             </div>
