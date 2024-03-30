@@ -68,7 +68,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant>(null);
     const [meals, setMeals] = useState<MealInBasket>([]);
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
-    const total = meals.length;
+    const total = meals.filter((meal) => meal.quantity > 0).length;
     const isEmpty = restaurant ? false : true;
     const emptyBasket = () => {
         setRestaurant(null);
