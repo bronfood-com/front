@@ -48,7 +48,7 @@ type BasketContext = {
     /**
      * Quantity of meals in basket
      */
-    total: number;
+    total: number | null;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -60,13 +60,13 @@ export const BasketContext = createContext<BasketContext>({
     addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
-    sum: null,
+    sum: 0,
     total: null,
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurant, setRestaurant] = useState<Restaurant>(null);
-    const [meals, setMeals] = useState<MealInBasket>([]);
+    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+    const [meals, setMeals] = useState<MealInBasket[]>([]);
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
     const total = meals.filter((meal) => meal.quantity > 0).length;
     const isEmpty = restaurant ? false : true;
@@ -83,7 +83,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals([{ ...newMeal, quantity: 1 }]);
         }
     };
-    const addMeal = (newMeal: MealInBasket) => {
+    const addMeal = (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
             setMeals(

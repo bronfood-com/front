@@ -3,7 +3,6 @@ import styles from './BasketPopup.module.scss';
 import Button from '../../../components/ButtonIconSquare/ButtonIconSquare';
 
 type BasketPopupProps = {
-    goBack: () => void;
     close: () => void;
     children?: ReactNode;
 };
