@@ -74,21 +74,13 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<MealInBasket[]>([]);
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
     const total = meals.filter((meal) => meal.quantity > 0).length;
-    const cookingTime = meals.reduce((acc, current) => acc + current.cookingTime * current.quantity, 0);
+    const cookingTime = Math.max(...meals.map(meal => meal.cookingTime));
     const isEmpty = restaurant ? false : true;
     const emptyBasket = () => {
         setRestaurant(null);
         setMeals([]);
     };
     /* const [isLoading, setIsLoading] = useState(false); */
-    const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
-        if (restaurant && restaurant.id === newRestaurant.id) {
-            addMeal(newMeal);
-        } else {
-            setRestaurant(newRestaurant);
-            setMeals([{ ...newMeal, quantity: 1 }]);
-        }
-    };
     const addMeal = (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
@@ -119,6 +111,14 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 }
             }),
         );
+    };
+    const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
+        if (restaurant && restaurant.id === newRestaurant.id) {
+            addMeal(newMeal);
+        } else {
+            setRestaurant(newRestaurant);
+            setMeals([{ ...newMeal, quantity: 1 }]);
+        }
     };
     /* useEffect(() => {
         const fetchRestaurants = async () => {
