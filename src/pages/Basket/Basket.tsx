@@ -17,11 +17,7 @@ function Basket() {
                 <BasketEmpty />
             ) : (
                 <>
-                    <BasketDescription cookingTime={15}>
-                        {
-                            restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={emptyBasket} />
-                        }
-                    </BasketDescription>
+                    <BasketDescription cookingTime={15}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={emptyBasket} />}</BasketDescription>
                     <BasketMealsList meals={meals} />
                     <BasketTotal sum={sum} />
                 </>
