@@ -28,9 +28,7 @@ const Header = () => {
                     <Link to="/basket">
                         <div className={styles.header__basket}>
                             <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                            {
-                                total ? <span className={styles.header__chip}>{total}</span> : null
-                            }
+                            {total ? <span className={styles.header__chip}>{total}</span> : null}
                         </div>
                     </Link>
                 </div>
