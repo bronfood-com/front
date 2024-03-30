@@ -22,6 +22,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
             {
                 id: '2',
@@ -29,6 +30,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
             {
                 id: '3',
@@ -36,6 +38,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
             {
                 id: '4',
@@ -43,6 +46,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: drink1,
                 price: 200,
                 type: 'drink',
+                cookingTime: 5,
             },
             {
                 id: '5',
@@ -50,6 +54,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
             {
                 id: '6',
@@ -57,6 +62,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: dessert1,
                 price: 350,
                 type: 'dessert',
+                cookingTime: 5,
             },
             {
                 id: '7',
@@ -64,6 +70,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
         ],
         type: 'cafe',
@@ -82,6 +89,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                cookingTime: 10,
             },
         ],
         type: 'cafe',
@@ -100,6 +108,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: drink1,
                 price: 200,
                 type: 'drink',
+                cookingTime: 5,
             },
         ],
         type: 'cafe',
@@ -118,6 +127,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: dessert1,
                 price: 350,
                 type: 'dessert',
+                cookingTime: 5,
             },
         ],
         type: 'fastFood',
@@ -136,6 +146,7 @@ export const mockRestaurants: Restaurant[] = [
                 photo: drink1,
                 price: 1,
                 type: 'drink',
+                cookingTime: 5,
             },
         ],
         type: 'cafeBar',
