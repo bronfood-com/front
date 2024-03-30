@@ -9,7 +9,7 @@ import BasketEmpty from './BasketEmpty/BasketEmpty';
 
 function Basket() {
     const navigate = useNavigate();
-    const { isEmpty, emptyBasket, restaurant, meals, sum } = useBasket();
+    const { isEmpty, emptyBasket, restaurant, meals, sum, cookingTime } = useBasket();
     const close = () => navigate(-1);
     return (
         <BasketPopup close={close}>
@@ -17,7 +17,7 @@ function Basket() {
                 <BasketEmpty />
             ) : (
                 <>
-                    <BasketDescription cookingTime={15}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={emptyBasket} />}</BasketDescription>
+                    <BasketDescription cookingTime={cookingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={emptyBasket} />}</BasketDescription>
                     <BasketMealsList meals={meals} />
                     <BasketTotal sum={sum} />
                 </>

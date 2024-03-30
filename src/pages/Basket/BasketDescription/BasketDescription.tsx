@@ -15,7 +15,7 @@ function BasketDescription({ cookingTime, children }: BasketDescriptionProps) {
             <div className={styles.basket__cooking_time}>
                 <p className={styles.basket__cooking_time__text}>{t(`pages.basket.cookingTime`)}</p>
                 <div className={styles.basket__cooking_time__icon} />
-                <span className={styles.basket__cooking_time__minutes}>{`${cookingTime}${t(`pages.basket.min`)}`}</span>
+                <span className={styles.basket__cooking_time__minutes}>{`${cookingTime} ${t(`pages.basket.min`)}`}</span>
             </div>
         </div>
     );
