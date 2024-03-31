@@ -5,16 +5,21 @@ import waitingImg from '../../vendor/images/waiting-screen.svg';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import styles from './WaitingConfirmOrderModal.module.scss';
 import { useDispatch } from 'react-redux';
-import { setEstimatedTime } from '../../services/slices/progressBarSlice';
+import { setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
 
 const WaitingConfirmOrderModal: FC = () => {
-    const waitingTime = 2;
+    const waitingTime = 3; // Время ожидания в минутах !
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setEstimatedTime(waitingTime));
+        const now = new Date().getTime();
+        const startTime = now; // Установка текущего времени как начального
+        const estimatedTime = waitingTime; // Установка ожидаемого времени в минутах
+
+        dispatch(setStartTime(startTime));
+        dispatch(setEstimatedTime(estimatedTime));
 
         const timer = setTimeout(() => {
             navigate('/waiting-order');
@@ -22,7 +27,8 @@ const WaitingConfirmOrderModal: FC = () => {
 
         return () => {
             clearTimeout(timer);
-            dispatch(setEstimatedTime(0));
+            // Здесь не очищаю состояние через dispatch(setEstimatedTime(0)), так как нужно будет
+            // делать это по запросу и ответу апишки
         };
     }, [dispatch, navigate, waitingTime]);
 

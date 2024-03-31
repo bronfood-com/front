@@ -28,7 +28,7 @@ function App() {
                         confirmButtonText='Да'
                         onCancel={() => navigate('/waiting-order')}
                         onSubmit={function (): void {
-                            throw new Error('функция сабмита не реализована');
+                            throw new Error('функция сабмита не реализована, но нужно отправить запрос на сервер через Redux');
                         }}
                         children={undefined}
                         />

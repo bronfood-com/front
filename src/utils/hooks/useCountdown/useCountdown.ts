@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // to remove
 
 export const useCountdown = (estimatedTime: number) => {
     const [remainingTime, setRemainingTime] = useState<number>(estimatedTime);

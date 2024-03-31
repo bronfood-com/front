@@ -1,40 +1,36 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { RootState } from "../../services/store";
-// import { setEstimatedTime } from './../../services/slices/progressBarSlice'; // для передачи в store ожидаемого времени
-import styles from "./ProgressBar.module.scss";
+import styles from './ProgressBar.module.scss';
 
-type ProgressBarProps = {
-    barColor?: string;
-};
-
-const ProgressBar: FC<ProgressBarProps> = ({ barColor = '#ff8f0b' }) => {
+const ProgressBar: FC = () => {
     const [progress, setProgress] = useState(0);
-    const estimatedTime = useSelector((state: RootState) => state.orderTime.estimatedTime);
+    const startTime = useSelector((state: RootState) => state.progressBar.startTime);
+    const estimatedTime = useSelector((state: RootState) => state.progressBar.estimatedTime);
     const totalMilliseconds = estimatedTime * 60 * 1000;
 
     useEffect(() => {
-        let start: number | null = null;
-        let animationFrameId: number;
+        if (!startTime) return;
 
-        const step = (timestamp: number) => {
-            if (!start) start = timestamp;
-            const elapsed = timestamp - start;
-            if (elapsed < totalMilliseconds) {
+        const end = new Date(startTime).getTime() + totalMilliseconds;
+        const updateProgress = () => {
+            const now = Date.now();
+            const elapsed = now - new Date(startTime).getTime();
+            if (now < end) {
                 setProgress((elapsed / totalMilliseconds) * 100);
-                animationFrameId = requestAnimationFrame(step);
+                requestAnimationFrame(updateProgress);
             } else {
                 setProgress(100);
             }
         };
 
-        animationFrameId = requestAnimationFrame(step);
+        updateProgress();
+    }, [startTime, estimatedTime]);
 
-        return () => cancelAnimationFrame(animationFrameId);
-
-    }, [estimatedTime]);
-
-    const barStyle = { width: `${progress}%`, backgroundColor: barColor };
+    const barStyle = {
+        width: `${progress}%`,
+        backgroundColor: progress < 100 ? '#ff8f0b' : '#f05252',
+    };
 
     return (
         <div className={styles.progressBar}>

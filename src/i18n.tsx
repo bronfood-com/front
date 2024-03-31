@@ -66,6 +66,7 @@ i18n
                             subtitleNote: 'Вы можете отменить заказ в течение ',
                             subtitleNoteMinutes: 'минут',
                             buttonTitle: 'Отменить заказ',
+                            minutes: 'мин.',
                         },
                         orderTimeCounter: {
                             minutes: 'мин.',
