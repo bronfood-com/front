@@ -7,7 +7,7 @@ const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
         <ul className={styles.basket_meals_list}>
             {meals.map((meal) => (
                 <li key={meal.id}>
-                    <BasketMeal card={meal} />
+                    <BasketMeal meal={meal} />
                 </li>
             ))}
         </ul>

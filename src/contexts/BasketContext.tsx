@@ -1,12 +1,6 @@
-import { createContext, FC, PropsWithChildren, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
 import { Restaurant, Meal } from '../utils/api/restaurantsService/restaurantsService';
-
-export interface MealInBasket extends Meal {
-    /**
-     * Quantity of particular meal
-     */
-    quantity: number;
-}
+import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 
 type BasketContext = {
     /**
@@ -26,9 +20,13 @@ type BasketContext = {
      */
     meals: MealInBasket[];
     /**
-     * Indicates whether basket is loading content
+     * Indicates whether basket is loading content from server
      */
-    /* isLoading: boolean; */
+    isLoading: boolean;
+    /**
+     * Error message returned from server
+     */
+    errorMessage: string;
     /**
      * Add restaurant and meal to basket
      */
@@ -60,7 +58,8 @@ export const BasketContext = createContext<BasketContext>({
     emptyBasket: () => {},
     restaurant: null,
     meals: [],
-    /* isLoading: false, */
+    isLoading: false,
+    errorMessage: '',
     addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
@@ -72,68 +71,123 @@ export const BasketContext = createContext<BasketContext>({
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
     const [meals, setMeals] = useState<MealInBasket[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
     const total = meals.filter((meal) => meal.quantity > 0).length;
     const cookingTime = Math.max(...meals.map(meal => meal.cookingTime));
     const isEmpty = restaurant ? false : true;
-    const emptyBasket = () => {
-        setRestaurant(null);
-        setMeals([]);
-    };
-    /* const [isLoading, setIsLoading] = useState(false); */
-    const addMeal = (newMeal: MealInBasket | Meal) => {
+    const addMeal = async (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
+            setIsLoading(true);
+            const res = await basketService.addMeal(newMeal);
+            if (res.status === 'error') {
+                setIsLoading(false);
+                setErrorMessage(res.error_message);
+            } else {
+                setIsLoading(false);
+                setMeals(
+                    meals.map((meal) => {
+                        if (meal.id === res.data.id) {
+                            return { ...res.data, quantity: meal.quantity + 1 };
+                        } else {
+                            return meal;
+                        }
+                    }),
+                );
+            }
+        } else {
+            setIsLoading(true);
+            const res = await basketService.addMeal(newMeal);
+            if (res.status === 'error') {
+                setIsLoading(false);
+                setErrorMessage(res.error_message);
+            } else {
+                setIsLoading(false);
+                setMeals([...meals, { ...res.data, quantity: 1 }]);
+            }
+        }
+    };
+    const deleteMeal = async (mealToDelete: MealInBasket) => {
+        setIsLoading(true);
+        const res = await basketService.deleteMeal(mealToDelete);
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+        } else {
+            setIsLoading(false);
             setMeals(
                 meals.map((meal) => {
-                    if (meal.id === newMeal.id) {
-                        return { ...meal, quantity: meal.quantity + 1 };
+                    if (meal.id === res.data.id) {
+                        if (mealToDelete.quantity > 1) {
+                            return { ...res.data, quantity: mealToDelete.quantity - 1 };
+                        } else {
+                            return { ...res.data, quantity: 0 };
+                        }
                     } else {
                         return meal;
                     }
                 }),
             );
-        } else {
-            setMeals([...meals, { ...newMeal, quantity: 1 }]);
         }
-    };
-    const deleteMeal = (mealToDelete: MealInBasket) => {
-        setMeals(
-            meals.map((meal) => {
-                if (meal.id === mealToDelete.id) {
-                    if (mealToDelete.quantity > 1) {
-                        return { ...meal, quantity: meal.quantity - 1 };
-                    } else {
-                        return { ...meal, quantity: 0 };
-                    }
-                } else {
-                    return meal;
-                }
-            }),
-        );
     };
     const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
         if (restaurant && restaurant.id === newRestaurant.id) {
             addMeal(newMeal);
         } else {
-            setRestaurant(newRestaurant);
-            setMeals([{ ...newMeal, quantity: 1 }]);
+            setIsLoading(true);
+            Promise.all([ basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal) ])
+            .then(([ newRestaurant, newMeal ]) => {
+                if(newRestaurant.status === 'success' && newMeal.status === 'success') {
+                    setIsLoading(false);
+                    setRestaurant(newRestaurant.data);
+                    setMeals([{ ...newMeal.data, quantity: 1 }]);
+                } else {
+                    setIsLoading(false);
+                    setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
+                }
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                setErrorMessage(err);
+            })
         }
     };
-    /* useEffect(() => {
-        const fetchRestaurants = async () => {
-            setIsLoading(true);
-            const res = await restaurantsService.getRestaurants();
-            if (res.status === 'error') {
-                setRestaurantsOnMap([]);
+    const emptyBasket = () => {
+        setIsLoading(true);
+        Promise.all([ basketService.deleteRestaurant(), basketService.deleteMeals() ])
+        .then(([deleteRestaurant, deleteMeals]) => {
+            if(deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
                 setIsLoading(false);
+                setRestaurant(null);
+                setMeals([]);
+                localStorage.removeItem('basket');
             } else {
-                setRestaurantsOnMap(res.data);
                 setIsLoading(false);
+                setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
             }
-        };
-        fetchRestaurants();
-    }, []); */
+        })
+        .catch((err) => {
+            setIsLoading(false);
+            setErrorMessage(err);
+        })
+    };
+    useEffect(() => {
+        if(restaurant) {
+            localStorage.setItem('basket', JSON.stringify({
+                restaurant,
+                meals,
+            }));
+        }
+    }, [restaurant, meals]);
+    useEffect(() => {
+        const basket = JSON.parse(localStorage.getItem('basket'));
+        if (basket) {
+            setRestaurant(basket.restaurant);
+            setMeals([...basket.meals]);
+        }
+    }, []);
     return (
         <BasketContext.Provider
             value={{
@@ -141,7 +195,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 emptyBasket,
                 restaurant,
                 meals,
-                /* isLoading, */
+                isLoading,
+                errorMessage,
                 addToBasket,
                 addMeal,
                 deleteMeal,

@@ -5,6 +5,10 @@ import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
 function BoxFood({ card, restaurant }: { card: Meal; restaurant: Restaurant }) {
     const { addToBasket } = useBasket();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addToBasket(restaurant, card);
+    }
     return (
         <div className={`${styles.boxfood}`}>
             <div className={styles.boxfood__container}>
@@ -12,9 +16,9 @@ function BoxFood({ card, restaurant }: { card: Meal; restaurant: Restaurant }) {
                 <div className={styles.boxfood__description}>
                     <p className={styles.boxfood__name}>{card.name}</p>
                     <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
-                    <div className={styles.boxfood__button}>
-                        <Button onClick={() => addToBasket(restaurant, card)} type="button" icon="add" />
-                    </div>
+                    <form className={styles.boxfood__button} onSubmit={handleSubmit}>
+                        <Button type="submit" icon="add" />
+                    </form>
                 </div>
             </div>
         </div>
