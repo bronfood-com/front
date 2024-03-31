@@ -8,7 +8,7 @@ function BoxFood({ card, restaurant }: { card: Meal; restaurant: Restaurant }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         addToBasket(restaurant, card);
-    }
+    };
     return (
         <div className={`${styles.boxfood}`}>
             <div className={styles.boxfood__container}>

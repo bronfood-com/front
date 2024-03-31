@@ -17,7 +17,7 @@ function Basket() {
     const close = () => navigate(-1);
     const handleEmptyBasket = () => {
         setIsConfirmationPopupOpen(true);
-    }
+    };
     return (
         <>
             <BasketPopup close={close}>
@@ -34,8 +34,7 @@ function Basket() {
             </BasketPopup>
             {isConfirmationPopupOpen && <BasketConfirmation close={() => setIsConfirmationPopupOpen(false)} />}
         </>
-
-    )
+    );
 }
 
 export default Basket;

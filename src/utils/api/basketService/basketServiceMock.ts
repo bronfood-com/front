@@ -18,7 +18,7 @@ export class BasketServiceMock implements BasketService {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async deleteRestaurant(): Promise<{ status: 'success'} | { status: 'error'; error_message: string }> {
+    async deleteRestaurant(): Promise<{ status: 'success' } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
         const token = this.getToken();
         if (token) {

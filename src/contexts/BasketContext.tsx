@@ -75,7 +75,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
     const total = meals.filter((meal) => meal.quantity > 0).length;
-    const cookingTime = Math.max(...meals.map(meal => meal.cookingTime));
+    const cookingTime = Math.max(...meals.map((meal) => meal.cookingTime));
     const isEmpty = restaurant ? false : true;
     const addMeal = async (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
@@ -137,48 +137,51 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             addMeal(newMeal);
         } else {
             setIsLoading(true);
-            Promise.all([ basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal) ])
-            .then(([ newRestaurant, newMeal ]) => {
-                if(newRestaurant.status === 'success' && newMeal.status === 'success') {
+            Promise.all([basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal)])
+                .then(([newRestaurant, newMeal]) => {
+                    if (newRestaurant.status === 'success' && newMeal.status === 'success') {
+                        setIsLoading(false);
+                        setRestaurant(newRestaurant.data);
+                        setMeals([{ ...newMeal.data, quantity: 1 }]);
+                    } else {
+                        setIsLoading(false);
+                        setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
+                    }
+                })
+                .catch((err) => {
                     setIsLoading(false);
-                    setRestaurant(newRestaurant.data);
-                    setMeals([{ ...newMeal.data, quantity: 1 }]);
+                    setErrorMessage(err);
+                });
+        }
+    };
+    const emptyBasket = () => {
+        setIsLoading(true);
+        Promise.all([basketService.deleteRestaurant(), basketService.deleteMeals()])
+            .then(([deleteRestaurant, deleteMeals]) => {
+                if (deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
+                    setIsLoading(false);
+                    setRestaurant(null);
+                    setMeals([]);
+                    localStorage.removeItem('basket');
                 } else {
                     setIsLoading(false);
-                    setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
+                    setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
                 }
             })
             .catch((err) => {
                 setIsLoading(false);
                 setErrorMessage(err);
-            })
-        }
-    };
-    const emptyBasket = () => {
-        setIsLoading(true);
-        Promise.all([ basketService.deleteRestaurant(), basketService.deleteMeals() ])
-        .then(([deleteRestaurant, deleteMeals]) => {
-            if(deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
-                setIsLoading(false);
-                setRestaurant(null);
-                setMeals([]);
-                localStorage.removeItem('basket');
-            } else {
-                setIsLoading(false);
-                setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
-            }
-        })
-        .catch((err) => {
-            setIsLoading(false);
-            setErrorMessage(err);
-        })
+            });
     };
     useEffect(() => {
-        if(restaurant) {
-            localStorage.setItem('basket', JSON.stringify({
-                restaurant,
-                meals,
-            }));
+        if (restaurant) {
+            localStorage.setItem(
+                'basket',
+                JSON.stringify({
+                    restaurant,
+                    meals,
+                }),
+            );
         }
     }, [restaurant, meals]);
     useEffect(() => {

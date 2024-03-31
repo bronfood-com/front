@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
-const BasketConfirmation: FC = ({close}) => {
-    const {emptyBasket, isLoading} = useBasket();
+const BasketConfirmation: FC = ({ close }) => {
+    const { emptyBasket, isLoading } = useBasket();
     const { t } = useTranslation();
     const handleSubmit = () => {
         emptyBasket();

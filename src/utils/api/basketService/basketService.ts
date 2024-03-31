@@ -1,6 +1,6 @@
-import { BasketServiceMock } from "./basketServiceMock";
+import { BasketServiceMock } from './basketServiceMock';
 // import { RestaurantsServiceReal } from './restaurantsServiceReal';
-import { Meal, Restaurant } from "../restaurantsService/restaurantsService";
+import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export interface MealInBasket extends Meal {
     /**
