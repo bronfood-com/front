@@ -20,7 +20,7 @@ function Basket() {
     };
     return (
         <>
-            <BasketPopup close={close}>
+            <BasketPopup close={close} isConfirmationPopupOpen={isConfirmationPopupOpen}>
                 {isEmpty ? (
                     <BasketEmpty />
                 ) : (

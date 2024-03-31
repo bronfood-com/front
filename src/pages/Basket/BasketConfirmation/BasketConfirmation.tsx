@@ -5,7 +5,7 @@ import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/Conf
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 const BasketConfirmation: FC = ({ close }) => {
-    const { emptyBasket, isLoading } = useBasket();
+    const { emptyBasket } = useBasket();
     const { t } = useTranslation();
     const handleSubmit = () => {
         emptyBasket();
@@ -24,9 +24,7 @@ const BasketConfirmation: FC = ({ close }) => {
     });
     return (
         <div className={styles.basket_confirmation} onClick={handleOverlayClick}>
-            <ConfirmationPopup title={t(`pages.basket.emptyBasket`)} confirmButtonText={t(`pages.basket.yes`)} onCancel={handleCancel} onSubmit={handleSubmit}>
-                {isLoading && <Preloader />}
-            </ConfirmationPopup>
+            <ConfirmationPopup title={t(`pages.basket.emptyBasket`)} confirmButtonText={t(`pages.basket.yes`)} onCancel={handleCancel} onSubmit={handleSubmit} />
         </div>
     );
 };
