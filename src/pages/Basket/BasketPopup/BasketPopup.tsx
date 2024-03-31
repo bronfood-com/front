@@ -15,7 +15,7 @@ const BasketPopup = ({ close, isConfirmationPopupOpen, children }: BasketPopupPr
         }
     };
     useEffect(() => {
-        if(!isConfirmationPopupOpen) {
+        if (!isConfirmationPopupOpen) {
             const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && close();
             document.addEventListener('keydown', handleCloseByEsc);
             return () => document.removeEventListener('keydown', handleCloseByEsc);
