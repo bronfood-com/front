@@ -187,7 +187,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         const basket = localStorage.getItem('basket');
         if (basket) {
-            const {restaurant, meals} = JSON.parse(basket);
+            const { restaurant, meals } = JSON.parse(basket);
             setRestaurant(restaurant);
             setMeals([...meals]);
         }
