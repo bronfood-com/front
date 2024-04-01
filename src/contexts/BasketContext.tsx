@@ -138,40 +138,40 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         } else {
             setIsLoading(true);
             Promise.all([basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal)])
-            .then(([newRestaurant, newMeal]) => {
-                if (newRestaurant.status === 'success' && newMeal.status === 'success') {
+                .then(([newRestaurant, newMeal]) => {
+                    if (newRestaurant.status === 'success' && newMeal.status === 'success') {
+                        setIsLoading(false);
+                        setRestaurant(newRestaurant.data);
+                        setMeals([{ ...newMeal.data, quantity: 1 }]);
+                    } else if (newRestaurant.status === 'error' && newMeal.status === 'error') {
+                        setIsLoading(false);
+                        setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
+                    }
+                })
+                .catch((err) => {
                     setIsLoading(false);
-                    setRestaurant(newRestaurant.data);
-                    setMeals([{ ...newMeal.data, quantity: 1 }]);
-                } else if (newRestaurant.status === 'error' && newMeal.status === 'error') {
+                    setErrorMessage(err);
+                });
+        }
+    };
+    const emptyBasket = () => {
+        setIsLoading(true);
+        Promise.all([basketService.deleteRestaurant(), basketService.deleteMeals()])
+            .then(([deleteRestaurant, deleteMeals]) => {
+                if (deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
                     setIsLoading(false);
-                    setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
+                    setRestaurant(null);
+                    setMeals([]);
+                    localStorage.removeItem('basket');
+                } else if (deleteRestaurant.status === 'error' && deleteMeals.status === 'error') {
+                    setIsLoading(false);
+                    setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
                 }
             })
             .catch((err) => {
                 setIsLoading(false);
                 setErrorMessage(err);
             });
-        }
-    };
-    const emptyBasket = () => {
-        setIsLoading(true);
-        Promise.all([basketService.deleteRestaurant(), basketService.deleteMeals()])
-        .then(([deleteRestaurant, deleteMeals]) => {
-            if (deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
-                setIsLoading(false);
-                setRestaurant(null);
-                setMeals([]);
-                localStorage.removeItem('basket');
-            } else if (deleteRestaurant.status === 'error' && deleteMeals.status === 'error') {
-                setIsLoading(false);
-                setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
-            }
-        })
-        .catch((err) => {
-            setIsLoading(false);
-            setErrorMessage(err);
-        });
     };
     useEffect(() => {
         if (restaurant) {

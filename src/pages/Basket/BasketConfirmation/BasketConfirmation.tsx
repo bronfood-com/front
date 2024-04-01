@@ -4,7 +4,7 @@ import styles from './BasketConfirmation.module.scss';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
-const BasketConfirmation = ({ close }: {close: () => void}) => {
+const BasketConfirmation = ({ close }: { close: () => void }) => {
     const { emptyBasket } = useBasket();
     const { t } = useTranslation();
     const handleSubmit = () => {
