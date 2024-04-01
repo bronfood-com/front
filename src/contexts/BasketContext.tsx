@@ -134,7 +134,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
         if (restaurant && restaurant.id === newRestaurant.id) {
-                addMeal(newMeal);
+            addMeal(newMeal);
         } else {
             setIsLoading(true);
             Promise.all([basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal)])
