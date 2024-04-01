@@ -10,9 +10,9 @@ export interface MealInBasket extends Meal {
 
 export interface BasketService {
     addRestaurant: (restaurant: Restaurant) => Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
-    deleteRestaurant: () => Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
-    addMeal: (meal: MealInBasket) => Promise<{ status: 'success'; data: MealInBasket } | { status: 'error'; error_message: string }>;
-    deleteMeal: (meal: MealInBasket) => Promise<{ status: 'success'; data: MealInBasket } | { status: 'error'; error_message: string }>;
+    deleteRestaurant: () => Promise<{ status: 'success' } | { status: 'error'; error_message: string }>;
+    addMeal: (meal: Meal) => Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }>;
+    deleteMeal: (meal: Meal) => Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }>;
     deleteMeals: () => Promise<{ status: 'success' } | { status: 'error'; error_message: string }>;
 }
 

@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
+import { Meal, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 
 type BasketContext = {
@@ -77,7 +77,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const total = meals.filter((meal) => meal.quantity > 0).length;
     const cookingTime = Math.max(...meals.map((meal) => meal.cookingTime));
     const isEmpty = restaurant ? false : true;
-    const addMeal = async (newMeal: MealInBasket) => {
+    const addMeal = async (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
         if (isAlreadyInBasket) {
             setIsLoading(true);
@@ -132,9 +132,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             );
         }
     };
-    const addToBasket = (newRestaurant: Restaurant, newMeal: MealInBasket) => {
+    const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
         if (restaurant && restaurant.id === newRestaurant.id) {
-            addMeal(newMeal);
+                addMeal(newMeal);
         } else {
             setIsLoading(true);
             Promise.all([basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal)])

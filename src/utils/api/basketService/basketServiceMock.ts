@@ -1,5 +1,5 @@
-import { MealInBasket, BasketService } from './basketService';
-import { Restaurant } from '../restaurantsService/restaurantsService';
+import { BasketService } from './basketService';
+import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
@@ -26,7 +26,7 @@ export class BasketServiceMock implements BasketService {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async addMeal(meal: MealInBasket): Promise<{ status: 'success'; data: MealInBasket } | { status: 'error'; error_message: string }> {
+    async addMeal(meal: Meal): Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
         const token = this.getToken();
         if (token) {
@@ -35,7 +35,7 @@ export class BasketServiceMock implements BasketService {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async deleteMeal(meal: MealInBasket): Promise<{ status: 'success'; data: MealInBasket } | { status: 'error'; error_message: string }> {
+    async deleteMeal(meal: Meal): Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
         const token = this.getToken();
         if (token) {
