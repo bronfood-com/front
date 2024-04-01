@@ -58,10 +58,12 @@ i18n
                             title: 'Ожидайте подтверждения заказа',
                             subtitle: 'Приготовление начнётся с момента подтверждения',
                             subtitleNote: 'Ожидайте код заказа',
+                            timeoutMessage: 'Время ожидания истекло. Попробуйте ещё раз',
+                            errorMessage: 'Произошла ошибка. Попробуйте ещё раз',
                         },
                         waitingOrderModal: {
                             title: 'Код заказа',
-                            promoCode: 'NHG347',
+                            promoCode: 'NHG3477',
                             subtitle: 'Приготовление начнётся с момента подтверждения',
                             subtitleNote: 'Вы можете отменить заказ в течение ',
                             subtitleNoteMinutes: 'минут',

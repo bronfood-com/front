@@ -7,5 +7,6 @@ export interface IOrderItem {
 
 export interface IOrder {
     total: number;
+    orderCode: string;
     items: IOrderItem[];
 }

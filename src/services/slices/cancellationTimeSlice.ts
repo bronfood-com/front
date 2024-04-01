@@ -11,16 +11,16 @@ const initialState: CancellationTimeState = {
 };
 
 export const cancellationSlice = createSlice({
-  name: 'cancellationTime',
-  initialState,
-  reducers: {
-    setCancellationTime: (state, action: PayloadAction<number>) => {
-      state.cancellationTime = action.payload;
+    name: 'cancellationTime',
+    initialState,
+    reducers: {
+        setCancellationTime: (state, action: PayloadAction<number>) => {
+        state.cancellationTime = action.payload;
+        },
+        setRemainingCancellationTime: (state, action: PayloadAction<number>) => {
+        state.remainingCancellationTime = action.payload;
+        },
     },
-    setRemainingCancellationTime: (state, action: PayloadAction<number>) => {
-      state.remainingCancellationTime = action.payload;
-    },
-  },
 });
 
 export const { setCancellationTime, setRemainingCancellationTime } = cancellationSlice.actions;

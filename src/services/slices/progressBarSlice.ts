@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { confirmOrder } from '../thunks/ConfirmOrderThunk';
+import { confirmOrder } from '../thunks/confirmOrderThunk';
 
 interface ProgressBarState {
   startTime: number;
   estimatedTime: number;
   orderConfirmed: boolean;
-  orderDetails: any; // на всякий случай для хранения деталей заказа
+  orderDetails: any;
 }
 
 const initialState: ProgressBarState = {
@@ -25,6 +25,12 @@ export const progressBarSlice = createSlice({
     setEstimatedTime: (state, action: PayloadAction<number>) => {
         state.estimatedTime = action.payload;
     },
+    resetStartTime: (state) => {
+        state.startTime = 0;
+    },
+    resetEstimatedTime: (state) => {
+        state.estimatedTime = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -38,6 +44,11 @@ export const progressBarSlice = createSlice({
   },
 });
 
-export const { setStartTime, setEstimatedTime } = progressBarSlice.actions;
+export const {
+    setStartTime,
+    setEstimatedTime,
+    resetStartTime,
+    resetEstimatedTime
+} = progressBarSlice.actions;
 
 export default progressBarSlice.reducer;

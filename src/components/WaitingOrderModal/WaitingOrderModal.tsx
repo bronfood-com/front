@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import styles from './WaitingOrderModal.module.scss';
-import OrderTimeCounter from '../OrderTimeCounter/OrderTimeCounter';
-import OrderListArticle from '../OrderListArticle/OrderListArticle';
-import mockData from '../../utils/serverMocks/orderMock.json';
-import { RootState } from '../../services/store';
-import { setStartTime, setEstimatedTime } from '../../services/slices/progressBarSlice';
 import { setRemainingCancellationTime } from '../../services/slices/cancellationTimeSlice';
+import { setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
+import { AppDispatch, RootState } from '../../services/store';
+import { confirmOrder } from '../../services/thunks/confirmOrderThunk';
+import OrderListArticle from '../OrderListArticle/OrderListArticle';
+import OrderTimeCounter from '../OrderTimeCounter/OrderTimeCounter';
+import styles from './WaitingOrderModal.module.scss';
 
 type WaitingOrderModalProps = {
     onCancelOrder: () => void;
@@ -17,7 +17,7 @@ type WaitingOrderModalProps = {
 const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const initialEstimatedTime = 20 * 60; // время ожидания заказа (20 умножаю на секунды)
     const initialCancellationTime = 3 * 60; // время для отмены (3 умножаю на секунды)
@@ -25,6 +25,9 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     const startTime = useSelector((state: RootState) => state.progressBar.startTime);
     const estimatedTime = useSelector((state: RootState) => state.progressBar.estimatedTime);
     const remainingCancellationTime = useSelector((state: RootState) => state.cancellationTime.remainingCancellationTime);
+    const orderDetails = useSelector((state: RootState) => state.order.orderData);
+    const isLoading = useSelector((state: RootState) => state.order.loading);
+    const error = useSelector((state: RootState) => state.order.error);
 
     const [remainingOrderTime, setRemainingOrderTime] = useState(estimatedTime);
 
@@ -41,10 +44,12 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
             const elapsedTimeInSeconds = Math.floor((now - startTime) / 1000);
 
             const newRemainingOrderTime = estimatedTime - elapsedTimeInSeconds;
-            dispatch(setRemainingCancellationTime(Math.max(initialCancellationTime - elapsedTimeInSeconds, 0))); // Обновление времени до отмены в Redux
+            dispatch(setRemainingCancellationTime(Math.max(initialCancellationTime - elapsedTimeInSeconds, 0)));
 
             setRemainingOrderTime(newRemainingOrderTime);
         }, 1000);
+
+        dispatch(confirmOrder());
 
         return () => clearInterval(timerInterval);
     }, [dispatch, startTime, estimatedTime, initialCancellationTime]);
@@ -65,26 +70,41 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     return (
         <div className={styles.waitingOrderModal}>
             <h2 className={styles.waitingOrderModal__title}>{t('components.waitingOrderModal.title')}</h2>
-            <h1 className={styles.waitingOrderModal__promocode}>{t('components.waitingOrderModal.promoCode')}</h1>
-            <OrderTimeCounter remainingTime={remainingOrderTime} />
-            <div className={styles.waitingOrderModal__separator}>
-                <OrderListArticle order={mockData} />
-            </div>
-            {remainingCancellationTime > 0 && (
+            {isLoading ? (
+                <p>Тут скоро будет прелоадер... <br/>
+                    ... который оповещает о загрузке деталей заказа<br/>
+                    а сейчас это двухсекудная имитация загрузки заказа
+                </p>
+            ) : error ? (
+                <p>А тут будет ошибка загрузки деталей заказа с сервера: {error}</p>
+            ) : (
                 <>
-                    <p className={styles.waitingOrderModal__subtitleNote}>
-                        {t('components.waitingOrderModal.subtitleNote')}
-                        <span className={styles.waitingOrderModal__subtitleNote_orange}>
-                            {formatTime(remainingCancellationTime)}{t('components.waitingOrderModal.minutes')}
-                        </span>
-                    </p>
-                    <button
-                        className={styles.waitingOrderModal__button}
-                        type='button'
-                        onClick={handleCancelOrder}
-                    >
-                        {t('components.waitingOrderModal.buttonTitle')}
-                    </button>
+                    {orderDetails && (
+                        <>
+                            <h1 className={styles.waitingOrderModal__orderCode}>{orderDetails.orderCode}</h1>
+                            <OrderTimeCounter remainingTime={remainingOrderTime} />
+                            <div className={styles.waitingOrderModal__separator}>
+                                <OrderListArticle order={orderDetails} />
+                            </div>
+                        </>
+                    )}
+                    {remainingCancellationTime > 0 && (
+                        <>
+                            <p className={styles.waitingOrderModal__subtitleNote}>
+                                {t('components.waitingOrderModal.subtitleNote')}
+                                <span className={styles.waitingOrderModal__subtitleNote_orange}>
+                                    {formatTime(remainingCancellationTime)}{t('components.waitingOrderModal.minutes')}
+                                </span>
+                            </p>
+                            <button
+                                className={styles.waitingOrderModal__button}
+                                type='button'
+                                onClick={handleCancelOrder}
+                            >
+                                {t('components.waitingOrderModal.buttonTitle')}
+                            </button>
+                        </>
+                    )}
                 </>
             )}
         </div>

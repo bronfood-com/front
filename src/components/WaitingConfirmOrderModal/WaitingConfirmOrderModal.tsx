@@ -1,36 +1,47 @@
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import waitingImg from '../../vendor/images/waiting-screen.svg';
-import ProgressBar from '../../UI/ProgressBar/ProgressBar';
-import styles from './WaitingConfirmOrderModal.module.scss';
 import { useDispatch } from 'react-redux';
-import { setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
+import { useNavigate } from 'react-router-dom';
+import ProgressBar from '../../UI/ProgressBar/ProgressBar';
+import { resetEstimatedTime, resetStartTime, setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
+import { AppDispatch } from '../../services/store';
+import { confirmOrder } from '../../services/thunks/confirmOrderThunk';
+import waitingImg from '../../vendor/images/waiting-screen.svg';
+import styles from './WaitingConfirmOrderModal.module.scss';
 
 const WaitingConfirmOrderModal: FC = () => {
-    const waitingTime = 3; // Время ожидания в минутах !
+    const waitingTime = 3;
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
-        const now = new Date().getTime();
-        const startTime = now; // Установка текущего времени как начального
-        const estimatedTime = waitingTime; // Установка ожидаемого времени в минутах
+        dispatch(setStartTime(new Date().getTime()));
+        dispatch(setEstimatedTime(waitingTime));
 
-        dispatch(setStartTime(startTime));
-        dispatch(setEstimatedTime(estimatedTime));
+        const confirmPromise = dispatch(confirmOrder()).unwrap();
 
-        const timer = setTimeout(() => {
-            navigate('/waiting-order');
+        const timeoutId = setTimeout(() => {
+            confirmPromise.then(() => {
+            }).catch(() => {
+                alert(t('components.waitingConfirmModal.timeoutMessage'));
+            });
         }, waitingTime * 60 * 1000);
 
+        confirmPromise.then(() => {
+            dispatch(resetStartTime());
+            dispatch(resetEstimatedTime());
+
+            clearTimeout(timeoutId);
+            navigate('/waiting-order');
+        }).catch(() => {
+            alert(t('components.waitingConfirmModal.errorMessage'));
+        });
+
         return () => {
-            clearTimeout(timer);
-            // Здесь не очищаю состояние через dispatch(setEstimatedTime(0)), так как нужно будет
-            // делать это по запросу и ответу апишки
+            clearTimeout(timeoutId);
         };
-    }, [dispatch, navigate, waitingTime]);
+    }, [dispatch, navigate, t, waitingTime]);
 
     return (
         <div className={styles.waitingConfirmOrderModal}>
