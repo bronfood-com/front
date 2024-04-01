@@ -30,7 +30,7 @@ type BasketContext = {
     /**
      * Add restaurant and meal to basket
      */
-    addToBasket: (newRestaurant: Restaurant, newMeal: MealInBasket) => void;
+    addToBasket: (newRestaurant: Restaurant, newMeal: Meal) => void;
     /**
      * Increment quantity of meals by 1
      */
@@ -185,10 +185,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [restaurant, meals]);
     useEffect(() => {
-        const basket = JSON.parse(localStorage.getItem('basket'));
+        const basket = localStorage.getItem('basket');
         if (basket) {
-            setRestaurant(basket.restaurant);
-            setMeals([...basket.meals]);
+            const {restaurant, meals} = JSON.parse(basket);
+            setRestaurant(restaurant);
+            setMeals([...meals]);
         }
     }, []);
     return (
