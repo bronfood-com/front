@@ -8,25 +8,33 @@ type BasketContext = {
      */
     isEmpty: boolean;
     /**
-     * Removes restaurant and all meals from basket
-     */
-    emptyBasket: () => void;
-    /**
      * Restaurant which meals are in basket
      */
     restaurant: Restaurant | null;
     /**
-     * List of meals in basket
+     * Meals in basket
      */
     meals: MealInBasket[];
     /**
-     * Indicates whether basket is loading content from server
+     * Indicates whether basket is communicating with server
      */
     isLoading: boolean;
     /**
      * Error message returned from server
      */
     errorMessage: string;
+    /**
+     * Longest cooking time of all meals in basket
+     */
+    cookingTime: number;
+    /**
+     * Total price of all meals in basket
+     */
+    sum: number;
+    /**
+     * Quantity of meals in basket
+     */
+    total: number | null;
     /**
      * Add restaurant and meal to basket
      */
@@ -40,32 +48,24 @@ type BasketContext = {
      */
     deleteMeal: (meal: MealInBasket) => void;
     /**
-     * Total price of all meals in basket
+     * Removes restaurant and all meals from basket
      */
-    sum: number;
-    /**
-     * Quantity of meals in basket
-     */
-    total: number | null;
-    /**
-     * Total cooking time of all meals in basket
-     */
-    cookingTime: number;
+    emptyBasket: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
     isEmpty: true,
-    emptyBasket: () => {},
     restaurant: null,
     meals: [],
     isLoading: false,
     errorMessage: '',
+    cookingTime: 0,
+    sum: 0,
+    total: null,
     addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
-    sum: 0,
-    total: null,
-    cookingTime: 0,
+    emptyBasket: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -196,17 +196,17 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         <BasketContext.Provider
             value={{
                 isEmpty,
-                emptyBasket,
                 restaurant,
                 meals,
                 isLoading,
                 errorMessage,
+                cookingTime,
+                sum,
+                total,
                 addToBasket,
                 addMeal,
                 deleteMeal,
-                sum,
-                total,
-                cookingTime,
+                emptyBasket,
             }}
         >
             {children}
