@@ -6,7 +6,7 @@ function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant;
     const handleSubmit = (e) => {
         e.preventDefault();
         emptyBasket();
-    }
+    };
     return (
         <div className={styles.basket_restaurant}>
             <div className={styles.basket_restaurant__container}>
@@ -20,7 +20,7 @@ function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant;
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
-                <ButtonIconSquare type='submit' icon="delete" />
+                <ButtonIconSquare type="submit" icon="delete" />
             </form>
         </div>
     );
