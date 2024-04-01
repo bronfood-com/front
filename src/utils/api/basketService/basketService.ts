@@ -1,5 +1,4 @@
 import { BasketServiceMock } from './basketServiceMock';
-// import { RestaurantsServiceReal } from './restaurantsServiceReal';
 import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export interface MealInBasket extends Meal {
@@ -17,5 +16,4 @@ export interface BasketService {
     deleteMeals: () => Promise<{ status: 'success' } | { status: 'error'; error_message: string }>;
 }
 
-// export const restaurantsService = new RestaurantsServiceReal();
 export const basketService = new BasketServiceMock();

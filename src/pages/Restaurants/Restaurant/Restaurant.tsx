@@ -7,8 +7,8 @@ import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
 import MealsList from './MealsList/MealsList';
 import MealsFilter from './MealsFilter/MealsFilter';
-import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import Preloader from '../../../components/Preloader/Preloader';
+import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function Restaurant() {
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);

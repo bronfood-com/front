@@ -1,6 +1,6 @@
 import { FC, useEffect, MouseEvent } from 'react';
-import styles from './BasketConfirmation.module.scss';
 import { useTranslation } from 'react-i18next';
+import styles from './BasketConfirmation.module.scss';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 

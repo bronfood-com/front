@@ -1,6 +1,5 @@
-import { BasketService } from './basketService';
+import { MealInBasket, BasketService } from './basketService';
 import { Restaurant } from '../restaurantsService/restaurantsService';
-import { MealInBasket } from './basketService';
 
 export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
