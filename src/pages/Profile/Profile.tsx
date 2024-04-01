@@ -36,6 +36,7 @@ const Profile = () => {
         if (result !== null) {
             setIsErrorVisible(true);
         }
+        navigate('/confirmation');
     };
 
     useEffect(() => {

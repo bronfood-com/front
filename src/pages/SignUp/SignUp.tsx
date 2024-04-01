@@ -40,6 +40,7 @@ const SignUp = () => {
         if (result !== null) {
             setIsErrorVisible(true);
         }
+        navigate('/confirmation');
     };
 
     const openInfoPopup = () => {

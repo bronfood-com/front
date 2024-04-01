@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
+import SMSConfirm from './pages/SMSConfirm/SMSConfirm';
 
 function App() {
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
+                <Route path="/confirmation" element={<ProtectedRoute component={<SMSConfirm />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
                     <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />

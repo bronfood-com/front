@@ -54,6 +54,9 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                         },
+                        button: {
+                            next: 'Далее',
+                        },
                     },
                     pages: {
                         signIn: {
@@ -73,6 +76,10 @@ i18n
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
+                        },
+                        confirmation: {
+                            title: 'Подтверждение номера',
+                            subtitle: 'Ввведите код из смс',
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
