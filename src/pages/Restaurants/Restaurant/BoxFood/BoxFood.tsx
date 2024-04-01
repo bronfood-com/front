@@ -2,10 +2,12 @@ import styles from './BoxFood.module.scss';
 import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal, Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
+import { FormEvent } from 'react';
+import { MealInBasket } from '../../../../utils/api/basketService/basketService';
 
-function BoxFood({ card, restaurant }: { card: Meal; restaurant: Restaurant }) {
+function BoxFood({ card, restaurant }: { card: Meal | MealInBasket; restaurant: Restaurant }) {
     const { addToBasket } = useBasket();
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         addToBasket(restaurant, card);
     };

@@ -1,6 +1,6 @@
 import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
-import { MealInBasket } from '../../../contexts/BasketContext';
+import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ meal }: { meal: MealInBasket }) {

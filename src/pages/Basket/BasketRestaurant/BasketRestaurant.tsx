@@ -1,9 +1,10 @@
 import styles from './BasketRestaurant.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 import ButtonIconSquare from '../../../components/ButtonIconSquare/ButtonIconSquare';
+import { FormEvent } from 'react';
 
 function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant; emptyBasket: () => void }) {
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         emptyBasket();
     };

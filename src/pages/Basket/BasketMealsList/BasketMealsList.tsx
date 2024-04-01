@@ -1,6 +1,6 @@
 import styles from './BasketMealsList.module.scss';
 import BasketMeal from '../BasketMeal/BasketMeal';
-import { MealInBasket } from '../../../contexts/BasketContext';
+import { MealInBasket } from '../../../utils/api/basketService/basketService';
 
 const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
     return (
