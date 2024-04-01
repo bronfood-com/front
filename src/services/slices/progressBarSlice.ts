@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { confirmOrder } from '../thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../thunks/confirmOrderThunk';
 
 interface ProgressBarState {
   startTime: number;
@@ -34,11 +34,11 @@ export const progressBarSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(confirmOrder.fulfilled, (state, action) => {
+    .addCase(confirmOrderThunk.fulfilled, (state, action) => {
         state.orderConfirmed = true;
         state.orderDetails = action.payload;
     })
-    .addCase(confirmOrder.rejected, (state) => {
+    .addCase(confirmOrderThunk.rejected, (state) => {
         state.orderDetails = 'Ошибка при подтверждении заказа';
     });
   },

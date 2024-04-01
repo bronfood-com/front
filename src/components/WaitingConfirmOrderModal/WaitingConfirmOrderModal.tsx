@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { resetEstimatedTime, resetStartTime, setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
 import { AppDispatch } from '../../services/store';
-import { confirmOrder } from '../../services/thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../../services/thunks/confirmOrderThunk';
 import waitingImg from '../../vendor/images/waiting-screen.svg';
 import styles from './WaitingConfirmOrderModal.module.scss';
 
@@ -19,7 +19,7 @@ const WaitingConfirmOrderModal: FC = () => {
         dispatch(setStartTime(new Date().getTime()));
         dispatch(setEstimatedTime(waitingTime));
 
-        const confirmPromise = dispatch(confirmOrder()).unwrap();
+        const confirmPromise = dispatch(confirmOrderThunk()).unwrap();
 
         const timeoutId = setTimeout(() => {
             confirmPromise.then(() => {

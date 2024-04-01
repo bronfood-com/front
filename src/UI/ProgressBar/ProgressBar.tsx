@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import { RootState } from "../../services/store";
+import { selectStartTime, selectEstimatedTime } from "../../services/selectors/progressBarSelectors";
 import styles from './ProgressBar.module.scss';
 
 const ProgressBar: FC = () => {
     const [progress, setProgress] = useState(0);
-    const startTime = useSelector((state: RootState) => state.progressBar.startTime);
-    const estimatedTime = useSelector((state: RootState) => state.progressBar.estimatedTime);
-    const totalMilliseconds = estimatedTime * 60 * 1000;
+    const startTime = useSelector(selectStartTime);
+    const estimatedTime = useSelector(selectEstimatedTime);
+    const totalMilliseconds = estimatedTime * 1000;
 
     useEffect(() => {
         if (!startTime) return;
@@ -34,7 +34,7 @@ const ProgressBar: FC = () => {
 
     return (
         <div className={styles.progressBar}>
-            <div className={styles.progressBar__line} style={barStyle}></div>
+            <div className={styles.progressBar__line} style={barStyle}/>
         </div>
     );
 };

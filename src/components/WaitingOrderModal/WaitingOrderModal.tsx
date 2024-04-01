@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setRemainingCancellationTime } from '../../services/slices/cancellationTimeSlice';
 import { setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
-import { AppDispatch, RootState } from '../../services/store';
-import { confirmOrder } from '../../services/thunks/confirmOrderThunk';
+import { AppDispatch } from '../../services/store';
+import { confirmOrderThunk } from '../../services/thunks/confirmOrderThunk';
+import { selectOrderData, selectOrderLoading, selectOrderError } from '../../services/selectors/orderSelectors';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import OrderTimeCounter from '../OrderTimeCounter/OrderTimeCounter';
 import styles from './WaitingOrderModal.module.scss';
+import { selectStartTime, selectEstimatedTime } from '../../services/selectors/progressBarSelectors';
+import { selectRemainingCancellationTime } from '../../services/selectors/remainingCancellationTimeSelector';
+import { formatTime } from '../../utils/serviceFuncs/formatTime';
 
 type WaitingOrderModalProps = {
     onCancelOrder: () => void;
@@ -22,12 +26,12 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     const initialEstimatedTime = 20 * 60; // время ожидания заказа (20 умножаю на секунды)
     const initialCancellationTime = 3 * 60; // время для отмены (3 умножаю на секунды)
 
-    const startTime = useSelector((state: RootState) => state.progressBar.startTime);
-    const estimatedTime = useSelector((state: RootState) => state.progressBar.estimatedTime);
-    const remainingCancellationTime = useSelector((state: RootState) => state.cancellationTime.remainingCancellationTime);
-    const orderDetails = useSelector((state: RootState) => state.order.orderData);
-    const isLoading = useSelector((state: RootState) => state.order.loading);
-    const error = useSelector((state: RootState) => state.order.error);
+    const startTime = useSelector(selectStartTime);
+    const estimatedTime = useSelector(selectEstimatedTime);
+    const remainingCancellationTime = useSelector(selectRemainingCancellationTime);
+    const orderDetails = useSelector(selectOrderData);
+    const isLoading = useSelector(selectOrderLoading);
+    const error = useSelector(selectOrderError);
 
     const [remainingOrderTime, setRemainingOrderTime] = useState(estimatedTime);
 
@@ -49,18 +53,10 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
             setRemainingOrderTime(newRemainingOrderTime);
         }, 1000);
 
-        dispatch(confirmOrder());
+        dispatch(confirmOrderThunk());
 
         return () => clearInterval(timerInterval);
     }, [dispatch, startTime, estimatedTime, initialCancellationTime]);
-
-    const formatTime = (timeInSeconds: number) => {
-        const sign = timeInSeconds < 0 ? "-" : "";
-        const absTimeInSeconds = Math.abs(timeInSeconds);
-        const minutes = Math.floor(absTimeInSeconds / 60);
-        const seconds = absTimeInSeconds % 60;
-        return `${sign}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    };
 
     const handleCancelOrder = () => {
         onCancelOrder();
@@ -76,7 +72,7 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
                     а сейчас это двухсекудная имитация загрузки заказа
                 </p>
             ) : error ? (
-                <p>А тут будет ошибка загрузки деталей заказа с сервера: {error}</p>
+                <p>А тут будет ошибка загрузки деталей заказа: {error}</p>
             ) : (
                 <>
                     {orderDetails && (

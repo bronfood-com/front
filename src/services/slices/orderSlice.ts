@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrder } from '../../interfaces/order';
-import { confirmOrder } from '../thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../thunks/confirmOrderThunk';
 
-export interface OrderState {
+interface OrderState {
   orderData: IOrder | null;
   loading: boolean;
   error: string | null;
@@ -20,17 +20,18 @@ const orderSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(confirmOrder.pending, (state) => {
+      .addCase(confirmOrderThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(confirmOrder.fulfilled, (state, action: PayloadAction<IOrder>) => {
+      .addCase(confirmOrderThunk.fulfilled, (state, action: PayloadAction<IOrder>) => {
+        state.loading = false;
         state.orderData = action.payload;
-        state.loading = false;
+        state.error = null;
       })
-      .addCase(confirmOrder.rejected, (state, action: PayloadAction<string | undefined>) => {
-        state.error = action.payload ?? 'Unknown error in orderSlice';
+      .addCase(confirmOrderThunk.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message || 'Произошла ошибка';
       });
   },
 });
