@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Meal, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 
@@ -69,7 +69,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
-    // Longest cooking time of all meals in basket
+    // Longest cooking time among meals in basket
     const waitingTime = Math.max(...meals.map((meal) => meal.waitingTime));
     const isEmpty = restaurant ? false : true;
     const addMeal = async (newMeal: Meal) => {
@@ -157,7 +157,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                     setIsLoading(false);
                     setRestaurant(null);
                     setMeals([]);
-                    localStorage.removeItem('basket');
                 } else if (deleteRestaurant.status === 'error' && deleteMeals.status === 'error') {
                     setIsLoading(false);
                     setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
@@ -168,25 +167,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 setErrorMessage(err);
             });
     };
-    useEffect(() => {
-        if (restaurant) {
-            localStorage.setItem(
-                'basket',
-                JSON.stringify({
-                    restaurant,
-                    meals,
-                }),
-            );
-        }
-    }, [restaurant, meals]);
-    useEffect(() => {
-        const basket = localStorage.getItem('basket');
-        if (basket) {
-            const { restaurant, meals } = JSON.parse(basket);
-            setRestaurant(restaurant);
-            setMeals([...meals]);
-        }
-    }, []);
     return (
         <BasketContext.Provider
             value={{
