@@ -14,7 +14,7 @@ type BasketContext = {
     /**
      * Meals in basket
      */
-    meals: MealInBasket[];
+    meals: Array<MealInBasket>;
     /**
      * Indicates whether basket is communicating with server
      */
@@ -24,7 +24,7 @@ type BasketContext = {
      */
     errorMessage: string;
     /**
-     * Longest cooking time of all meals in basket
+     * Waiting time before meals are ready for pickup
      */
     waitingTime: number;
     /**
@@ -32,21 +32,17 @@ type BasketContext = {
      */
     price: number;
     /**
-     * Quantity of meals in basket
-     */
-    total: number | null;
-    /**
      * Add restaurant and meal to basket
      */
     addToBasket: (newRestaurant: Restaurant, newMeal: Meal) => void;
     /**
      * Increment quantity of meals by 1
      */
-    addMeal: (meal: MealInBasket) => void;
+    addMeal: (meal: Meal) => void;
     /**
      * Decrement quantity of meals by 1
      */
-    deleteMeal: (meal: MealInBasket) => void;
+    deleteMeal: (meal: Meal) => void;
     /**
      * Removes restaurant and all meals from basket
      */
@@ -61,7 +57,6 @@ export const BasketContext = createContext<BasketContext>({
     errorMessage: '',
     waitingTime: 0,
     price: 0,
-    total: null,
     addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
@@ -70,15 +65,15 @@ export const BasketContext = createContext<BasketContext>({
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-    const [meals, setMeals] = useState<MealInBasket[]>([]);
+    const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
-    const total = meals.filter((meal) => meal.quantity > 0).length;
+    // Longest cooking time of all meals in basket
     const waitingTime = Math.max(...meals.map((meal) => meal.waitingTime));
     const isEmpty = restaurant ? false : true;
-    const addMeal = async (newMeal: MealInBasket | Meal) => {
-        const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
+    const addMeal = async (newMeal: Meal) => {
+        const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.meal.id === newMeal.id);
         if (isAlreadyInBasket) {
             setIsLoading(true);
             const res = await basketService.addMeal(newMeal);
@@ -89,8 +84,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 setIsLoading(false);
                 setMeals(
                     meals.map((meal) => {
-                        if (meal.id === res.data.id) {
-                            return { ...res.data, quantity: meal.quantity + 1 };
+                        if (meal.meal.id === res.data.id) {
+                            return { meal: res.data, count: meal.count + 1 };
                         } else {
                             return meal;
                         }
@@ -105,11 +100,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 setErrorMessage(res.error_message);
             } else {
                 setIsLoading(false);
-                setMeals([...meals, { ...res.data, quantity: 1 }]);
+                setMeals([...meals, { meal: res.data, count: 1 }]);
             }
         }
     };
-    const deleteMeal = async (mealToDelete: MealInBasket) => {
+    const deleteMeal = async (mealToDelete: Meal) => {
         setIsLoading(true);
         const res = await basketService.deleteMeal(mealToDelete);
         if (res.status === 'error') {
@@ -119,11 +114,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
             setMeals(
                 meals.map((meal) => {
-                    if (meal.id === res.data.id) {
-                        if (mealToDelete.quantity > 1) {
-                            return { ...res.data, quantity: mealToDelete.quantity - 1 };
+                    if (meal.meal.id === res.data.id) {
+                        if (mealToDelete.count > 1) {
+                            return { meal: res.data, count: meal.count - 1 };
                         } else {
-                            return { ...res.data, quantity: 0 };
+                            return { meal: res.data, count: 1 };
                         }
                     } else {
                         return meal;
@@ -142,7 +137,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                     if (newRestaurant.status === 'success' && newMeal.status === 'success') {
                         setIsLoading(false);
                         setRestaurant(newRestaurant.data);
-                        setMeals([{ ...newMeal.data, quantity: 1 }]);
+                        setMeals([{ meal: newMeal.data, count: 1 }]);
                     } else if (newRestaurant.status === 'error' && newMeal.status === 'error') {
                         setIsLoading(false);
                         setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
@@ -202,7 +197,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 errorMessage,
                 waitingTime,
                 price,
-                total,
                 addToBasket,
                 addMeal,
                 deleteMeal,

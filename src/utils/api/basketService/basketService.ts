@@ -1,12 +1,10 @@
 import { BasketServiceMock } from './basketServiceMock';
 import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
-export interface MealInBasket extends Meal {
-    /**
-     * Quantity of particular meal
-     */
-    quantity: number;
-}
+export type MealInBasket = {
+    meal: Meal;
+    count: number;
+};
 
 export interface BasketService {
     addRestaurant: (restaurant: Restaurant) => Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
