@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrder } from '../../interfaces/order';
-import { confirmOrderThunk } from '../thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../thunks/сonfirmOrderThunk';
 
 interface OrderState {
   orderData: IOrder | null;

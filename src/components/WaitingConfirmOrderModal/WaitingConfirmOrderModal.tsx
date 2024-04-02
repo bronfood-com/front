@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { resetEstimatedTime, resetStartTime, setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
 import { AppDispatch } from '../../services/store';
-import { confirmOrderThunk } from '../../services/thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../../services/thunks/сonfirmOrderThunk';
 import waitingImg from '../../vendor/images/waiting-screen.svg';
 import styles from './WaitingConfirmOrderModal.module.scss';
 

@@ -2,17 +2,17 @@ import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { selectOrderData, selectOrderError, selectOrderLoading } from '../../services/selectors/orderSelectors';
+import { selectEstimatedTime, selectStartTime } from '../../services/selectors/progressBarSelectors';
+import { selectRemainingCancellationTime } from '../../services/selectors/remainingCancellationTimeSelector';
 import { setRemainingCancellationTime } from '../../services/slices/cancellationTimeSlice';
 import { setEstimatedTime, setStartTime } from '../../services/slices/progressBarSlice';
 import { AppDispatch } from '../../services/store';
-import { confirmOrderThunk } from '../../services/thunks/confirmOrderThunk';
-import { selectOrderData, selectOrderLoading, selectOrderError } from '../../services/selectors/orderSelectors';
+import { confirmOrderThunk } from '../../services/thunks/сonfirmOrderThunk';
+import { formatTime } from '../../utils/serviceFuncs/formatTime';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import OrderTimeCounter from '../OrderTimeCounter/OrderTimeCounter';
 import styles from './WaitingOrderModal.module.scss';
-import { selectStartTime, selectEstimatedTime } from '../../services/selectors/progressBarSelectors';
-import { selectRemainingCancellationTime } from '../../services/selectors/remainingCancellationTimeSelector';
-import { formatTime } from '../../utils/serviceFuncs/formatTime';
 
 type WaitingOrderModalProps = {
     onCancelOrder: () => void;

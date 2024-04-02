@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { confirmOrderThunk } from '../thunks/confirmOrderThunk';
+import { confirmOrderThunk } from '../thunks/сonfirmOrderThunk';
 
 interface ProgressBarState {
   startTime: number;

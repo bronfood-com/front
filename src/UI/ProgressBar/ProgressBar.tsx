@@ -7,7 +7,7 @@ const ProgressBar: FC = () => {
     const [progress, setProgress] = useState(0);
     const startTime = useSelector(selectStartTime);
     const estimatedTime = useSelector(selectEstimatedTime);
-    const totalMilliseconds = estimatedTime * 1000;
+    const totalMilliseconds = estimatedTime * 1000 * 60;
 
     useEffect(() => {
         if (!startTime) return;
