@@ -16,10 +16,10 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime }) => {
     const formattedTime = `${sign}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     const getStatusMessage = useCallback(() => {
-        if (remainingTime > 0) return 'components.orderTimeCounter.preparing';
-        if (remainingTime === 0) return 'components.orderTimeCounter.ready';
-        return 'components.orderTimeCounter.delayed';
-    }, [remainingTime, t]);
+        if (remainingTime > 0) return 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared';
+        if (remainingTime === 0) return 'components.orderTimeCounter.yourOrderIsReady';
+        return 'components.orderTimeCounter.yourOrderWillBeReadySoon';
+    }, [remainingTime]);
 
     const containerStyle = useMemo(() => ({
         container: remainingTime <= 0 ? styles.orderTimeCounterExpiredBorder : styles.orderTimeCounter,

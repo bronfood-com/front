@@ -10,7 +10,7 @@ export const confirmOrderThunk = createAsyncThunk<IOrder, void, { rejectValue: s
       const response = await new Promise<IOrder>((resolve) => setTimeout(() => resolve(orderMock), 2000));
       return response;
     } catch (error) {
-      return rejectWithValue('Ошибка при подтверждении заказа');
+      return rejectWithValue('An error occurred during order confirmation');
     }
   }
 );

@@ -49,7 +49,7 @@ export const progressBarSlice = createSlice({
         state.orderDetails = action.payload;
     })
     .addCase(confirmOrderThunk.rejected, (state, action) => {
-        state.orderError = action.error?.message || 'Ошибка при подтверждении заказа';
+        state.orderError = action.error?.message || 'An error occurred during order confirmation';
     });
   },
 });

@@ -32,7 +32,7 @@ const orderSlice = createSlice({
       })
       .addCase(confirmOrderThunk.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Произошла ошибка';
+        state.error = action.error.message || 'An error occurred during order confirmation';
       })
       .addCase(cancelOrderThunk.pending, (state) => {
         state.loading = true;
@@ -45,7 +45,7 @@ const orderSlice = createSlice({
       })
       .addCase(cancelOrderThunk.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Не удалось отменить заказ';
+        state.error = action.error.message || 'Failed to cancel the order';
       });
   },
 });

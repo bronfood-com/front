@@ -18,8 +18,10 @@ import { cancelOrderThunk } from './services/thunks/cancelOrderThunk';
 import { AppDispatch } from './services/store';
 import { resetProgressBarState } from './services/slices/progressBarSlice';
 import { resetCancellationTime } from './services/slices/cancellationTimeSlice';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
@@ -35,8 +37,8 @@ function App() {
             <Routes>
                 <Route path='/confirm-cancelling' element={
                     <ConfirmationPopup
-                        title='Вы уверены, что хотите отменить заказ?'
-                        confirmButtonText='Да'
+                        title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')}
+                        confirmButtonText={t('components.confirmationPopup.yes')}
                         onCancel={() => navigate('/waiting-order')}
                         onSubmit={() =>
                             dispatch(cancelOrderThunk())

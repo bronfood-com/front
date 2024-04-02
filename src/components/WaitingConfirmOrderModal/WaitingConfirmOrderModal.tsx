@@ -19,22 +19,18 @@ const WaitingConfirmOrderModal: FC = () => {
         dispatch(setStartTime(new Date().getTime()));
         dispatch(setEstimatedTime(waitingTime));
 
-        // Запускаем асинхронную операцию подтверждения заказа
         const confirmPromise = dispatch(confirmOrderThunk()).unwrap();
 
-        // Обработка результата операции
         confirmPromise.then(() => {
             navigate('/waiting-order');
         }).catch(() => {
-            alert(t('components.waitingConfirmModal.errorMessage'));
+            alert(t('components.waitingConfirmModal.anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain'));
         });
 
-        // Настройка таймера ожидания
         const timeoutId = setTimeout(() => {
-            alert(t('components.waitingConfirmModal.timeoutMessage'));
+            alert(t('components.waitingConfirmModal.theWaitingTimeHasExpiredPleaseTryAgain'));
         }, waitingTime * 60 * 1000);
 
-        // Очистка таймера при размонтировании компонента
         return () => {
             clearTimeout(timeoutId);
             dispatch(resetStartTime());
@@ -44,12 +40,12 @@ const WaitingConfirmOrderModal: FC = () => {
 
     return (
         <div className={styles.waitingConfirmOrderModal}>
-            <h2 className={styles.waitingConfirmOrderModal__title}>{t('components.waitingConfirmModal.title')}</h2>
-            <p className={styles.waitingConfirmOrderModal__subtitle}>{t('components.waitingConfirmModal.subtitle')}</p>
+            <h2 className={styles.waitingConfirmOrderModal__title}>{t('components.waitingConfirmModal.pleaseWaitForTheOrderConfirmation')}</h2>
+            <p className={styles.waitingConfirmOrderModal__subtitle}>{t('components.waitingConfirmModal.preparationWillBeginUponConfirmation')}</p>
             <img src={waitingImg} alt="waiting image" className={styles.waitingConfirmOrderModal__img} />
             <span className={styles.waitingConfirmOrderModal__separator} />
             <ProgressBar />
-            <p className={styles.waitingConfirmOrderModal__subtitleNote}>{t('components.waitingConfirmModal.subtitleNote')}</p>
+            <p className={styles.waitingConfirmOrderModal__subtitleNote}>{t('components.waitingConfirmModal.pleaseWaitForTheOrderCode')}</p>
         </div>
     );
 };

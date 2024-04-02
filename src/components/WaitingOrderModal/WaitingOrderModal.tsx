@@ -60,15 +60,15 @@ const WaitingOrderModal: FC = () => {
 
     return (
         <div className={styles.waitingOrderModal}>
-            <h2 className={styles.waitingOrderModal__title}>{t('components.waitingOrderModal.title')}</h2>
             {isLoading ? (
-                <p>Тут будет прелоадер... а пока просто ждем фейк ответ сервера 2 сек</p>
+                <p>Soon will be preloader here... by the way here is fake 2 sec delay imitation</p>
             ) : error ? (
-                <p>А тут будет ошибка загрузки деталей заказа: {error}</p>
+                <p>And here willbe error message about the order: {error}</p>
             ) : (
                 <>
                     {orderDetails && (
                         <>
+                            <h2 className={styles.waitingOrderModal__title}>{t('components.waitingOrderModal.orderCode')}</h2>
                             <h1 className={styles.waitingOrderModal__orderCode}>{orderDetails.orderCode}</h1>
                             <OrderTimeCounter remainingTime={remainingOrderTime} />
                             <div className={styles.waitingOrderModal__separator}>
@@ -79,7 +79,7 @@ const WaitingOrderModal: FC = () => {
                     {remainingCancellationTime > 0 && (
                         <>
                             <p className={styles.waitingOrderModal__subtitleNote}>
-                                {t('components.waitingOrderModal.subtitleNote')}
+                                {t('components.waitingOrderModal.youCanCancelTheOrderWithin')}
                                 <span className={styles.waitingOrderModal__subtitleNote_orange}>
                                     {formatTime(remainingCancellationTime)}{t('components.waitingOrderModal.minutes')}
                                 </span>
@@ -89,7 +89,7 @@ const WaitingOrderModal: FC = () => {
                                 type='button'
                                 onClick={handleCancelOrder}
                             >
-                                {t('components.waitingOrderModal.buttonTitle')}
+                                {t('components.waitingOrderModal.cancelOrder')}
                             </button>
                         </>
                     )}

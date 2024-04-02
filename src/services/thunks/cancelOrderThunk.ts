@@ -10,7 +10,7 @@ export const cancelOrderThunk = createAsyncThunk<IOrder | null, void, { rejectVa
       );
       return response;
     } catch (error) {
-      return rejectWithValue('Ошибка при отмене заказа');
+      return rejectWithValue('Failed to cancel the order');
     }
   }
 );
