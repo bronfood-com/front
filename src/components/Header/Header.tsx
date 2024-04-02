@@ -10,7 +10,7 @@ const Header = () => {
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
-    const { total } = useBasket();
+    const { meals } = useBasket();
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };
@@ -28,7 +28,7 @@ const Header = () => {
                     <Link to="/basket">
                         <div className={styles.header__basket}>
                             <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                            {total ? <span className={styles.header__chip}>{total}</span> : null}
+                            {meals.length >  0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
                         </div>
                     </Link>
                 </div>
