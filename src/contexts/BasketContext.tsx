@@ -68,12 +68,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const price = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
+    const price = meals.reduce((acc, current) => acc + current.meal.price * current.count, 0);
     // Longest cooking time among meals in basket
     const waitingTime = Math.max(...meals.map((meal) => meal.meal.waitingTime));
     const isEmpty = restaurant ? false : true;
     const addMeal = async (newMeal: Meal) => {
-        const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.meal.id === newMeal.id);
+        const isAlreadyInBasket = 'count' in newMeal ? true : false;
         if (isAlreadyInBasket) {
             setIsLoading(true);
             const res = await basketService.addMeal(newMeal);
@@ -84,8 +84,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 setIsLoading(false);
                 setMeals(
                     meals.map((meal) => {
-                        if (meal.meal.id === res.data.id) {
-                            return { meal: res.data, count: meal.count + 1 };
+                        if (meal.meal.id === res.data.meal.id) {
+                            return { meal: res.data.meal, count: meal.count + 1 };
                         } else {
                             return meal;
                         }
@@ -114,11 +114,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
             setMeals(
                 meals.map((meal) => {
-                    if (meal.meal.id === res.data.id) {
+                    if (meal.meal.id === res.data.meal.id) {
                         if (mealToDelete.count > 1) {
-                            return { meal: res.data, count: meal.count - 1 };
+                            return { meal: res.data.meal, count: meal.count - 1 };
                         } else {
-                            return { meal: res.data, count: 1 };
+                            return { meal: res.data.meal, count: 0 };
                         }
                     } else {
                         return meal;
