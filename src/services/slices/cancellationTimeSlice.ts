@@ -15,14 +15,18 @@ export const cancellationSlice = createSlice({
     initialState,
     reducers: {
         setCancellationTime: (state, action: PayloadAction<number>) => {
-        state.cancellationTime = action.payload;
+            state.cancellationTime = action.payload;
         },
         setRemainingCancellationTime: (state, action: PayloadAction<number>) => {
-        state.remainingCancellationTime = action.payload;
+            state.remainingCancellationTime = action.payload;
+        },
+        resetCancellationTime: (state) => {
+            state.cancellationTime = 0;
+            state.remainingCancellationTime = 0;
         },
     },
 });
 
-export const { setCancellationTime, setRemainingCancellationTime } = cancellationSlice.actions;
+export const { setCancellationTime, setRemainingCancellationTime, resetCancellationTime } = cancellationSlice.actions;
 
 export default cancellationSlice.reducer;

@@ -14,11 +14,7 @@ import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import OrderTimeCounter from '../OrderTimeCounter/OrderTimeCounter';
 import styles from './WaitingOrderModal.module.scss';
 
-type WaitingOrderModalProps = {
-    onCancelOrder: () => void;
-};
-
-const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
+const WaitingOrderModal: FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
@@ -59,7 +55,6 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
     }, [dispatch, startTime, estimatedTime, initialCancellationTime, initialEstimatedTime]);
 
     const handleCancelOrder = () => {
-        onCancelOrder();
         navigate('/confirm-cancelling', { replace: true });
     };
 
@@ -67,10 +62,7 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
         <div className={styles.waitingOrderModal}>
             <h2 className={styles.waitingOrderModal__title}>{t('components.waitingOrderModal.title')}</h2>
             {isLoading ? (
-                <p>Тут скоро будет прелоадер... <br/>
-                    ... который оповещает о загрузке деталей заказа<br/>
-                    а сейчас это двухсекудная имитация загрузки заказа
-                </p>
+                <p>Тут будет прелоадер... а пока просто ждем фейк ответ сервера 2 сек</p>
             ) : error ? (
                 <p>А тут будет ошибка загрузки деталей заказа: {error}</p>
             ) : (

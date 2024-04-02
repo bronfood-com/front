@@ -19,27 +19,26 @@ const WaitingConfirmOrderModal: FC = () => {
         dispatch(setStartTime(new Date().getTime()));
         dispatch(setEstimatedTime(waitingTime));
 
+        // Запускаем асинхронную операцию подтверждения заказа
         const confirmPromise = dispatch(confirmOrderThunk()).unwrap();
 
-        const timeoutId = setTimeout(() => {
-            confirmPromise.then(() => {
-            }).catch(() => {
-                alert(t('components.waitingConfirmModal.timeoutMessage'));
-            });
-        }, waitingTime * 60 * 1000);
-
+        // Обработка результата операции
         confirmPromise.then(() => {
-            dispatch(resetStartTime());
-            dispatch(resetEstimatedTime());
-
-            clearTimeout(timeoutId);
             navigate('/waiting-order');
         }).catch(() => {
             alert(t('components.waitingConfirmModal.errorMessage'));
         });
 
+        // Настройка таймера ожидания
+        const timeoutId = setTimeout(() => {
+            alert(t('components.waitingConfirmModal.timeoutMessage'));
+        }, waitingTime * 60 * 1000);
+
+        // Очистка таймера при размонтировании компонента
         return () => {
             clearTimeout(timeoutId);
+            dispatch(resetStartTime());
+            dispatch(resetEstimatedTime());
         };
     }, [dispatch, navigate, t, waitingTime]);
 
