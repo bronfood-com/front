@@ -4,7 +4,7 @@ import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ meal }: { meal: MealInBasket }) {
-    const {photo, name, price} = meal.meal;
+    const { photo, name, price } = meal.meal;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
