@@ -147,7 +147,7 @@ i18n
                         },
                         basket: {
                             basket: 'Корзина',
-                            cookingTime: 'Время ожидания',
+                            waitingTime: 'Время ожидания',
                             min: 'мин',
                             total: 'Итого:',
                             pay: 'Оплатить',

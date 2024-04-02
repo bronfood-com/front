@@ -13,7 +13,7 @@ import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, sum, cookingTime, isLoading } = useBasket();
+    const { isEmpty, restaurant, meals, price, waitingTime, isLoading } = useBasket();
     const close = () => navigate(-1);
     return (
         <>
@@ -22,9 +22,9 @@ function Basket() {
                     <BasketEmpty />
                 ) : (
                     <>
-                        <BasketDescription cookingTime={cookingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
+                        <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         <BasketMealsList meals={meals} />
-                        <BasketTotal sum={sum} />
+                        <BasketTotal price={price} />
                     </>
                 )}
                 {isLoading && <Preloader />}

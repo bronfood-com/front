@@ -27,7 +27,7 @@ export type Meal = {
     /**
      * Meal's cooking time in minutes
      */
-    cookingTime: number;
+    waitingTime: number;
 };
 
 export type Restaurant = {

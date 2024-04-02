@@ -26,11 +26,11 @@ type BasketContext = {
     /**
      * Longest cooking time of all meals in basket
      */
-    cookingTime: number;
+    waitingTime: number;
     /**
      * Total price of all meals in basket
      */
-    sum: number;
+    price: number;
     /**
      * Quantity of meals in basket
      */
@@ -59,8 +59,8 @@ export const BasketContext = createContext<BasketContext>({
     meals: [],
     isLoading: false,
     errorMessage: '',
-    cookingTime: 0,
-    sum: 0,
+    waitingTime: 0,
+    price: 0,
     total: null,
     addToBasket: () => {},
     addMeal: () => {},
@@ -73,9 +73,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<MealInBasket[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const sum = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
+    const price = meals.reduce((acc, current) => acc + current.price * current.quantity, 0);
     const total = meals.filter((meal) => meal.quantity > 0).length;
-    const cookingTime = Math.max(...meals.map((meal) => meal.cookingTime));
+    const waitingTime = Math.max(...meals.map((meal) => meal.waitingTime));
     const isEmpty = restaurant ? false : true;
     const addMeal = async (newMeal: MealInBasket | Meal) => {
         const isAlreadyInBasket = meals.find((meal: MealInBasket) => meal.id === newMeal.id);
@@ -200,8 +200,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 meals,
                 isLoading,
                 errorMessage,
-                cookingTime,
-                sum,
+                waitingTime,
+                price,
                 total,
                 addToBasket,
                 addMeal,
