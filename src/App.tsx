@@ -13,9 +13,13 @@ import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/Wait
 import WaitingOrderModal from './components/WaitingOrderModal/WaitingOrderModal';
 import ConfirmationPopup from './components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { cancelOrderThunk } from './services/thunks/cancelOrderThunk';
+import { AppDispatch } from './services/store';
 
 function App() {
     const navigate = useNavigate();
+    const dispatch: AppDispatch = useDispatch();
 
     return (
         <div>
@@ -27,11 +31,9 @@ function App() {
                         title='Вы уверены, что хотите отменить заказ?'
                         confirmButtonText='Да'
                         onCancel={() => navigate('/waiting-order')}
-                        onSubmit={function (): void {
-                            throw new Error('функция сабмита не реализована, но нужно отправить запрос на сервер через Redux');
-                        }}
+                        onSubmit={() => dispatch(cancelOrderThunk()).then(() => navigate('/'))}
                         children={undefined}
-                        />
+                    />
                 }
                 />
                 <Route path='/waiting-confirm-order' element={<WaitingConfirmOrderModal />} />

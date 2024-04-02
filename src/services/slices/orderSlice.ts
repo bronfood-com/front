@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IOrder } from '../../interfaces/order';
 import { confirmOrderThunk } from '../thunks/сonfirmOrderThunk';
+import { cancelOrderThunk } from '../thunks/cancelOrderThunk';
 
 interface OrderState {
   orderData: IOrder | null;
@@ -32,6 +33,19 @@ const orderSlice = createSlice({
       .addCase(confirmOrderThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Произошла ошибка';
+      })
+      .addCase(cancelOrderThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(cancelOrderThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orderData = action.payload;
+        state.error = null;
+      })
+      .addCase(cancelOrderThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Не удалось отменить заказ';
       });
   },
 });

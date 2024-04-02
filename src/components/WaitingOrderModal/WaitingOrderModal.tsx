@@ -56,7 +56,7 @@ const WaitingOrderModal: FC<WaitingOrderModalProps> = ({ onCancelOrder }) => {
         dispatch(confirmOrderThunk());
 
         return () => clearInterval(timerInterval);
-    }, [dispatch, startTime, estimatedTime, initialCancellationTime]);
+    }, [dispatch, startTime, estimatedTime, initialCancellationTime, initialEstimatedTime]);
 
     const handleCancelOrder = () => {
         onCancelOrder();
