@@ -28,6 +28,9 @@ export interface СonfirmRegisterPhoneData {
     confirmation_code: string;
 }
 
+export interface СonfirmUpdateUser {
+    confirmation_code: string;
+}
 export interface User {
     phone: PhoneNumber;
     fullname: string;
@@ -41,9 +44,11 @@ export interface AuthService {
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 
+    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+
     logOut: () => Promise<void>;
 
-    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
 }
 
 export const authService = new AuthServiceMock();

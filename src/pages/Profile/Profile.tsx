@@ -13,6 +13,8 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
+import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
+
 const Profile = () => {
     const {
         register,
@@ -26,6 +28,7 @@ const Profile = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
@@ -36,7 +39,7 @@ const Profile = () => {
         if (result !== null) {
             setIsErrorVisible(true);
         }
-        navigate('/confirmation');
+        setIsConfirmOpen(true);
     };
 
     useEffect(() => {
@@ -45,25 +48,30 @@ const Profile = () => {
     }, [currentUser]);
 
     return (
-        <Popup
-            title={t('pages.profile.title')}
-            onClose={() => {
-                navigate('/');
-                setIsErrorVisible(false);
-            }}
-        >
-            {updateUser.isLoading && <Preloader />}
-
-            <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
-                <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
-                    <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                </FormInputs>
-                <div className={styles.profile__button_space}></div>
-                <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
-            </Form>
-        </Popup>
+        <>
+            {isConfirmOpen ? (
+                <SMSConfirm parentPage="profile"></SMSConfirm>
+            ) : (
+                <Popup
+                    title={t('pages.profile.title')}
+                    onClose={() => {
+                        navigate('/');
+                        setIsErrorVisible(false);
+                    }}
+                >
+                    {updateUser.isLoading && <Preloader />}
+                    <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
+                        {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
+                        <FormInputs>
+                            <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
+                            <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
+                        </FormInputs>
+                        <div className={styles.profile__button_space}></div>
+                        <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
+                    </Form>
+                </Popup>
+            )}
+        </>
     );
 };
 

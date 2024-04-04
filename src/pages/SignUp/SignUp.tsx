@@ -7,20 +7,19 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
-import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
 
 const SignUp = () => {
     const navigate = useNavigate();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-    const { currentUser, signUp } = useCurrentUser();
+    const { signUp } = useCurrentUser();
     const { t } = useTranslation();
     const {
         register,
@@ -28,29 +27,23 @@ const SignUp = () => {
         formState: { errors },
     } = useForm();
 
-    useEffect(() => {
-        if (currentUser) {
-            openInfoPopup();
-        }
-    }, [currentUser]);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
         const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
+
         if (result !== null) {
             setIsErrorVisible(true);
         }
-        navigate('/confirmation');
-    };
 
-    const openInfoPopup = () => {
-        setIsInfoPopupOpen(true);
+        setIsConfirmOpen(true);
     };
 
     return (
         <>
-            {isInfoPopupOpen ? (
-                <PopupSignupSuccess isOpened={isInfoPopupOpen}></PopupSignupSuccess>
+            {isConfirmOpen ? (
+                <SMSConfirm parentPage="signup"></SMSConfirm>
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}

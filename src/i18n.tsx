@@ -78,8 +78,10 @@ i18n
                             registerButton: 'Регистрация',
                         },
                         confirmation: {
-                            title: 'Подтверждение номера',
-                            subtitle: 'Ввведите код из смс',
+                            phoneConfirmation: 'Подтверждение номера',
+                            enterSmsCode: 'Ввведите код из смс',
+                            validationError: 'Неверный код',
+                            serverError: 'ОШибка сервера'
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',

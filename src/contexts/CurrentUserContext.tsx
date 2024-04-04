@@ -12,7 +12,7 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     signUp: {
-        mutation: (data: FieldValues) => Promise<void>;
+        mutation: (data: FieldValues) => Promise<void | string | undefined>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -22,7 +22,17 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     updateUser: {
-        mutation: (data: FieldValues) => Promise<void>;
+        mutation: (data: FieldValues) => Promise<void | string | undefined>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
+    confirmSignUp: {
+        mutation: (data: string) => Promise<void>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
+    confirmUpdateUser: {
+        mutation: (data: string) => Promise<void>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -51,6 +61,16 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         isLoading: false,
         errorMessage: null,
     },
+    confirmSignUp: {
+        mutation: () => Promise.resolve(),
+        isLoading: false,
+        errorMessage: null,
+    },
+    confirmUpdateUser: {
+        mutation: () => Promise.resolve(),
+        isLoading: false,
+        errorMessage: null,
+    },
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -62,6 +82,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const [serverSMSCode, setServerSMSCode] = useState<string>('');
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
     useEffect(() => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -87,26 +109,33 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
+    const confirmSignUp = async (enteredCode: string) => {
+        setIsLoading(true);
+        const result = await authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: enteredCode });
+        if (result.status === 'error') {
+            setConfirmErrorMessage(result.error_message);
+            setCurrentUser(null);
+            setIsLoading(false);
+        } else {
+            setCurrentUser(result.data);
+            localStorage.setItem('user', JSON.stringify(result.data));
+            setIsLoading(false);
+            setServerSMSCode('');
+        }
+    };
+
     const signUp = async (data: FieldValues) => {
         setIsLoading(true);
         setSignUpErrorMessage(null);
         const { password, phone, name } = data;
         const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
-            setSignUpErrorMessage(res.error_message);
-            setCurrentUser(null);
+            setUpdateUserErrorMessage(res.error_message);
             setIsLoading(false);
         } else {
-            const result = await authService.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
-            if (result.status === 'error') {
-                setSignUpErrorMessage(result.error_message);
-                setCurrentUser(null);
-                setIsLoading(false);
-            } else {
-                setCurrentUser(result.data);
-                localStorage.setItem('user', JSON.stringify(result.data));
-                setIsLoading(false);
-            }
+            setIsLoading(false);
+            setServerSMSCode(res.data.temp_data_code);
+            return res.data.temp_data_code;
         }
     };
 
@@ -123,6 +152,20 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [currentUser]);
 
+    const confirmUpdateUser = async (enteredCode: string) => {
+        setIsLoading(true);
+        const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
+        if (result.status === 'error') {
+            setConfirmErrorMessage(result.error_message);
+            setIsLoading(false);
+        } else {
+            setCurrentUser(result.data);
+            localStorage.setItem('user', JSON.stringify(result.data));
+            setIsLoading(false);
+            setServerSMSCode('');
+        }
+    };
+
     const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
@@ -138,9 +181,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             }
             setIsLoading(false);
         } else {
-            setCurrentUser({ phone, fullname });
-            localStorage.setItem('user', JSON.stringify({ phone, fullname }));
             setIsLoading(false);
+            setServerSMSCode(res.data.temp_data_code);
+            return res.data.temp_data_code;
         }
     };
 
@@ -168,6 +211,18 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: updateUser,
                     isLoading,
                     errorMessage: updateUserErrorMessage,
+                },
+                confirmSignUp: {
+                    mutation: confirmSignUp,
+                    isLoading,
+                    errorMessage: confirmErrorMessage,
+
+                },
+                confirmUpdateUser: {
+                    mutation: confirmUpdateUser,
+                    isLoading,
+                    errorMessage: confirmErrorMessage,
+
                 },
             }}
         >

@@ -1,5 +1,4 @@
-import { AuthService } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
+import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -66,7 +65,7 @@ export class AuthServiceReal implements AuthService {
         localStorage.removeItem('token');
     }
 
-    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>{
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
             headers: {
@@ -77,5 +76,13 @@ export class AuthServiceReal implements AuthService {
 
         const result = await res.json();
         return result;
+    }
+
+    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+        if (confirmation_code) {
+            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed' } };
+        } else {
+            return { status: 'error', error_message: 'invalidValidation' };
+        }
     }
 }
