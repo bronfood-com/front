@@ -33,7 +33,7 @@ export const fetchOrderDetailsByOrderId = async (id: string): Promise<OrderState
         const orders: OrderState[] = await fetchResponse<OrderState[]>(`${baseUrl}/orders?id=${id}`);
         return orders.length > 0 ? orders[0] : undefined;
     } catch (error) {
-        throw new Error ('Ошибка при получении данных заказа');
+        throw new Error('Ошибка при получении данных заказа');
     }
 };
 
@@ -52,6 +52,6 @@ export const cancelOrder = async (id: string): Promise<void> => {
             body: body,
         });
     } catch (error) {
-        throw new Error ('Ошибка при отмене заказа:');
+        throw new Error('Ошибка при отмене заказа:');
     }
 };
