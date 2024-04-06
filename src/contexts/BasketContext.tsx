@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Meal, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
+import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 
 type BasketContext = {
@@ -10,7 +10,7 @@ type BasketContext = {
     /**
      * Restaurant which meals are in basket
      */
-    restaurant: Restaurant | null;
+    restaurant: Restaurant | Record<string, never>;
     /**
      * Meals in basket
      */
@@ -32,17 +32,13 @@ type BasketContext = {
      */
     price: number;
     /**
-     * Add restaurant and meal to basket
+     * Add meal to basket
      */
-    addToBasket: (newRestaurant: Restaurant, newMeal: Meal) => void;
+    addMeal: (mealId: string) => void;
     /**
-     * Increment quantity of meals by 1
+     * Delete meal from basket
      */
-    addMeal: (meal: Meal) => void;
-    /**
-     * Decrement quantity of meals by 1
-     */
-    deleteMeal: (meal: Meal) => void;
+    deleteMeal: (mealId: string) => void;
     /**
      * Removes restaurant and all meals from basket
      */
@@ -51,121 +47,67 @@ type BasketContext = {
 
 export const BasketContext = createContext<BasketContext>({
     isEmpty: true,
-    restaurant: null,
+    restaurant: {},
     meals: [],
     isLoading: false,
     errorMessage: '',
     waitingTime: 0,
     price: 0,
-    addToBasket: () => {},
     addMeal: () => {},
     deleteMeal: () => {},
     emptyBasket: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+    const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => acc + current.meal.price * current.count, 0);
     // Longest cooking time among meals in basket
-    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map((meal) => meal.meal.waitingTime)) : 0;
-    const isEmpty = restaurant ? false : true;
-    const addMeal = async (newMeal: Meal) => {
-        const isAlreadyInBasket = 'count' in newMeal ? true : false;
-        if (isAlreadyInBasket) {
-            setIsLoading(true);
-            const res = await basketService.addMeal(newMeal);
-            if (res.status === 'error') {
-                setIsLoading(false);
-                setErrorMessage(res.error_message);
-            } else {
-                setIsLoading(false);
-                setMeals(
-                    meals.map((meal) => {
-                        if (meal.meal.id === res.data.meal.id) {
-                            return { meal: res.data.meal, count: meal.count + 1 };
-                        } else {
-                            return meal;
-                        }
-                    }),
-                );
-            }
+    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal }) => meal.waitingTime)) : 0;
+    const isEmpty = Object.keys(restaurant).length === 0 ? true : false;
+    const getBasket = async () => {
+        const basket = await basketService.getBasket();
+        if (basket.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(basket.error_message);
         } else {
-            setIsLoading(true);
-            const res = await basketService.addMeal(newMeal);
-            if (res.status === 'error') {
-                setIsLoading(false);
-                setErrorMessage(res.error_message);
-            } else {
-                setIsLoading(false);
-                setMeals([...meals, { meal: res.data, count: 1 }]);
-            }
+            setIsLoading(false);
+            const { restaurant, meals } = basket.data;
+            setRestaurant(restaurant);
+            setMeals(meals);
         }
     };
-    const deleteMeal = async (mealToDelete: Meal) => {
+    const addMeal = async (mealId: string) => {
         setIsLoading(true);
-        const res = await basketService.deleteMeal(mealToDelete);
+        const res = await basketService.addMeal(mealId);
         if (res.status === 'error') {
             setIsLoading(false);
             setErrorMessage(res.error_message);
         } else {
-            setIsLoading(false);
-            setMeals(
-                meals.map((meal) => {
-                    if (meal.meal.id === res.data.meal.id) {
-                        if (mealToDelete.count > 1) {
-                            return { meal: res.data.meal, count: meal.count - 1 };
-                        } else {
-                            return { meal: res.data.meal, count: 0 };
-                        }
-                    } else {
-                        return meal;
-                    }
-                }),
-            );
+            getBasket();
         }
     };
-    const addToBasket = (newRestaurant: Restaurant, newMeal: Meal) => {
-        if (restaurant && restaurant.id === newRestaurant.id) {
-            addMeal(newMeal);
-        } else {
-            setIsLoading(true);
-            Promise.all([basketService.addRestaurant(newRestaurant), basketService.addMeal(newMeal)])
-                .then(([newRestaurant, newMeal]) => {
-                    if (newRestaurant.status === 'success' && newMeal.status === 'success') {
-                        setIsLoading(false);
-                        setRestaurant(newRestaurant.data);
-                        setMeals([{ meal: newMeal.data, count: 1 }]);
-                    } else if (newRestaurant.status === 'error' && newMeal.status === 'error') {
-                        setIsLoading(false);
-                        setErrorMessage(`${newRestaurant.error_message} ${newMeal.error_message}`);
-                    }
-                })
-                .catch((err) => {
-                    setIsLoading(false);
-                    setErrorMessage(err);
-                });
-        }
-    };
-    const emptyBasket = () => {
+    const deleteMeal = async (mealId: string) => {
         setIsLoading(true);
-        Promise.all([basketService.deleteRestaurant(), basketService.deleteMeals()])
-            .then(([deleteRestaurant, deleteMeals]) => {
-                if (deleteRestaurant.status === 'success' && deleteMeals.status === 'success') {
-                    setIsLoading(false);
-                    setRestaurant(null);
-                    setMeals([]);
-                } else if (deleteRestaurant.status === 'error' && deleteMeals.status === 'error') {
-                    setIsLoading(false);
-                    setErrorMessage(`${deleteRestaurant.error_message} ${deleteMeals.error_message}`);
-                }
-            })
-            .catch((err) => {
-                setIsLoading(false);
-                setErrorMessage(err);
-            });
+        const res = await basketService.deleteMeal(mealId);
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+        } else {
+            getBasket();
+        }
+    };
+    const emptyBasket = async () => {
+        setIsLoading(true);
+        const res = await basketService.emptyBasket();
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+        } else {
+            getBasket();
+        }
     };
     return (
         <BasketContext.Provider
@@ -177,7 +119,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 errorMessage,
                 waitingTime,
                 price,
-                addToBasket,
                 addMeal,
                 deleteMeal,
                 emptyBasket,

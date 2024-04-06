@@ -3,8 +3,9 @@ import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
-function BasketMeal({ meal }: { meal: MealInBasket }) {
-    const { photo, name, price } = meal.meal;
+function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
+    const { meal, count } = mealInBasket;
+    const { id, name, photo, price } = meal;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
@@ -15,7 +16,7 @@ function BasketMeal({ meal }: { meal: MealInBasket }) {
                     <span className={styles.basket_meal__price}>{`${price.toFixed(0)} ₸`}</span>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={meal.count} increment={() => addMeal(meal)} decrement={() => deleteMeal(meal)} />
+                    <Counter count={count} increment={() => addMeal(id)} decrement={() => deleteMeal(id)} />
                 </div>
             </div>
         </div>

@@ -1,54 +1,86 @@
-import { BasketService } from './basketService';
+import { BasketService, MealInBasket } from './basketService';
 import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
+
+type Basket = {
+    restaurant: Restaurant;
+    meals: MealInBasket[];
+};
+
+const basket: Basket = {
+    restaurant: {},
+    meals: [],
+};
 
 export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
-    getToken() {
-        return 'token';
-    }
-    async addRestaurant(restaurant: Restaurant): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }> {
+    async addMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
-        const token = this.getToken();
-        if (token) {
-            return { status: 'success', data: restaurant };
+        const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
+            const found = restaurant.meals.find((meal) => meal.id === mealId);
+            if (found) {
+                return restaurant;
+            }
+        });
+        const hasRestaurantChanged = basket.restaurant.id !== restaurantFound?.id;
+        const mealFound = restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
+        if (mealFound) {
+            basket.restaurant = restaurantFound;
+            basket.meals =
+                basket.meals.length === 0 || hasRestaurantChanged
+                    ? [{ meal: mealFound, count: 1 }]
+                    : basket.meals.some(({ meal }) => meal.id === mealFound.id)
+                      ? basket.meals.map(({ meal, count }) => {
+                            if (meal.id === mealFound.id) {
+                                return { meal, count: count + 1 };
+                            } else {
+                                return { meal, count };
+                            }
+                        })
+                      : [...basket.meals, { meal: mealFound, count: 1 }];
+            return { status: 'success', data: mealFound.id };
         } else {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async deleteRestaurant(): Promise<{ status: 'success' } | { status: 'error'; error_message: string }> {
+    async deleteMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
-        const token = this.getToken();
-        if (token) {
-            return { status: 'success' };
+        const mealFound = basket.meals.find(({ meal }) => meal.id === mealId);
+        if (mealFound) {
+            basket.meals = basket.meals.map(({ meal, count }) => {
+                if (meal.id === mealFound.meal.id) {
+                    if (count <= 0) {
+                        return { meal, count: 0 };
+                    } else {
+                        return { meal, count: count - 1 };
+                    }
+                } else {
+                    return { meal, count };
+                }
+            });
+            return { status: 'success', data: mealFound.id };
         } else {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async addMeal(meal: Meal): Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }> {
+    async getBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
-        const token = this.getToken();
-        if (token) {
-            return { status: 'success', data: meal };
+        const success = true;
+        if (success) {
+            return { status: 'success', data: basket };
         } else {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async deleteMeal(meal: Meal): Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }> {
+    async emptyBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(1000);
-        const token = this.getToken();
-        if (token) {
-            return { status: 'success', data: meal };
-        } else {
-            return { status: 'error', error_message: 'error' };
-        }
-    }
-    async deleteMeals(): Promise<{ status: 'success' } | { status: 'error'; error_message: string }> {
-        await this._wait(1000);
-        const token = this.getToken();
-        if (token) {
-            return { status: 'success' };
+        basket.restaurant = {};
+        basket.meals = [];
+        const success = true;
+        if (success) {
+            return { status: 'success', data: basket };
         } else {
             return { status: 'error', error_message: 'error' };
         }
