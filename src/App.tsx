@@ -9,50 +9,15 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
-import WaitingConfirmOrderModal from './components/WaitingConfirmOrderModal/WaitingConfirmOrderModal';
-import WaitingOrderModal from './components/WaitingOrderModal/WaitingOrderModal';
-import ConfirmationPopup from './components/Popups/ConfirmationPopup/ConfirmationPopup';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { cancelOrderThunk } from './services/thunks/cancelOrderThunk';
-import { AppDispatch } from './services/store';
-import { resetProgressBarState } from './services/slices/progressBarSlice';
-import { resetCancellationTime } from './services/slices/cancellationTimeSlice';
-import { useTranslation } from 'react-i18next';
+import WaitingConfirm from './pages/WaitingConfirm.tsx/WaitingConfirm';
 
 function App() {
-    const { t } = useTranslation();
-    const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
-
-    const handleResetCounters = () => {
-        dispatch(resetProgressBarState());
-        dispatch(resetCancellationTime());
-    };
-
     return (
         <div>
             <Header />
             <YandexMap />
             <Routes>
-                <Route path='/confirm-cancelling' element={
-                    <ConfirmationPopup
-                        title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')}
-                        confirmButtonText={t('components.confirmationPopup.yes')}
-                        onCancel={() => navigate('/waiting-order')}
-                        onSubmit={() =>
-                            dispatch(cancelOrderThunk())
-                                .then(() => {
-                                    navigate('/');
-                                    handleResetCounters();
-                                })
-                        }
-                        onSuccess={handleResetCounters}
-                    />
-                }
-                />
-                <Route path='/waiting-confirm-order' element={<WaitingConfirmOrderModal />} />
-                <Route path='/waiting-order' element={<WaitingOrderModal />} />
+                <Route path="/waiting-confirm" element={<WaitingConfirm clientId="clientId1" />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />

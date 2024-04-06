@@ -11,14 +11,7 @@ type ConfirmationPopupProps = {
     children?: ReactNode; // сделал необязательным // Орлов Дима
 };
 
-const ConfirmationPopup: FC<ConfirmationPopupProps> = ({
-    title,
-    confirmButtonText,
-    onCancel,
-    onSubmit,
-    onSuccess,
-    children
-}) => {
+const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, onSuccess, children }) => {
     const { t } = useTranslation();
 
     const handleSubmit = () => {

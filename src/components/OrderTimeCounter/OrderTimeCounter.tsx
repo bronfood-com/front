@@ -1,47 +1,41 @@
-import { FC, useCallback, useMemo } from 'react';
-import ProgressBar from '../../UI/ProgressBar/ProgressBar';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import ProgressBar1 from '../ProgressBar/ProgressBar';
 import styles from './OrderTimeCounter.module.scss';
 
 type OrderTimeCounterProps = {
     remainingTime: number;
+    initialTime: number;
 };
 
-const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime }) => {
+const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime }) => {
     const { t } = useTranslation();
 
-    const sign = remainingTime < 0 ? "-" : "";
-    const minutes = Math.floor(Math.abs(remainingTime) / 60);
-    const seconds = Math.abs(remainingTime) % 60;
-    const formattedTime = `${sign}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    const sign = remainingTime < 0 ? '-' : '';
+    const formattedTime = `${sign}${Math.abs(remainingTime)}`;
 
-    const getStatusMessage = useCallback(() => {
-        if (remainingTime > 0) return 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared';
-        if (remainingTime === 0) return 'components.orderTimeCounter.yourOrderIsReady';
-        return 'components.orderTimeCounter.yourOrderWillBeReadySoon';
-    }, [remainingTime]);
+    const getStatusMessage = remainingTime > 0 ? 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared' : remainingTime === 0 ? 'components.orderTimeCounter.yourOrderIsReady' : 'components.orderTimeCounter.yourOrderWillBeReadySoon';
 
-    const containerStyle = useMemo(() => ({
-        container: remainingTime <= 0 ? styles.orderTimeCounterExpiredBorder : styles.orderTimeCounter,
-        number: remainingTime <= 0 ? styles.timeExpired : '',
-        image: remainingTime <= 0 ? styles.imageExpired : '',
-    }), [remainingTime]);
+    const containerStyle = {
+        container: remainingTime <= -1 ? styles.orderTimeCounterExpiredBorder : styles.orderTimeCounter,
+        number: remainingTime <= -1 ? styles.timeExpired : '',
+        image: remainingTime <= -1 ? styles.imageExpired : '',
+    };
 
     return (
         <div className={containerStyle.container}>
             <div className={styles.orderTimeCounter__container}>
                 <div className={styles.orderTimeCounter__time}>
-                    <span className={`${styles.orderTimeCounter__image} ${containerStyle.image}`}/>
+                    <span className={`${styles.orderTimeCounter__image} ${containerStyle.image}`} />
                     <p className={`${styles.orderTimeCounter__time_number} ${containerStyle.number}`}>
-                        {formattedTime}{t('components.orderTimeCounter.minutes')}
+                        {formattedTime}
+                        {t('components.orderTimeCounter.minutes')}
                     </p>
                 </div>
                 <div className={styles.orderTimeCounter__separator}>
-                    <ProgressBar />
+                    <ProgressBar1 initialTime={initialTime} currentTime={remainingTime} />
                 </div>
-                <p className={styles.orderTimeCounter__subtitle}>
-                    {t(getStatusMessage())}
-                </p>
+                <p className={styles.orderTimeCounter__subtitle}>{t(getStatusMessage)}</p>
             </div>
         </div>
     );

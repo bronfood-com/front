@@ -5,34 +5,35 @@
     flex-direction: column;
     width: 100%;
     padding: 8px;
-    border: 1px solid $line;
     border-radius: 24px;
-    height: 138px;
+    max-height: 230px;
 
-    &__header {
+    &__amount {
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         width: 100%;
         padding: 0;
+        margin: 14px 0 0 0;
     }
 
-    &__total {
+    &__title {
         color: $black;
         font-size: 17px;
         line-height: 23.8px;
         font-weight: 500;
         display: flex;
-        padding: 3px 0 7px 5px;
+        padding: 0;
     }
 
     &__list {
         display: flex;
+        flex-direction: column;
         justify-content: flex-start;
-        gap: 8px;
-        flex-wrap: wrap;
         max-height: 100px;
         overflow-y: auto;
-        border-radius: 5px;
-        padding: 0 0 0 2px;
+        padding: 0 0 0 0;
+        border-bottom: 1px solid $line;
     }
 
     &__price {

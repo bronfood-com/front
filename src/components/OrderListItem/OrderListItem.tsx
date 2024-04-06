@@ -1,19 +1,13 @@
-import { FC } from "react";
-import { IOrder } from "../../interfaces/order";
-import styles from "./OrderListItem.module.scss";
+import { FC } from 'react';
+import styles from './OrderListItem.module.scss';
+import { OrderState } from '../../interfaces/OrderInterface';
 
-export const OrderListItem: FC<{ item: IOrder["items"][number] }> = ({ item }) => (
+export const OrderListItem: FC<{ item: OrderState['orderDetails'][number] }> = ({ item }) => (
     <li className={styles.orderListItem__item}>
-        <figure className={styles.orderListItem__figure}>
-            <img
-                className={styles.orderListItem__image}
-                src={item.imageUrl}
-                alt={item.name}
-                loading="lazy"
-            />
-            <figcaption className={styles.orderListItem__caption}>
-                {item.name}
-            </figcaption>
-        </figure>
+        <h3 className={styles.orderListItem__title}>{item.itemDescription}</h3>
+        <p className={styles.orderListItem__price}>
+            {item.itemPrice} &#x20B8;&nbsp;
+            <span className={styles.orderListItem__span}>x{item.quantity}</span>
+        </p>
     </li>
 );

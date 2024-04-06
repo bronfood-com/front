@@ -1,24 +1,25 @@
-import { FC } from "react";
-import { IOrder } from "../../interfaces/order";
-import styles from "./OrderListArticle.module.scss";
-import { OrderListItem } from "../OrderListItem/OrderListItem";
+import { FC } from 'react';
+import { OrderListItem } from '../OrderListItem/OrderListItem';
+import styles from './OrderListArticle.module.scss';
+import { OrderState } from '../../interfaces/OrderInterface';
 
 type OrderListArticleProps = {
-    order: IOrder;
-}
-const OrderListArticle: FC<OrderListArticleProps> = ({ order }) => {
+    order: OrderState;
+};
+const OrderListArticle1: FC<OrderListArticleProps> = ({ order }) => {
     return (
         <article className={styles.orderListArticle}>
-            <header className={styles.orderListArticle__header}>
-                <h2 className={styles.orderListArticle__total}>{order.total} &#x20B8;</h2>
-            </header>
             <ul className={styles.orderListArticle__list}>
-                {order.items.map((item) => (
+                {order.orderDetails.map((item) => (
                     <OrderListItem item={item} key={item.id} />
                 ))}
             </ul>
+            <div className={styles.orderListArticle__amount}>
+                <h3 className={styles.orderListArticle__title}>Итого: </h3>
+                <h3 className={styles.orderListArticle__title}>{order.totalAmount} &#x20B8;</h3>
+            </div>
         </article>
-    )
-}
+    );
+};
 
-export default OrderListArticle;
+export default OrderListArticle1;
