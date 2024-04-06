@@ -45,12 +45,8 @@ export class BasketServiceMock implements BasketService {
         const mealFound = basket.meals.find(({ meal }) => meal.id === mealId);
         if (mealFound) {
             basket.meals = basket.meals.map(({ meal, count }) => {
-                if (meal.id === mealFound.meal.id) {
-                    if (count <= 0) {
-                        return { meal, count: 0 };
-                    } else {
-                        return { meal, count: count - 1 };
-                    }
+                if (meal.id === mealFound.meal.id && count >= 1) {
+                    return { meal, count: count - 1 };
                 } else {
                     return { meal, count };
                 }
