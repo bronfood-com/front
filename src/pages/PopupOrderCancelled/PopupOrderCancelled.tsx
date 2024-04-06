@@ -3,7 +3,7 @@ import styles from './PopupOrderCancelled.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import waitingImg from '../../vendor/images/waiting-screen.svg'
+import waitingImg from '../../vendor/images/waiting-screen.svg';
 
 const PopupOrderCancelled = () => {
     const { t } = useTranslation();
@@ -18,7 +18,7 @@ const PopupOrderCancelled = () => {
             <div className={styles.popupOrderCancelled}>
                 <h2 className={styles.popupOrderCancelled__title}>{t('pages.popupOrderCancelled.yourOrderHasBeeCancelled')}</h2>
                 <p className={styles.popupOrderCancelled__description}>{t('pages.popupOrderCancelled.youWillReceiveYourMoneyBackWithin15Minutes')}</p>
-                <img className={styles.popupOrderCancelled__image} src={waitingImg} alt='waiting image'/>
+                <img className={styles.popupOrderCancelled__image} src={waitingImg} alt="waiting image" />
             </div>
         </Popup>
     );
