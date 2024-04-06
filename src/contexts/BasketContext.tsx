@@ -65,7 +65,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => acc + current.meal.price * current.count, 0);
     // Longest cooking time among meals in basket
-    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => count > 0 && meal.waitingTime)) : 0;
+    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => count > 0 ? meal.waitingTime : 0)) : 0;
     const isEmpty = Object.keys(restaurant).length === 0 ? true : false;
     const getBasket = async () => {
         setIsLoading(true);
