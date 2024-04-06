@@ -47,7 +47,7 @@ const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
 
         const orderTimer = setInterval(() => {
             setPreparationTime((prevTime) => prevTime - 1);
-        }, 60000); // каждую минуту счетчик подготовки заказа
+        }, 60000);
 
         const waitTimer = setInterval(() => {
             setWaitTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
@@ -74,7 +74,7 @@ const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
                 setInitialPreparationTime(0);
                 setCancellationCountdown(CANCEL_ORDER_TIME_IN_SECONDS);
                 setWaitTime(WAIT_CODE_IN_SECONDS);
-                navigate('/');
+                navigate('/popup-order-cancelled');
             } catch (error) {
                 throw new Error('Ошибка при отмене заказа:');
             }

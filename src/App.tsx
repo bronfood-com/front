@@ -12,8 +12,9 @@ import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
-import WaitingConfirm from './pages/WaitingConfirm.tsx/WaitingConfirm';
+import WaitingConfirm from './pages/WaitingConfirm/WaitingConfirm';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
+import PopupOrderCancelled from './pages/PopupOrderCancelled/PopupOrderCancelled';
 
 function App() {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function App() {
             <Header />
             <YandexMap />
             <Routes>
+                <Route path="/popup-order-cancelled" element={<PopupOrderCancelled />} />
                 <Route path="/waiting-confirm" element={<WaitingConfirm clientId="clientId1" />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />

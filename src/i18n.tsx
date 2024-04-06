@@ -116,6 +116,11 @@ i18n
                             title: 'Спасибо за регистрацию!',
                         },
 
+                        popupOrderCancelled: {
+                            yourOrderHasBeeCancelled: 'Ваш заказ отменен',
+                            youWillReceiveYourMoneyBackWithin15Minutes: 'В течение 15 минут вам вернут деньги',
+                        },
+
                         newPassword: {
                             title: 'Придумайте новый пароль',
                             nameLabel: 'Новый пароль',
