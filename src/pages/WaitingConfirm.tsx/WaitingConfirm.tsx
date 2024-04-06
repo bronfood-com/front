@@ -20,8 +20,8 @@ interface WaitingConfirmProps {
 }
 
 const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
-    const WAIT_TIME_SECONDS = 5 * 60; // секунд для ожидания кода заказа
-    const CANCEL_TIME_SECONDS = 2 * 60; // секунд для отмены заказа
+    const WAIT_CODE_IN_SECONDS = 5 * 60; // секунд для ожидания кода заказа
+    const CANCEL_ORDER_TIME_IN_SECONDS = 2 * 60; // секунд для отмены заказа
 
     const { t } = useTranslation();
 
@@ -30,8 +30,8 @@ const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
     const [orderDetails, setOrderDetails] = useState<OrderState | null>(null);
     const [preparationTime, setPreparationTime] = useState<number>(0);
     const [initialPreparationTime, setInitialPreparationTime] = useState<number>(0);
-    const [cancellationCountdown, setCancellationCountdown] = useState(CANCEL_TIME_SECONDS);
-    const [waitTime, setWaitTime] = useState(WAIT_TIME_SECONDS);
+    const [cancellationCountdown, setCancellationCountdown] = useState(CANCEL_ORDER_TIME_IN_SECONDS);
+    const [waitTime, setWaitTime] = useState(WAIT_CODE_IN_SECONDS);
 
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
 
@@ -72,8 +72,8 @@ const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
                 setOrderDetails(null);
                 setPreparationTime(0);
                 setInitialPreparationTime(0);
-                setCancellationCountdown(CANCEL_TIME_SECONDS);
-                setWaitTime(WAIT_TIME_SECONDS);
+                setCancellationCountdown(CANCEL_ORDER_TIME_IN_SECONDS);
+                setWaitTime(WAIT_CODE_IN_SECONDS);
                 navigate('/');
             } catch (error) {
                 throw new Error('Ошибка при отмене заказа:');
@@ -112,7 +112,7 @@ const WaitingConfirm: FC<WaitingConfirmProps> = ({ clientId }) => {
                         <p className={styles.waitingConfirm__subtitle}>{t('components.waitingConfirmModal.preparationWillBeginUponConfirmation')}</p>
                         <img src={waitingImg} alt="waiting image" className={styles.waitingConfirm__img} />
                         <div className={styles.waitingConfirm__separator} />
-                        <ProgressBar initialTime={WAIT_TIME_SECONDS} currentTime={waitTime} />
+                        <ProgressBar initialTime={WAIT_CODE_IN_SECONDS} currentTime={waitTime} />
                         <p className={styles.waitingConfirm__subtitleNote}>{t('components.waitingConfirmModal.pleaseWaitForTheOrderCode')}</p>
                     </>
                 )}
