@@ -154,7 +154,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
         } else {
             setIsLoading(false);
-            setServerSMSCode(res.data.temp_data_code);
             return res.data.temp_data_code;
         }
     };
@@ -163,13 +162,17 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
         if (result.status === 'error') {
-            setConfirmErrorMessage(result.error_message);
+            if (result.error_message === 'ValidationError') {
+                setConfirmErrorMessage(t(`pages.error.validation`));
+            } else {
+                setConfirmErrorMessage(t(`pages.error.server`));
+            }
             setIsLoading(false);
         } else {
-            setCurrentUser(result.data);
-            localStorage.setItem('user', JSON.stringify(result.data));
+            const user = { phone: result.data.phone, fullname: result.data.fullname };
+            setCurrentUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
             setIsLoading(false);
-            setServerSMSCode('');
         }
     };
 

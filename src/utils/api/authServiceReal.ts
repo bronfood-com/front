@@ -1,4 +1,4 @@
-import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
+import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -54,6 +54,33 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
+    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+        const res = await fetch(`${API_URL}/client/profile/update_request/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ fullname, phone, password, confirmPassword }),
+        });
+
+        const result = await res.json();
+        return result;
+    }
+
+    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+        const res = await fetch(`${API_URL}/client/profile/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ confirmation_code }),
+        });
+        const result = await res.json();
+        delete result.data.auth_token;
+        delete result.data.role;
+        return result;
+    }
+
     async logOut() {
         const token = this.getToken();
         await fetch(`${API_URL}/client/signout/`, {
@@ -63,26 +90,5 @@ export class AuthServiceReal implements AuthService {
             },
         });
         localStorage.removeItem('token');
-    }
-
-    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>{
-        const res = await fetch(`${API_URL}/client/profile/update_request/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ fullname, phone }),
-        });
-
-        const result = await res.json();
-        return result;
-    }
-
-    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
-        if (confirmation_code) {
-            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed' } };
-        } else {
-            return { status: 'error', error_message: 'invalidValidation' };
-        }
     }
 }
