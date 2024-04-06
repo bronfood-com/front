@@ -7,7 +7,7 @@ export type MealInBasket = {
 };
 
 export type Basket = {
-    restaurant: Restaurant;
+    restaurant: Restaurant | Record<string, never>;
     meals: MealInBasket[];
 };
 

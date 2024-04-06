@@ -3,7 +3,7 @@ import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsSer
 import ButtonIconSquare from '../../../components/ButtonIconSquare/ButtonIconSquare';
 import { FormEvent } from 'react';
 
-function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant; emptyBasket: () => void }) {
+function BasketRestaurant({ restaurant, emptyBasket }: { restaurant: Restaurant | Record<string, never>; emptyBasket: () => void }) {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         emptyBasket();

@@ -104,7 +104,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         const basket = await basketService.emptyBasket();
         if (basket.status === 'error') {
             setIsLoading(false);
-            setErrorMessage(res.error_message);
+            setErrorMessage(basket.error_message);
         } else {
             setIsLoading(false);
             const { restaurant, meals } = basket.data;

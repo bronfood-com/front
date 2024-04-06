@@ -12,15 +12,15 @@ export class BasketServiceMock implements BasketService {
         return new Promise((res) => setTimeout(res, ms));
     }
     async addMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
-        await this._wait(1000);
+        await this._wait(500);
         const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
             const found = restaurant.meals.find((meal) => meal.id === mealId);
             if (found) {
                 return restaurant;
             }
         });
-        const hasRestaurantChanged = basket.restaurant.id !== restaurantFound?.id;
-        const mealFound = restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
+        const hasRestaurantChanged = restaurantFound && basket.restaurant.id !== restaurantFound.id;
+        const mealFound = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
         if (mealFound) {
             basket.restaurant = restaurantFound;
             basket.meals =
@@ -41,7 +41,7 @@ export class BasketServiceMock implements BasketService {
         }
     }
     async deleteMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
-        await this._wait(1000);
+        await this._wait(500);
         const mealFound = basket.meals.find(({ meal }) => meal.id === mealId);
         if (mealFound) {
             basket.meals = basket.meals.map(({ meal, count }) => {
@@ -55,13 +55,13 @@ export class BasketServiceMock implements BasketService {
                     return { meal, count };
                 }
             });
-            return { status: 'success', data: mealFound.id };
+            return { status: 'success', data: mealFound.meal.id };
         } else {
             return { status: 'error', error_message: 'error' };
         }
     }
     async getBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
-        await this._wait(1000);
+        await this._wait(500);
         const success = true;
         if (success) {
             return { status: 'success', data: basket };
@@ -70,7 +70,7 @@ export class BasketServiceMock implements BasketService {
         }
     }
     async emptyBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
-        await this._wait(1000);
+        await this._wait(500);
         basket.restaurant = {};
         basket.meals = [];
         const success = true;
