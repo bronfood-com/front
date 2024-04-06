@@ -34,15 +34,15 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (mealId: string) => void;
+    addMeal: (mealId: string) => Promise<void>;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (mealId: string) => void;
+    deleteMeal: (mealId: string) => Promise<void>;
     /**
      * Removes restaurant and all meals from basket
      */
-    emptyBasket: () => void;
+    emptyBasket: () => Promise<void>;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -53,9 +53,9 @@ export const BasketContext = createContext<BasketContext>({
     errorMessage: '',
     waitingTime: 0,
     price: 0,
-    addMeal: () => {},
-    deleteMeal: () => {},
-    emptyBasket: () => {},
+    addMeal: () => Promise.resolve(),
+    deleteMeal: () => Promise.resolve(),
+    emptyBasket: () => Promise.resolve(),
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
