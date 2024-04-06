@@ -14,12 +14,14 @@ import { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
+import InputPassword from '../../components/InputPassword/InputPassword';
 
 const Profile = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        getValues,
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -34,6 +36,8 @@ const Profile = () => {
         const result = await updateUser.mutation({
             phone: data.phoneNumber,
             fullname: data.username,
+            password: data.newPassword,
+            confirmPassword: data.newPasswordConfirm,
         });
 
         if (result !== null) {
@@ -46,6 +50,11 @@ const Profile = () => {
         setFullname(currentUser?.fullname);
         setPhoneNumber(currentUser?.phone);
     }, [currentUser]);
+
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { newPassword } = getValues();
+        return newPassword === value || t('pages.profile.passwordDontMatch');
+    };
 
     return (
         <>
@@ -65,6 +74,8 @@ const Profile = () => {
                         <FormInputs>
                             <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
                             <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
+                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} />
+                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} />
                         </FormInputs>
                         <div className={styles.profile__button_space}></div>
                         <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>

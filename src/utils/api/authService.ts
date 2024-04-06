@@ -18,6 +18,8 @@ export interface RegisterData {
 export interface UpdateUser {
     fullname: string;
     phone: PhoneNumber;
+    password: string;
+    confirmPassword: string;
 }
 /*
  temp_data_code: Temporary code that the server assign to the user in db during registration
@@ -36,7 +38,12 @@ export interface User {
     fullname: string;
     role?: 'CLIENT';
 }
-
+export interface UserExtra {
+    phone: PhoneNumber;
+    fullname: string;
+    role?: 'CLIENT';
+    auth_token: string;
+}
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 
@@ -44,11 +51,11 @@ export interface AuthService {
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 
-    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+
+    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
 
     logOut: () => Promise<void>;
-
-    updateUser: ({ fullname, phone }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
 }
 
 export const authService = new AuthServiceMock();

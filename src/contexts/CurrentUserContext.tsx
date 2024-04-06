@@ -109,6 +109,20 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
+    const signUp = async (data: FieldValues) => {
+        setIsLoading(true);
+        setSignUpErrorMessage(null);
+        const { password, phone, name } = data;
+        const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
+        if (res.status === 'error') {
+            setUpdateUserErrorMessage(res.error_message);
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+            setServerSMSCode(res.data.temp_data_code);
+            return res.data.temp_data_code;
+        }
+    };
     const confirmSignUp = async (enteredCode: string) => {
         setIsLoading(true);
         const result = await authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: enteredCode });
@@ -124,53 +138,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
 
-    const signUp = async (data: FieldValues) => {
-        setIsLoading(true);
-        setSignUpErrorMessage(null);
-        const { password, phone, name } = data;
-        const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
-        if (res.status === 'error') {
-            setUpdateUserErrorMessage(res.error_message);
-            setIsLoading(false);
-        } else {
-            setIsLoading(false);
-            setServerSMSCode(res.data.temp_data_code);
-            return res.data.temp_data_code;
-        }
-    };
-
-    const logout = useCallback(async () => {
-        setLogoutErrorMessage(null);
-        setIsLoading(true);
-        if (currentUser) {
-            await authService.logOut();
-            setCurrentUser(null);
-            localStorage.removeItem('user');
-            setIsLoading(false);
-        } else {
-            return;
-        }
-    }, [currentUser]);
-
-    const confirmUpdateUser = async (enteredCode: string) => {
-        setIsLoading(true);
-        const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
-        if (result.status === 'error') {
-            setConfirmErrorMessage(result.error_message);
-            setIsLoading(false);
-        } else {
-            setCurrentUser(result.data);
-            localStorage.setItem('user', JSON.stringify(result.data));
-            setIsLoading(false);
-            setServerSMSCode('');
-        }
-    };
-
     const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
-        const { phone, fullname } = data;
-        const res = await authService.updateUser({ phone: phone, fullname: fullname });
+        const { phone, fullname, password, confirmPassword } = data;
+        const res = await authService.updateUser({ phone: phone, fullname: fullname, password: password, confirmPassword: confirmPassword });
         if (res.status === 'error') {
             if (res.error_message === 'ValidationError') {
                 setUpdateUserErrorMessage(t(`pages.error.validation`));
@@ -186,6 +158,33 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             return res.data.temp_data_code;
         }
     };
+
+    const confirmUpdateUser = async (enteredCode: string) => {
+        setIsLoading(true);
+        const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
+        if (result.status === 'error') {
+            setConfirmErrorMessage(result.error_message);
+            setIsLoading(false);
+        } else {
+            setCurrentUser(result.data);
+            localStorage.setItem('user', JSON.stringify(result.data));
+            setIsLoading(false);
+            setServerSMSCode('');
+        }
+    };
+
+    const logout = useCallback(async () => {
+        setLogoutErrorMessage(null);
+        setIsLoading(true);
+        if (currentUser) {
+            await authService.logOut();
+            setCurrentUser(null);
+            localStorage.removeItem('user');
+            setIsLoading(false);
+        } else {
+            return;
+        }
+    }, [currentUser]);
 
     return (
         <CurrentUserContext.Provider
@@ -216,13 +215,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: confirmSignUp,
                     isLoading,
                     errorMessage: confirmErrorMessage,
-
                 },
                 confirmUpdateUser: {
                     mutation: confirmUpdateUser,
                     isLoading,
                     errorMessage: confirmErrorMessage,
-
                 },
             }}
         >

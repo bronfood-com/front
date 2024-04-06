@@ -1,4 +1,4 @@
-import { AuthService, СonfirmUpdateUser } from './authService';
+import { AuthService, UserExtra, СonfirmUpdateUser } from './authService';
 import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
 
 export class AuthServiceMock implements AuthService {
@@ -39,10 +39,22 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+        await this._wait(500);
+        if (phone && fullname && password && confirmPassword) {
+            return {
+                status: 'success',
+                data: { temp_data_code: '1111' },
+            };
+        } else {
+            return { status: 'error', error_message: 'invalidCredentials' };
+        }
+    }
+
+    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         if (confirmation_code) {
-            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed' } };
+            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
         } else {
             return { status: 'error', error_message: 'invalidValidation' };
         }
@@ -53,18 +65,6 @@ export class AuthServiceMock implements AuthService {
         const token = this.getToken();
         if (token) {
             localStorage.removeItem('token');
-        }
-    }
-
-    async updateUser({ fullname, phone }: UpdateUser):  Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
-        await this._wait(500);
-        if (phone && fullname) {
-            return {
-                status: 'success',
-                data: { temp_data_code: '1111' }
-            };
-        } else {
-            return { status: 'error', error_message: 'invalidCredentials' };
         }
     }
 }
