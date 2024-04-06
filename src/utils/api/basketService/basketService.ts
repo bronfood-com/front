@@ -6,12 +6,16 @@ export type MealInBasket = {
     count: number;
 };
 
+export type Basket = {
+    restaurant: Restaurant;
+    meals: MealInBasket[];
+};
+
 export interface BasketService {
-    addRestaurant: (restaurant: Restaurant) => Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
-    deleteRestaurant: () => Promise<{ status: 'success' } | { status: 'error'; error_message: string }>;
-    addMeal: (meal: Meal) => Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }>;
-    deleteMeal: (meal: Meal) => Promise<{ status: 'success'; data: Meal } | { status: 'error'; error_message: string }>;
-    deleteMeals: () => Promise<{ status: 'success' } | { status: 'error'; error_message: string }>;
+    addMeal: (mealId: string) => Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }>;
+    deleteMeal: (mealId: string) => Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }>;
+    getBasket: () => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
+    emptyBasket: () => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
 }
 
 export const basketService = new BasketServiceMock();

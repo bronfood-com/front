@@ -1,11 +1,6 @@
-import { BasketService, MealInBasket } from './basketService';
+import { BasketService, Basket } from './basketService';
 import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
-
-type Basket = {
-    restaurant: Restaurant;
-    meals: MealInBasket[];
-};
 
 const basket: Basket = {
     restaurant: {},
