@@ -68,12 +68,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal }) => meal.waitingTime)) : 0;
     const isEmpty = Object.keys(restaurant).length === 0 ? true : false;
     const getBasket = async () => {
+        setIsLoading(true);
         const basket = await basketService.getBasket();
+        setIsLoading(false);
         if (basket.status === 'error') {
-            setIsLoading(false);
             setErrorMessage(basket.error_message);
         } else {
-            setIsLoading(false);
             const { restaurant, meals } = basket.data;
             setRestaurant(restaurant);
             setMeals(meals);
@@ -82,8 +82,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const addMeal = async (mealId: string) => {
         setIsLoading(true);
         const res = await basketService.addMeal(mealId);
+        setIsLoading(false);
         if (res.status === 'error') {
-            setIsLoading(false);
             setErrorMessage(res.error_message);
         } else {
             getBasket();
@@ -92,8 +92,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteMeal = async (mealId: string) => {
         setIsLoading(true);
         const res = await basketService.deleteMeal(mealId);
+        setIsLoading(false);
         if (res.status === 'error') {
-            setIsLoading(false);
             setErrorMessage(res.error_message);
         } else {
             getBasket();
@@ -102,11 +102,10 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const emptyBasket = async () => {
         setIsLoading(true);
         const basket = await basketService.emptyBasket();
+        setIsLoading(false);
         if (basket.status === 'error') {
-            setIsLoading(false);
             setErrorMessage(basket.error_message);
         } else {
-            setIsLoading(false);
             const { restaurant, meals } = basket.data;
             setRestaurant(restaurant);
             setMeals(meals);
