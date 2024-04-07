@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
-const Header = ({city}: {city: string}) => {
+const Header = ({ city }: { city: string }) => {
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
