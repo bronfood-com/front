@@ -14,7 +14,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     const [longitude, setLongitude] = useState(76.921552);
     const getCity = useCallback(
         (ymaps) => {
-            ymaps.geocode([latitude, longitude]).then((res) => {
+            ymaps.geocode([latitude, longitude], {kind: 'locality'}).then((res) => {
                 const city = res.geoObjects.get(0).properties.get('name');
                 setCity(city);
             });
