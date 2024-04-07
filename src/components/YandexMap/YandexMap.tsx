@@ -32,14 +32,12 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                         suppressMapOpenBlock: true,
                     }}
                     modules={['geocode']}
-                    onLoad={
-                        (ymaps) => {
-                            ymaps.geocode([latitude, longitude], {kind: 'locality'}).then((res) => {
-                                const city = res.geoObjects.get(0).properties.get('name');
-                                setCity(city);
-                            });
-                        }
-                    }
+                    onLoad={(ymaps) => {
+                        ymaps.geocode([latitude, longitude], { kind: 'locality' }).then((res) => {
+                            const city = res.geoObjects.get(0).properties.get('name');
+                            setCity(city);
+                        });
+                    }}
                 >
                     {latitude && longitude && (
                         <Placemark
