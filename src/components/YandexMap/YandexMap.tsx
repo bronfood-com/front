@@ -6,6 +6,7 @@ import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
+    const [geolocation, setGeolocation] = useState(false);
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
         setIsPlaceActive(!isPlaceActive);
@@ -17,12 +18,13 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
             navigator.geolocation.getCurrentPosition((position) => {
                 setLatitude(position.coords.latitude);
                 setLongitude(position.coords.longitude);
+                setGeolocation(position.coords);
             });
         }
     }, []);
 
     return (
-        <YMaps query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
+        <YMaps key={geolocation} query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
             <div className={styles.yamap}>
                 <Map
                     state={{ center: [latitude, longitude], zoom: 15 }}
