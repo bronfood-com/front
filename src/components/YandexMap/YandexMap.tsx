@@ -1,19 +1,24 @@
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import styles from './YandexMap.module.scss';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 
-const YandexMap = () => {
+const YandexMap = ({setCity}: {setCity: Dispatch<SetStateAction<string>>}) => {
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
         setIsPlaceActive(!isPlaceActive);
     };
-
     const [latitude, setLatitude] = useState(43.246345);
     const [longitude, setLongitude] = useState(76.921552);
-
+    const getCity = useCallback((ymaps) => {
+        ymaps.geocode([latitude, longitude])
+        .then((res) => {
+            const city = res.geoObjects.get(0).properties.get('name');
+            setCity(city);
+        })
+    }, [latitude, longitude, setCity])
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -33,6 +38,8 @@ const YandexMap = () => {
                     options={{
                         suppressMapOpenBlock: true,
                     }}
+                    modules={['geocode']}
+                    onLoad={getCity}
                 >
                     {latitude && longitude && (
                         <Placemark
