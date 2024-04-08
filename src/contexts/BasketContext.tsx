@@ -86,7 +86,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         const basket = await basketService.deleteMeal(mealId);
         setIsLoading(false);
-        handleServerResponse(basket)
+        handleServerResponse(basket);
     };
     const emptyBasket = async () => {
         setIsLoading(true);
