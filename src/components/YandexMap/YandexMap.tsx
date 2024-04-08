@@ -6,7 +6,7 @@ import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
-    const [geolocation, setGeolocation] = useState(false);
+    const [geolocation, setGeolocation] = useState({});
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
         setIsPlaceActive(!isPlaceActive);

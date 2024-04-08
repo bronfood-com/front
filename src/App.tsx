@@ -15,7 +15,7 @@ import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
-    const [city, setCity] = useState();
+    const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
