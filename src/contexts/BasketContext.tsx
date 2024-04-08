@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
+import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
 
 type BasketContext = {
     /**
@@ -67,7 +67,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
-    const handleServerResponse = (basket) => {
+    const handleServerResponse = (basket: { status: 'success'; data: Basket } | { status: 'error'; error_message: string }) => {
         if (basket.status === 'error') {
             setErrorMessage(basket.error_message);
         } else {

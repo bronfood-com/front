@@ -10,7 +10,7 @@ export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
-    async addMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
+    async addMeal(mealId: string): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
             const found = restaurant.meals.find((meal) => meal.id === mealId);
@@ -39,7 +39,7 @@ export class BasketServiceMock implements BasketService {
             return { status: 'error', error_message: 'error' };
         }
     }
-    async deleteMeal(mealId: string): Promise<{ status: 'success'; data: string } | { status: 'error'; error_message: string }> {
+    async deleteMeal(mealId: string): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         const mealFound = this.basket.meals.find(({ meal }) => meal.id === mealId);
         if (mealFound) {
