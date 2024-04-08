@@ -8,7 +8,7 @@ import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
         setIsPlaceActive(!isPlaceActive);
@@ -37,8 +37,8 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     modules={['geocode']}
                     onLoad={(ymaps) => {
-                        ymaps.geocode([latitude, longitude], {kind: 'locality'}).then((res) => {
-                            const city = res.geoObjects.get(0).properties.get('name', {kind: 'locality', name: t('components.header.placeName')});
+                        ymaps.geocode([latitude, longitude], { kind: 'locality' }).then((res) => {
+                            const city = res.geoObjects.get(0).properties.get('name', { kind: 'locality', name: t('components.header.placeName') });
                             setCity(city.toString());
                         });
                     }}
