@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Profile from './pages/Profile/Profile';
@@ -15,6 +15,7 @@ import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
+    const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
@@ -27,8 +28,8 @@ function App() {
     }, [currentUser, navigate, pathname]);
     return (
         <div>
-            <Header />
-            <YandexMap></YandexMap>
+            <Header city={city} />
+            <YandexMap setCity={setCity}></YandexMap>
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
