@@ -34,7 +34,7 @@ export class BasketServiceMock implements BasketService {
                             }
                         })
                       : [...this.basket.meals, { meal: mealFound, count: 1 }];
-            return { status: 'success', data: mealFound.id };
+            return { status: 'success', data: this.basket };
         } else {
             return { status: 'error', error_message: 'error' };
         }
@@ -50,15 +50,6 @@ export class BasketServiceMock implements BasketService {
                     return { meal, count };
                 }
             });
-            return { status: 'success', data: mealFound.meal.id };
-        } else {
-            return { status: 'error', error_message: 'error' };
-        }
-    }
-    async getBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
-        await this._wait(500);
-        const success = true;
-        if (success) {
             return { status: 'success', data: this.basket };
         } else {
             return { status: 'error', error_message: 'error' };

@@ -67,10 +67,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
-    const getBasket = async () => {
-        setIsLoading(true);
-        const basket = await basketService.getBasket();
-        setIsLoading(false);
+    const handleServerResponse = (basket) => {
         if (basket.status === 'error') {
             setErrorMessage(basket.error_message);
         } else {
@@ -81,35 +78,21 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const addMeal = async (mealId: string) => {
         setIsLoading(true);
-        const res = await basketService.addMeal(mealId);
+        const basket = await basketService.addMeal(mealId);
         setIsLoading(false);
-        if (res.status === 'error') {
-            setErrorMessage(res.error_message);
-        } else {
-            getBasket();
-        }
+        handleServerResponse(basket);
     };
     const deleteMeal = async (mealId: string) => {
         setIsLoading(true);
-        const res = await basketService.deleteMeal(mealId);
+        const basket = await basketService.deleteMeal(mealId);
         setIsLoading(false);
-        if (res.status === 'error') {
-            setErrorMessage(res.error_message);
-        } else {
-            getBasket();
-        }
+        handleServerResponse(basket)
     };
     const emptyBasket = async () => {
         setIsLoading(true);
         const basket = await basketService.emptyBasket();
         setIsLoading(false);
-        if (basket.status === 'error') {
-            setErrorMessage(basket.error_message);
-        } else {
-            const { restaurant, meals } = basket.data;
-            setRestaurant(restaurant);
-            setMeals(meals);
-        }
+        handleServerResponse(basket);
     };
     return (
         <BasketContext.Provider
