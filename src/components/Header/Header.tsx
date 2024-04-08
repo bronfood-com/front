@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
-const Header = () => {
+const Header = ({ city }: { city: string }) => {
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
@@ -22,7 +22,7 @@ const Header = () => {
                 <button title={t('components.header.burgerTitleHover')} className={`${styles.header__burger} ${styles.header__icon}`} onClick={handleMenuActive}></button>
                 <div className={styles.header__place}>
                     <div className={styles.header__place_point}></div>
-                    <p className={styles.header__place_name}>{t('components.header.placeName')}</p>
+                    <p className={styles.header__place_name}>{city}</p>
                 </div>
                 <div className={styles.header__buttons}>
                     {isLogin ? <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
