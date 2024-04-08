@@ -9,9 +9,9 @@ type CounterProps = {
 function Counter({ count, increment, decrement }: CounterProps) {
     return (
         <div className={`${styles.counter}`}>
-            <button type='button' onClick={decrement} className={`${styles.counter__button} ${styles.counter__button_minus}`} />
+            <button type="button" onClick={decrement} className={`${styles.counter__button} ${styles.counter__button_minus}`} />
             <span className={styles.counter__count}>{count}</span>
-            <button type='button' onClick={increment} className={`${styles.counter__button} ${styles.counter__button_plus}`} />
+            <button type="button" onClick={increment} className={`${styles.counter__button} ${styles.counter__button_plus}`} />
         </div>
     );
 }
