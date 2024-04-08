@@ -26,6 +26,7 @@ i18n
                         },
                         header: {
                             burgerTitleHover: 'Меню',
+                            placeName: 'Алматы',
                             favouritesTitleHover: 'Избранное',
                             searchTitleHover: 'Поиск',
                             logoTitleHover: 'Bronfood',

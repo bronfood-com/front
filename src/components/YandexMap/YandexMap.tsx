@@ -1,12 +1,14 @@
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import styles from './YandexMap.module.scss';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
+    const {t} = useTranslation();
     const [isPlaceActive, setIsPlaceActive] = useState(false);
     const handlePlacemarkClick = () => {
         setIsPlaceActive(!isPlaceActive);
@@ -35,8 +37,8 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     modules={['geocode']}
                     onLoad={(ymaps) => {
-                        ymaps.geocode([latitude, longitude], { kind: 'locality' }).then((res) => {
-                            const city = res.geoObjects.get(0).properties.get('name');
+                        ymaps.geocode([latitude, longitude], {kind: 'locality'}).then((res) => {
+                            const city = res.geoObjects.get(0).properties.get('name', {kind: 'locality', name: t('components.header.placeName')});
                             setCity(city.toString());
                         });
                     }}
