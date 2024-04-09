@@ -12,7 +12,7 @@ type BasketContext = {
      */
     restaurant: Restaurant | Record<string, never>;
     /**
-     * Meals in basket
+     * Meals in basket. If meal's count = 0 then meal is removed from basket
      */
     meals: Array<MealInBasket>;
     /**
