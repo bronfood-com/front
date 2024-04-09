@@ -36,7 +36,7 @@ export class BasketServiceMock implements BasketService {
                       : [...this.basket.meals, { meal: mealFound, count: 1 }];
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'error' };
+            return { status: 'error', error_message: 'serverError' };
         }
     }
     async deleteMeal(mealId: string): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
@@ -51,7 +51,7 @@ export class BasketServiceMock implements BasketService {
             this.basket.meals = this.basket.meals.filter(({ meal }) => meal.id !== mealId);
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'error' };
+            return { status: 'error', error_message: 'serverError' };
         }
     }
     async emptyBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
@@ -62,7 +62,7 @@ export class BasketServiceMock implements BasketService {
         if (success) {
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'error' };
+            return { status: 'error', error_message: 'serverError' };
         }
     }
 }

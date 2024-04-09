@@ -154,6 +154,7 @@ i18n
                             basketEmpty: 'Корзина пуста',
                             emptyBasket: 'Очистить корзину?',
                             yes: 'Да',
+                            serverError: 'Ошибка на сервере',
                         },
                     },
                 },
