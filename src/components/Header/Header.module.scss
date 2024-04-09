@@ -24,6 +24,8 @@
     &__icon {
         width: 35px;
         height: 35px;
+        background-image: url(../../vendor/images/icons/basket.svg);
+        cursor: pointer;
     }
     &__favorite {
         position: absolute;
@@ -37,8 +39,24 @@
     &__burger {
         background-image: url(../../vendor/images/icons/burger-menu-icon.svg);
     }
-    &__search {
-        background-image: url(../../vendor/images/icons/search-icon.svg);
+    &__basket {
+        position: relative;
+    }
+    &__chip {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 1px;
+        right: 2px;
+        height: 16px;
+        width: 16px;
+        background-color: $red;
+        color: $white;
+        border-radius: 50%;
+        font-size: 10px;
+        line-height: 1.21;
+        font-weight: 700;
     }
     &__close {
         background-image: url(../../vendor/images/icons/close-icon.svg);

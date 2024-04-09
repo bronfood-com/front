@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash';
 import restaurant1 from './MockImages/restaurant1.png';
 import restaurant2 from './MockImages/restaurant2.png';
 import restaurant3 from './MockImages/restaurant3.png';
@@ -17,53 +18,60 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '09:00 - 22.00',
         meals: [
             {
-                id: '1',
+                id: uniqueId(),
                 name: 'Куриный донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
             {
-                id: '2',
+                id: uniqueId(),
                 name: 'Говяжий донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
             {
-                id: '3',
+                id: uniqueId(),
                 name: 'Куриный донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
             {
-                id: '4',
+                id: uniqueId(),
                 name: 'Американо',
                 photo: drink1,
                 price: 200,
                 type: 'drink',
+                waitingTime: 5,
             },
             {
-                id: '5',
+                id: uniqueId(),
                 name: 'Говяжий донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
             {
-                id: '6',
+                id: uniqueId(),
                 name: 'Пуддинг',
                 photo: dessert1,
                 price: 350,
                 type: 'dessert',
+                waitingTime: 5,
             },
             {
-                id: '7',
+                id: uniqueId(),
                 name: 'Куриный донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
         ],
         type: 'cafe',
@@ -77,11 +85,12 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '10:00 - 23.00',
         meals: [
             {
-                id: '1',
+                id: uniqueId(),
                 name: 'Куриный донер',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
+                waitingTime: 10,
             },
         ],
         type: 'cafe',
@@ -95,11 +104,12 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '12:00 - 01.00',
         meals: [
             {
-                id: '4',
+                id: uniqueId(),
                 name: 'Американо',
                 photo: drink1,
                 price: 200,
                 type: 'drink',
+                waitingTime: 5,
             },
         ],
         type: 'cafe',
@@ -113,11 +123,12 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '09:00 - 22.00',
         meals: [
             {
-                id: '6',
+                id: uniqueId(),
                 name: 'Пуддинг',
                 photo: dessert1,
                 price: 350,
                 type: 'dessert',
+                waitingTime: 5,
             },
         ],
         type: 'fastFood',
@@ -131,11 +142,12 @@ export const mockRestaurants: Restaurant[] = [
         workingTime: '12:00 - 01.00',
         meals: [
             {
-                id: '1',
+                id: uniqueId(),
                 name: 'Капуччино',
                 photo: drink1,
                 price: 1,
                 type: 'drink',
+                waitingTime: 5,
             },
         ],
         type: 'cafeBar',

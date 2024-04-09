@@ -7,7 +7,7 @@ type ConfirmationPopupProps = {
     confirmButtonText: string;
     onCancel: () => void;
     onSubmit: () => void;
-    children: ReactNode;
+    children?: ReactNode;
 };
 
 const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, children }) => {
