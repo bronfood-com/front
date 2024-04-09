@@ -13,7 +13,7 @@ export class AuthServiceReal implements AuthService {
         const res = await fetch(`${API_URL}/signin/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8',
             },
             body: JSON.stringify({ phone, password }),
         });
@@ -30,7 +30,7 @@ export class AuthServiceReal implements AuthService {
         const res = await fetch(`${API_URL}/client/request_to_signup/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8',
             },
             body: JSON.stringify({ phone, password, fullname }),
         });
@@ -42,7 +42,7 @@ export class AuthServiceReal implements AuthService {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8',
             },
             body: JSON.stringify({ temp_data_code, confirmation_code }),
         });
@@ -70,7 +70,7 @@ export class AuthServiceReal implements AuthService {
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8',
             },
             body: JSON.stringify({ fullname, phone }),
         });
