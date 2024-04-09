@@ -12,7 +12,7 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     signUp: {
-        mutation: (data: FieldValues) => Promise<void | string | undefined>;
+        mutation: (data: FieldValues) => Promise<string | undefined>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -22,7 +22,7 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     updateUser: {
-        mutation: (data: FieldValues) => Promise<void | string | undefined>;
+        mutation: (data: FieldValues) => Promise<string | undefined>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -47,7 +47,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         errorMessage: null,
     },
     signUp: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve(''),
         isLoading: false,
         errorMessage: null,
     },
@@ -57,7 +57,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         errorMessage: null,
     },
     updateUser: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve(''),
         isLoading: false,
         errorMessage: null,
     },
