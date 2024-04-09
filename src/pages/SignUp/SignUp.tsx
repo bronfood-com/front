@@ -15,19 +15,22 @@ import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
+import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 
 const SignUp = () => {
     const navigate = useNavigate();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const { signUp } = useCurrentUser();
+    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
+    const { signUp, confirmSignUp } = useCurrentUser();
     const { t } = useTranslation();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [code, setCode] = useState('');
+    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
@@ -40,10 +43,22 @@ const SignUp = () => {
         setIsConfirmOpen(true);
     };
 
+    const getCode = (getCode: string) => {
+        setCode(getCode);
+    };
+
+    const confirm = async () => {
+        const result = await confirmSignUp.mutation(code);
+        if (result !== null) {
+            setIsConfirmErrorVisible(true);
+        }
+        setIsInfoPopupOpen(true);
+    };
+
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm parentPage="signup"></SMSConfirm>
+                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} getCode={getCode} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}

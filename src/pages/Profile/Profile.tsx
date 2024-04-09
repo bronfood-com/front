@@ -26,11 +26,13 @@ const Profile = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const { currentUser, updateUser } = useCurrentUser();
+    const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
+    const [code, setCode] = useState('');
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
@@ -39,7 +41,6 @@ const Profile = () => {
             password: data.newPassword,
             confirmPassword: data.newPasswordConfirm,
         });
-
         if (result !== null) {
             setIsErrorVisible(true);
         }
@@ -56,10 +57,22 @@ const Profile = () => {
         return newPassword === value || t('pages.profile.passwordDontMatch');
     };
 
+    const getCode = (getCode: string) => {
+        setCode(getCode);
+    };
+
+    const confirm = async () => {
+        const result = await confirmUpdateUser.mutation(code);
+        if (result !== null) {
+            setIsConfirmErrorVisible(true);
+        }
+        setIsConfirmOpen(false);
+    };
+
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm parentPage="profile"></SMSConfirm>
+                <SMSConfirm isLoading={confirmUpdateUser.isLoading} error={confirmUpdateUser.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} getCode={getCode} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}

@@ -81,7 +81,7 @@ i18n
                             phoneConfirmation: 'Подтверждение номера',
                             enterSmsCode: 'Ввведите код из смс',
                             validationError: 'Неверный код',
-                            serverError: 'ОШибка сервера'
+                            serverError: 'Ошибка сервера',
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
