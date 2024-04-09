@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './InputPhone.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
@@ -15,14 +15,22 @@ interface InputPhone {
      * React Hook Forms error object
      */
     errors: FieldErrors;
+    /**
+     * Input Value
+     */
+    value?: string;
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
+    const [inputValue, setInputValue] = useState(props.value);
+
     const { t } = useTranslation();
-
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
-
     const id = useId();
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
+
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
@@ -40,6 +48,8 @@ const InputPhone: FC<InputPhone> = (props) => {
                         message: t('components.inputPhone.invalidPhoneNumberFormat'),
                     },
                 })}
+                onChange={handleInputChange}
+                value={inputValue}
                 mask="+7 (999) 999-99-99"
             ></InputMask>
             {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}

@@ -26,11 +26,9 @@ const SignIn = () => {
 
     useEffect(() => {
         if (currentUser) {
-            navigate('/');
+            navigate('/restaurants');
         }
-        // Doesnt pass ci build with navigate deps
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser]);
+    }, [currentUser, navigate]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
