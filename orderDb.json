@@ -9,8 +9,8 @@
       "paymentStatus": "paid",
       "reviewStatus": "waiting",
       "cancellationTime": 120,
-      "cancellationStatus": "requested",
-      "isCancellationRequested": true,
+      "cancellationStatus": "none",
+      "isCancellationRequested": false,
       "orderDetails": [
         {
           "id": "1",
@@ -39,6 +39,7 @@
       ]
     },
     {
+      "clientId": "clientId2",
       "id": "NHG348",
       "totalAmount": 5800,
       "confirmationStatus": "waiting",

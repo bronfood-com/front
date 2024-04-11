@@ -34,7 +34,7 @@ export const fetchOrderDetailsByOrderId = async (id: string): Promise<OrderState
         const orders: OrderState[] = await fetchResponse<OrderState[]>(`${baseUrl}/orders?id=${id}`);
         return orders.length > 0 ? orders[0] : undefined;
     } catch (error) {
-        throw new Error("Error receiving order data.");
+        throw new Error('Error receiving order data.');
     }
 };
 
@@ -53,6 +53,6 @@ export const cancelOrder = async (id: string): Promise<void> => {
             body: body,
         });
     } catch (error) {
-        throw new Error("Error canceling the order.");
+        throw new Error('Error canceling the order.');
     }
 };

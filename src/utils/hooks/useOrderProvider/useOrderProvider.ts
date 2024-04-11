@@ -6,7 +6,6 @@ import { OrderState } from '../../api/orderService/orderService';
 import { useTranslation } from 'react-i18next';
 
 export const useOrderProvider = (clientId: string): OrderContextType => {
-
     const { t } = useTranslation();
 
     const WAIT_CODE_IN_SECONDS = 5 * 60;
