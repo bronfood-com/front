@@ -13,6 +13,7 @@ export interface OrderState {
     confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
     paymentStatus: 'waiting' | 'paid' | 'failed';
     reviewStatus: 'waiting' | 'reviewed' | 'skipped';
+    cancellationTime: number;
     cancellationStatus: 'none' | 'requested' | 'confirmed';
     isCancellationRequested: boolean;
     preparationTime: number;

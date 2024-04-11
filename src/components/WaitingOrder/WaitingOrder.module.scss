@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-.waitingConfirm {
+.waitingOrder {
     &__title {
         color: $black;
         text-align: center;
@@ -19,37 +19,6 @@
         font-weight: 400;
         line-height: 19.6px;
         margin: 25px 0 25px 0;
-    }
-
-    &__img {
-        width: 254px;
-        height: 181px;
-        margin: 23px 0 0 0;
-    }
-
-    &__separator {
-        height: 25px;
-    }
-
-    &__subtitleNote {
-        color: $light-gray;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 21px;
-        margin: 27px 0 5px 0;
-    }
-}
-
-.waitingOrder {
-    &__title {
-        color: $black;
-        text-align: center;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 1.4;
-        max-width: 266px;
     }
 
     &__orderCode {

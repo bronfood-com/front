@@ -56,19 +56,7 @@ i18n
                             areYouSureYouWantToCancelTheOrder: 'Вы уверены, что хотите отменить заказ?',
                             yes: 'Да',
                         },
-                        waitingConfirmModal: {
-                            pleaseWaitForTheOrderConfirmation: 'Ожидайте подтверждения заказа',
-                            preparationWillBeginUponConfirmation: 'Приготовление начнётся с момента подтверждения',
-                            pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
-                            theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
-                            anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
-                        },
-                        waitingOrderModal: {
-                            orderCode: 'Код заказа',
-                            youCanCancelTheOrderWithin: 'Вы можете отменить заказ в течение ',
-                            minutes: 'минут',
-                            cancelOrder: 'Отменить заказ',
-                        },
+
                         orderTimeCounter: {
                             minutes: 'мин.',
                             yourOrderIsAlreadyBeingPrepared: 'Ваш заказ уже готовят',
@@ -170,6 +158,18 @@ i18n
                             food: 'Еда',
                             drink: 'Напитки',
                             dessert: 'Десерты',
+                        },
+
+                        waitingOrderModal: {
+                            orderCode: 'Код заказа',
+                            youCanCancelTheOrderWithin: 'Вы можете отменить заказ в течение ',
+                            minutes: 'минут',
+                            cancelOrder: 'Отменить заказ',
+                            pleaseWaitForTheOrderConfirmation: 'Ожидайте подтверждения заказа',
+                            preparationWillBeginUponConfirmation: 'Приготовление начнётся с момента подтверждения',
+                            pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
+                            theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
+                            anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
                         },
                     },
                 },

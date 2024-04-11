@@ -6,7 +6,7 @@ type ConfirmationPopupProps = {
     title: string;
     confirmButtonText: string;
     onCancel: () => void;
-    onSubmit: () => Promise<void>; // может быть асинхронной // Орлов Дима
+    onSubmit: () => void | Promise<void>; // может быть и асинхронной // Орлов Дима
     onSuccess?: () => void; // необязательный callback // Орлов Дима
     children?: ReactNode; // сделал необязательным // Орлов Дима
 };

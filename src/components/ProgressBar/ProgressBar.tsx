@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './ProgressBar.module.scss';
 
-interface ProgressBarProps1 {
+interface ProgressBarProps {
     initialTime: number;
     currentTime: number;
 }
 
-const ProgressBar1: FC<ProgressBarProps1> = ({ initialTime, currentTime }) => {
+const ProgressBar: FC<ProgressBarProps> = ({ initialTime, currentTime }) => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
@@ -30,4 +30,4 @@ const ProgressBar1: FC<ProgressBarProps1> = ({ initialTime, currentTime }) => {
     );
 };
 
-export default ProgressBar1;
+export default ProgressBar;

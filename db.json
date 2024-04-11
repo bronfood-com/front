@@ -5,11 +5,12 @@
       "id": "NHG347",
       "totalAmount": 4100,
       "confirmationStatus": "waiting",
-      "preparationTime": 1,
+      "preparationTime": 3,
       "paymentStatus": "paid",
       "reviewStatus": "waiting",
-      "cancelationStatus": "none",
-      "isCancellationRequested:": false,
+      "cancellationTime": 3,
+      "cancellationStatus": "requested",
+      "isCancellationRequested": true,
       "orderDetails": [
         {
           "id": "1",
@@ -35,9 +36,7 @@
           "itemPrice": 300,
           "quantity": 1
         }
-      ],
-      "cancellationStatus": "requested",
-      "isCancellationRequested": true
+      ]
     },
     {
       "id": "NHG348",
@@ -46,7 +45,8 @@
       "preparationTime": 5,
       "paymentStatus": "paid",
       "reviewStatus": "waiting",
-      "cancelationStatus": "none",
+      "cancellationTime": 4,
+      "cancellationStatus": "none",
       "isCancellationRequested:": false,
       "orderDetails": [
         {
