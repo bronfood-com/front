@@ -6,7 +6,7 @@ import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 import { FormEvent } from 'react';
 
 function BoxFood({ card }: { card: Meal }) {
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const { addMeal, isLoading } = useBasket();
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,7 +27,6 @@ function BoxFood({ card }: { card: Meal }) {
                 </div>
             </div>
         </Link>
-
     );
 }
 

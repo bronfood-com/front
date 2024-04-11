@@ -40,7 +40,6 @@ function Restaurant() {
                 </RestaurantPopup>
                 <Outlet />
             </>
-
         );
     }
 }
