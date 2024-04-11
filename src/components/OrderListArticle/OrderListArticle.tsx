@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { OrderListItem } from '../OrderListItem/OrderListItem';
 import styles from './OrderListArticle.module.scss';
-import { OrderState } from '../../interfaces/OrderInterface';
+import { OrderState } from '../../utils/api/orderService/orderService';
+
 
 type OrderListArticleProps = {
     order: OrderState;

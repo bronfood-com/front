@@ -1,4 +1,4 @@
-import { OrderState } from '../../../interfaces/OrderInterface';
+import { OrderState } from "../orderService/orderService";
 
 const baseUrl = 'http://localhost:3001';
 
