@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
-import styles from './ConfirmPopup.module.scss';
 import { useTranslation } from 'react-i18next';
+import styles from './ConfirmPopup.module.scss';
 
 type ConfirmationPopupProps = {
     title: string;

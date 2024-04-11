@@ -1,22 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import YandexMap from './components/YandexMap/YandexMap';
 import './index.scss';
+import Basket from './pages/Basket/Basket';
 import Logout from './pages/Logout/Logout';
 import Main from './pages/Main/Main';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
+import PopupOrderCancelled from './pages/PopupOrderCancelled/PopupOrderCancelled';
 import Profile from './pages/Profile/Profile';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
-import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 import WaitingOrderPage from './pages/WaitingOrder/WaitingOrderPage';
-import PopupOrderCancelled from './pages/PopupOrderCancelled/PopupOrderCancelled';
+import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {
+    const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
@@ -29,8 +31,8 @@ function App() {
     }, [currentUser, navigate, pathname]);
     return (
         <div>
-            <Header />
-            <YandexMap />
+            <Header city={city} />
+            <YandexMap setCity={setCity}></YandexMap>
             <Routes>
                 <Route path="/waiting-order" element={<WaitingOrderPage />} />
                 <Route path="/popup-order-cancelled" element={<PopupOrderCancelled />} />
@@ -42,6 +44,7 @@ function App() {
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
                     <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />
                 </Route>
+                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
         </div>

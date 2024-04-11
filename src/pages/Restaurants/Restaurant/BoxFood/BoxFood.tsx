@@ -1,8 +1,15 @@
 import styles from './BoxFood.module.scss';
 import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
+import { FormEvent } from 'react';
 
 function BoxFood({ card }: { card: Meal }) {
+    const { addMeal, isLoading } = useBasket();
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        addMeal(card.id);
+    };
     return (
         <div className={`${styles.boxfood}`}>
             <div className={styles.boxfood__container}>
@@ -10,9 +17,9 @@ function BoxFood({ card }: { card: Meal }) {
                 <div className={styles.boxfood__description}>
                     <p className={styles.boxfood__name}>{card.name}</p>
                     <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
-                    <div className={styles.boxfood__button}>
-                        <Button type="button" icon="add" />
-                    </div>
+                    <form className={styles.boxfood__button} onSubmit={handleSubmit}>
+                        <Button type="submit" icon="add" isActive={isLoading} disabled={isLoading} />
+                    </form>
                 </div>
             </div>
         </div>
