@@ -1,13 +1,16 @@
 @import '../../../styles/variables.scss';
 
 .choice {
-    padding-bottom: 14px;
+    padding-bottom: 9px;
     border-bottom: 1px solid $line;
 
+    &_blur {
+        filter: opacity(20%)
+    }
     &__container {
         position: relative;
         display: flex;
-        gap: 17px;
+        gap: 10px;
     }
     &__image {
         width: 74px;
@@ -35,7 +38,7 @@
         font-size: 17px;
         font-weight: 500;
         line-height: 1.4;
-        color: $orange;
+        color: $light-gray;
     }
     &__counter {
         position: absolute;
