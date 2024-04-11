@@ -63,6 +63,19 @@ i18n
                             yourOrderWillBeReadySoon: 'Ваш заказ скоро будет готов',
                             yourOrderIsReady: 'Ваш заказ уже готов',
                         },
+
+                        waitingOrder: {
+                            orderCode: 'Код заказа',
+                            youCanCancelTheOrderWithin: 'Вы можете отменить заказ в течение ',
+                            minutes: 'минут',
+                            cancelOrder: 'Отменить заказ',
+                            pleaseWaitForTheOrderConfirmation: 'Ожидайте подтверждения заказа',
+                            preparationWillBeginUponConfirmation: 'Приготовление начнётся с момента подтверждения',
+                            pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
+                            theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
+                            anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
+                        },
+
                     },
                     pages: {
                         signIn: {
@@ -158,18 +171,6 @@ i18n
                             food: 'Еда',
                             drink: 'Напитки',
                             dessert: 'Десерты',
-                        },
-
-                        waitingOrderModal: {
-                            orderCode: 'Код заказа',
-                            youCanCancelTheOrderWithin: 'Вы можете отменить заказ в течение ',
-                            minutes: 'минут',
-                            cancelOrder: 'Отменить заказ',
-                            pleaseWaitForTheOrderConfirmation: 'Ожидайте подтверждения заказа',
-                            preparationWillBeginUponConfirmation: 'Приготовление начнётся с момента подтверждения',
-                            pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
-                            theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
-                            anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
                         },
                     },
                 },

@@ -13,6 +13,7 @@ import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/Confirm
 import { useOrderContext } from '../../utils/hooks/useOrderContext/useOrderContext';
 const portalRoot = document.getElementById('portal-root');
 
+
 const WaitingOrder: FC = () => {
     const WAIT_CODE_IN_SECONDS = 5 * 60; // секунды для ожидания кода заказа (запросить у бэка)
 
@@ -29,7 +30,7 @@ const WaitingOrder: FC = () => {
         showConfirmationPopup,
         setShowConfirmationPopup,
         cancelOrder,
-        setErrorMessage,
+        setErrorMessage
     } = useOrderContext();
 
     const handleCancelOrder = () => {
@@ -45,7 +46,7 @@ const WaitingOrder: FC = () => {
             setErrorMessage('error while canceling order');
         } finally {
             setShowConfirmationPopup(false);
-            navigate('/');
+            navigate('/popup-order-cancelled');
         }
     };
 
@@ -54,7 +55,7 @@ const WaitingOrder: FC = () => {
             <Modal>
                 {orderDetails ? (
                     <>
-                        <h2 className={styles.waitingOrder__title}>{t('pages.waitingOrderModal.orderCode')}</h2>
+                        <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
                         <h1 className={styles.waitingOrder__orderCode}>{orderDetails.id}</h1>
                         <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} />
                         <div className={styles.waitingOrder__separator} />
@@ -62,26 +63,26 @@ const WaitingOrder: FC = () => {
                         {cancellationCountdown > 0 && (
                             <div className={styles.waitingOrder__cancelSection}>
                                 <p className={styles.waitingOrder__subtitleNote}>
-                                    {t('pages.waitingOrderModal.youCanCancelTheOrderWithin')}
+                                    {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
                                         {formatTime(cancellationCountdown)}
-                                        {t('pages.waitingOrderModal.minutes')}
+                                        {t('components.waitingOrder.minutes')}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>
-                                    {t('pages.waitingOrderModal.cancelOrder')}
+                                    {t('components.waitingOrder.cancelOrder')}
                                 </button>
                             </div>
                         )}
                     </>
                 ) : (
                     <>
-                        <h2 className={styles.waitingOrder__title}>{t('pages.waitingOrderModal.pleaseWaitForTheOrderConfirmation')}</h2>
-                        <p className={styles.waitingOrder__subtitle}>{t('pages.waitingOrderModal.preparationWillBeginUponConfirmation')}</p>
+                        <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
+                        <p className={styles.waitingOrder__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
                         <img src={waitingImg} alt="waiting image" className={styles.waitingOrder__img} />
                         <div className={styles.waitingOrder__separator} />
                         <ProgressBar initialTime={WAIT_CODE_IN_SECONDS} currentTime={waitOrderCodeTime} />
-                        <p className={styles.waitingOrder__subtitleNote}>{t('pages.waitingOrderModal.pleaseWaitForTheOrderCode')}</p>
+                        <p className={styles.waitingOrder__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
                     </>
                 )}
             </Modal>

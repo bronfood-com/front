@@ -14,6 +14,7 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 import WaitingOrderPage from './pages/WaitingOrder/WaitingOrderPage';
+import PopupOrderCancelled from './pages/PopupOrderCancelled/PopupOrderCancelled';
 
 function App() {
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ function App() {
             <YandexMap />
             <Routes>
                 <Route path="/waiting-order" element={<WaitingOrderPage />} />
+                <Route path="/popup-order-cancelled" element={<PopupOrderCancelled />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
