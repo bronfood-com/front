@@ -32,7 +32,7 @@ const WaitingOrder: FC = () => {
             if (!orderDetails) return;
             await cancelOrder(orderDetails.id);
         } catch (error) {
-            setErrorMessage('error while canceling order');
+            setErrorMessage(t('components.waitingOrder.errorWhileCancellingTheOrder') as string);
         } finally {
             setShowConfirmationPopup(false);
             navigate('/popup-order-cancelled');

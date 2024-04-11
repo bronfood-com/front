@@ -1,3 +1,4 @@
+// link to contract: https://www.notion.so/API-Restaurant-Meal-Basket-Order-e7947e0efa5948238032620646f28890
 import { OrderState } from '../orderService/orderService';
 
 const baseUrl = 'http://localhost:3001';
@@ -5,7 +6,7 @@ const baseUrl = 'http://localhost:3001';
 async function fetchResponse<T>(url: string, options?: RequestInit): Promise<T> {
     const response = await fetch(url, options);
     if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
+        throw new Error(`Error ${response.status}`);
     }
     return response.json();
 }
@@ -33,7 +34,7 @@ export const fetchOrderDetailsByOrderId = async (id: string): Promise<OrderState
         const orders: OrderState[] = await fetchResponse<OrderState[]>(`${baseUrl}/orders?id=${id}`);
         return orders.length > 0 ? orders[0] : undefined;
     } catch (error) {
-        throw new Error('Ошибка при получении данных заказа');
+        throw new Error("Error receiving order data.");
     }
 };
 
@@ -52,6 +53,6 @@ export const cancelOrder = async (id: string): Promise<void> => {
             body: body,
         });
     } catch (error) {
-        throw new Error('Ошибка при отмене заказа:');
+        throw new Error("Error canceling the order.");
     }
 };

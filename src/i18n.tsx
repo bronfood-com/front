@@ -74,6 +74,9 @@ i18n
                             pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
                             theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
                             anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
+                            errorReceivingOrderData: 'Ошибка при получении данных о заказе',
+                            errorWhileCancellingTheOrder: 'Ошибка при отмене заказа',
+                            orderDoesNotExist: 'Заказ не существует',
                         },
                     },
                     pages: {

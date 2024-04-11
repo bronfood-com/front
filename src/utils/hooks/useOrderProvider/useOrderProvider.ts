@@ -3,8 +3,12 @@ import { OrderContextType } from '../../../contexts/OrderContext';
 import { cancelOrder, fetchOrderDetailsByOrderId, fetchOrderIdByClientId } from '../../api/orderApiRequests/orderApi';
 import { useTimers } from '../useTimer/useTimer';
 import { OrderState } from '../../api/orderService/orderService';
+import { useTranslation } from 'react-i18next';
 
 export const useOrderProvider = (clientId: string): OrderContextType => {
+
+    const { t } = useTranslation();
+
     const WAIT_CODE_IN_SECONDS = 5 * 60;
     const [orderDetails, setOrderDetails] = useState<OrderState | null>(null);
     const [preparationTime, setPreparationTime] = useState<number>(0);
@@ -30,13 +34,13 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
                     setCancellationCountdown(details.cancellationTime);
                 }
             } catch (error) {
-                setErrorMessage('Ошибка при получении данных заказа');
+                setErrorMessage(t('components.waitingOrder.errorReceivingOrderData') as string);
             } finally {
                 setIsLoading(false);
             }
         };
         fetchOrder();
-    }, [clientId]);
+    }, [clientId, t]);
 
     const handleCancelOrder = async () => {
         setIsLoading(true);
@@ -45,10 +49,10 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
                 await cancelOrder(orderDetails.id);
                 resetStates();
             } else {
-                setErrorMessage('ID заказа не установлен.');
+                setErrorMessage(t('components.waitingOrder.orderDoesNotExist') as string);
             }
         } catch (error) {
-            setErrorMessage('Ошибка при отмене заказа');
+            setErrorMessage(t('components.waitingOrder.errorWhileCancellingTheOrder') as string);
         } finally {
             setIsLoading(false);
         }
