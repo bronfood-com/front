@@ -5,10 +5,10 @@
       "id": "NHG347",
       "totalAmount": 4100,
       "confirmationStatus": "waiting",
-      "preparationTime": 3,
+      "preparationTime": 11,
       "paymentStatus": "paid",
       "reviewStatus": "waiting",
-      "cancellationTime": 3,
+      "cancellationTime": 120,
       "cancellationStatus": "requested",
       "isCancellationRequested": true,
       "orderDetails": [
