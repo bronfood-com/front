@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import styles from './SMSConfirm.module.scss';
 import Button from '../Button/Button';
 import { StatefulPinInput } from 'react-input-pin-code';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Preloader from '../Preloader/Preloader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -24,14 +24,9 @@ interface SMSConfirm {
      */
     isConfirmErrorVisible: boolean;
     /**
-     * Submit function
+     * Is called when the user submits the code.
      */
-    onSubmit: () => void;
-    /**
-     * Set code from inputs
-     */
-    getCode: (arg: string) => void;
-
+    onSubmit: (code: string) => void;
     /**
      * Open info sucessfull popup
      */
@@ -47,14 +42,15 @@ const SMSConfirm: FC<SMSConfirm> = (props) => {
     const { t } = useTranslation();
     const { handleSubmit } = useForm();
     const inputClassName = styles.confirmation__inputs;
+    const [SMScode, setSMSCode] = useState('');
 
     const onSubmit = () => {
-        props.onSubmit();
+        props.onSubmit(SMScode);
     };
 
     const handleCompleteCode = (values: string[]) => {
         const code = values.reduce((prev, current) => (prev += current));
-        props.getCode(code);
+        setSMSCode(code);
     };
 
     return (

@@ -29,7 +29,6 @@ const SignUp = () => {
         formState: { errors },
     } = useForm();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-    const [code, setCode] = useState('');
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,22 +42,19 @@ const SignUp = () => {
         setIsConfirmOpen(true);
     };
 
-    const getCode = (getCode: string) => {
-        setCode(getCode);
-    };
-
-    const confirm = async () => {
+    const confirm = async (code: string) => {
         const result = await confirmSignUp.mutation(code);
-        if (result !== null) {
+        if (!result) {
             setIsConfirmErrorVisible(true);
+        } else {
+            setIsInfoPopupOpen(true);
         }
-        setIsInfoPopupOpen(true);
     };
 
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} getCode={getCode} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
+                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}

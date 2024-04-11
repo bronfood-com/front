@@ -1,6 +1,6 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { authService, User } from '../utils/api/authService';
+import { authService, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
 
 type CurrentUserContent = {
@@ -12,7 +12,7 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     signUp: {
-        mutation: (data: FieldValues) => Promise<string | undefined>;
+        mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -22,17 +22,17 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     updateUser: {
-        mutation: (data: FieldValues) => Promise<string | undefined>;
+        mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
         errorMessage: string | null;
     };
     confirmSignUp: {
-        mutation: (data: string) => Promise<void>;
+        mutation: (data: string) => Promise<User | null>;
         isLoading: boolean;
         errorMessage: string | null;
     };
     confirmUpdateUser: {
-        mutation: (data: string) => Promise<void>;
+        mutation: (data: string) => Promise<UserExtra | null>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -62,12 +62,12 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         errorMessage: null,
     },
     confirmSignUp: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve<User | null>(null),
         isLoading: false,
         errorMessage: null,
     },
     confirmUpdateUser: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve<UserExtra | null>(null),
         isLoading: false,
         errorMessage: null,
     },
@@ -117,6 +117,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         if (res.status === 'error') {
             setUpdateUserErrorMessage(res.error_message);
             setIsLoading(false);
+            return null;
         } else {
             setIsLoading(false);
             setServerSMSCode(res.data.temp_data_code);
@@ -130,11 +131,13 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setConfirmErrorMessage(result.error_message);
             setCurrentUser(null);
             setIsLoading(false);
+            return null;
         } else {
             setCurrentUser(result.data);
             localStorage.setItem('user', JSON.stringify(result.data));
             setIsLoading(false);
             setServerSMSCode('');
+            return result.data;
         }
     };
 
@@ -152,6 +155,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 setUpdateUserErrorMessage(t(`pages.error.server`));
             }
             setIsLoading(false);
+            return null;
         } else {
             setIsLoading(false);
             return res.data.temp_data_code;
@@ -168,26 +172,24 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 setConfirmErrorMessage(t(`pages.error.server`));
             }
             setIsLoading(false);
+            return null;
         } else {
             const user = { phone: result.data.phone, fullname: result.data.fullname };
             setCurrentUser(user);
             localStorage.setItem('user', JSON.stringify(user));
             setIsLoading(false);
+            return result.data;
         }
     };
 
     const logout = useCallback(async () => {
         setLogoutErrorMessage(null);
         setIsLoading(true);
-        if (currentUser) {
-            await authService.logOut();
-            setCurrentUser(null);
-            localStorage.removeItem('user');
-            setIsLoading(false);
-        } else {
-            return;
-        }
-    }, [currentUser]);
+        await authService.logOut();
+        setCurrentUser(null);
+        localStorage.removeItem('user');
+        setIsLoading(false);
+    }, []);
 
     return (
         <CurrentUserContext.Provider
