@@ -24,16 +24,27 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
         const fetchOrder = async () => {
             setIsLoading(true);
             try {
-                const fetchedOrderId = await fetchOrderIdByClientId(clientId);
-                const details = fetchedOrderId && (await fetchOrderDetailsByOrderId(fetchedOrderId));
-                if (details) {
-                    setOrderDetails(details);
-                    setPreparationTime(details.preparationTime);
-                    setInitialPreparationTime(details.preparationTime);
-                    setCancellationCountdown(details.cancellationTime);
+                const orderIdResponse = await fetchOrderIdByClientId(clientId);
+                if (orderIdResponse.error || orderIdResponse.data === null) {
+                    setErrorMessage(orderIdResponse.error || t('components.waitingOrder.orderDoesNotExist'));
+                    setIsLoading(false);
+                    return;
                 }
+
+                const orderDetailsResponse = await fetchOrderDetailsByOrderId(orderIdResponse.data);
+                if (orderDetailsResponse.error || orderDetailsResponse.data === null) {
+                    setErrorMessage(orderDetailsResponse.error || t('components.waitingOrder.errorReceivingOrderData'));
+                    setIsLoading(false);
+                    return;
+                }
+
+                const details = orderDetailsResponse.data;
+                setOrderDetails(details);
+                setPreparationTime(details.preparationTime);
+                setInitialPreparationTime(details.preparationTime);
+                setCancellationCountdown(details.cancellationTime);
             } catch (error) {
-                setErrorMessage(t('components.waitingOrder.errorReceivingOrderData') as string);
+                setErrorMessage(t('components.waitingOrder.errorReceivingOrderData'));
             } finally {
                 setIsLoading(false);
             }
