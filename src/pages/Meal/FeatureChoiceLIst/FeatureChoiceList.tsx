@@ -1,5 +1,5 @@
-import FeatureChoice from "../FeatureChoice/FeatureChoice";
-import styles from './FeatureChoiceList.module.scss'
+import FeatureChoice from '../FeatureChoice/FeatureChoice';
+import styles from './FeatureChoiceList.module.scss';
 
 const FeatureChoiceList = ({ featureName, choices }) => {
     return (
@@ -11,5 +11,4 @@ const FeatureChoiceList = ({ featureName, choices }) => {
     );
 };
 
-export default FeatureChoiceList
-
+export default FeatureChoiceList;

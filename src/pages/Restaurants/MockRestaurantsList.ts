@@ -45,7 +45,7 @@ export const mockRestaurants: Restaurant[] = [
                                 name: 'Большой',
                                 price: 300,
                             },
-                        ]
+                        ],
                     },
                     {
                         id: '2',
@@ -66,9 +66,9 @@ export const mockRestaurants: Restaurant[] = [
                                 name: 'Кетчуп',
                                 price: 100,
                             },
-                        ]
+                        ],
                     },
-                ]
+                ],
             },
             {
                 id: uniqueId(),
@@ -145,7 +145,7 @@ export const mockRestaurants: Restaurant[] = [
                                 name: 'Большой',
                                 price: 300,
                             },
-                        ]
+                        ],
                     },
                     {
                         id: '2',
@@ -166,9 +166,9 @@ export const mockRestaurants: Restaurant[] = [
                                 name: 'Кетчуп',
                                 price: 100,
                             },
-                        ]
+                        ],
                     },
-                ]
+                ],
             },
         ],
         type: 'cafe',

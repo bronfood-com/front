@@ -13,6 +13,6 @@ const MealFeature = ({ feature }) => {
             </div>
         </div>
     );
-}
+};
 
 export default MealFeature;
