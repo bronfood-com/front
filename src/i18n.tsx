@@ -145,6 +145,10 @@ i18n
                             drink: 'Напитки',
                             dessert: 'Десерты',
                         },
+                        meal: {
+                            total: 'Итого:',
+                            add: 'Добавить',
+                        },
                         basket: {
                             basket: 'Корзина',
                             waitingTime: 'Время ожидания',
