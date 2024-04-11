@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.radioButton {
+    display: flex;
+    appearance: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: $button-grey;
+    border: 1px solid $line;
+}
+
+.radioButton:checked {
+    background-color: $orange;
+    background-image: url(../../vendor/images/icons/radioButton/check.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+

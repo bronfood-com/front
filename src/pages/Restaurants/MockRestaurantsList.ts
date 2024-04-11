@@ -25,20 +25,55 @@ export const mockRestaurants: Restaurant[] = [
                 price: 1350,
                 type: 'food',
                 waitingTime: 10,
+                features: [
+                    {
+                        id: '1',
+                        name: 'Размер',
+                        choices: [
+                            {
+                                id: '1',
+                                name: 'Маленький',
+                                price: 100,
+                            },
+                            {
+                                id: '2',
+                                name: 'Средний',
+                                price: 200,
+                            },
+                            {
+                                id: '3',
+                                name: 'Большой',
+                                price: 300,
+                            },
+                        ]
+                    },
+                    {
+                        id: '2',
+                        name: 'Соусы',
+                        choices: [
+                            {
+                                id: '1',
+                                name: 'Сырный',
+                                price: 100,
+                            },
+                            {
+                                id: '2',
+                                name: 'Чесночный',
+                                price: 100,
+                            },
+                            {
+                                id: '3',
+                                name: 'Кетчуп',
+                                price: 100,
+                            },
+                        ]
+                    },
+                ]
             },
             {
                 id: uniqueId(),
                 name: 'Говяжий донер',
                 description: 'Говядина',
-                photo: meal1,
-                price: 1350,
-                type: 'food',
-                waitingTime: 10,
-            },
-            {
-                id: uniqueId(),
-                name: 'Куриный донер',
-                description: 'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
@@ -71,15 +106,6 @@ export const mockRestaurants: Restaurant[] = [
                 type: 'dessert',
                 waitingTime: 5,
             },
-            {
-                id: uniqueId(),
-                name: 'Куриный донер',
-                description: 'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
-                photo: meal1,
-                price: 1350,
-                type: 'food',
-                waitingTime: 10,
-            },
         ],
         type: 'cafe',
     },
@@ -99,6 +125,50 @@ export const mockRestaurants: Restaurant[] = [
                 price: 1350,
                 type: 'food',
                 waitingTime: 10,
+                features: [
+                    {
+                        id: '1',
+                        name: 'Размер',
+                        choices: [
+                            {
+                                id: '1',
+                                name: 'Маленький',
+                                price: 100,
+                            },
+                            {
+                                id: '2',
+                                name: 'Средний',
+                                price: 200,
+                            },
+                            {
+                                id: '3',
+                                name: 'Большой',
+                                price: 300,
+                            },
+                        ]
+                    },
+                    {
+                        id: '2',
+                        name: 'Соусы',
+                        choices: [
+                            {
+                                id: '1',
+                                name: 'Сырный',
+                                price: 100,
+                            },
+                            {
+                                id: '2',
+                                name: 'Чесночный',
+                                price: 100,
+                            },
+                            {
+                                id: '3',
+                                name: 'Кетчуп',
+                                price: 100,
+                            },
+                        ]
+                    },
+                ]
             },
         ],
         type: 'cafe',

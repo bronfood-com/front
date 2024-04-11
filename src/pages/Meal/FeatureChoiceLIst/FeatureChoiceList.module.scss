@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+
+.choice_list {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}

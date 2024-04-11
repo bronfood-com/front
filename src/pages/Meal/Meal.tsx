@@ -4,6 +4,7 @@ import MealImage from './MealImage/MealImage';
 import MealDescription from './MealDescription/MealDescription';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import MealTotal from './MealTotal/MealTotal';
+import MealFeatureList from './MealFeatureList/MealFeatureList';
 
 function Meal() {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Meal() {
             <MealPopup goBack={goBack} close={close}>
                 <MealImage image={meal.photo} />
                 <MealDescription name={meal.name} description={meal.description} />
+                <MealFeatureList features={meal.features} />
                 <MealTotal price={200} />
             </MealPopup>
         );
