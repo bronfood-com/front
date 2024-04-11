@@ -13,7 +13,6 @@ import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/Confirm
 import { useOrderContext } from '../../utils/hooks/useOrderContext/useOrderContext';
 const portalRoot = document.getElementById('portal-root');
 
-
 const WaitingOrder: FC = () => {
     const WAIT_CODE_IN_SECONDS = 5 * 60; // секунды для ожидания кода заказа (запросить у бэка)
 
@@ -21,17 +20,7 @@ const WaitingOrder: FC = () => {
 
     const navigate = useNavigate();
 
-    const {
-        orderDetails,
-        preparationTime,
-        initialPreparationTime,
-        cancellationCountdown,
-        waitOrderCodeTime,
-        showConfirmationPopup,
-        setShowConfirmationPopup,
-        cancelOrder,
-        setErrorMessage
-    } = useOrderContext();
+    const { orderDetails, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder, setErrorMessage } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);

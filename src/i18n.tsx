@@ -75,7 +75,6 @@ i18n
                             theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
                             anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
                         },
-
                     },
                     pages: {
                         signIn: {
