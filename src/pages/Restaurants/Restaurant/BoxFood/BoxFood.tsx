@@ -13,7 +13,7 @@ function BoxFood({ card }: { card: Meal }) {
         if (!hasFeatures) {
             addMeal(card.id);
         } else {
-            navigate(`${pathname}/meal/${card.id}`)
+            navigate(`${pathname}/meal/${card.id}`);
         }
     };
     return (
