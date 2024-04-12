@@ -22,7 +22,7 @@ function Choice({ featureName, choice, container }) {
     );
 }
 
-function ChoiceList ({ featureName, choices, container }) {
+function ChoiceList({ featureName, choices, container }) {
     return (
         <fieldset className={styles.choice_list}>
             {choices.map((choice) => (
@@ -32,7 +32,7 @@ function ChoiceList ({ featureName, choices, container }) {
     );
 }
 
-function MealFeature ({ feature, container }) {
+function MealFeature({ feature, container }) {
     const { name, choices } = feature;
     return (
         <div className={styles.feature}>
