@@ -1,6 +1,40 @@
 import { RestaurantsServiceMock } from './restaurantsServiceMock';
 // import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
+export type Choice = {
+   /**
+     * Choice's id
+     */
+   id: string;
+   /**
+    * Choice's name
+    */
+   name: string;
+   /**
+    * Choice's price
+    */
+   price: number;
+   /**
+    * Is choice selected by default
+    */
+   default: boolean;
+}
+
+export type Feature = {
+    /**
+     * Feature's id
+     */
+    id: string;
+    /**
+     * Feature's name
+     */
+    name: string;
+    /**
+     * Feature's choices
+     */
+    choices: Choice[];
+}
+
 export type MealType = 'food' | 'drink' | 'dessert';
 
 export type Meal = {
@@ -28,6 +62,10 @@ export type Meal = {
      * Meal's cooking time in minutes
      */
     waitingTime: number;
+    /**
+     * Meal's additions
+     */
+    features: Feature[];
 };
 
 export type Restaurant = {
