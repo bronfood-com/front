@@ -13,7 +13,7 @@ function Meal() {
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsFiltered } = useRestaurants();
-    const {addMeal, isLoading} = useBasket();
+    const { addMeal, isLoading } = useBasket();
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal = restaurant.meals.find((meal) => meal.id === params.mealId);
     const goBack = () => {
@@ -38,7 +38,6 @@ function Meal() {
                     {isLoading && <Preloader />}
                 </MealPopup>
             </form>
-
         );
     }
 }

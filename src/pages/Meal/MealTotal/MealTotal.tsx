@@ -11,7 +11,7 @@ function MealTotal({ price }: { price: number }) {
                 <span className={styles.meal_total__price}>{`${price} ₸`}</span>
             </div>
             <div className={styles.meal_total__button}>
-                <Button type='submit'>{t(`pages.meal.add`)}</Button>
+                <Button type="submit">{t(`pages.meal.add`)}</Button>
             </div>
         </div>
     );
