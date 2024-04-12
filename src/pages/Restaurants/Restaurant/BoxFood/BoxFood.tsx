@@ -10,10 +10,11 @@ function BoxFood({ card }: { card: Meal }) {
     const { addMeal, isLoading } = useBasket();
     const hasFeatures = 'features' in card;
     const handleClick = () => {
-        if (!hasFeatures) {
-            addMeal(card.id);
-        } else {
+        if (hasFeatures) {
             navigate(`${pathname}/meal/${card.id}`);
+
+        } else {
+            addMeal(card.id);
         }
     };
     return (
