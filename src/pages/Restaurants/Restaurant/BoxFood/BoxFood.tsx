@@ -12,7 +12,6 @@ function BoxFood({ card }: { card: Meal }) {
     const handleClick = () => {
         if (hasFeatures) {
             navigate(`${pathname}/meal/${card.id}`);
-
         } else {
             addMeal(card.id);
         }
