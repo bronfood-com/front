@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import styles from './MealFeatureList.module.scss';
-import RadioButton from '../../../components/RadioButton/RadioButton';
+import { useFormContext } from 'react-hook-form';
 
 const MealFeatureList = ({ features }) => {
     const featuresContainer = useRef(null);
@@ -21,7 +21,7 @@ function MealFeature({ feature, container }) {
     return (
         <div className={styles.feature}>
             <p className={styles.feature__name}>{name}</p>
-            <ChoiceList featureName={feature.name} choices={choices} container={container} />
+            <ChoiceList featureName={name} choices={choices} container={container} />
         </div>
     );
 }
@@ -37,6 +37,7 @@ function ChoiceList({ featureName, choices, container }) {
 }
 
 function Choice({ featureName, choice, container }) {
+    const { register } = useFormContext();
     const choiceRef = useRef(null);
     const isInView = useInView(choiceRef, {
         amount: 'all',
@@ -45,7 +46,7 @@ function Choice({ featureName, choice, container }) {
     return (
         <div ref={choiceRef} className={`${styles.choice} ${!isInView && styles.choice_blur}`}>
             <div className={styles.choice__container}>
-                <RadioButton id={choice.id} value={choice.name} name={featureName} defaultChecked={choice.default} />
+                <input type="radio" id={choice.id} value={choice.name} name={featureName} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
                 <label htmlFor={choice.id} className={styles.choice__name}>
                     {choice.name}
                 </label>

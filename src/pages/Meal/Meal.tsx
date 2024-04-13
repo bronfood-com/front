@@ -1,5 +1,5 @@
-import { FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 import MealPopup from './MealPopup/MealPopup';
@@ -14,6 +14,7 @@ function Meal() {
     const params = useParams();
     const { restaurantsFiltered } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
+    const methods = useForm();
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal = restaurant.meals.find((meal) => meal.id === params.mealId);
     const goBack = () => {
@@ -22,22 +23,23 @@ function Meal() {
     const close = () => {
         navigate('/restaurants');
     };
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit: SubmitHandler<FieldValues> = async () => {
         await addMeal(meal.id);
         goBack();
     };
     if (meal) {
         return (
-            <form onSubmit={handleSubmit}>
-                <MealPopup goBack={goBack} close={close}>
-                    <MealImage image={meal.photo} />
-                    <MealDescription name={meal.name} description={meal.description} />
-                    <MealFeatureList features={meal.features} />
-                    <MealTotal price={200} />
-                    {isLoading && <Preloader />}
-                </MealPopup>
-            </form>
+            <FormProvider {...methods}>
+                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    <MealPopup goBack={goBack} close={close}>
+                        <MealImage image={meal.photo} />
+                        <MealDescription name={meal.name} description={meal.description} />
+                        <MealFeatureList features={meal.features} />
+                        <MealTotal price={200} />
+                        {isLoading && <Preloader />}
+                    </MealPopup>
+                </form>
+            </FormProvider>
         );
     }
 }

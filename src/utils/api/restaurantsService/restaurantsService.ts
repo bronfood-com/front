@@ -65,7 +65,7 @@ export type Meal = {
     /**
      * Meal's additions
      */
-    features: Feature[];
+    features?: Feature[];
 };
 
 export type Restaurant = {
