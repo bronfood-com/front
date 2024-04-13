@@ -6,6 +6,10 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price } = meal;
+    const mealPrice = 'features' in meal ? meal.features.reduce((acc, current) => {
+        const selectedChoice = current.choices.find((choice) => choice.default === true);
+        return acc + selectedChoice.price;
+    }, 0) : price;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
@@ -13,7 +17,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                 <div className={styles.basket_meal__image} style={{ backgroundImage: `url(${photo})` }} />
                 <div className={styles.basket_meal__description}>
                     <p className={styles.basket_meal__name}>{name}</p>
-                    <span className={styles.basket_meal__price}>{`${price.toFixed(0)} ₸`}</span>
+                    <span className={styles.basket_meal__price}>{`${mealPrice.toFixed(0)} ₸`}</span>
                 </div>
                 <div className={styles.basket_meal__counter}>
                     <Counter count={count} increment={() => addMeal(id)} decrement={() => deleteMeal(id)} />

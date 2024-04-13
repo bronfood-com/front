@@ -20,7 +20,7 @@ function Meal() {
     const { watch } = methods;
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal = restaurant.meals.find((meal) => meal.id === params.mealId);
-    const featuresPrice = features.reduce((acc, current) => {
+    const price = features.reduce((acc, current) => {
         const selectedChoice = current.choices.find((choice) => choice.default === true);
         return acc + selectedChoice.price;
     }, 0);
@@ -31,7 +31,7 @@ function Meal() {
         navigate('/restaurants');
     };
     const onSubmit: SubmitHandler<FieldValues> = async () => {
-        await addMeal(meal.id);
+        await addMeal(meal.id, features);
         goBack();
     };
     useEffect(() => {
@@ -63,7 +63,7 @@ function Meal() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={meal.features} />
-                        <MealTotal price={meal.price + featuresPrice} />
+                        <MealTotal price={price} />
                         {isLoading && <Preloader />}
                     </MealPopup>
                 </form>

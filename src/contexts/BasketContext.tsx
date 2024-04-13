@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
+import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
 
 type BasketContext = {
@@ -34,7 +34,7 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (mealId: string) => Promise<void>;
+    addMeal: (mealId: string, features?: Feature[]) => Promise<void>;
     /**
      * Delete meal from basket
      */
@@ -63,7 +63,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const price = meals.reduce((acc, current) => acc + current.meal.price * current.count, 0);
+    const price = meals.reduce((acc, current) => {
+        if ('features' in current.meal) {
+            return current.count *
+            current.meal.features.reduce((ac, curr) => {
+                const selectedChoice = curr.choices.find((choice) => choice.default === true);
+                return ac + selectedChoice.price;
+            }, 0)
+        } else return current.count * current.meal.price
+    }, 0);
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
@@ -76,9 +84,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals(meals);
         }
     };
-    const addMeal = async (mealId: string) => {
+    const addMeal = async (mealId: string, features: Feature[]) => {
         setIsLoading(true);
-        const basket = await basketService.addMeal(mealId);
+        const basket = await basketService.addMeal(mealId, features);
         setIsLoading(false);
         handleServerResponse(basket);
     };
