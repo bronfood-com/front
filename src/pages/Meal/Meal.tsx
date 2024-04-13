@@ -25,7 +25,7 @@ function Meal() {
         const selectedChoice = current.choices.find((choice) => choice.default === true);
         if (selectedChoice) {
             return acc + selectedChoice.price;
-        } else return acc
+        } else return acc;
     }, 0);
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);

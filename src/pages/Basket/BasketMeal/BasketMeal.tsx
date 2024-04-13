@@ -8,11 +8,11 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { id, name, photo, price } = meal;
     const mealPrice = meal.features
         ? meal.features.reduce((acc, current) => {
-                const selectedChoice = current.choices.find((choice) => choice.default === true);
-                if (selectedChoice) {
-                    return acc + selectedChoice.price;
-                } else return acc
-            }, 0)
+              const selectedChoice = current.choices.find((choice) => choice.default === true);
+              if (selectedChoice) {
+                  return acc + selectedChoice.price;
+              } else return acc;
+          }, 0)
         : price;
     const { addMeal, deleteMeal } = useBasket();
     return (

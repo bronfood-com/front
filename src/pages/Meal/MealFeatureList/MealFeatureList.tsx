@@ -4,7 +4,7 @@ import styles from './MealFeatureList.module.scss';
 import { useFormContext } from 'react-hook-form';
 import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsService/restaurantsService';
 
-const MealFeatureList = ({ features }: {features: Feature[]}) => {
+const MealFeatureList = ({ features }: { features: Feature[] }) => {
     const featuresContainer = useRef(null);
     return (
         <ul ref={featuresContainer} className={styles.feature_list}>
@@ -17,7 +17,7 @@ const MealFeatureList = ({ features }: {features: Feature[]}) => {
     );
 };
 
-function MealFeature({ feature, container }: {feature: Feature, container: RefObject<Element>}) {
+function MealFeature({ feature, container }: { feature: Feature; container: RefObject<Element> }) {
     const { name, choices } = feature;
     return (
         <div className={styles.feature}>
@@ -27,7 +27,7 @@ function MealFeature({ feature, container }: {feature: Feature, container: RefOb
     );
 }
 
-function ChoiceList({ featureName, choices, container }: {featureName: string, choices: ChoiceType[], container: RefObject<Element>}) {
+function ChoiceList({ featureName, choices, container }: { featureName: string; choices: ChoiceType[]; container: RefObject<Element> }) {
     return (
         <fieldset className={styles.choice_list}>
             {choices.map((choice) => (
@@ -37,7 +37,7 @@ function ChoiceList({ featureName, choices, container }: {featureName: string, c
     );
 }
 
-function Choice({ featureName, choice, container }: {featureName: string, choice: ChoiceType, container: RefObject<Element>}) {
+function Choice({ featureName, choice, container }: { featureName: string; choice: ChoiceType; container: RefObject<Element> }) {
     const { register } = useFormContext();
     const choiceRef = useRef(null);
     const isInView = useInView(choiceRef, {

@@ -66,14 +66,14 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const price = meals.reduce((acc, current) => {
         if (current.meal.features) {
             return (
-                acc + current.count *
-                current.meal.features.reduce((ac, curr) => {
-                    const selectedChoice = curr.choices.find((choice) => choice.default === true);
-                    if (selectedChoice) {
-                        return ac + selectedChoice.price;
-                    } else return ac
-
-                }, 0)
+                acc +
+                current.count *
+                    current.meal.features.reduce((ac, curr) => {
+                        const selectedChoice = curr.choices.find((choice) => choice.default === true);
+                        if (selectedChoice) {
+                            return ac + selectedChoice.price;
+                        } else return ac;
+                    }, 0)
             );
         } else return acc + current.count * current.meal.price;
     }, 0);
