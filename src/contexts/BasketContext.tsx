@@ -65,12 +65,14 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => {
         if ('features' in current.meal) {
-            return current.count *
-            current.meal.features.reduce((ac, curr) => {
-                const selectedChoice = curr.choices.find((choice) => choice.default === true);
-                return ac + selectedChoice.price;
-            }, 0)
-        } else return current.count * current.meal.price
+            return (
+                current.count *
+                current.meal.features.reduce((ac, curr) => {
+                    const selectedChoice = curr.choices.find((choice) => choice.default === true);
+                    return ac + selectedChoice.price;
+                }, 0)
+            );
+        } else return current.count * current.meal.price;
     }, 0);
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
