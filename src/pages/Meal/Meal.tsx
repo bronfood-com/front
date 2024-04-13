@@ -9,20 +9,23 @@ import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { useEffect, useState } from 'react';
+import { Feature, Meal as MealType, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 function Meal() {
-    const [features, setFeatures] = useState([]);
+    const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsFiltered } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
-    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
-    const meal = restaurant.meals.find((meal) => meal.id === params.mealId);
-    const price = features.reduce((acc, current) => {
+    const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    const meal: MealType | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
+    const price = features.reduce((acc, current: Feature) => {
         const selectedChoice = current.choices.find((choice) => choice.default === true);
-        return acc + selectedChoice.price;
+        if (selectedChoice) {
+            return acc + selectedChoice.price;
+        } else return acc
     }, 0);
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
@@ -30,13 +33,9 @@ function Meal() {
     const close = () => {
         navigate('/restaurants');
     };
-    const onSubmit: SubmitHandler<FieldValues> = async () => {
-        await addMeal(meal.id, features);
-        goBack();
-    };
     useEffect(() => {
         const formValues = watch((value, { name }) => {
-            const nextFeatures = features.map((feature) => {
+            const nextFeatures = features.map((feature: Feature) => {
                 if (feature.name === name) {
                     const choices = feature.choices.map((choice) => {
                         if (choice.name === value[name]) {
@@ -52,10 +51,16 @@ function Meal() {
     }, [watch, features]);
 
     useEffect(() => {
-        setFeatures(meal.features);
+        if (meal?.features) {
+            setFeatures(meal.features);
+        }
     }, [meal]);
 
-    if (meal) {
+    if (meal && meal.features) {
+        const onSubmit: SubmitHandler<FieldValues> = async () => {
+            await addMeal(meal.id, features);
+            goBack();
+        };
         return (
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>

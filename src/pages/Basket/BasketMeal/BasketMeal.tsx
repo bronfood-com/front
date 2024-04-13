@@ -6,13 +6,14 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price } = meal;
-    const mealPrice =
-        'features' in meal
-            ? meal.features.reduce((acc, current) => {
-                  const selectedChoice = current.choices.find((choice) => choice.default === true);
-                  return acc + selectedChoice.price;
-              }, 0)
-            : price;
+    const mealPrice = meal.features
+        ? meal.features.reduce((acc, current) => {
+                const selectedChoice = current.choices.find((choice) => choice.default === true);
+                if (selectedChoice) {
+                    return acc + selectedChoice.price;
+                } else return acc
+            }, 0)
+        : price;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>

@@ -64,15 +64,18 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => {
-        if ('features' in current.meal) {
+        if (current.meal.features) {
             return (
-                current.count *
+                acc + current.count *
                 current.meal.features.reduce((ac, curr) => {
                     const selectedChoice = curr.choices.find((choice) => choice.default === true);
-                    return ac + selectedChoice.price;
+                    if (selectedChoice) {
+                        return ac + selectedChoice.price;
+                    } else return ac
+
                 }, 0)
             );
-        } else return current.count * current.meal.price;
+        } else return acc + current.count * current.meal.price;
     }, 0);
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
@@ -86,7 +89,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals(meals);
         }
     };
-    const addMeal = async (mealId: string, features: Feature[]) => {
+    const addMeal = async (mealId: string, features?: Feature[]) => {
         setIsLoading(true);
         const basket = await basketService.addMeal(mealId, features);
         setIsLoading(false);

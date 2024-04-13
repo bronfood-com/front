@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { RefObject, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import styles from './MealFeatureList.module.scss';
 import { useFormContext } from 'react-hook-form';
+import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsService/restaurantsService';
 
-const MealFeatureList = ({ features }) => {
+const MealFeatureList = ({ features }: {features: Feature[]}) => {
     const featuresContainer = useRef(null);
     return (
         <ul ref={featuresContainer} className={styles.feature_list}>
@@ -16,7 +17,7 @@ const MealFeatureList = ({ features }) => {
     );
 };
 
-function MealFeature({ feature, container }) {
+function MealFeature({ feature, container }: {feature: Feature, container: RefObject<Element>}) {
     const { name, choices } = feature;
     return (
         <div className={styles.feature}>
@@ -26,7 +27,7 @@ function MealFeature({ feature, container }) {
     );
 }
 
-function ChoiceList({ featureName, choices, container }) {
+function ChoiceList({ featureName, choices, container }: {featureName: string, choices: ChoiceType[], container: RefObject<Element>}) {
     return (
         <fieldset className={styles.choice_list}>
             {choices.map((choice) => (
@@ -36,7 +37,7 @@ function ChoiceList({ featureName, choices, container }) {
     );
 }
 
-function Choice({ featureName, choice, container }) {
+function Choice({ featureName, choice, container }: {featureName: string, choice: ChoiceType, container: RefObject<Element>}) {
     const { register } = useFormContext();
     const choiceRef = useRef(null);
     const isInView = useInView(choiceRef, {
@@ -46,7 +47,7 @@ function Choice({ featureName, choice, container }) {
     return (
         <div ref={choiceRef} className={`${styles.choice} ${!isInView && styles.choice_blur}`}>
             <div className={styles.choice__container}>
-                <input type="radio" id={choice.id} value={choice.name} name={featureName} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
+                <input type="radio" id={choice.id} value={choice.name} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
                 <label htmlFor={choice.id} className={styles.choice__name}>
                     {choice.name}
                 </label>

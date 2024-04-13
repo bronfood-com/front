@@ -24,13 +24,13 @@ export class BasketServiceMock implements BasketService {
             this.basket.restaurant = restaurantFound;
             this.basket.meals =
                 this.basket.meals.length === 0 || hasRestaurantChanged
-                    ? [{ meal: { ...mealFound, features }, count: 1 }]
+                    ? [{ meal: {...mealFound, features}, count: 1 }]
                     : this.basket.meals.some(({ meal }) => meal.id === mealFound.id)
                       ? this.basket.meals.map(({ meal, count }) => {
                             if (meal.id === mealFound.id) {
                                 if (features) {
-                                    return { meal: { ...meal, features }, count: count + 1 };
-                                } else return { meal, count: count + 1 };
+                                    return { meal: {...meal, features}, count: count + 1 }
+                                } else return { meal, count: count + 1 }
                             } else {
                                 return { meal, count };
                             }

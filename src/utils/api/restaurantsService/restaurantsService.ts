@@ -47,6 +47,10 @@ export type Meal = {
      */
     name: string;
     /**
+     * Meal's description
+     */
+    description: string;
+    /**
      * Link to meal's image
      */
     photo: string;
