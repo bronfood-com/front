@@ -17,12 +17,12 @@ function Meal() {
     const { restaurantsFiltered } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
-    const {watch} = methods;
+    const { watch } = methods;
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal = restaurant.meals.find((meal) => meal.id === params.mealId);
     const featuresPrice = features.reduce((acc, current) => {
         const selectedChoice = current.choices.find((choice) => choice.default === true);
-        return acc + selectedChoice.price
+        return acc + selectedChoice.price;
     }, 0);
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
@@ -40,19 +40,19 @@ function Meal() {
                 if (feature.name === name) {
                     const choices = feature.choices.map((choice) => {
                         if (choice.name === value[name]) {
-                            return {...choice, default: true }
-                        } else return {...choice, default: false }
-                    })
-                    return {...feature, choices}
-                } else return feature
+                            return { ...choice, default: true };
+                        } else return { ...choice, default: false };
+                    });
+                    return { ...feature, choices };
+                } else return feature;
             });
             setFeatures(nextFeatures);
-        })
-        return () => formValues.unsubscribe()
+        });
+        return () => formValues.unsubscribe();
     }, [watch, features]);
 
     useEffect(() => {
-        setFeatures(meal.features)
+        setFeatures(meal.features);
     }, [meal]);
 
     if (meal) {
