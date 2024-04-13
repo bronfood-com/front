@@ -1,7 +1,7 @@
 import { RefObject, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useInView } from 'framer-motion';
 import styles from './MealFeatureList.module.scss';
-import { useFormContext } from 'react-hook-form';
 import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsService/restaurantsService';
 
 const MealFeatureList = ({ features }: { features: Feature[] }) => {

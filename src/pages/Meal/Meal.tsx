@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
@@ -8,7 +9,6 @@ import MealDescription from './MealDescription/MealDescription';
 import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
-import { useEffect, useState } from 'react';
 import { Feature, Meal as MealType, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
 function Meal() {
