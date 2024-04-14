@@ -18,18 +18,22 @@ export class BasketServiceMock implements BasketService {
                 return restaurant;
             }
         });
-        const idPostfix = features && features.map((feature) => {
-            const choice = feature.choices.find(choice => choice.default === true);
-            if (choice) {
-                return choice.name
-            }
-        }).toString();
+        const idPostfix =
+            features &&
+            features
+                .map((feature) => {
+                    const choice = feature.choices.find((choice) => choice.default === true);
+                    if (choice) {
+                        return choice.name;
+                    }
+                })
+                .toString();
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
         const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId || meal.id === mealId + idPostfix);
         const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
         if (mealFoundInBasket) {
             if (JSON.stringify(mealFoundInBasket?.meal.features) !== JSON.stringify(features)) {
-                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInBasket.meal, features, id: mealFoundInBasket.meal.id + idPostfix }, count: 1 }]
+                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInBasket.meal, features, id: mealFoundInBasket.meal.id + idPostfix }, count: 1 }];
             } else {
                 this.basket.meals = this.basket.meals.map(({ meal, count }) => {
                     if (meal.id === mealId || meal.id === mealId + idPostfix) {
@@ -44,12 +48,12 @@ export class BasketServiceMock implements BasketService {
             if (this.basket.meals.length === 0 || hasRestaurantChanged) {
                 this.basket.restaurant = restaurantFound;
                 if (features) {
-                    this.basket.meals = [{ meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id + idPostfix  }, count: 1 }]
+                    this.basket.meals = [{ meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id + idPostfix }, count: 1 }];
                 } else {
-                    this.basket.meals = [{ meal: mealFoundInRestaurants, count: 1 }]
+                    this.basket.meals = [{ meal: mealFoundInRestaurants, count: 1 }];
                 }
             } else {
-                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id + idPostfix }, count: 1 }]
+                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id + idPostfix }, count: 1 }];
             }
             return { status: 'success', data: this.basket };
         } else {
