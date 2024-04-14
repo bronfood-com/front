@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash';
 import { BasketService, Basket } from './basketService';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
@@ -19,23 +20,38 @@ export class BasketServiceMock implements BasketService {
             }
         });
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
-        const mealFound = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
-        if (mealFound) {
+        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId);
+        const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
+        const isMealFeaturesDifferent = mealFoundInRestaurants?.features !== features || mealFoundInBasket?.features !== features;
+        if (mealFoundInBasket) {
+            this.basket.meals = this.basket.meals.map(({ meal, count }) => {
+                if (meal.id === mealId && isMealFeaturesDifferent) {
+                    return { meal: { ...meal, features, id: uniqueId() }, count: count + 1 };
+                } else if (meal.id === mealId && !isMealFeaturesDifferent) {
+                    return { meal: { ...meal, id: uniqueId() }, count: count + 1 };
+                } else {
+                    return { meal, count };
+                }
+            });
+            return { status: 'success', data: this.basket };
+        } else if (mealFoundInRestaurants) {
             this.basket.restaurant = restaurantFound;
             this.basket.meals =
                 this.basket.meals.length === 0 || hasRestaurantChanged
-                    ? [{ meal: { ...mealFound, features }, count: 1 }]
-                    : this.basket.meals.some(({ meal }) => meal.id === mealFound.id)
+                    ? [{ meal: { ...mealFoundInRestaurants, features, id: uniqueId() }, count: 1 }]
+                    : this.basket.meals.some(({ meal }) => meal.id === mealId) && !isMealFeaturesDifferent
                       ? this.basket.meals.map(({ meal, count }) => {
-                            if (meal.id === mealFound.id) {
+                            if (meal.id === mealId) {
                                 if (features) {
-                                    return { meal: { ...meal, features }, count: count + 1 };
-                                } else return { meal, count: count + 1 };
+                                    return { meal: { ...meal, features, id: uniqueId() }, count: count + 1 };
+                                } else {
+                                    return { meal: { ...meal, id: uniqueId() }, count: count + 1 };
+                                }
                             } else {
                                 return { meal, count };
                             }
                         })
-                      : [...this.basket.meals, { meal: mealFound, count: 1 }];
+                      : [...this.basket.meals, { meal: { ...mealFoundInRestaurants, features, id: uniqueId() }, count: 1 }];
             return { status: 'success', data: this.basket };
         } else {
             return { status: 'error', error_message: 'serverError' };
@@ -43,8 +59,8 @@ export class BasketServiceMock implements BasketService {
     }
     async deleteMeal(mealId: string): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(500);
-        const mealFound = this.basket.meals.find(({ meal }) => meal.id === mealId);
-        if (mealFound && mealFound.count > 1) {
+        const mealFoundInRestaurants = this.basket.meals.find(({ meal }) => meal.id === mealId);
+        if (mealFoundInRestaurants && mealFoundInRestaurants.count > 1) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
                 if (meal.id === mealId) {
                     return { meal, count: count - 1 };
@@ -53,7 +69,7 @@ export class BasketServiceMock implements BasketService {
                 }
             });
             return { status: 'success', data: this.basket };
-        } else if (mealFound && mealFound.count === 1) {
+        } else if (mealFoundInRestaurants && mealFoundInRestaurants.count === 1) {
             this.basket.meals = this.basket.meals.filter(({ meal }) => meal.id !== mealId);
             return { status: 'success', data: this.basket };
         } else {
