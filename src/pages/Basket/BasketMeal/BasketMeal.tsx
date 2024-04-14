@@ -21,10 +21,10 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
         } else {
             addMeal(id);
         }
-    }
+    };
     const handleDecrement = () => {
         deleteMeal(id);
-    }
+    };
     return (
         <div className={`${styles.basket_meal}`}>
             <div className={styles.basket_meal__container}>
