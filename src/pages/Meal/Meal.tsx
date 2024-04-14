@@ -68,7 +68,7 @@ function Meal() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={meal.features} />
-                        <MealTotal price={price} />
+                        <MealTotal price={price} buttonDisabled={isLoading} />
                         {isLoading && <Preloader />}
                     </MealPopup>
                 </form>
