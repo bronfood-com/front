@@ -15,6 +15,16 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
           }, 0)
         : price;
     const { addMeal, deleteMeal } = useBasket();
+    const handleIncrement = () => {
+        if (meal.features) {
+            addMeal(id, meal.features);
+        } else {
+            addMeal(id);
+        }
+    }
+    const handleDecrement = () => {
+        deleteMeal(id);
+    }
     return (
         <div className={`${styles.basket_meal}`}>
             <div className={styles.basket_meal__container}>
@@ -24,7 +34,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     <span className={styles.basket_meal__price}>{`${mealPrice.toFixed(0)} ₸`}</span>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal(id)} decrement={() => deleteMeal(id)} />
+                    <Counter count={count} increment={handleIncrement} decrement={handleDecrement} />
                 </div>
             </div>
         </div>

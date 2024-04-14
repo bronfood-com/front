@@ -22,12 +22,11 @@ export class BasketServiceMock implements BasketService {
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
         const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId);
         const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
-        const isMealFeaturesDifferent = mealFoundInRestaurants?.features !== features || mealFoundInBasket?.meal.features !== features;
         if (mealFoundInBasket) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
-                if (meal.id === mealId && isMealFeaturesDifferent) {
+                if (meal.id === mealId && mealFoundInBasket?.meal.features !== features) {
                     return { meal: { ...meal, features, id: uniqueId() }, count: count + 1 };
-                } else if (meal.id === mealId && !isMealFeaturesDifferent) {
+                } else if (meal.id === mealId && mealFoundInBasket?.meal.features === features) {
                     return { meal: { ...meal, id: uniqueId() }, count: count + 1 };
                 } else {
                     return { meal, count };
@@ -39,7 +38,7 @@ export class BasketServiceMock implements BasketService {
             this.basket.meals =
                 this.basket.meals.length === 0 || hasRestaurantChanged
                     ? [{ meal: { ...mealFoundInRestaurants, features, id: uniqueId() }, count: 1 }]
-                    : this.basket.meals.some(({ meal }) => meal.id === mealId) && !isMealFeaturesDifferent
+                    : this.basket.meals.some(({ meal }) => meal.id === mealId) && mealFoundInRestaurants?.features !== features
                       ? this.basket.meals.map(({ meal, count }) => {
                             if (meal.id === mealId) {
                                 if (features) {
