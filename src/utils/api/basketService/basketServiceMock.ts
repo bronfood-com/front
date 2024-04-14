@@ -22,7 +22,7 @@ export class BasketServiceMock implements BasketService {
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
         const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId);
         const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
-        const isMealFeaturesDifferent = mealFoundInRestaurants?.features !== features || mealFoundInBasket?.features !== features;
+        const isMealFeaturesDifferent = mealFoundInRestaurants?.features !== features || mealFoundInBasket?.meal.features !== features;
         if (mealFoundInBasket) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
                 if (meal.id === mealId && isMealFeaturesDifferent) {
