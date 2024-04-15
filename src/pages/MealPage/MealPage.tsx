@@ -10,6 +10,7 @@ import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
+import { sumBy } from 'lodash';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
@@ -21,12 +22,7 @@ function MealPage() {
     const { watch } = methods;
     const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
-    const price = features.reduce((acc, current: Feature) => {
-        const selectedChoice = current.choices.find((choice) => choice.default);
-        if (selectedChoice) {
-            return acc + selectedChoice.price;
-        } else return acc;
-    }, 0);
+    const price = sumBy(features, feature => feature.choices.filter(choice => choice.default)[0].price);
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
     };
