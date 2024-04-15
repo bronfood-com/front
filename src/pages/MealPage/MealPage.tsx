@@ -9,9 +9,9 @@ import MealDescription from './MealDescription/MealDescription';
 import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
-import { Feature, Meal as MealType, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
+import { Feature, Meal, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 
-function Meal() {
+function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
@@ -20,9 +20,9 @@ function Meal() {
     const methods = useForm();
     const { watch } = methods;
     const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
-    const meal: MealType | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
+    const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
     const price = features.reduce((acc, current: Feature) => {
-        const selectedChoice = current.choices.find((choice) => choice.default === true);
+        const selectedChoice = current.choices.find((choice) => choice.default);
         if (selectedChoice) {
             return acc + selectedChoice.price;
         } else return acc;
@@ -77,4 +77,4 @@ function Meal() {
     }
 }
 
-export default Meal;
+export default MealPage;
