@@ -22,7 +22,7 @@ function MealPage() {
     const { watch } = methods;
     const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
-    const price = sumBy(features, feature => feature.choices.filter(choice => choice.default)[0].price);
+    const price = sumBy(features, (feature) => feature.choices.filter((choice) => choice.default)[0].price);
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
     };
