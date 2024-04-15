@@ -77,9 +77,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                         }
                     }, 0)
             );
-        } else {
-            return acc + current.count * current.meal.price;
         }
+        return acc + current.count * current.meal.price;
     }, 0);
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
