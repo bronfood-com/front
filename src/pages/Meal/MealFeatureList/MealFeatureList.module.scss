@@ -44,6 +44,7 @@
         position: relative;
         display: flex;
         gap: 10px;
+        cursor: pointer;
     }
     &__image {
         width: 74px;
@@ -90,6 +91,7 @@
     height: 25px;
     background-color: $button-grey;
     border: 1px solid $line;
+    cursor: pointer;
 }
 
 .radioButton:checked {

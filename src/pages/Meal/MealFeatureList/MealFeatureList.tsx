@@ -29,7 +29,7 @@ function MealFeature({ feature, container }: { feature: Feature; container: RefO
 
 function ChoiceList({ featureName, choices, container }: { featureName: string; choices: ChoiceType[]; container: RefObject<Element> }) {
     return (
-        <fieldset className={styles.choice_list}>
+        <fieldset name={featureName} className={styles.choice_list}>
             {choices.map((choice) => (
                 <Choice key={choice.id} featureName={featureName} choice={choice} container={container} />
             ))}
@@ -46,13 +46,11 @@ function Choice({ featureName, choice, container }: { featureName: string; choic
     });
     return (
         <div ref={choiceRef} className={`${styles.choice} ${!isInView && styles.choice_blur}`}>
-            <div className={styles.choice__container}>
-                <input type="radio" id={choice.id} value={choice.name} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
-                <label htmlFor={choice.id} className={styles.choice__name}>
-                    {choice.name}
-                </label>
+            <label className={styles.choice__container}>
+                <input type="radio" value={choice.name} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
+                <span className={styles.choice__name}>{choice.name}</span>
                 <span className={styles.choice__price}>{`${choice.price.toFixed(0)} ₸`}</span>
-            </div>
+            </label>
         </div>
     );
 }
