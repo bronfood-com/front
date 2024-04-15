@@ -63,13 +63,13 @@ export const mockRestaurants: Restaurant[] = [
                             {
                                 id: '2',
                                 name: 'Чесночный',
-                                price: 100,
+                                price: 200,
                                 default: false,
                             },
                             {
                                 id: '3',
                                 name: 'Сырный',
-                                price: 100,
+                                price: 300,
                                 default: false,
                             },
                         ],
@@ -169,13 +169,13 @@ export const mockRestaurants: Restaurant[] = [
                             {
                                 id: '2',
                                 name: 'Чесночный',
-                                price: 100,
+                                price: 200,
                                 default: false,
                             },
                             {
                                 id: '3',
                                 name: 'Сырный',
-                                price: 100,
+                                price: 300,
                                 default: false,
                             },
                         ],
