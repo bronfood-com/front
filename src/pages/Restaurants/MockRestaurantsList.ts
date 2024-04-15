@@ -74,6 +74,42 @@ export const mockRestaurants: Restaurant[] = [
                             },
                         ],
                     },
+                    {
+                        id: '3',
+                        name: 'Овощи',
+                        choices: [
+                            {
+                                id: '1',
+                                name: 'Томаты',
+                                price: 100,
+                                default: true,
+                            },
+                            {
+                                id: '2',
+                                name: 'Огурцы',
+                                price: 200,
+                                default: false,
+                            },
+                            {
+                                id: '3',
+                                name: 'Оливки',
+                                price: 300,
+                                default: false,
+                            },
+                            {
+                                id: '4',
+                                name: 'Маринованные огурцы',
+                                price: 400,
+                                default: false,
+                            },
+                            {
+                                id: '5',
+                                name: 'Зелень',
+                                price: 500,
+                                default: false,
+                            },
+                        ],
+                    },
                 ],
             },
             {
