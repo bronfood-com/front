@@ -37,8 +37,8 @@ const Profile = () => {
         const result = await updateUser.mutation({
             phone: data.phoneNumber,
             fullname: data.username,
-            password: data.newPassword,
-            confirmPassword: data.newPasswordConfirm,
+            password: data.newPassword || null,
+            confirmPassword: data.newPasswordConfirm || null,
         });
         if (result !== null) {
             setIsErrorVisible(true);
@@ -85,8 +85,8 @@ const Profile = () => {
                         <FormInputs>
                             <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
                             <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} />
-                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} />
+                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
+                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
                         </FormInputs>
                         <div className={styles.profile__button_space}></div>
                         <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>

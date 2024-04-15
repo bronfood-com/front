@@ -18,8 +18,8 @@ export interface RegisterData {
 export interface UpdateUser {
     fullname: string;
     phone: PhoneNumber;
-    password: string;
-    confirmPassword: string;
+    password?: string;
+    confirmPassword?: string;
 }
 /*
  temp_data_code: Temporary code that the server assign to the user in db during registration

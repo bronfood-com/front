@@ -54,13 +54,17 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone, password, confirmPassword}: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+        let requestData: UpdateUser = { fullname, phone };
+        if (password && confirmPassword) {
+            requestData = { ...requestData, password, confirmPassword };
+        }
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body: JSON.stringify({ fullname, phone, password, confirmPassword }),
+            body: JSON.stringify(requestData),
         });
 
         const result = await res.json();
