@@ -28,6 +28,10 @@ interface InputPassword {
      * Custom validation function
      */
     validate?: (value: FieldValues) => string | boolean;
+    /**
+     * Input required: True/False
+     */
+    required?: boolean;
 }
 
 const InputPassword: FC<InputPassword> = (props) => {
@@ -49,7 +53,7 @@ const InputPassword: FC<InputPassword> = (props) => {
                 type={isPasswordInvisible ? 'password' : 'text'}
                 placeholder={isPasswordInvisible ? '******' : '123456'}
                 {...props.register(props.name, {
-                    required: t('components.inputPassword.required'),
+                    required: props.required && t('components.inputPassword.required'),
                     pattern: {
                         value: regexPassword,
                         message: t('components.inputPassword.errorMessage'),

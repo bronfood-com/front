@@ -1,6 +1,6 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { authService, User } from '../utils/api/authService';
+import { authService, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
 
 type CurrentUserContent = {
@@ -12,7 +12,7 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     signUp: {
-        mutation: (data: FieldValues) => Promise<void>;
+        mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -22,7 +22,17 @@ type CurrentUserContent = {
         errorMessage: string | null;
     };
     updateUser: {
-        mutation: (data: FieldValues) => Promise<void>;
+        mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
+    confirmSignUp: {
+        mutation: (data: string) => Promise<User | null>;
+        isLoading: boolean;
+        errorMessage: string | null;
+    };
+    confirmUpdateUser: {
+        mutation: (data: string) => Promise<UserExtra | null>;
         isLoading: boolean;
         errorMessage: string | null;
     };
@@ -37,7 +47,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         errorMessage: null,
     },
     signUp: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve(''),
         isLoading: false,
         errorMessage: null,
     },
@@ -47,7 +57,17 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         errorMessage: null,
     },
     updateUser: {
-        mutation: () => Promise.resolve(),
+        mutation: () => Promise.resolve(''),
+        isLoading: false,
+        errorMessage: null,
+    },
+    confirmSignUp: {
+        mutation: () => Promise.resolve<User | null>(null),
+        isLoading: false,
+        errorMessage: null,
+    },
+    confirmUpdateUser: {
+        mutation: () => Promise.resolve<UserExtra | null>(null),
         isLoading: false,
         errorMessage: null,
     },
@@ -62,6 +82,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const [serverSMSCode, setServerSMSCode] = useState<string>('');
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
     useEffect(() => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -93,41 +115,37 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         const { password, phone, name } = data;
         const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
         if (res.status === 'error') {
-            setSignUpErrorMessage(res.error_message);
-            setCurrentUser(null);
+            setUpdateUserErrorMessage(res.error_message);
             setIsLoading(false);
+            return null;
         } else {
-            const result = await authService.confirmRegisterPhone({ temp_data_code: res.data.temp_data_code, confirmation_code: '0000' });
-            if (result.status === 'error') {
-                setSignUpErrorMessage(result.error_message);
-                setCurrentUser(null);
-                setIsLoading(false);
-            } else {
-                setCurrentUser(result.data);
-                localStorage.setItem('user', JSON.stringify(result.data));
-                setIsLoading(false);
-            }
+            setIsLoading(false);
+            setServerSMSCode(res.data.temp_data_code);
+            return res.data.temp_data_code;
         }
     };
-
-    const logout = useCallback(async () => {
-        setLogoutErrorMessage(null);
+    const confirmSignUp = async (enteredCode: string) => {
         setIsLoading(true);
-        if (currentUser) {
-            await authService.logOut();
+        const result = await authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: enteredCode });
+        if (result.status === 'error') {
+            setConfirmErrorMessage(result.error_message);
             setCurrentUser(null);
-            localStorage.removeItem('user');
             setIsLoading(false);
+            return null;
         } else {
-            return;
+            setCurrentUser(result.data);
+            localStorage.setItem('user', JSON.stringify(result.data));
+            setIsLoading(false);
+            setServerSMSCode('');
+            return result.data;
         }
-    }, [currentUser]);
+    };
 
     const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
-        const { phone, fullname } = data;
-        const res = await authService.updateUser({ phone: phone, fullname: fullname });
+        const { phone, fullname, password, confirmPassword } = data;
+        const res = await authService.updateUser({ phone: phone, fullname: fullname, password: password, confirmPassword: confirmPassword });
         if (res.status === 'error') {
             if (res.error_message === 'ValidationError') {
                 setUpdateUserErrorMessage(t(`pages.error.validation`));
@@ -137,12 +155,41 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 setUpdateUserErrorMessage(t(`pages.error.server`));
             }
             setIsLoading(false);
+            return null;
         } else {
-            setCurrentUser({ phone, fullname });
-            localStorage.setItem('user', JSON.stringify({ phone, fullname }));
             setIsLoading(false);
+            return res.data.temp_data_code;
         }
     };
+
+    const confirmUpdateUser = async (enteredCode: string) => {
+        setIsLoading(true);
+        const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
+        if (result.status === 'error') {
+            if (result.error_message === 'ValidationError') {
+                setConfirmErrorMessage(t(`pages.error.validation`));
+            } else {
+                setConfirmErrorMessage(t(`pages.error.server`));
+            }
+            setIsLoading(false);
+            return null;
+        } else {
+            const user = { phone: result.data.phone, fullname: result.data.fullname };
+            setCurrentUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+            setIsLoading(false);
+            return result.data;
+        }
+    };
+
+    const logout = useCallback(async () => {
+        setLogoutErrorMessage(null);
+        setIsLoading(true);
+        await authService.logOut();
+        setCurrentUser(null);
+        localStorage.removeItem('user');
+        setIsLoading(false);
+    }, []);
 
     return (
         <CurrentUserContext.Provider
@@ -168,6 +215,16 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     mutation: updateUser,
                     isLoading,
                     errorMessage: updateUserErrorMessage,
+                },
+                confirmSignUp: {
+                    mutation: confirmSignUp,
+                    isLoading,
+                    errorMessage: confirmErrorMessage,
+                },
+                confirmUpdateUser: {
+                    mutation: confirmUpdateUser,
+                    isLoading,
+                    errorMessage: confirmErrorMessage,
                 },
             }}
         >
