@@ -47,12 +47,12 @@ function MealPage() {
     }, [watch, features]);
 
     useEffect(() => {
-        if (meal?.features) {
+        if (meal) {
             setFeatures(meal.features);
         }
     }, [meal]);
 
-    if (meal && meal.features) {
+    if (meal && meal.features.length > 0) {
         const onSubmit: SubmitHandler<FieldValues> = async () => {
             await addMeal(meal.id, features);
             goBack();

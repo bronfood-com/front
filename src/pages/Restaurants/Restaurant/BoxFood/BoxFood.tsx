@@ -5,15 +5,16 @@ import { Meal } from '../../../../utils/api/restaurantsService/restaurantsServic
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
 function BoxFood({ card }: { card: Meal }) {
+    const {id, features} = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { addMeal, isLoading } = useBasket();
-    const hasFeatures = 'features' in card;
+    const hasFeatures = card.features.length > 0;
     const handleClick = () => {
         if (hasFeatures) {
-            navigate(`${pathname}/meal/${card.id}`);
+            navigate(`${pathname}/meal/${id}`);
         } else {
-            addMeal(card.id);
+            addMeal(id, features);
         }
     };
     return (

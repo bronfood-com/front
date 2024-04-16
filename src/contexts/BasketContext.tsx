@@ -35,7 +35,7 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (mealId: string, features?: Feature[]) => Promise<void>;
+    addMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
     /**
      * Delete meal from basket
      */
@@ -65,7 +65,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => {
-        if (current.meal.features) {
+        if (current.meal.features.length > 0) {
             return acc + current.count * sumBy(current.meal.features, (feature) => feature.choices.filter((choice) => choice.default)[0].price);
         }
         return acc + current.count * current.meal.price;
@@ -82,7 +82,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals(meals);
         }
     };
-    const addMeal = async (mealId: string, features?: Feature[]) => {
+    const addMeal = async (mealId: string, features: Feature[] | never[]) => {
         setIsLoading(true);
         const basket = await basketService.addMeal(mealId, features);
         setIsLoading(false);

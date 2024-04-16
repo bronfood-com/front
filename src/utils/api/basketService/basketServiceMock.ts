@@ -10,7 +10,7 @@ export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
-    async addMeal(mealId: string, features?: Feature[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
+    async addMeal(mealId: string, features: Feature[] | never[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
             const found = restaurant.meals.find((meal) => meal.id === mealId);
@@ -18,9 +18,7 @@ export class BasketServiceMock implements BasketService {
                 return restaurant;
             }
         });
-        const idPostfix =
-            features &&
-            features
+        const idPostfix = features
                 .map((feature) => {
                     const choice = feature.choices.find((choice) => choice.default === true);
                     if (choice) {
@@ -47,7 +45,7 @@ export class BasketServiceMock implements BasketService {
         } else if (mealFoundInRestaurants) {
             if (this.basket.meals.length === 0 || hasRestaurantChanged) {
                 this.basket.restaurant = restaurantFound;
-                if (features) {
+                if (features.length > 0) {
                     this.basket.meals = [{ meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id + idPostfix }, count: 1 }];
                 } else {
                     this.basket.meals = [{ meal: mealFoundInRestaurants, count: 1 }];

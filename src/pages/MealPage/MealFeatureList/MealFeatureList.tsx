@@ -4,7 +4,7 @@ import { useInView } from 'framer-motion';
 import styles from './MealFeatureList.module.scss';
 import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsService/restaurantsService';
 
-const MealFeatureList = ({ features }: { features: Feature[] }) => {
+const MealFeatureList = ({ features }: { features: Feature[] | [] }) => {
     const featuresContainer = useRef(null);
     return (
         <ul ref={featuresContainer} className={styles.feature_list}>
