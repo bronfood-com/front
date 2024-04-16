@@ -19,13 +19,13 @@ export class BasketServiceMock implements BasketService {
             }
         });
         const idPostfix = features
-                .map((feature) => {
-                    const choice = feature.choices.find((choice) => choice.default === true);
-                    if (choice) {
-                        return choice.name;
-                    }
-                })
-                .toString();
+            .map((feature) => {
+                const choice = feature.choices.find((choice) => choice.default === true);
+                if (choice) {
+                    return choice.name;
+                }
+            })
+            .toString();
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
         const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId || meal.id === mealId + idPostfix);
         const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);

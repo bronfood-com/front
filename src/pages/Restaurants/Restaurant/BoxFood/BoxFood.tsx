@@ -5,7 +5,7 @@ import { Meal } from '../../../../utils/api/restaurantsService/restaurantsServic
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
 function BoxFood({ card }: { card: Meal }) {
-    const {id, features} = card;
+    const { id, features } = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { addMeal, isLoading } = useBasket();
