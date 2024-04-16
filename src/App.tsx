@@ -21,13 +21,10 @@ function App() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
-    /* console.log(pathname); */
     useEffect(() => {
         // Enable redirect to /restaurants in PR preview
         const regex = /\/pr-preview\/pr-\d\d\//i;
-        /* console.log((regex.test(pathname) || pathname === '/')) */
         if (currentUser && (regex.test(pathname) || pathname === '/')) {
-            /* console.log('redirect to restaurants') */
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
