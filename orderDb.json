@@ -9,8 +9,8 @@
       "paymentStatus": "paid",
       "reviewStatus": "waiting",
       "cancellationTime": 120,
-      "cancellationStatus": "none",
-      "isCancellationRequested": false,
+      "cancellationStatus": "requested",
+      "isCancellationRequested": true,
       "orderDetails": [
         {
           "id": "1",

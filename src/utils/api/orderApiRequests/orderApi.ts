@@ -23,7 +23,7 @@ async function fetchResponse<T>(url: string, options?: RequestInit): Promise<Api
 }
 
 export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiResponse<string>> => {
-    const response = await fetchResponse<{id: string}[]>(`${baseUrl}/orders?clientId=${clientId}`);
+    const response = await fetchResponse<{ id: string }[]>(`${baseUrl}/orders?clientId=${clientId}`);
     if (response.error || response.data === null || response.data.length === 0) {
         return { data: null, error: response.error || 'No orders found for this client' };
     }
@@ -55,4 +55,3 @@ export const cancelOrder = async (id: string): Promise<ApiResponse<void>> => {
     }
     return { data: null, error: null };
 };
-
