@@ -1,3 +1,4 @@
+import { sumBy } from 'lodash';
 import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
@@ -8,12 +9,14 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { id, name, photo, price, features } = meal;
     const mealPrice =
         meal.features.length > 0
-            ? meal.features.reduce((acc, current) => {
-                  const selectedChoice = current.choices.find((choice) => choice.default);
-                  if (selectedChoice) {
-                      return acc + selectedChoice.price;
-                  } else return acc;
-              }, 0)
+            ? sumBy(meal.features, (feature) => {
+                const isChosen = feature.choices.some(choice => choice.chosen);
+                if (isChosen) {
+                    return feature.choices.filter(choice => choice.chosen)[0].price
+                } else {
+                    return feature.choices.filter(choice => choice.default)[0].price
+                }
+            })
             : price;
     const { addMeal, deleteMeal } = useBasket();
     return (

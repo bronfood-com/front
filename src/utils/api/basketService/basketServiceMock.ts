@@ -20,7 +20,7 @@ export class BasketServiceMock implements BasketService {
         });
         const idPostfix = features
             .map((feature) => {
-                const choice = feature.choices.find((choice) => choice.default === true);
+                const choice = feature.choices.find((choice) => choice.chosen || choice.default);
                 if (choice) {
                     return choice.name;
                 }
