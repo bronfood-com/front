@@ -44,7 +44,7 @@ interface Input {
 }
 
 const Input: FC<Input> = (props) => {
-    const [inputValue, setInputValue] = useState(props.value || '');
+    const [inputValue, setInputValue] = useState(props.value === undefined ? '' : props.value);
     const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
