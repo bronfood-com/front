@@ -18,6 +18,10 @@ export type Choice = {
      * Is choice selected by default
      */
     default: boolean;
+    /**
+     * Is choice selected by user
+     */
+    chosen: boolean;
 };
 
 export type Feature = {
