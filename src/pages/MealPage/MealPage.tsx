@@ -16,11 +16,11 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { restaurantsFiltered } = useRestaurants();
+    const { restaurantsOnMap } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
-    const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
     const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
     const price = sumBy(features, (feature) => feature.choices.filter((choice) => choice.default)[0].price);
     const goBack = () => {
