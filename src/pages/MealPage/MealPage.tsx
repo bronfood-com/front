@@ -23,12 +23,13 @@ function MealPage() {
     const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
     const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
     const price = sumBy(features, (feature) => {
-        const isChosen = feature.choices.some(choice => choice.chosen);
+        const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
-            return feature.choices.filter(choice => choice.chosen)[0].price
+            return feature.choices.filter((choice) => choice.chosen)[0].price;
         } else {
-            return feature.choices.filter(choice => choice.default)[0].price
-        }})
+            return feature.choices.filter((choice) => choice.default)[0].price;
+        }
+    });
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
     };
