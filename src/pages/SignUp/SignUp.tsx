@@ -70,7 +70,7 @@ const SignUp = () => {
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                                 <InputPhone register={register} errors={errors}></InputPhone>
-                                <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} required={true}/>
+                                <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} required={true} />
                             </FormInputs>
                         </fieldset>
                         <Button disabled={signUp.isLoading}>{t('pages.signUp.registerButton')}</Button>
