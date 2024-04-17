@@ -22,7 +22,7 @@ interface InputPhone {
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
-    const [inputValue, setInputValue] = useState(props.value);
+    const [inputValue, setInputValue] = useState('');
 
     const { t } = useTranslation();
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
