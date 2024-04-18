@@ -14,7 +14,7 @@ import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
-import WaitingOrderPage from './pages/WaitingOrder/WaitingOrderPage';
+import WaitingOrderPage from './pages/WaitingOrderPage/WaitingOrderPage';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 
 function App() {

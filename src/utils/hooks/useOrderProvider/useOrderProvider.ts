@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { OrderContextType } from '../../../contexts/OrderContext';
-import { cancelOrder, fetchOrderDetailsByOrderId, fetchOrderIdByClientId } from '../../api/orderApiRequests/orderApi';
+import { cancelOrder, fetchOrderDetailsByOrderId, fetchOrderIdByClientId } from '../../api/orderService/orderServiceMockReqs'
+// import { cancelOrder, fetchOrderDetailsByOrderId, fetchOrderIdByClientId } from '../../api/orderApiRequests/orderApi';
 import { useTimers } from '../useTimer/useTimer';
 import { OrderState } from '../../api/orderService/orderService';
 import { useTranslation } from 'react-i18next';

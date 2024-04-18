@@ -1,4 +1,4 @@
-import WaitingOrder from '../../components/WaitingOrder/WaitingOrder';
+import WaitingOrder from '../WaitingOrder/WaitingOrder';
 import { OrderProvider } from '../../contexts/OrderContext';
 
 const WaitingOrderPage = () => {

@@ -31,13 +31,27 @@ export interface OrderDetails {
 export interface OrderState {
     clientId: string;
     id: string;
-    orderDetails: OrderDetails[];
     totalAmount: number;
-    confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
-    paymentStatus: 'waiting' | 'paid' | 'failed';
-    reviewStatus: 'waiting' | 'reviewed' | 'skipped';
-    cancellationTime: number;
-    cancellationStatus: 'none' | 'requested' | 'confirmed';
-    isCancellationRequested: boolean;
+    confirmationStatus: string;
     preparationTime: number;
+    paymentStatus: string;
+    reviewStatus: string;
+    cancellationTime: number;
+    cancellationStatus: string;
+    isCancellationRequested: boolean;
+    orderDetails: OrderDetails[];
 }
+
+// export interface OrderState {
+//     clientId: string;
+//     id: string;
+//     totalAmount: number;
+//     confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
+//     preparationTime: number;
+//     paymentStatus: 'waiting' | 'paid' | 'failed';
+//     reviewStatus: 'waiting' | 'reviewed' | 'skipped';
+//     cancellationTime: number;
+//     cancellationStatus: 'none' | 'requested' | 'confirmed';
+//     isCancellationRequested: boolean;
+//     orderDetails: OrderDetails[];
+// }
