@@ -7,7 +7,7 @@ type ApiResponse<T> = {
 };
 
 export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiResponse<string>> => {
-    const orders = mockData.orders.filter(order => order.clientId === clientId);
+    const orders = mockData.orders.filter((order) => order.clientId === clientId);
     if (orders.length === 0) {
         return { data: null, error: 'No orders found for this client' };
     }
@@ -15,7 +15,7 @@ export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiRespo
 };
 
 export const fetchOrderDetailsByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
-    const order = mockData.orders.find(order => order.id === id);
+    const order = mockData.orders.find((order) => order.id === id);
     if (!order) {
         return { data: null, error: 'Order details not found' };
     }
@@ -23,7 +23,7 @@ export const fetchOrderDetailsByOrderId = async (id: string): Promise<ApiRespons
 };
 
 export const cancelOrder = async (id: string): Promise<ApiResponse<void>> => {
-    const order = mockData.orders.find(order => order.id === id);
+    const order = mockData.orders.find((order) => order.id === id);
     if (!order) {
         return { data: null, error: 'Error canceling the order' };
     }
