@@ -8,7 +8,7 @@ type ApiResponse<T> = {
 
 export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiResponse<string>> => {
     // timeout to simulate waiting for order confirmation
-    await new Promise(resolve => setTimeout(resolve, 4000));
+    await new Promise((resolve) => setTimeout(resolve, 4000));
 
     const orders = mockData.orders.filter((order) => order.clientId === clientId);
     if (orders.length === 0) {
