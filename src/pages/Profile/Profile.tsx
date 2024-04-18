@@ -13,29 +13,37 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
+import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
+import InputPassword from '../../components/InputPassword/InputPassword';
+
 const Profile = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        getValues,
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const { currentUser, updateUser } = useCurrentUser();
+    const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const result = await updateUser.mutation({
             phone: data.phoneNumber,
             fullname: data.username,
+            password: data.newPassword || null,
+            confirmPassword: data.newPasswordConfirm || null,
         });
-
         if (result !== null) {
             setIsErrorVisible(true);
         }
+        setIsConfirmOpen(true);
     };
 
     useEffect(() => {
@@ -43,26 +51,49 @@ const Profile = () => {
         setPhoneNumber(currentUser?.phone);
     }, [currentUser]);
 
-    return (
-        <Popup
-            title={t('pages.profile.title')}
-            onClose={() => {
-                navigate('/');
-                setIsErrorVisible(false);
-            }}
-        >
-            {updateUser.isLoading && <Preloader />}
+    const validatePasswordMatch = (value: FieldValues) => {
+        const { newPassword } = getValues();
+        return newPassword === value || t('pages.profile.passwordDontMatch');
+    };
 
-            <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
-                <FormInputs>
-                    <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
-                    <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                </FormInputs>
-                <div className={styles.profile__button_space}></div>
-                <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
-            </Form>
-        </Popup>
+    const confirm = async (code: string) => {
+        const result = await confirmUpdateUser.mutation(code);
+        if (!result) {
+            setIsConfirmErrorVisible(true);
+        } else {
+            setFullname(result.fullname);
+            setPhoneNumber(result.phone);
+            setIsConfirmOpen(false);
+        }
+    };
+
+    return (
+        <>
+            {isConfirmOpen ? (
+                <SMSConfirm isLoading={confirmUpdateUser.isLoading} error={confirmUpdateUser.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} />
+            ) : (
+                <Popup
+                    title={t('pages.profile.title')}
+                    onClose={() => {
+                        navigate('/');
+                        setIsErrorVisible(false);
+                    }}
+                >
+                    {updateUser.isLoading && <Preloader />}
+                    <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
+                        {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
+                        <FormInputs>
+                            <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
+                            <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
+                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
+                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
+                        </FormInputs>
+                        <div className={styles.profile__button_space}></div>
+                        <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
+                    </Form>
+                </Popup>
+            )}
+        </>
     );
 };
 

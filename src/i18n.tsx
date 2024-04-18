@@ -78,6 +78,9 @@ i18n
                             errorWhileCancellingTheOrder: 'Ошибка при отмене заказа',
                             orderDoesNotExist: 'Заказ не существует',
                         },
+                        button: {
+                            next: 'Далее',
+                        },
                     },
                     pages: {
                         signIn: {
@@ -97,6 +100,12 @@ i18n
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
+                        },
+                        confirmation: {
+                            phoneConfirmation: 'Подтверждение номера',
+                            enterSmsCode: 'Ввведите код из смс',
+                            validationError: 'Неверный код',
+                            serverError: 'Ошибка сервера',
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
