@@ -59,6 +59,9 @@ i18n
                         confirmationPopup: {
                             cancel: 'Отмена',
                         },
+                        button: {
+                            next: 'Далее',
+                        },
                     },
                     pages: {
                         signIn: {
@@ -80,7 +83,12 @@ i18n
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
                         },
-
+                        confirmation: {
+                            phoneConfirmation: 'Подтверждение номера',
+                            enterSmsCode: 'Ввведите код из смс',
+                            validationError: 'Неверный код',
+                            serverError: 'Ошибка сервера',
+                        },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
                             signout: 'Выйти',
@@ -111,12 +119,6 @@ i18n
                             button: 'Сохранить',
                             passwordDontMatch: 'Пароли не совпадают',
                             invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
-                        },
-
-                        SMS: {
-                            title: 'Введите код из смс',
-                            continue: 'Далее',
-                            code: 'Код',
                         },
 
                         passwordRecovery: {

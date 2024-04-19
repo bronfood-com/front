@@ -54,7 +54,7 @@ const SignIn = () => {
                 <fieldset className={styles.form__field} disabled={signIn.isLoading}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
-                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} />
+                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
                     </FormInputs>
                 </fieldset>
                 <Link to="/restore-password" onClick={startRestorePassword} className={`${styles.link_recovery} link`}>
