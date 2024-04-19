@@ -24,6 +24,7 @@ i18n
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
                         },
+
                         header: {
                             burgerTitleHover: 'Меню',
                             placeName: 'Алматы',
@@ -32,15 +33,18 @@ i18n
                             logoTitleHover: 'Bronfood',
                             buttonCloseTitleHover: 'Закрыть',
                         },
+
                         inputPhone: {
                             required: 'Обязательное поле',
                             invalidPhoneNumberFormat: 'Неверный ввод',
                             phoneNumber: 'Телефон',
                         },
+
                         inputPassword: {
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
                         },
+
                         input: {
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
@@ -51,6 +55,7 @@ i18n
                             editBankData: 'Редактировать банковские данные',
                             signOut: 'Выйти',
                         },
+
                         confirmationPopup: {
                             cancel: 'Отмена',
                         },
@@ -66,6 +71,7 @@ i18n
                             loginButton: 'Войти',
                             registartion: 'Регистрация',
                         },
+
                         signUp: {
                             signUpHeading: 'Регистрация',
                             phoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
@@ -74,15 +80,18 @@ i18n
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
                         },
+
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
                             signout: 'Выйти',
                             serverError: 'Ошибка на сервере',
                         },
+
                         pageNotFound: {
                             goBack: 'Вернуться на главную',
                             somethingWentWrong: 'Кажется что-то пошло не так...',
                         },
+
                         passwordSaved: {
                             title: 'Ваш пароль сохранен!',
                         },
@@ -104,6 +113,12 @@ i18n
                             invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
                         },
 
+                        SMS: {
+                            title: 'Введите код из смс',
+                            continue: 'Далее',
+                            code: 'Код',
+                        },
+
                         passwordRecovery: {
                             title: 'Восстановить пароль',
                             phoneNumber: 'Телефон',
@@ -123,14 +138,17 @@ i18n
                             passwordDontMatch: 'Пароли не совпадают',
                             errorMessage: 'Не удалось изменить данные',
                         },
+
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',
                             validation: 'Данные заполненые неверно.',
                             duplicate: 'Такой номер телефона уже зарегистрирован',
                         },
+
                         restaurants: {
                             selectPlace: 'Выберите заведение',
                         },
+
                         filter: {
                             filters: 'Фильтры',
                             enterSearchString: 'Введите в поиске название блюда, продукта или заведение',
@@ -140,11 +158,13 @@ i18n
                             cafe: 'Кафе',
                             cafeBar: 'Кофейня',
                         },
+
                         restaurant: {
                             food: 'Еда',
                             drink: 'Напитки',
                             dessert: 'Десерты',
                         },
+
                         basket: {
                             basket: 'Корзина',
                             waitingTime: 'Время ожидания',
