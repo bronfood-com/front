@@ -46,17 +46,17 @@ const RestorePassword = () => {
     const renderStage = () => {
         switch (stage) {
             case 'START':
-                return <QueryPhone control={control} register={register} errors={errors} onSubmit={onSubmitQueryPhone} />
+                return <QueryPhone control={control} register={register} errors={errors} onSubmit={onSubmitQueryPhone} />;
 
             case 'PHONE-EXIST':
-                return <NewPassword control={control} register={register}  errors={errors} onSubmit={onSubmitChangePassword} />;
+                return <NewPassword control={control} register={register} errors={errors} onSubmit={onSubmitChangePassword} />;
 
             case 'NEW-PASSWORD-GIVEN':
-                return <SMSVerify control={control} errors={errors} onSubmit={onSubmitApplyPassword}  />;
+                return <SMSVerify control={control} errors={errors} onSubmit={onSubmitApplyPassword} />;
 
             case 'SUCCESS':
                 return <SuccessPasswordChange />;
-                
+
             case 'ERROR':
                 return (
                     <Popup

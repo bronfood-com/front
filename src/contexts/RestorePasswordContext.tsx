@@ -40,7 +40,6 @@ export const RestorePasswordContext = createContext<TypeRestorePasswordContext>(
 });
 
 export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => {
-
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [stage, setStage] = useState<TypeStage>('START');
 
@@ -80,7 +79,7 @@ export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => 
         setIsLoading(true);
         const temp_data_code = localStorage.getItem('temp_data_code');
         const confirmation_code = localStorage.getItem('confirmation_code');
-        if ((temp_data_code && temp_data_code !== '')&&(confirmation_code && confirmation_code !== '')) {
+        if (temp_data_code && temp_data_code !== '' && confirmation_code && confirmation_code !== '') {
             const res = await restorePasswordService.verifyPasswordChange(temp_data_code, confirmation_code);
             if (res.status === 'error') {
                 setIsLoading(false);
