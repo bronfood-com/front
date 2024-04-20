@@ -8,7 +8,6 @@ import Basket from './pages/Basket/Basket';
 import Logout from './pages/Logout/Logout';
 import Main from './pages/Main/Main';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
-import PopupOrderCancelled from './pages/PopupOrderCancelled/PopupOrderCancelled';
 import Profile from './pages/Profile/Profile';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
@@ -35,7 +34,6 @@ function App() {
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
                 <Route path="/waiting-order" element={<WaitingOrderPage />} />
-                <Route path="/popup-order-cancelled" element={<PopupOrderCancelled />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />

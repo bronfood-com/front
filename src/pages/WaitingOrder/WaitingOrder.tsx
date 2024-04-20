@@ -1,6 +1,4 @@
-import { FC } from 'react';
-import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Modal from '../../components/Modal/Modal';
 import OrderListArticle from '../../components/OrderListArticle/OrderListArticle';
@@ -11,14 +9,13 @@ import waitingImg from '../../vendor/images/waiting-screen.svg';
 import styles from './WaitingOrder.module.scss';
 import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useOrderContext } from '../../utils/hooks/useOrderContext/useOrderContext';
-const portalRoot = document.getElementById('portal-root');
+import PopupOrderCancelled from '../PopupOrderCancelled/PopupOrderCancelled';
 
 const WaitingOrder: FC = () => {
+    const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
     const WAIT_CODE_IN_SECONDS = 5 * 60; // секунды для ожидания кода заказа (запросить у бэка)
 
     const { t } = useTranslation();
-
-    const navigate = useNavigate();
 
     const { orderDetails, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder, setErrorMessage } = useOrderContext();
 
@@ -35,7 +32,7 @@ const WaitingOrder: FC = () => {
             setErrorMessage(t('components.waitingOrder.errorWhileCancellingTheOrder') as string);
         } finally {
             setShowConfirmationPopup(false);
-            navigate('/popup-order-cancelled');
+            setShowOrderCancelledPopup(true);
         }
     };
 
@@ -76,13 +73,13 @@ const WaitingOrder: FC = () => {
                 )}
             </Modal>
             {showConfirmationPopup &&
-                portalRoot &&
-                createPortal(
-                    <div className={styles.confirmationPopup__wrapper}>
-                        <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
-                    </div>,
-                    portalRoot,
-                )}
+                <div className={styles.confirmationPopup__wrapper}>
+                    <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
+                </div>
+            }
+            {showOrderCancelledPopup && (
+                <PopupOrderCancelled />
+            )}
         </>
     );
 };
