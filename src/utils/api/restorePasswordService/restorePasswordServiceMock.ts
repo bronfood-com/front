@@ -14,7 +14,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
     }
 
     async queryPhoneNumber(phone: string): Promise<requestChangePasswordResponse | requestChangePasswordResponseError> {
-        await this._wait(500);
+        await this._wait(300);
         const phoneNumber = this.getPhoneNumber(phone);
         const temp_data_code = this.generateTempDataCode(phone);
         if (phoneNumber && temp_data_code) {
@@ -27,7 +27,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
     }
 
     async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<requestChangePasswordResponse | requestChangePasswordResponseError> {
-        await this._wait(500);
+        await this._wait(300);
         if (password === password_confirm) {
             return { status: 'success', data: { temp_data_code } };
         } else {
@@ -37,7 +37,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
     }
 
     async verifyPasswordChange(temp_data_code: string, confirmation_code: string): Promise<completeChangePasswordResponse | requestChangePasswordResponseError> {
-        await this._wait(700);
+        await this._wait(300);
         if (temp_data_code && confirmation_code) {
             return { status: 'success', message: 'Password updated' };
         } else {

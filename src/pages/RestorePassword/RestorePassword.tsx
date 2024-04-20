@@ -1,36 +1,29 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import NewPassword from '../../components/NewPassword/NewPassword';
+import NewPassword from './NewPassword/NewPassword';
 import Popup from '../../components/Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import InputPhone from '../../components/InputPhone/InputPhone';
-import Button from '../../components/Button/Button';
-import InfoPopup from '../../components/Popups/InfoPopup/InfoPopup';
-import InfoImage from '../../components/InfoImage/InfoImage';
-import InputPassword from '../../components/InputPassword/InputPassword';
 import { useRestorePassword } from '../../utils/hooks/useRestorePassword/useRestorePassword';
 import Preloader from '../../components/Preloader/Preloader';
-import Form from '../../components/Form/Form';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-// import FormInputs from '../../components/FormInputs/FormInputs';
+import SMSVerify from '../../components/SMSVerify/SMSVerify';
+import SuccessPasswordChange from './SuccessPasswordChange/SuccessPasswordChange';
+import QueryPhone from './QueryPhone/QueryPhone';
 
 const RestorePassword = () => {
-    {
-        /* нужно ли на этом уровне useForm может непосредственно в компонентах */
-    }
     const {
         register,
         formState: { errors },
-        handleSubmit,
         control,
     } = useForm();
 
     const navigate = useNavigate();
     const { t } = useTranslation();
     const { isLoading, stage, queryPhone, requestChangePassword, applyPasswordChange } = useRestorePassword();
-    const onSubmitQueryPhone: SubmitHandler<FieldValues> = (data) => {
+
+    const onSubmitQueryPhone: SubmitHandler<FieldValues> = (formFields) => {
         if (queryPhone !== null) {
-            queryPhone(data.phoneNumber);
+            queryPhone(formFields.data.phoneNumber);
         }
     };
 
@@ -40,9 +33,9 @@ const RestorePassword = () => {
         }
     };
 
-    const onSubmitApplyPassword: SubmitHandler<FieldValues> = (formFields) => {
+    const onSubmitApplyPassword: SubmitHandler<FieldValues> = () => {
         if (applyPasswordChange !== null) {
-            applyPasswordChange(formFields.sms);
+            applyPasswordChange();
         }
     };
 
@@ -53,45 +46,17 @@ const RestorePassword = () => {
     const renderStage = () => {
         switch (stage) {
             case 'START':
-                return (
-                    <Popup
-                        title={t('pages.passwordRecovery.title')}
-                        onClose={() => {
-                            navigate('/');
-                        }}
-                    >
-                        <Form name="form-query-phone" onSubmit={handleSubmit(onSubmitQueryPhone)}>
-                            <InputPhone errors={errors} register={register} />
-                            <Button>{t('pages.passwordRecovery.continue')}</Button>
-                        </Form>
-                    </Popup>
-                );
+                return <QueryPhone control={control} register={register} errors={errors} onSubmit={onSubmitQueryPhone} />
 
             case 'PHONE-EXIST':
-                return <NewPassword register={register} control={control} errors={errors} onSubmit={onSubmitChangePassword} />;
+                return <NewPassword control={control} register={register}  errors={errors} onSubmit={onSubmitChangePassword} />;
 
             case 'NEW-PASSWORD-GIVEN':
-                return (
-                    <Popup
-                        title={t('pages.SMS.title')}
-                        onClose={() => {
-                            navigate('/');
-                        }}
-                    >
-                        <Form name="form-change-password" onSubmit={handleSubmit(onSubmitApplyPassword)}>
-                            <InputPassword name={'sms'} nameLabel={t('pages.SMS.code')} register={register} errors={errors}></InputPassword>
-                            <Button>{t('pages.SMS.continue')}</Button>
-                        </Form>
-                    </Popup>
-                );
+                return <SMSVerify control={control} errors={errors} onSubmit={onSubmitApplyPassword}  />;
 
             case 'SUCCESS':
-                return (
-                    <InfoPopup isOpened={true}>
-                        <h2>{t('pages.passwordSaved.title')}</h2>
-                        <InfoImage mode="stars_tube"></InfoImage>
-                    </InfoPopup>
-                );
+                return <SuccessPasswordChange />;
+                
             case 'ERROR':
                 return (
                     <Popup

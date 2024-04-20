@@ -1,11 +1,11 @@
-import Popup from '../Popups/Popup/Popup';
+import Popup from '../../../components/Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import { Form, FieldErrors, FieldValues, UseFormRegister, Control, SubmitHandler } from 'react-hook-form';
-import FormInputs from '../FormInputs/FormInputs';
-import InputPassword from '../InputPassword/InputPassword';
+import FormInputs from '../../../components/FormInputs/FormInputs';
+import InputPassword from '../../../components/InputPassword/InputPassword';
 import { useTranslation } from 'react-i18next';
 import { FC } from 'react';
-import Button from '../Button/Button';
+import Button from '../../../components/Button/Button';
 
 interface NewPassword {
     /**
