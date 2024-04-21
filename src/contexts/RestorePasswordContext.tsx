@@ -53,7 +53,7 @@ export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => 
     const queryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
         localStorage.setItem('phone', phoneNumber);
-        const mappedPhoneNumber = phoneNumber.replace(/\D/g, "");
+        const mappedPhoneNumber = phoneNumber.replace(/\D/g, '');
         const res = await restorePasswordService.queryPhoneNumber(mappedPhoneNumber);
         if (res.status === 'error') {
             setIsLoading(false);
