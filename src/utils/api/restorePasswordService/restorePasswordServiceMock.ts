@@ -10,7 +10,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
     }
 
     generateTempDataCode(phoneNumber: string) {
-        return `ok${phoneNumber[17]}kjh23a;bn%`;
+        return `ok${phoneNumber[5]}kjh23a;bn%`;
     }
 
     async queryPhoneNumber(phone: string): Promise<requestChangePasswordResponse | requestChangePasswordResponseError> {
@@ -18,10 +18,8 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
         const phoneNumber = this.getPhoneNumber(phone);
         const temp_data_code = this.generateTempDataCode(phone);
         if (phoneNumber && temp_data_code) {
-            localStorage.setItem('temp_data_code', temp_data_code);
-            return { status: 'success', data: { temp_data_code: `ok${phone}` } };
+            return { status: 'success', data: { temp_data_code: `${temp_data_code}` } };
         } else {
-            localStorage.setItem('error', 'phoneNumber or temp_data_code is empty');
             return { status: 'error', error_message: 'something goes wrong' };
         }
     }
@@ -31,8 +29,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
         if (password === password_confirm) {
             return { status: 'success', data: { temp_data_code } };
         } else {
-            localStorage.setItem('error', "passwords don't match");
-            return { status: 'error', error_message: 'something goes wrong' };
+            return { status: 'error', error_message: "passwords don't match" };
         }
     }
 
@@ -41,8 +38,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
         if (temp_data_code && confirmation_code) {
             return { status: 'success', message: 'Password updated' };
         } else {
-            localStorage.setItem('error', 'confirmation_code or temp_data_code is empty');
-            return { status: 'error', error_message: 'something goes wrong' };
+            return { status: 'error', error_message: 'confirmation_code or temp_data_code is empty' };
         }
     }
 }

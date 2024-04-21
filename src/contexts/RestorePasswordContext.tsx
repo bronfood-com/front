@@ -43,15 +43,26 @@ export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [stage, setStage] = useState<TypeStage>('START');
 
+    const startRestorePassword = () => {
+        localStorage.removeItem('error');
+        localStorage.removeItem('temp_data_code');
+        localStorage.removeItem('confirmation_code');
+        setStage('START');
+    };
+
     const queryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
-        const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
+        localStorage.setItem('phone', phoneNumber);
+        const mappedPhoneNumber = phoneNumber.replace(/\D/g, "");
+        const res = await restorePasswordService.queryPhoneNumber(mappedPhoneNumber);
         if (res.status === 'error') {
             setIsLoading(false);
+            localStorage.setItem('error', res.error_message);
             setStage('ERROR');
         }
         if (res.status === 'success') {
             setIsLoading(false);
+            localStorage.setItem('temp_data_code', res.data.temp_data_code);
             setStage('PHONE-EXIST');
         }
     };
@@ -63,15 +74,18 @@ export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => 
             const res = await restorePasswordService.setNewPassword(password, password_confirm, temp_data_code);
             if (res.status === 'error') {
                 setIsLoading(false);
+                localStorage.setItem('error', res.error_message);
                 setStage('ERROR');
             }
             if (res.status === 'success') {
                 setIsLoading(false);
+                localStorage.setItem('temp_data_code', res.data.temp_data_code);
                 setStage('NEW-PASSWORD-GIVEN');
                 return;
             }
         }
         setIsLoading(false);
+        localStorage.setItem('error', 'temp_data_code is empty');
         setStage('ERROR');
     };
 
@@ -83,23 +97,18 @@ export const RestorePasswordProvider: FC<PropsWithChildren> = ({ children }) => 
             const res = await restorePasswordService.verifyPasswordChange(temp_data_code, confirmation_code);
             if (res.status === 'error') {
                 setIsLoading(false);
+                localStorage.setItem('error', res.error_message);
                 setStage('ERROR');
             }
             if (res.status === 'success') {
                 setIsLoading(false);
                 setStage('SUCCESS');
+                localStorage.removeItem('phone');
             }
         }
         setTimeout(() => {
-            setStage('START');
+            startRestorePassword();
         }, 3000);
-    };
-
-    const startRestorePassword = () => {
-        localStorage.removeItem('error');
-        localStorage.removeItem('temp_data_code');
-        localStorage.removeItem('confirmation_code');
-        setStage('START');
     };
 
     return (
