@@ -16,13 +16,20 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { restaurantsFiltered } = useRestaurants();
+    const { restaurantsOnMap } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
-    const restaurant: Restaurant | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
     const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
-    const price = sumBy(features, (feature) => feature.choices.filter((choice) => choice.default)[0].price);
+    const price = sumBy(features, (feature) => {
+        const isChosen = feature.choices.some((choice) => choice.chosen);
+        if (isChosen) {
+            return feature.choices.filter((choice) => choice.chosen)[0].price;
+        } else {
+            return feature.choices.filter((choice) => choice.default)[0].price;
+        }
+    });
     const goBack = () => {
         navigate(`/restaurants/${params.restaurantId}`);
     };
@@ -34,9 +41,7 @@ function MealPage() {
             const nextFeatures = features.map((feature: Feature) => {
                 if (feature.name === name) {
                     const choices = feature.choices.map((choice) => {
-                        if (choice.name === value[name]) {
-                            return { ...choice, default: true };
-                        } else return { ...choice, default: false };
+                        return { ...choice, chosen: choice.name === value[name] };
                     });
                     return { ...feature, choices };
                 } else return feature;
@@ -54,7 +59,16 @@ function MealPage() {
 
     if (meal && meal.features.length > 0) {
         const onSubmit: SubmitHandler<FieldValues> = async () => {
-            await addMeal(meal.id, features);
+            const newFeatures = features.map((feature: Feature) => {
+                const choiceChosen = feature.choices.filter((choice) => choice.chosen)[0];
+                if (choiceChosen) {
+                    return feature;
+                } else {
+                    const choices = feature.choices.map((choice) => ({ ...choice, chosen: choice.default }));
+                    return { ...feature, choices };
+                }
+            });
+            await addMeal(meal.id, newFeatures);
             goBack();
         };
         return (

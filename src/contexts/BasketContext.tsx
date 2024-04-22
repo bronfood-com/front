@@ -39,7 +39,7 @@ type BasketContext = {
     /**
      * Delete meal from basket
      */
-    deleteMeal: (mealId: string) => Promise<void>;
+    deleteMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
     /**
      * Removes restaurant and all meals from basket
      */
@@ -66,7 +66,18 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
-            return acc + current.count * sumBy(current.meal.features, (feature) => feature.choices.filter((choice) => choice.default)[0].price);
+            return (
+                acc +
+                current.count *
+                    sumBy(current.meal.features, (feature) => {
+                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        if (isChosen) {
+                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                        } else {
+                            return feature.choices.filter((choice) => choice.default)[0].price;
+                        }
+                    })
+            );
         }
         return acc + current.count * current.meal.price;
     }, 0);
@@ -88,9 +99,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(false);
         handleServerResponse(basket);
     };
-    const deleteMeal = async (mealId: string) => {
+    const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
         setIsLoading(true);
-        const basket = await basketService.deleteMeal(mealId);
+        const basket = await basketService.deleteMeal(mealId, features);
         setIsLoading(false);
         handleServerResponse(basket);
     };
