@@ -41,9 +41,7 @@ function MealPage() {
             const nextFeatures = features.map((feature: Feature) => {
                 if (feature.name === name) {
                     const choices = feature.choices.map((choice) => {
-                        if (choice.name === value[name]) {
-                            return { ...choice, chosen: true };
-                        } else return { ...choice, chosen: false };
+                        return { ...choice, chosen: choice.name === value[name] };
                     });
                     return { ...feature, choices };
                 } else return feature;
