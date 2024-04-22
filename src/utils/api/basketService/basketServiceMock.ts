@@ -19,20 +19,16 @@ export class BasketServiceMock implements BasketService {
             }
         });
         const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
-        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId || meal.id === mealId);
+        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features));
         const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
         if (mealFoundInBasket) {
-            if (JSON.stringify(mealFoundInBasket?.meal.features) !== JSON.stringify(features)) {
-                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInBasket.meal, features, id: mealFoundInBasket.meal.id }, count: 1 }];
-            } else {
-                this.basket.meals = this.basket.meals.map(({ meal, count }) => {
-                    if (meal.id === mealId || meal.id === mealId) {
-                        return { meal, count: count + 1 };
-                    } else {
-                        return { meal, count };
-                    }
-                });
-            }
+            this.basket.meals = this.basket.meals.map(({ meal, count }) => {
+                if (meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features)) {
+                    return { meal, count: count + 1 };
+                } else {
+                    return { meal, count };
+                }
+            });
             return { status: 'success', data: this.basket };
         } else if (mealFoundInRestaurants) {
             if (this.basket.meals.length === 0 || hasRestaurantChanged) {
@@ -50,20 +46,28 @@ export class BasketServiceMock implements BasketService {
             return { status: 'error', error_message: 'serverError' };
         }
     }
-    async deleteMeal(mealId: string): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
+    async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
         await this._wait(500);
-        const mealFoundInRestaurants = this.basket.meals.find(({ meal }) => meal.id === mealId);
-        if (mealFoundInRestaurants && mealFoundInRestaurants.count > 1) {
+        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features));
+        if (mealFoundInBasket && mealFoundInBasket.count > 1) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
-                if (meal.id === mealId) {
+                if (meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features)) {
                     return { meal, count: count - 1 };
                 } else {
                     return { meal, count };
                 }
             });
             return { status: 'success', data: this.basket };
-        } else if (mealFoundInRestaurants && mealFoundInRestaurants.count === 1) {
-            this.basket.meals = this.basket.meals.filter(({ meal }) => meal.id !== mealId);
+        } else if (mealFoundInBasket && mealFoundInBasket.count === 1) {
+            this.basket.meals = this.basket.meals.filter(({ meal }) => {
+                if (meal.id !== mealId) {
+                    return true;
+                } else if (JSON.stringify(meal.features) !== JSON.stringify(features)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
             return { status: 'success', data: this.basket };
         } else {
             return { status: 'error', error_message: 'serverError' };

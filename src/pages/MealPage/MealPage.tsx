@@ -59,7 +59,16 @@ function MealPage() {
 
     if (meal && meal.features.length > 0) {
         const onSubmit: SubmitHandler<FieldValues> = async () => {
-            await addMeal(meal.id, features);
+            const newFeatures = features.map((feature: Feature) => {
+                const choiceChosen = feature.choices.filter((choice) => choice.chosen)[0];
+                if (choiceChosen) {
+                    return feature;
+                } else {
+                    const choices = feature.choices.map((choice) => ({ ...choice, chosen: choice.default }));
+                    return { ...feature, choices };
+                }
+            });
+            await addMeal(meal.id, newFeatures);
             goBack();
         };
         return (
