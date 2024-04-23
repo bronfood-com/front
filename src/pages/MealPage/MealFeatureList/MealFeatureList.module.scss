@@ -37,9 +37,6 @@
     padding-bottom: 9px;
     border-bottom: 1px solid $line;
 
-    &_blur {
-        filter: opacity(20%);
-    }
     &__container {
         position: relative;
         display: flex;
