@@ -7,6 +7,10 @@ function MealTotal({ price, buttonDisabled }: { price: number; buttonDisabled: b
     return (
         <div className={styles.meal_total}>
             <div className={styles.meal_total__title}>
+                <p className={styles.meal_total__text}>{t(`pages.meal.fee`)}</p>
+                <span className={styles.meal_total__price}>{`130 ₸`}</span>
+            </div>
+            <div className={styles.meal_total__title}>
                 <p className={styles.meal_total__text}>{t(`pages.meal.total`)}</p>
                 <span className={styles.meal_total__price}>{`${price} ₸`}</span>
             </div>
