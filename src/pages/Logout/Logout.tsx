@@ -11,7 +11,7 @@ import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 const Logout: FC = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { currentUser, logout } = useCurrentUser();
-    const {emptyBasket} = useBasket();
+    const { emptyBasket } = useBasket();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = async () => {
