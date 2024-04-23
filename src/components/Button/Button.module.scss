@@ -9,6 +9,7 @@
     color: $white;
     font-weight: 600;
     margin-top: 25px;
+    cursor: pointer;
 
     &_disabled {
         background: $button-grey;
