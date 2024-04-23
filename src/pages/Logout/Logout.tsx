@@ -6,15 +6,18 @@ import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/Confirm
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
+import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const Logout: FC = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { currentUser, logout } = useCurrentUser();
+    const {emptyBasket} = useBasket();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = async () => {
         const result = await logout.mutation();
         if (result !== null) {
+            emptyBasket();
             setIsErrorVisible(true);
         }
     };
