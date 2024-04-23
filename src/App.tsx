@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
+import MealPage from './pages/MealPage/MealPage';
 
 function App() {
     const [city, setCity] = useState('');
@@ -38,7 +39,9 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
-                    <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />} />
+                    <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />}>
+                        <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
+                    </Route>
                 </Route>
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />

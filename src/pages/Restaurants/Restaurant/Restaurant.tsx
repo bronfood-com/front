@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Meal, MealType, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
 import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
@@ -30,13 +30,16 @@ function Restaurant() {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
         return (
-            <RestaurantPopup close={close}>
-                <RestaurantImage image={restaurant.photo} />
-                <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
-                <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                <MealsList meals={mealsFiltered} />
-                {isLoading && <Preloader />}
-            </RestaurantPopup>
+            <>
+                <RestaurantPopup close={close}>
+                    <RestaurantImage image={restaurant.photo} />
+                    <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
+                    <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
+                    <MealsList meals={mealsFiltered} />
+                    {isLoading && <Preloader />}
+                </RestaurantPopup>
+                <Outlet />
+            </>
         );
     }
 }

@@ -3,6 +3,7 @@
 .boxfood {
     border-radius: 20px;
     border: 1px solid $line;
+    cursor: pointer;
 
     &__container {
         display: flex;
