@@ -1,6 +1,7 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
+import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
+import { sumBy } from 'lodash';
 
 type BasketContext = {
     /**
@@ -34,11 +35,11 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (mealId: string) => Promise<void>;
+    addMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (mealId: string) => Promise<void>;
+    deleteMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
     /**
      * Removes restaurant and all meals from basket
      */
@@ -63,7 +64,23 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const price = meals.reduce((acc, current) => acc + current.meal.price * current.count, 0);
+    const price = meals.reduce((acc, current) => {
+        if (current.meal.features.length > 0) {
+            return (
+                acc +
+                current.count *
+                    sumBy(current.meal.features, (feature) => {
+                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        if (isChosen) {
+                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                        } else {
+                            return feature.choices.filter((choice) => choice.default)[0].price;
+                        }
+                    })
+            );
+        }
+        return acc + current.count * current.meal.price;
+    }, 0);
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
@@ -76,15 +93,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals(meals);
         }
     };
-    const addMeal = async (mealId: string) => {
+    const addMeal = async (mealId: string, features: Feature[] | never[]) => {
         setIsLoading(true);
-        const basket = await basketService.addMeal(mealId);
+        const basket = await basketService.addMeal(mealId, features);
         setIsLoading(false);
         handleServerResponse(basket);
     };
-    const deleteMeal = async (mealId: string) => {
+    const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
         setIsLoading(true);
-        const basket = await basketService.deleteMeal(mealId);
+        const basket = await basketService.deleteMeal(mealId, features);
         setIsLoading(false);
         handleServerResponse(basket);
     };
