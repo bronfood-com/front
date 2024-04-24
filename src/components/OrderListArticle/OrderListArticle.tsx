@@ -10,7 +10,7 @@ const OrderListArticle1: FC<OrderListArticleProps> = ({ order }) => {
     return (
         <article className={styles.orderListArticle}>
             <ul className={styles.orderListArticle__list}>
-                {order.orderDetails.map((item) => (
+                {order.orderedMeal.map((item) => (
                     <OrderListItem item={item} key={item.id} />
                 ))}
             </ul>

@@ -17,7 +17,7 @@ export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiRespo
     return { data: orders[0].id, error: null };
 };
 
-export const fetchOrderDetailsByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
+export const fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
     const order = mockData.orders.find((order) => order.id === id);
     if (!order) {
         return { data: null, error: 'Order details not found' };

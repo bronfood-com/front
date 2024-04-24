@@ -30,7 +30,7 @@ export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiRespo
     return { data: response.data[0].id, error: null };
 };
 
-export const fetchOrderDetailsByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
+export const fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
     const response = await fetchResponse<OrderState[]>(`${baseUrl}/orders?id=${id}`);
     if (response.error || response.data === null || response.data.length === 0) {
         return { data: null, error: response.error || 'Order details not found' };

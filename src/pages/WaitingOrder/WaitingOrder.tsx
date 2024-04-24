@@ -17,7 +17,7 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const { orderDetails, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder, setErrorMessage } = useOrderContext();
+    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder, setErrorMessage } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -26,8 +26,8 @@ const WaitingOrder: FC = () => {
     const handleConfirmCancellOrder = async () => {
         setShowConfirmationPopup(true);
         try {
-            if (!orderDetails) return;
-            await cancelOrder(orderDetails.id);
+            if (!orderedMeal) return;
+            await cancelOrder(orderedMeal.id);
         } catch (error) {
             setErrorMessage(t('components.waitingOrder.errorWhileCancellingTheOrder') as string);
         } finally {
@@ -39,13 +39,13 @@ const WaitingOrder: FC = () => {
     return (
         <>
             <Modal>
-                {orderDetails ? (
+                {orderedMeal ? (
                     <>
                         <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
-                        <h1 className={styles.waitingOrder__orderCode}>{orderDetails.id}</h1>
+                        <h1 className={styles.waitingOrder__orderCode}>{orderedMeal.id}</h1>
                         <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} />
                         <div className={styles.waitingOrder__separator} />
-                        <OrderListArticle order={orderDetails} />
+                        <OrderListArticle order={orderedMeal} />
                         {cancellationCountdown > 0 && (
                             <div className={styles.waitingOrder__cancelSection}>
                                 <p className={styles.waitingOrder__subtitleNote}>

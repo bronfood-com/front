@@ -3,8 +3,8 @@ import { useOrderProvider } from '../utils/hooks/useOrderProvider/useOrderProvid
 import { OrderState } from '../utils/api/orderService/orderService';
 
 export interface OrderContextType {
-    orderDetails: OrderState | null;
-    setOrderDetails: React.Dispatch<React.SetStateAction<OrderState | null>>;
+    orderedMeal: OrderState | null;
+    setOrderedMeal: React.Dispatch<React.SetStateAction<OrderState | null>>;
     preparationTime: number;
     setPreparationTime: React.Dispatch<React.SetStateAction<number>>;
     initialPreparationTime: number;
@@ -23,8 +23,8 @@ export interface OrderContextType {
 }
 
 const defaultOrderContextValue: OrderContextType = {
-    orderDetails: null,
-    setOrderDetails: () => {},
+    orderedMeal: null,
+    setOrderedMeal: () => {},
     preparationTime: 0,
     setPreparationTime: () => {},
     initialPreparationTime: 0,

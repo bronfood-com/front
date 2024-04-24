@@ -13,11 +13,11 @@ export const mockData: { orders: OrderState[] } = {
             cancellationTime: 120,
             cancellationStatus: 'none',
             isCancellationRequested: false,
-            orderDetails: [
-                { id: '1', itemDescription: 'Куриный донер', itemPrice: 1300, quantity: 1 },
-                { id: '2', itemDescription: 'Coffee', itemPrice: 500, quantity: 3 },
-                { id: '3', itemDescription: 'Салат Цезарь с курицей и сухариками', itemPrice: 2000, quantity: 1 },
-                { id: '4', itemDescription: 'Вода негазированная', itemPrice: 300, quantity: 1 },
+            orderedMeal: [
+                { id: '1', name: 'Куриный донер', price: 1300, quantity: 1 },
+                { id: '2', name: 'Coffee', price: 500, quantity: 3 },
+                { id: '3', name: 'Салат Цезарь с курицей и сухариками', price: 2000, quantity: 1 },
+                { id: '4', name: 'Вода негазированная', price: 300, quantity: 1 },
             ],
         },
         {
@@ -31,11 +31,11 @@ export const mockData: { orders: OrderState[] } = {
             cancellationTime: 4,
             cancellationStatus: 'none',
             isCancellationRequested: false,
-            orderDetails: [
-                { id: '1', itemDescription: 'Куриный донер', itemPrice: 1300, quantity: 1 },
-                { id: '2', itemDescription: 'Coffee', itemPrice: 500, quantity: 3 },
-                { id: '3', itemDescription: 'Салат Цезарь с курицей и сухариками', itemPrice: 2000, quantity: 1 },
-                { id: '4', itemDescription: 'Вода негазированная', itemPrice: 300, quantity: 1 },
+            orderedMeal: [
+                { id: '1', name: 'Куриный донер', price: 1300, quantity: 1 },
+                { id: '2', name: 'Coffee', price: 500, quantity: 3 },
+                { id: '3', name: 'Салат Цезарь с курицей и сухариками', price: 2000, quantity: 1 },
+                { id: '4', name: 'Вода негазированная', price: 300, quantity: 1 },
             ],
         },
     ],

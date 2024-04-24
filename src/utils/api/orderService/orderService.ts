@@ -1,15 +1,19 @@
-/**
- * Describes the details of a specific item in an order.
- * @interface
- * @property {string} id - Unique identifier for the item.
- * @property {string} itemDescription - Description of the item.
- * @property {number} itemPrice - Price per item.
- * @property {number} quantity - Number of units of the item ordered.
- */
-export interface OrderDetails {
+export interface OrderedMeal {
+    /**
+     * Meal's id
+     */
     id: string;
-    itemDescription: string;
-    itemPrice: number;
+    /**
+     * Meal's name
+     */
+    name: string;
+    /**
+     * Meal's type
+     */
+    price: number;
+    /**
+     * Number of units of the item ordered
+     */
     quantity: number;
 }
 
@@ -18,10 +22,9 @@ export interface OrderDetails {
  * @interface
  * @property {string} clientId - Unique identifier for the client.
  * @property {string} id - Unique identifier for the order.
- * @property {OrderDetails[]} orderDetails - Array with details of items in the order.
+ * @property {OrderedMeal[]} orderedMeal - Array with details of items in the order.
  * @property {number} totalAmount - Total amount of the order.
  * @property {'waiting' | 'confirmed' | 'notConfirmed'} confirmationStatus - Confirmation status of the order.
- * @property {'waiting' | 'paid' | 'failed'} paymentStatus - Payment status of the order.
  * @property {'waiting' | 'reviewed' | 'skipped'} reviewStatus - Review status of the order.
  * @property {number} cancellationTime - Time of order cancellation in seconds.
  * @property {'none' | 'requested' | 'confirmed'} cancellationStatus - Cancellation status of the order.
@@ -40,5 +43,5 @@ export interface OrderState {
     cancellationTime: number;
     cancellationStatus: string;
     isCancellationRequested: boolean;
-    orderDetails: OrderDetails[];
+    orderedMeal: OrderedMeal[];
 }
