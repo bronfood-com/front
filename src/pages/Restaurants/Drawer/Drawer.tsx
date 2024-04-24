@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
@@ -6,7 +6,6 @@ import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import Preloader from '../../../components/Preloader/Preloader';
 import { Link } from 'react-router-dom';
-import { MapContext } from '../../../contexts/MapContext';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -14,11 +13,6 @@ const Drawer = () => {
     const { restaurantsFiltered, isLoading } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
-
-    const { setIsOpenRestaurant } = useContext(MapContext);
-    useEffect(() => {
-        setIsOpenRestaurant(isOpen);
-    }, [isOpen, setIsOpenRestaurant]);
 
     return (
         <div className={`${styles.drawer} ${styles.up} ${isOpen ? styles.open : ''}`}>

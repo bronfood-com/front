@@ -7,7 +7,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { CurrentUserProvider } from './contexts/CurrentUserContext.tsx';
 import { RestaurantsProvider } from './contexts/RestaurantsContext.tsx';
 import { BasketProvider } from './contexts/BasketContext.tsx';
-import { MapProvider } from './contexts/MapContext.tsx';
 
 const router = createBrowserRouter([{ path: '*', element: <App /> }], { basename: `${process.env.NODE_ENV === 'production' ? '/front/' : ''}` });
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -15,9 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <CurrentUserProvider>
             <RestaurantsProvider>
                 <BasketProvider>
-                    <MapProvider>
-                        <RouterProvider router={router} />
-                    </MapProvider>
+                    <RouterProvider router={router} />
                 </BasketProvider>
             </RestaurantsProvider>
         </CurrentUserProvider>

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
+import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
@@ -15,6 +16,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     };
     const [latitude, setLatitude] = useState(43.246345);
     const [longitude, setLongitude] = useState(76.921552);
+    const { isLogin } = useCurrentUser();
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -46,9 +48,11 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     instanceRef={(map) => {
                         if (map) {
-                            const currentGlobalPixelCenter = map.getGlobalPixelCenter();
-                            const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 150];
-                            map.setGlobalPixelCenter(newGlobalPixelCenter);
+                            if (isLogin) {
+                                const currentGlobalPixelCenter = map.getGlobalPixelCenter();
+                                const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 150];
+                                map.setGlobalPixelCenter(newGlobalPixelCenter);
+                            }
                         }
                     }}
                 >
