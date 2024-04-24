@@ -45,7 +45,7 @@ function App() {
                         <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
                     </Route>
                 </Route>
-                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
+                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')}/>} />} />
                 <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
             </Routes>
         </div>

@@ -1,15 +1,15 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Modal from '../../components/Modal/Modal';
-import OrderListArticle from '../../components/OrderListArticle/OrderListArticle';
-import OrderTimeCounter from '../../components/OrderTimeCounter/OrderTimeCounter';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import { formatTime } from '../../utils/serviceFuncs/formatTime';
-import waitingImg from '../../vendor/images/waiting-screen.svg';
+import Modal from '../../../components/Modal/Modal';
+import OrderTimeCounter from '../../../components/OrderTimeCounter/OrderTimeCounter';
+import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
+import ProgressBar from '../../../components/ProgressBar/ProgressBar';
+import { useOrderContext } from '../../../utils/hooks/useOrderContext/useOrderContext';
+import { formatTime } from '../../../utils/serviceFuncs/formatTime';
+import waitingImg from '../../../vendor/images/waiting-screen.svg';
+import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
+import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import styles from './WaitingOrder.module.scss';
-import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/ConfirmationPopup';
-import { useOrderContext } from '../../utils/hooks/useOrderContext/useOrderContext';
-import PopupOrderCancelled from '../PopupOrderCancelled/PopupOrderCancelled';
 
 const WaitingOrder: FC = () => {
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);

@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { OrderState } from '../../../utils/api/orderService/orderService';
 import styles from './OrderListItem.module.scss';
-import { OrderState } from '../../utils/api/orderService/orderService';
 
 export const OrderListItem: FC<{ item: OrderState['orderedMeal'][number] }> = ({ item }) => (
     <li className={styles.orderListItem__item}>
