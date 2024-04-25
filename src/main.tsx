@@ -9,13 +9,13 @@ import { RestaurantsProvider } from './contexts/RestaurantsContext.tsx';
 import { BasketProvider } from './contexts/BasketContext.tsx';
 
 const browserRouter = createBrowserRouter([{ path: '*', element: <App /> }], { basename: '/' });
-const hashRouter = createHashRouter([{ path: '*', element: <App /> }], { basename: '/front' });
+const hashRouter = createHashRouter([{ path: '*', element: <App /> }], { basename: '' });
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <CurrentUserProvider>
             <RestaurantsProvider>
                 <BasketProvider>
-                    <RouterProvider router={process.env.NODE_ENV === 'production' ? hashRouter : browserRouter} />
+                    <RouterProvider router={process.env.NODE_ENV === 'production' ? hashRouter : hashRouter} />
                 </BasketProvider>
             </RestaurantsProvider>
         </CurrentUserProvider>

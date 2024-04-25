@@ -20,6 +20,7 @@ function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    console.log(pathname);
     const { currentUser } = useCurrentUser();
     useEffect(() => {
         // Enable redirect to /restaurants in PR preview
