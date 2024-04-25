@@ -41,9 +41,9 @@ function Restaurant() {
             </>
         );
     } else if (isLoading) {
-        return null
+        return null;
     } else if (!restaurant) {
-        return <PageNotFound />
+        return <PageNotFound />;
     }
 }
 
