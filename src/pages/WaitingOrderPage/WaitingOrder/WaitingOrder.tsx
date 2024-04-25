@@ -74,12 +74,7 @@ const WaitingOrder: FC = () => {
             </Modal>
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper}>
-                    <ConfirmationPopup
-                        title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')}
-                        confirmButtonText={t('components.confirmationPopup.yes')}
-                        onCancel={() => setShowConfirmationPopup(false)}
-                        onSubmit={handleConfirmCancellOrder}
-                    />
+                    <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
                 </div>
             )}
             {showOrderCancelledPopup && <PopupOrderCancelled />}
