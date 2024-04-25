@@ -5,6 +5,7 @@ import InputPhone from '../../../components/InputPhone/InputPhone';
 import Button from '../../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import styles from './QueryPhone.module.scss';
 
 interface QueryPhone {
     /**
@@ -36,10 +37,12 @@ const QueryPhone: FC<QueryPhone> = (props) => {
                 navigate('/');
             }}
         >
-            <Form control={props.control} name="phoneNumber" onSubmit={props.onSubmit}>
-                <InputPhone errors={props.errors} register={props.register} />
-                <Button>{t('pages.passwordRecovery.continue')}</Button>
-            </Form>
+            <div className={styles.QueryPhone__layout}>
+                <Form control={props.control} name="phoneNumber" onSubmit={props.onSubmit}>
+                    <InputPhone errors={props.errors} register={props.register} />
+                    <Button>{t('pages.passwordRecovery.continue')}</Button>
+                </Form>
+            </div>
         </Popup>
     );
 };

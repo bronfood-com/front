@@ -1,13 +1,8 @@
 @import '../../styles/variables.scss';
 
-.confirmation {
-    &__title {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 1.4;
-        color: $raisinBlack;
-
-        margin: -10px auto 25px;
+.SMSVerify {
+    &__layout {
+        padding: 0 21px;
     }
 
     &__inputs {

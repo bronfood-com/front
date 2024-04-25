@@ -3,12 +3,15 @@ import NewPassword from './NewPassword/NewPassword';
 import Popup from '../../components/Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useRestorePassword } from '../../utils/hooks/useRestorePassword/useRestorePassword';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import SMSVerify from '../../components/SMSVerify/SMSVerify';
 import SuccessPasswordChange from './SuccessPasswordChange/SuccessPasswordChange';
 import QueryPhone from './QueryPhone/QueryPhone';
+import { restorePasswordService } from '../../utils/api/restorePasswordService/restorePasswordService';
+import { useState } from 'react';
+
+type TypeStage = 'START' | 'PHONE-EXIST' | 'NEW-PASSWORD-GIVEN' | 'SUCCESS' | 'ERROR';
 
 const RestorePassword = () => {
     const {
@@ -19,28 +22,69 @@ const RestorePassword = () => {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { isLoading, stage, queryPhone, requestChangePassword, applyPasswordChange } = useRestorePassword();
 
-    const onSubmitQueryPhone: SubmitHandler<FieldValues> = (formFields) => {
-        if (queryPhone !== null) {
-            queryPhone(formFields.data.phoneNumber);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [stage, setStage] = useState<TypeStage>('START');
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [tempDataCode, setTempDataCode] = useState<string>('');
+
+    const startRestorePassword = () => {
+        localStorage.removeItem('temp_data_code');
+        localStorage.removeItem('confirmation_code');
+        setStage('START');
+    };
+
+    const onSubmitQueryPhone: SubmitHandler<FieldValues> = async (formFields) => {
+        const phoneNumber = formFields.data.phoneNumber;
+        setIsLoading(true);
+        localStorage.setItem('phone', phoneNumber);
+        const mappedPhoneNumber = phoneNumber.replace(/\D/g, '');
+        const res = await restorePasswordService.queryPhoneNumber(mappedPhoneNumber);
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+            setStage('ERROR');
+        }
+        if (res.status === 'success') {
+            setIsLoading(false);
+            setTempDataCode(res.data.temp_data_code);
+            setStage('PHONE-EXIST');
         }
     };
 
-    const onSubmitChangePassword: SubmitHandler<FieldValues> = (formFields) => {
-        if (requestChangePassword !== null) {
-            requestChangePassword(formFields.data.password, formFields.data.password_confirm);
+    const onSubmitChangePassword: SubmitHandler<FieldValues> = async (formFields) => {
+        const { password, password_confirm } = formFields.data;
+        setIsLoading(true);
+        const res = await restorePasswordService.setNewPassword(password, password_confirm, tempDataCode);
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+            setStage('ERROR');
+        }
+        if (res.status === 'success') {
+            setIsLoading(false);
+            setTempDataCode(res.data.temp_data_code);
+            setStage('NEW-PASSWORD-GIVEN');
+            return;
         }
     };
 
-    const onSubmitApplyPassword: SubmitHandler<FieldValues> = () => {
-        if (applyPasswordChange !== null) {
-            applyPasswordChange();
+    const onSubmitApplyPassword = async (code: string) => {
+        setIsLoading(true);
+        const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
+        if (res.status === 'error') {
+            setIsLoading(false);
+            setErrorMessage(res.error_message);
+            setStage('ERROR');
         }
-    };
-
-    const getErrorMessage = (): string => {
-        return localStorage.getItem('error') || '';
+        if (res.status === 'success') {
+            setIsLoading(false);
+            setStage('SUCCESS');
+            localStorage.removeItem('phone');
+        }
+        setTimeout(() => {
+            startRestorePassword();
+        }, 3000);
     };
 
     const renderStage = () => {
@@ -65,7 +109,7 @@ const RestorePassword = () => {
                             navigate('/');
                         }}
                     >
-                        <ErrorMessage message={getErrorMessage()} />
+                        <ErrorMessage message={errorMessage} />
                     </Popup>
                 );
         }

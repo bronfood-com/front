@@ -1,50 +1,50 @@
-import { RestorePasswordServiceMock } from './restorePasswordServiceMock';
-// import { RestorePasswordServiceReal } from './restorePasswordServiceReal';
+// import { RestorePasswordServiceMock } from './restorePasswordServiceMock';
+import { RestorePasswordServiceReal } from './restorePasswordServiceReal';
 
-export type restorePassword = {
+export type RestorePassword = {
     /**
-     * user's phone number
+     * User's phone number
      */
     phoneNumber: string;
 };
 
-export type newPassword = {
+export type NewPassword = {
     /**
-     * user's phone number
+     * User's phone number
      */
     phoneNumber: string;
     /**
-     * new password
+     * New password
      */
     newPassword: string;
     /**
-     * code to verify user is owner of the phone number
+     * Code to verify user is owner of the phone number
      */
     verificationСode: string;
 };
 
-export type requestChangePasswordResponse = {
+export type RequestChangePasswordResponse = {
     status: 'success';
     data: {
         temp_data_code: string;
     };
 };
 
-export type requestChangePasswordResponseError = {
+export type RequestChangePasswordResponseError = {
     status: 'error';
     error_message: string;
 };
 
-export type completeChangePasswordResponse = {
+export type CompleteChangePasswordResponse = {
     status: 'success';
     message: string;
 };
 
 export interface RestorePasswordService {
-    queryPhoneNumber: (phone: string) => Promise<requestChangePasswordResponse | requestChangePasswordResponseError>;
-    setNewPassword: (phone: string, newPassword: string, verificationCode: string) => Promise<requestChangePasswordResponse | requestChangePasswordResponseError>;
-    verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<completeChangePasswordResponse | requestChangePasswordResponseError>;
+    queryPhoneNumber: (phone: string) => Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError>;
+    setNewPassword: (phone: string, newPassword: string, verificationCode: string) => Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError>;
+    verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError>;
 }
 
-// export const restorePasswordService = new RestorePasswordServiceReal();
-export const restorePasswordService = new RestorePasswordServiceMock();
+export const restorePasswordService = new RestorePasswordServiceReal();
+// export const restorePasswordService = new RestorePasswordServiceMock();

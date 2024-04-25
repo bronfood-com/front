@@ -12,7 +12,7 @@ interface FormInputs {
  * Input has its own margin-top 8px cause of lable above.
  */
 const FormInputs: FC<FormInputs> = (props) => {
-    return <div className={styles.form__inputs}>{props.children}</div>;
+    return <div className={styles.FormInputs__inputs}>{props.children}</div>;
 };
 
 export default FormInputs;

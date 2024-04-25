@@ -1,8 +1,8 @@
-import { RestorePasswordService, requestChangePasswordResponse, requestChangePasswordResponseError, completeChangePasswordResponse } from './restorePasswordService';
+import { RestorePasswordService, RequestChangePasswordResponse, RequestChangePasswordResponseError, CompleteChangePasswordResponse } from './restorePasswordService';
 import { API_URL } from '../../consts';
 
 export class RestorePasswordServiceReal implements RestorePasswordService {
-    async queryPhoneNumber(phone: string): Promise<requestChangePasswordResponse | requestChangePasswordResponseError> {
+    async queryPhoneNumber(phone: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         const body = { phone };
         const res = await fetch(`${API_URL}/client/change_password/request/`, {
             method: 'POST',
@@ -15,7 +15,7 @@ export class RestorePasswordServiceReal implements RestorePasswordService {
         return result;
     }
 
-    async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<requestChangePasswordResponse | requestChangePasswordResponseError> {
+    async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         const body = { password, password_confirm, temp_data_code };
         const res = await fetch(`${API_URL}/client/change_password/confirmation/`, {
             method: 'POST',
@@ -28,7 +28,7 @@ export class RestorePasswordServiceReal implements RestorePasswordService {
         return result;
     }
 
-    async verifyPasswordChange(temp_data_code: string, confirmation_code: string): Promise<completeChangePasswordResponse | requestChangePasswordResponseError> {
+    async verifyPasswordChange(temp_data_code: string, confirmation_code: string): Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError> {
         const body = { confirmation_code, temp_data_code };
         const res = await fetch(`${API_URL}/client/change_password/complete/`, {
             method: 'PATCH',
