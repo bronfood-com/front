@@ -24,7 +24,7 @@ function Basket({ onPayOrder }: { onPayOrder: () => void }) {
                     <>
                         <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         <BasketMealsList meals={meals} />
-                        <BasketTotal price={price}  onPayOrderClick={onPayOrder}/>
+                        <BasketTotal price={price} onPayOrderClick={onPayOrder} />
                     </>
                 )}
                 {isLoading && <Preloader />}

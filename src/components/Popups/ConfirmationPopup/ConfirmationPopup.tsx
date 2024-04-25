@@ -6,20 +6,13 @@ type ConfirmationPopupProps = {
     title: string;
     confirmButtonText: string;
     onCancel: () => void;
-    onSubmit: () => void | Promise<void>; // может быть и асинхронной // Орлов Дима
-    onSuccess?: () => void; // необязательный callback // Орлов Дима
-    children?: ReactNode; // сделал необязательным // Орлов Дима
+    onSubmit: () => void;
+    children?: ReactNode;
 };
 
-const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, onSuccess, children }) => {
+const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, children }) => {
     const { t } = useTranslation();
 
-    const handleSubmit = () => {
-        const result = onSubmit();
-        if (result && onSuccess) {
-            result.then(onSuccess);
-        }
-    };
     return (
         <div className={styles.confirmPopup}>
             <h2 className={styles.confirmPopup__title}>{title}</h2>
@@ -29,7 +22,7 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonTex
                 <button className={styles.cancel} onClick={onCancel}>
                     {t('components.confirmationPopup.cancel')}
                 </button>
-                <button className={styles.confirm} onClick={handleSubmit}>
+                <button className={styles.confirm} onClick={onSubmit}>
                     {confirmButtonText}
                 </button>
             </div>
