@@ -9,12 +9,14 @@ import MealsList from './MealsList/MealsList';
 import MealsFilter from './MealsFilter/MealsFilter';
 import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
+import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function Restaurant() {
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsFiltered, isLoading } = useRestaurants();
+    const {isLoading: isBasketLoading} = useBasket();
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const close = () => {
         navigate('/restaurants');
@@ -35,7 +37,7 @@ function Restaurant() {
                     <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                     <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
                     <MealsList meals={mealsFiltered} />
-                    {isLoading && <Preloader />}
+                    {isBasketLoading && <Preloader />}
                 </RestaurantPopup>
                 <Outlet />
             </>
