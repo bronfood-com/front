@@ -85,7 +85,7 @@ function MealPage() {
                 </form>
             </FormProvider>
         );
-    } else return <PageNotFound />
+    } else return <PageNotFound />;
 }
 
 export default MealPage;

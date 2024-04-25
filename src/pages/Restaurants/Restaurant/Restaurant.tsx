@@ -42,7 +42,7 @@ function Restaurant() {
                 <Outlet />
             </>
         );
-    } else return <PageNotFound />
+    } else return <PageNotFound />;
 }
 
 export default Restaurant;
