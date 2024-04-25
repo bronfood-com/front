@@ -37,6 +37,10 @@
     &__img {
         width: 254px;
         height: 181px;
+        background-image: url('../../../vendor/images/waiting-screen.svg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
     &__cancelSection {

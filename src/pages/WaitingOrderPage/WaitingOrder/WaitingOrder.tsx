@@ -6,7 +6,6 @@ import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/Conf
 import ProgressBar from '../../../components/ProgressBar/ProgressBar';
 import { useOrderContext } from '../../../utils/hooks/useOrderContext/useOrderContext';
 import { formatTime } from '../../../utils/serviceFuncs/formatTime';
-import waitingImg from '../../../vendor/images/waiting-screen.svg';
 import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import styles from './WaitingOrder.module.scss';
@@ -65,7 +64,7 @@ const WaitingOrder: FC = () => {
                     <>
                         <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
                         <p className={styles.waitingOrder__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
-                        <img src={waitingImg} alt="waiting image" className={styles.waitingOrder__img} />
+                        <span className={styles.waitingOrder__img} />
                         <div className={styles.waitingOrder__separator} />
                         <ProgressBar initialTime={WAIT_CODE_IN_SECONDS} currentTime={waitOrderCodeTime} />
                         <p className={styles.waitingOrder__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
