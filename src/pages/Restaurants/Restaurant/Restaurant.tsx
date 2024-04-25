@@ -16,7 +16,7 @@ function Restaurant() {
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsFiltered, isLoading } = useRestaurants();
-    const {isLoading: isBasketLoading} = useBasket();
+    const { isLoading: isBasketLoading } = useBasket();
     const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
     const close = () => {
         navigate('/restaurants');
