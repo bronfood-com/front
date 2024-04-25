@@ -11,7 +11,7 @@ export type ProtectedRouteProps = {
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ component }) => {
     const { isLogin } = useCurrentUser();
-
+    
     return isLogin ? component : <Navigate to="/" />;
 };
 

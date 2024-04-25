@@ -74,7 +74,10 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<User | null>(JSON.parse(localStorage.getItem('user')));
+    const user = localStorage.getItem('user');
+    const [currentUser, setCurrentUser] = useState<User | null>(
+        user && JSON.parse(user)
+    );
     const { t } = useTranslation();
     const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
