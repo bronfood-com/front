@@ -8,8 +8,8 @@ import { CurrentUserProvider } from './contexts/CurrentUserContext.tsx';
 import { RestaurantsProvider } from './contexts/RestaurantsContext.tsx';
 import { BasketProvider } from './contexts/BasketContext.tsx';
 
-const browserRouter = createBrowserRouter([{ path: '*', element: <App /> }], { basename: `${process.env.NODE_ENV === 'production' ? '/front/' : ''}` });
-const hashRouter = createHashRouter([{ path: '*', element: <App /> }], { basename: `${process.env.NODE_ENV === 'production' ? '/front/' : ''}` });
+const browserRouter = createBrowserRouter([{ path: '*', element: <App /> }], { basename: '/' });
+const hashRouter = createHashRouter([{ path: '*', element: <App /> }], { basename: '/front/' });
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <CurrentUserProvider>
