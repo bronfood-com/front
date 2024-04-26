@@ -63,9 +63,6 @@ const SMSVerify: FC<SMSVerify> = (props) => {
                     control={props.control}
                     name="form-confirmation"
                     onSubmit={onSubmit}
-                    onError={() => {
-                        alert('error');
-                    }}
                 >
                     <PinInput values={props.values} name="PinInput" placeholder="" required={true} containerClassName={styles.SMSVerify__inputs} showState={showError} autoFocus={true} onChange={handleCompleteCode} validate={valTest} />
                     <Button>{t('components.button.next')}</Button>

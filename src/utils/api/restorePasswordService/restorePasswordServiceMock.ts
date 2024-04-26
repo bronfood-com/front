@@ -14,7 +14,7 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
         return { status: 'success', data: { temp_data_code: `${this.generateTempDataCode(phone)}` } };
     }
 
-    async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
+    async setNewPassword(_password: string, _password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
         return { status: 'success', data: { temp_data_code } };
     }
