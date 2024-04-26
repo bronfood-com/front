@@ -18,6 +18,7 @@ const RestorePassword = () => {
         register,
         formState: { errors },
         control,
+        watch,
     } = useForm();
 
     const navigate = useNavigate();
@@ -27,10 +28,12 @@ const RestorePassword = () => {
     const [stage, setStage] = useState<TypeStage>('START');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [tempDataCode, setTempDataCode] = useState<string>('');
+    const [confirmationCode, setConfirmationCode] = useState<string[]>(['', '', '', '']);
 
     const startRestorePassword = () => {
-        localStorage.removeItem('temp_data_code');
-        localStorage.removeItem('confirmation_code');
+        setErrorMessage('');
+        setTempDataCode('');
+        setConfirmationCode(['', '', '', '']);
         setStage('START');
     };
 
@@ -39,16 +42,18 @@ const RestorePassword = () => {
         setIsLoading(true);
         localStorage.setItem('phone', phoneNumber);
         const mappedPhoneNumber = phoneNumber.replace(/\D/g, '');
-        const res = await restorePasswordService.queryPhoneNumber(mappedPhoneNumber);
-        if (res.status === 'error') {
-            setIsLoading(false);
-            setErrorMessage(res.error_message);
-            setStage('ERROR');
-        }
-        if (res.status === 'success') {
-            setIsLoading(false);
-            setTempDataCode(res.data.temp_data_code);
-            setStage('PHONE-EXIST');
+        if (mappedPhoneNumber !== '' && mappedPhoneNumber.length > 10) {
+            const res = await restorePasswordService.queryPhoneNumber(mappedPhoneNumber);
+            if (res.status === 'error') {
+                setIsLoading(false);
+                setErrorMessage(res.error_message);
+                setStage('ERROR');
+            }
+            if (res.status === 'success') {
+                setIsLoading(false);
+                setTempDataCode(res.data.temp_data_code);
+                setStage('PHONE-EXIST');
+            }
         }
     };
 
@@ -65,26 +70,28 @@ const RestorePassword = () => {
             setIsLoading(false);
             setTempDataCode(res.data.temp_data_code);
             setStage('NEW-PASSWORD-GIVEN');
-            return;
         }
     };
 
-    const onSubmitApplyPassword = async (code: string) => {
+    const onSubmitApplyPassword = async () => {
         setIsLoading(true);
-        const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
-        if (res.status === 'error') {
-            setIsLoading(false);
-            setErrorMessage(res.error_message);
-            setStage('ERROR');
+        const code = confirmationCode.join('');
+        if (tempDataCode !== '' && code !== '' && code.length === 4) {
+            const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
+            if (res.status === 'error') {
+                setIsLoading(false);
+                setErrorMessage(res.error_message);
+                setStage('ERROR');
+            }
+            if (res.status === 'success') {
+                setIsLoading(false);
+                setStage('SUCCESS');
+                localStorage.removeItem('phone');
+            }
+            setTimeout(() => {
+                startRestorePassword();
+            }, 3000);
         }
-        if (res.status === 'success') {
-            setIsLoading(false);
-            setStage('SUCCESS');
-            localStorage.removeItem('phone');
-        }
-        setTimeout(() => {
-            startRestorePassword();
-        }, 3000);
     };
 
     const renderStage = () => {
@@ -93,10 +100,10 @@ const RestorePassword = () => {
                 return <QueryPhone control={control} register={register} errors={errors} onSubmit={onSubmitQueryPhone} />;
 
             case 'PHONE-EXIST':
-                return <NewPassword control={control} register={register} errors={errors} onSubmit={onSubmitChangePassword} />;
+                return <NewPassword control={control} register={register} errors={errors} watch={watch} onSubmit={onSubmitChangePassword} />;
 
             case 'NEW-PASSWORD-GIVEN':
-                return <SMSVerify control={control} errors={errors} onSubmit={onSubmitApplyPassword} />;
+                return <SMSVerify values={confirmationCode} setCode={setConfirmationCode} control={control} errors={errors} onSubmit={onSubmitApplyPassword} />;
 
             case 'SUCCESS':
                 return <SuccessPasswordChange />;

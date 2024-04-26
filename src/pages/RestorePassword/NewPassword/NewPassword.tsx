@@ -24,11 +24,23 @@ interface NewPassword {
      * Submit form action
      */
     onSubmit: SubmitHandler<FieldValues>;
+    /**
+     *
+     * Method will watch specified inputs and return their values
+     */
+    watch: (names?: string | string[]) => unknown;
 }
 
 const NewPassword: FC<NewPassword> = (props) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+
+    const validatePasswords = (value: FieldValues): string | boolean => {
+        if (props.watch('password') != value) {
+            return t('pages.newPassword.passwordDontMatch');
+        }
+        return true;
+    };
 
     return (
         <Popup
@@ -40,7 +52,7 @@ const NewPassword: FC<NewPassword> = (props) => {
             <Form control={props.control} name="form-restore-password" onSubmit={props.onSubmit}>
                 <FormInputs>
                     <InputPassword register={props.register} errors={props.errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
-                    <InputPassword register={props.register} errors={props.errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} />
+                    <InputPassword register={props.register} errors={props.errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
                     <Button>{t('pages.newPassword.button')}</Button>
                 </FormInputs>
             </Form>
