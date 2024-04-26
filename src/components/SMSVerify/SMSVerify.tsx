@@ -35,7 +35,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
     const { t } = useTranslation();
     const [showError, setShowError] = useState<boolean>(false);
 
-    const handleCompleteCode = (value: string | string[], index: number, values: string[]) => {
+    const handleCompleteCode = (_value: string | string[], _index: number, values: string[]) => {
         setShowError(false);
         if (values.length === 4) {
             props.setCode(values);
@@ -59,11 +59,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
             }}
         >
             <div className={styles.SMSVerify__layout}>
-                <Form
-                    control={props.control}
-                    name="form-confirmation"
-                    onSubmit={onSubmit}
-                >
+                <Form control={props.control} name="form-confirmation" onSubmit={onSubmit}>
                     <PinInput values={props.values} name="PinInput" placeholder="" required={true} containerClassName={styles.SMSVerify__inputs} showState={showError} autoFocus={true} onChange={handleCompleteCode} validate={valTest} />
                     <Button>{t('components.button.next')}</Button>
                 </Form>
