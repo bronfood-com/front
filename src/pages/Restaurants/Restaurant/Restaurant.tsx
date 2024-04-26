@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import styles from './RestaurantPopup/RestaurantPopup.module.scss'
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Meal, MealType, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
 import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
@@ -43,7 +44,13 @@ function Restaurant() {
             </>
         );
     } else if (isLoading) {
-        return null;
+        return (
+            <div className={styles.restaurant_popup_overlay}>
+                <div className={styles.restaurant_popup}>
+                    <Preloader />
+                </div>
+            </div>
+        )
     } else if (!restaurant) {
         return <PageNotFound />;
     }
