@@ -44,7 +44,7 @@ function App() {
                     </Route>
                 </Route>
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
-                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
         </div>
     );
