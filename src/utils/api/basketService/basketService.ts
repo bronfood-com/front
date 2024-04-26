@@ -1,5 +1,5 @@
 import { BasketServiceMock } from './basketServiceMock';
-import { Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export type MealInBasket = {
     /**
@@ -24,8 +24,8 @@ export type Basket = {
 };
 
 export interface BasketService {
-    addMeal: (mealId: string) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
-    deleteMeal: (mealId: string) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
+    addMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
+    deleteMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
     emptyBasket: () => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
 }
 

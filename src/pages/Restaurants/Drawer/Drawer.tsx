@@ -13,6 +13,7 @@ const Drawer = () => {
     const { restaurantsFiltered, isLoading } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
+
     return (
         <div className={`${styles.drawer} ${styles.up} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
