@@ -102,7 +102,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
@@ -127,7 +127,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
     useEffect(() => {
         const fetchRestaurants = async () => {
-            setIsLoading(true);
             const res = await restaurantsService.getRestaurants();
             if (res.status === 'error') {
                 setRestaurantsOnMap([]);
