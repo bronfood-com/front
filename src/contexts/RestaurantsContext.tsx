@@ -2,6 +2,7 @@ import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { useQuery } from '@tanstack/react-query';
 
 export type Option = {
     /**
@@ -102,7 +103,6 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
@@ -125,25 +125,24 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
+
+    const {isPending, data} = useQuery({
+        queryKey: ['restaurants'],
+        queryFn: () => restaurantsService.getRestaurants(),
+    })
+
     useEffect(() => {
-        const fetchRestaurants = async () => {
-            const res = await restaurantsService.getRestaurants();
-            if (res.status === 'error') {
-                setRestaurantsOnMap([]);
-                setIsLoading(false);
-            } else {
-                setRestaurantsOnMap(res.data);
-                setIsLoading(false);
-            }
-        };
-        fetchRestaurants();
-    }, []);
+        if (data) {
+            setRestaurantsOnMap(data.data)
+        }
+    }, [data])
+
     return (
         <RestaurantsContext.Provider
             value={{
                 restaurantsOnMap,
                 restaurantsFiltered,
-                isLoading,
+                isLoading: isPending,
                 options: {
                     all: options,
                     selectedOptions,

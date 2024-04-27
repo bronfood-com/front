@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useCallback } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useCallback, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { authService, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
@@ -74,8 +74,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const user = localStorage.getItem('user');
-    const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const { t } = useTranslation();
     const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
@@ -85,6 +84,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
     const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            setCurrentUser(JSON.parse(user));
+        }
+    }, []);
 
     const isLogin = !!currentUser;
 

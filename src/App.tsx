@@ -45,7 +45,7 @@ function App() {
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-            <ReactQueryDevtools initialIsOpen />
+            <ReactQueryDevtools initialIsOpen={false} />
         </div>
     );
 }
