@@ -126,16 +126,16 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
 
-    const {isPending, data} = useQuery({
+    const { isPending, data } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
-    })
+    });
 
     useEffect(() => {
         if (data) {
-            setRestaurantsOnMap(data.data)
+            setRestaurantsOnMap(data.data);
         }
-    }, [data])
+    }, [data]);
 
     return (
         <RestaurantsContext.Provider
