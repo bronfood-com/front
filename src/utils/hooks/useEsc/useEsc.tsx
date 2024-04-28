@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export const useEsc = (handleFunction) => {
     useEffect(() => {
@@ -6,4 +6,4 @@ export const useEsc = (handleFunction) => {
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
     });
-}
+};
