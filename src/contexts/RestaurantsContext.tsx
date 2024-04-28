@@ -27,6 +27,14 @@ export type VenueType = {
 
 type RestaurantsContext = {
     /**
+     * Set id restaurant which centered in list
+     */
+    setActiveRestaurant: (id: string) => void;
+    /**
+     * Restaurant which centered in list
+     */
+    inView: string;
+    /**
      * List of restaurants currently on map
      */
     restaurantsOnMap: Restaurant[];
@@ -83,6 +91,8 @@ type RestaurantsContext = {
 };
 
 export const RestaurantsContext = createContext<RestaurantsContext>({
+    inView: '',
+    setActiveRestaurant: () => {},
     restaurantsOnMap: [],
     restaurantsFiltered: [],
     isLoading: false,
@@ -101,6 +111,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [inView, setInView] = useState('');
     const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -114,6 +125,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         } else {
             setSelectedOptions([...selectedOptions, option]);
         }
+    };
+    const setActiveRestaurant = (id: string) => {
+        setInView(id);
     };
     const deleteOption = (option: Option) => {
         setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
@@ -142,6 +156,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <RestaurantsContext.Provider
             value={{
+                setActiveRestaurant,
+                inView,
                 restaurantsOnMap,
                 restaurantsFiltered,
                 isLoading,
