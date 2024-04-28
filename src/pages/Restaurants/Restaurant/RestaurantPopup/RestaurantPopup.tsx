@@ -1,6 +1,7 @@
-import { useEffect, MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
+import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
 
 type RestaurantPopupProps = {
     close: () => void;
@@ -13,11 +14,7 @@ const RestaurantPopup = ({ close, children }: RestaurantPopupProps) => {
             close();
         }
     };
-    useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && close();
-        document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
+    useEsc(close);
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
