@@ -40,6 +40,10 @@ type RestaurantsContext = {
      */
     isLoading: boolean;
     /**
+     * Indicates whether query encountered an error
+     */
+    isError: boolean;
+    /**
      * Options' states and controls. Options come from user's input
      */
     options: {
@@ -87,6 +91,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsOnMap: [],
     restaurantsFiltered: [],
     isLoading: false,
+    isError: false,
     options: {
         all: [],
         selectedOptions: [],
@@ -126,16 +131,19 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
 
-    const { isPending, data } = useQuery({
+    const { isPending, isError, isSuccess, data } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
-
+    
     useEffect(() => {
-        if (data) {
+        if (isError) {
+            setRestaurantsOnMap([]);
+        }
+        if (isSuccess) {
             setRestaurantsOnMap(data.data);
         }
-    }, [data]);
+    }, [isSuccess, data, isError]);
 
     return (
         <RestaurantsContext.Provider
@@ -143,6 +151,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 restaurantsOnMap,
                 restaurantsFiltered,
                 isLoading: isPending,
+                isError,
                 options: {
                     all: options,
                     selectedOptions,

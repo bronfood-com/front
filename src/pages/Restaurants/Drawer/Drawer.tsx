@@ -6,14 +6,18 @@ import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import Preloader from '../../../components/Preloader/Preloader';
 import { Link } from 'react-router-dom';
+import PageNotFound from '../../PageNotFound/PageNotFound';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered, isLoading } = useRestaurants();
+    const { restaurantsFiltered, isLoading, isError } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
 
+    if (isError) {
+        return <PageNotFound />
+    } else {
     return (
         <div className={`${styles.drawer} ${styles.up} ${isOpen ? styles.open : ''}`}>
             <div className={styles.drawer__container}>
@@ -37,7 +41,7 @@ const Drawer = () => {
             </div>
             {isFilterOpen && <Filter close={() => setIsFilterOpen(false)} />}
         </div>
-    );
+    )}
 };
 
 export default Drawer;
