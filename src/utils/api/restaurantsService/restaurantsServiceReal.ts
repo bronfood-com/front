@@ -18,7 +18,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
             },
         });
         if (!res.ok) {
-            return Promise.reject({ status: 'error', error_message: 'error' })
+            return Promise.reject({ status: 'error', error_message: 'error' });
         }
         return res.json();
     }
