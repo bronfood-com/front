@@ -15,6 +15,6 @@ export class RestaurantsServiceMock implements RestaurantsService {
             } else {
                 reject({ status: 'error', error_message: 'error' });
             }
-        })
+        });
     }
 }

@@ -135,12 +135,12 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
-    
+
     useEffect(() => {
         if (isError) {
             setRestaurantsOnMap([]);
         }
-        if (isSuccess) {
+        if (isSuccess && 'data' in data) {
             setRestaurantsOnMap(data.data);
         }
     }, [isSuccess, data, isError]);

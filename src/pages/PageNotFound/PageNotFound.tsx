@@ -11,8 +11,8 @@ const PageNotFound = () => {
     const queryClient = useQueryClient();
     const navigateToRoot = () => {
         queryClient.invalidateQueries();
-        navigate('/')
-    }
+        navigate('/');
+    };
     return (
         <Popup onClose={navigateToRoot}>
             <div className={styles.pageNotFound}>
