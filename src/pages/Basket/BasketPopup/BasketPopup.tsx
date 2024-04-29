@@ -15,9 +15,11 @@ const BasketPopup = ({ close, isConfirmationPopupOpen, children }: BasketPopupPr
             close();
         }
     };
-    useEsc(useCallback(() => {
-        return !isConfirmationPopupOpen && close();
-    }, [isConfirmationPopupOpen, close]));
+    useEsc(
+        useCallback(() => {
+            return !isConfirmationPopupOpen && close();
+        }, [isConfirmationPopupOpen, close]),
+    );
     return (
         <div className={styles.basket_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.basket_popup}>
