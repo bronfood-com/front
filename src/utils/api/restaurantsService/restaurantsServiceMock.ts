@@ -12,7 +12,7 @@ export class RestaurantsServiceMock implements RestaurantsService {
         if (token) {
             return { status: 'success', data: mockRestaurants };
         } else {
-            throw new Error({ status: 'error', error_message: 'error' });
+            throw new Error('error');
         }
     }
 }
