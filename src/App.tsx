@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
 import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
+            <ReactQueryDevtools initialIsOpen={false} />
         </div>
     );
 }
