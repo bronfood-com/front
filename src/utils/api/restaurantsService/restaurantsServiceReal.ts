@@ -17,8 +17,9 @@ export class RestaurantsServiceReal implements RestaurantsService {
                 authorization: `Token ${token}`,
             },
         });
-        const result = await res.json();
-        const { data } = result.data;
-        return data;
+        if (!res.ok) {
+            throw new Error('error');
+        }
+        return res.json();
     }
 }
