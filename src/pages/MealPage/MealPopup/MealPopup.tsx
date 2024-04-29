@@ -15,7 +15,7 @@ const MealPopup = ({ goBack, close, children }: MealPopupProps) => {
             close();
         }
     };
-    useEsc(useCallback(() => close(), [close]));
+    useEsc(useCallback(() => goBack(), [goBack]));
     return (
         <div className={styles.meal_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.meal_popup}>

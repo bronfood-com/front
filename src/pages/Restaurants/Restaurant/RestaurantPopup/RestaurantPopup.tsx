@@ -1,20 +1,33 @@
-import { MouseEvent, ReactNode, useCallback } from 'react';
+import { Dispatch, MouseEvent, ReactNode, SetStateAction, useCallback, useEffect } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
 import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
+import { useParams } from 'react-router-dom';
 
 type RestaurantPopupProps = {
     close: () => void;
+    isMealPageOpen: boolean;
+    setIsMealPageOpen: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
 };
 
-const RestaurantPopup = ({ close, children }: RestaurantPopupProps) => {
+const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children }: RestaurantPopupProps) => {
+    const {mealId} = useParams();
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
         }
     };
-    useEsc(useCallback(() => close(), [close]));
+    useEsc(
+        useCallback(() => {
+            return !isMealPageOpen && close();
+        }, [isMealPageOpen, close]),
+    );
+    useEffect(() => {
+        if (!mealId) {
+            setIsMealPageOpen(false);
+        }
+    }, [mealId, setIsMealPageOpen])
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>

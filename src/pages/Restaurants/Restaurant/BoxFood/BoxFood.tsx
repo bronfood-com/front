@@ -1,10 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './BoxFood.module.scss';
 import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
-function BoxFood({ card }: { card: Meal }) {
+function BoxFood({ card, setIsMealPageOpen }: { card: Meal, setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function BoxFood({ card }: { card: Meal }) {
     const handleClick = () => {
         if (hasFeatures) {
             navigate(`${pathname}/meal/${id}`);
+            setIsMealPageOpen(true);
         } else {
             addMeal(id, features);
         }
