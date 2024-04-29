@@ -30,7 +30,7 @@ const Popup: FC<Popup> = (props) => {
             props.onClose();
         }
     };
-    const {onClose} = props;
+    const { onClose } = props;
     useEsc(useCallback(() => onClose(), [onClose]));
     return (
         <div className={styles.popup_overlay} onClick={handleOverlayClick}>
