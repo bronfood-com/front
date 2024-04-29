@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
@@ -107,11 +107,16 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 });
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
+    const { isPending, isError, isSuccess, data } = useQuery({
+        queryKey: ['restaurants'],
+        queryFn: () => restaurantsService.getRestaurants(),
+    });
+    const restaurantsOnMap: Restaurant[] = isSuccess ? data.data : [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
     const typeNames: string[] = selectedVenueTypes.map((type) => type.name.toLowerCase());
+    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -129,21 +134,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteVenueType = (venueType: VenueType) => {
         setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
-    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
-
-    const { isPending, isError, isSuccess, data } = useQuery({
-        queryKey: ['restaurants'],
-        queryFn: () => restaurantsService.getRestaurants(),
-    });
-
-    useEffect(() => {
-        if (isError) {
-            setRestaurantsOnMap([]);
-        }
-        if (isSuccess && 'data' in data) {
-            setRestaurantsOnMap(data.data);
-        }
-    }, [isSuccess, data, isError]);
 
     return (
         <RestaurantsContext.Provider
