@@ -10,5 +10,5 @@ export const useEsc = (handleFunction: () => void) => {
         const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handleFunction();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
+    }, [handleFunction]);
 };

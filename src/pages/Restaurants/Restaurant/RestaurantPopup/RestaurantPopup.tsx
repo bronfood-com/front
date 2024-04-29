@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useCallback } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
 import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
@@ -14,7 +14,7 @@ const RestaurantPopup = ({ close, children }: RestaurantPopupProps) => {
             close();
         }
     };
-    useEsc(close);
+    useEsc(useCallback(() => close(), [close]));
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>

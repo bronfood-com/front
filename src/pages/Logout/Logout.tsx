@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, MouseEvent } from 'react';
+import { FC, useState, useEffect, MouseEvent, useCallback } from 'react';
 import styles from './Logout.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Logout: FC = () => {
             setIsErrorVisible(true);
         }
     };
-    const handleCancel = () => navigate('/');
+    const handleCancel = useCallback(() => navigate('/'), [navigate]);
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             navigate('/');

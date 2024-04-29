@@ -1,4 +1,4 @@
-import { MouseEvent, useState, useId, ChangeEvent } from 'react';
+import { MouseEvent, useState, useId, ChangeEvent, useCallback } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
@@ -50,7 +50,7 @@ const Filter = ({ close }: { close: () => void }) => {
             close();
         }
     };
-    useEsc(close);
+    useEsc(useCallback(() => close(), [close]));
     return (
         <div className={styles.filter_overlay} onClick={handleOverlayClick}>
             <div className={styles.filter}>

@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BasketConfirmation.module.scss';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
@@ -12,7 +12,7 @@ const BasketConfirmation = ({ close }: { close: () => void }) => {
         emptyBasket();
         close();
     };
-    const handleCancel = () => close();
+    const handleCancel = useCallback(() => close(), [close]);
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
