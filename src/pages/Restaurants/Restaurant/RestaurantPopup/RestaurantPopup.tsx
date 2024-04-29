@@ -12,7 +12,7 @@ type RestaurantPopupProps = {
 };
 
 const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children }: RestaurantPopupProps) => {
-    const {mealId} = useParams();
+    const { mealId } = useParams();
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -27,7 +27,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children }:
         if (!mealId) {
             setIsMealPageOpen(false);
         }
-    }, [mealId, setIsMealPageOpen])
+    }, [mealId, setIsMealPageOpen]);
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>

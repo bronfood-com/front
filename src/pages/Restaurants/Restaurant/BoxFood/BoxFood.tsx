@@ -5,7 +5,7 @@ import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 
-function BoxFood({ card, setIsMealPageOpen }: { card: Meal, setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
+function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
