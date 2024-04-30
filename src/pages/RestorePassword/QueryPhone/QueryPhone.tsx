@@ -37,7 +37,7 @@ const QueryPhone: FC<QueryPhone> = (props) => {
                 navigate('/');
             }}
         >
-            <div className={styles.QueryPhone__layout}>
+            <div className={styles.query_phone__layout}>
                 <Form control={props.control} name="phoneNumber" onSubmit={props.onSubmit}>
                     <InputPhone errors={props.errors} register={props.register} />
                     <Button>{t('pages.passwordRecovery.continue')}</Button>

@@ -1,8 +1,6 @@
-.FormInputs {
-    &__inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding: 0 21px;
-    }
+.form__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 21px;
 }

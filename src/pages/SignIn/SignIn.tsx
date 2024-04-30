@@ -12,12 +12,10 @@ import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
-import { useRestorePassword } from '../../utils/hooks/useRestorePassword/useRestorePassword';
 
 const SignIn = () => {
     const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { currentUser, signIn } = useCurrentUser();
-    const { startRestorePassword } = useRestorePassword();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -57,7 +55,7 @@ const SignIn = () => {
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
                     </FormInputs>
                 </fieldset>
-                <Link to="/restore-password" onClick={startRestorePassword} className={`${styles.link_recovery} link`}>
+                <Link to="/restore-password" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
                 </Link>
                 <Button disabled={signIn.isLoading}>{t('pages.signIn.loginButton')}</Button>

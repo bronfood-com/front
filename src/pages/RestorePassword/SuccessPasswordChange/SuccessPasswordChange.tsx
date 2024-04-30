@@ -9,8 +9,8 @@ const SuccessPasswordChange: FC = () => {
 
     return (
         <InfoPopup isOpened={true}>
-            <div className={styles.SuccessPasswordChange__layout}>
-                <div className={styles.SuccessPasswordChange__success} />
+            <div className={styles.success_password_change__layout}>
+                <div className={styles.success_password_change__success} />
                 <h2>{t('pages.passwordSaved.title')}</h2>
                 <InfoImage mode="stars_tube"></InfoImage>
             </div>
