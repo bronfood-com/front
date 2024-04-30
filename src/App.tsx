@@ -15,6 +15,8 @@ import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 import MealPage from './pages/MealPage/MealPage';
+import AboutUs from './components/AboutUs/AboutUs';
+import Feedback from './pages/Feedback/Feedback';
 
 function App() {
     const [city, setCity] = useState('');
@@ -42,6 +44,8 @@ function App() {
                     </Route>
                 </Route>
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </div>
