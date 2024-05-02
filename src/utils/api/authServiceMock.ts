@@ -14,7 +14,7 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         if (phone && password) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { fullname: 'User', phone, role: 'CLIENT' } };
+            return { status: 'success', data: { userId: 'u12345', fullname: 'User', phone, role: 'CLIENT' } };
         } else {
             return { status: 'error', error_message: 'invalidCredentials' };
         }
@@ -33,7 +33,7 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         if (temp_data_code && confirmation_code) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { phone: '74443332211', fullname: 'user registred' } };
+            return { status: 'success', data: { userId: 'u67890',phone: '74443332211', fullname: 'user registred' } };
         } else {
             return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
         }
@@ -54,7 +54,7 @@ export class AuthServiceMock implements AuthService {
     async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         if (confirmation_code) {
-            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
+            return { status: 'success', data: { userId: 'u56789', phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
         } else {
             return { status: 'error', error_message: 'invalidValidation' };
         }

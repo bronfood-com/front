@@ -6,11 +6,11 @@ type ApiResponse<T> = {
     error: string | null;
 };
 
-export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiResponse<string>> => {
+export const fetchOrderIdByClientId = async (userId: string): Promise<ApiResponse<string>> => {
     // timeout to simulate waiting for order confirmation
     await new Promise((resolve) => setTimeout(resolve, 4000));
 
-    const orders = mockData.orders.filter((order) => order.clientId === clientId);
+    const orders = mockData.orders.filter((order) => order.userId === userId);
     if (orders.length === 0) {
         return { data: null, error: 'No orders found for this client' };
     }

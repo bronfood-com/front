@@ -44,12 +44,12 @@ const defaultOrderContextValue: OrderContextType = {
 
 interface OrderProviderProps {
     children: ReactNode;
-    clientId: string;
+    userId: string;
 }
 
 export const OrderContext = createContext<OrderContextType>(defaultOrderContextValue);
 
-export const OrderProvider: FC<OrderProviderProps> = ({ children, clientId }) => {
-    const value = useOrderProvider(clientId);
+export const OrderProvider: FC<OrderProviderProps> = ({ children, userId }) => {
+    const value = useOrderProvider(userId);
     return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;
 };

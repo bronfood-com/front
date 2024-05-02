@@ -34,11 +34,13 @@ export interface СonfirmUpdateUser {
     confirmation_code: string;
 }
 export interface User {
+    userId: string;
     phone: PhoneNumber;
     fullname: string;
     role?: 'CLIENT';
 }
 export interface UserExtra {
+    userId: string;
     phone: PhoneNumber;
     fullname: string;
     role?: 'CLIENT';

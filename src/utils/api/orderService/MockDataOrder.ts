@@ -3,7 +3,7 @@ import { OrderState } from './orderService';
 export const mockData: { orders: OrderState[] } = {
     orders: [
         {
-            clientId: 'clientId1',
+            userId: 'u12345',
             id: 'NHG347',
             totalAmount: 4100,
             confirmationStatus: 'waiting',
@@ -21,7 +21,7 @@ export const mockData: { orders: OrderState[] } = {
             ],
         },
         {
-            clientId: 'clientId2',
+            userId: 'clientId2',
             id: 'NHG348',
             totalAmount: 5800,
             confirmationStatus: 'waiting',

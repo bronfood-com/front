@@ -174,7 +174,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
             return null;
         } else {
-            const user = { phone: result.data.phone, fullname: result.data.fullname };
+            const user = {
+                userId: result.data.userId,
+                phone: result.data.phone,
+                fullname: result.data.fullname,
+            };
             setCurrentUser(user);
             localStorage.setItem('user', JSON.stringify(user));
             setIsLoading(false);

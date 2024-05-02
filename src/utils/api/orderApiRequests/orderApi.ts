@@ -1,7 +1,7 @@
 // link to contract: https://www.notion.so/API-Restaurant-Meal-Basket-Order-e7947e0efa5948238032620646f28890
 import { OrderState } from '../orderService/orderService';
-
-const baseUrl = 'http://localhost:3001';
+// import { API_URL } from '../../consts';
+const API_URL = 'http://localhost:3001';
 
 type ApiResponse<T> = {
     data: T | null;
@@ -23,7 +23,7 @@ async function fetchResponse<T>(url: string, options?: RequestInit): Promise<Api
 }
 
 export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiResponse<string>> => {
-    const response = await fetchResponse<{ id: string }[]>(`${baseUrl}/orders?clientId=${clientId}`);
+    const response = await fetchResponse<{ id: string }[]>(`${API_URL}/orders?clientId=${clientId}`);
     if (response.error || response.data === null || response.data.length === 0) {
         return { data: null, error: response.error || 'No orders found for this client' };
     }
@@ -31,7 +31,7 @@ export const fetchOrderIdByClientId = async (clientId: string): Promise<ApiRespo
 };
 
 export const fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
-    const response = await fetchResponse<OrderState[]>(`${baseUrl}/orders?id=${id}`);
+    const response = await fetchResponse<OrderState[]>(`${API_URL}/orders?id=${id}`);
     if (response.error || response.data === null || response.data.length === 0) {
         return { data: null, error: response.error || 'Order details not found' };
     }
@@ -44,7 +44,7 @@ export const cancelOrder = async (id: string): Promise<ApiResponse<void>> => {
         isCancellationRequested: true,
     });
 
-    const response = await fetch(`${baseUrl}/orders/${id}`, {
+    const response = await fetch(`${API_URL}/orders/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: body,

@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './WaitingOrder.module.scss';
 import Modal from '../../../components/Modal/Modal';
 import OrderTimeCounter from '../../../components/OrderTimeCounter/OrderTimeCounter';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
@@ -8,7 +9,6 @@ import { useOrderContext } from '../../../utils/hooks/useOrderContext/useOrderCo
 import { formatTime } from '../../../utils/serviceFuncs/formatTime';
 import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
-import styles from './WaitingOrder.module.scss';
 
 const WaitingOrder: FC = () => {
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
@@ -16,22 +16,27 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder, setErrorMessage } = useOrderContext();
+    const {
+        orderedMeal,
+        preparationTime,
+        initialPreparationTime,
+        cancellationCountdown,
+        waitOrderCodeTime,
+        showConfirmationPopup,
+        setShowConfirmationPopup,
+        cancelOrder,
+    } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
     };
 
-    const handleConfirmCancellOrder = async () => {
-        setShowConfirmationPopup(true);
-        try {
-            if (!orderedMeal) return;
-            await cancelOrder(orderedMeal.id);
-        } catch (error) {
-            setErrorMessage(t('components.waitingOrder.errorWhileCancellingTheOrder') as string);
-        } finally {
-            setShowConfirmationPopup(false);
-            setShowOrderCancelledPopup(true);
+    const handleConfirmCancellOrder = () => {
+        if (orderedMeal && orderedMeal.id) {
+            cancelOrder(orderedMeal.id).then(() => {
+                setShowConfirmationPopup(false);
+                setShowOrderCancelledPopup(true);
+            });
         }
     };
 

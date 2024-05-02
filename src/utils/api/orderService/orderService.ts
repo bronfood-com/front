@@ -33,7 +33,7 @@ export interface OrderedMeal {
  */
 
 export interface OrderState {
-    clientId: string;
+    userId: string;
     id: string;
     totalAmount: number;
     confirmationStatus: string;
