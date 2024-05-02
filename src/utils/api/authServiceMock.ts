@@ -33,7 +33,7 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         if (temp_data_code && confirmation_code) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { userId: 'u67890',phone: '74443332211', fullname: 'user registred' } };
+            return { status: 'success', data: { userId: 'u67890', phone: '74443332211', fullname: 'user registred' } };
         } else {
             return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
         }

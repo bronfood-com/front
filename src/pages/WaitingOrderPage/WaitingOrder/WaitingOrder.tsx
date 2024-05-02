@@ -16,16 +16,7 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const {
-        orderedMeal,
-        preparationTime,
-        initialPreparationTime,
-        cancellationCountdown,
-        waitOrderCodeTime,
-        showConfirmationPopup,
-        setShowConfirmationPopup,
-        cancelOrder,
-    } = useOrderContext();
+    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
