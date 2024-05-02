@@ -13,7 +13,6 @@ import { useState } from 'react';
 type TypeStage = 'START' | 'PHONE-EXIST' | 'NEW-PASSWORD-GIVEN' | 'SUCCESS' | 'ERROR';
 
 const RestorePassword = () => {
-
     const navigate = useNavigate();
     const { t } = useTranslation();
 
