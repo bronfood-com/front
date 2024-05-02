@@ -1,4 +1,4 @@
-import { FC, ReactNode, MouseEvent, useCallback } from 'react';
+import { FC, ReactNode, MouseEvent } from 'react';
 import styles from './Popup.module.scss';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
@@ -31,7 +31,7 @@ const Popup: FC<Popup> = (props) => {
         }
     };
     const { onClose } = props;
-    useEsc(useCallback(() => onClose(), [onClose]));
+    useEsc(() => onClose(), [onClose]);
     return (
         <div className={styles.popup_overlay} onClick={handleOverlayClick}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>

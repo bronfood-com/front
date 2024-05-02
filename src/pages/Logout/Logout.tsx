@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, MouseEvent, useCallback } from 'react';
+import { FC, useState, useEffect, MouseEvent } from 'react';
 import styles from './Logout.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,6 @@ const Logout: FC = () => {
             setIsErrorVisible(true);
         }
     };
-    const handleCancel = useCallback(() => navigate('/'), [navigate]);
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             navigate('/');
@@ -33,11 +32,11 @@ const Logout: FC = () => {
             navigate('/');
         }
     }, [currentUser, navigate]);
-    useEsc(handleCancel);
+    useEsc(() => navigate('/'), [navigate]);
 
     return (
         <div className={styles.logout} onClick={handleOverlayClick}>
-            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={handleCancel} onSubmit={handleLogout}>
+            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={() => navigate('/')} onSubmit={handleLogout}>
                 {logout.isLoading && <Preloader />}
                 {isErrorVisible && logout.errorMessage && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
             </ConfirmationPopup>

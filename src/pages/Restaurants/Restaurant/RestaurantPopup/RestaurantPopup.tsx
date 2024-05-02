@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, ReactNode, SetStateAction, useCallback, useEffect } from 'react';
+import { Dispatch, MouseEvent, ReactNode, SetStateAction, useEffect } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
 import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
@@ -18,11 +18,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children }:
             close();
         }
     };
-    useEsc(
-        useCallback(() => {
-            return !isMealPageOpen && close();
-        }, [isMealPageOpen, close]),
-    );
+    useEsc(() => !isMealPageOpen && close(), [isMealPageOpen, close]);
     useEffect(() => {
         if (!mealId) {
             setIsMealPageOpen(false);

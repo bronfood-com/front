@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
- * Invokes 'handleFunction' when user clicks on 'Esc'
+ * Invokes callback function when user clicks on 'Esc'
  *
- * @param {} handleFunction
+ * @param {} cb callback function
+ * @param {} deps dependency array
  */
-export const useEsc = (handleFunction: () => void) => {
+export const useEsc = (cb: () => void, deps: unknown[]) => {
+    const handler = useCallback(cb, [deps, cb]);
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handleFunction();
+        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && handler();
         document.addEventListener('keydown', handleCloseByEsc);
         return () => document.removeEventListener('keydown', handleCloseByEsc);
-    }, [handleFunction]);
+    }, [handler]);
 };
