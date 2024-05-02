@@ -82,6 +82,12 @@ i18n
                         button: {
                             next: 'Далее',
                         },
+
+                        minutesForm: {
+                            minutes_one: 'минута',
+                            minutes_few: 'минуты',
+                            minutes_many: 'минут',
+                        },
                     },
                     pages: {
                         signIn: {
