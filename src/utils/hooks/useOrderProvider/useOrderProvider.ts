@@ -38,7 +38,10 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
             }
 
             const details = orderedMealResponse.data;
-            setOrderedMeal(details);
+            setOrderedMeal({
+                ...details,
+                confirmationStatus: details.confirmationStatus
+            });
             setPreparationTime(details.preparationTime);
             setInitialPreparationTime(details.preparationTime);
             setCancellationCountdown(details.cancellationTime);

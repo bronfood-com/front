@@ -1,20 +1,32 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import ProgressBar1 from '../ProgressBar/ProgressBar';
+import ProgressBar from '../ProgressBar/ProgressBar';
 import styles from './OrderTimeCounter.module.scss';
 
 type OrderTimeCounterProps = {
     remainingTime: number;
     initialTime: number;
+    confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
 };
 
-const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime }) => {
+const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime, confirmationStatus }) => {
     const { t } = useTranslation();
 
     const sign = remainingTime < 0 ? '-' : '';
     const formattedTime = `${sign}${Math.abs(remainingTime)}`;
 
-    const getStatusMessage = remainingTime > 0 ? 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared' : remainingTime === 0 ? 'components.orderTimeCounter.yourOrderIsReady' : 'components.orderTimeCounter.yourOrderWillBeReadySoon';
+    const getStatusMessage = () => {
+        switch (confirmationStatus) {
+            case 'waiting':
+                return 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared';
+            case 'confirmed':
+                return 'components.orderTimeCounter.yourOrderIsReady';
+            case 'notConfirmed':
+                return 'components.orderTimeCounter.yourOrderWillBeReadySoon';
+            default:
+                return 'components.orderTimeCounter.statusUnknown';
+        }
+    };
 
     const containerStyle = {
         container: remainingTime <= -1 ? styles.orderTimeCounterExpiredBorder : styles.orderTimeCounter,
@@ -33,9 +45,9 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTim
                     </p>
                 </div>
                 <div className={styles.orderTimeCounter__separator}>
-                    <ProgressBar1 initialTime={initialTime} currentTime={remainingTime} />
+                    <ProgressBar initialTime={initialTime} currentTime={remainingTime} />
                 </div>
-                <p className={styles.orderTimeCounter__subtitle}>{t(getStatusMessage)}</p>
+                <p className={styles.orderTimeCounter__subtitle}>{t(getStatusMessage())}</p>
             </div>
         </div>
     );

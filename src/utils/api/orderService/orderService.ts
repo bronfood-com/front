@@ -36,7 +36,7 @@ export interface OrderState {
     userId: string;
     id: string;
     totalAmount: number;
-    confirmationStatus: string;
+    confirmationStatus: "waiting" | "confirmed" | "notConfirmed";
     preparationTime: number;
     paymentStatus: string;
     reviewStatus: string;

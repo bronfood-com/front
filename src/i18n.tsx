@@ -62,6 +62,7 @@ i18n
                             yourOrderIsAlreadyBeingPrepared: 'Ваш заказ уже готовят',
                             yourOrderWillBeReadySoon: 'Ваш заказ скоро будет готов',
                             yourOrderIsReady: 'Ваш заказ уже готов',
+                            statusUnknown: 'Статус неизвестен',
                         },
 
                         waitingOrder: {
