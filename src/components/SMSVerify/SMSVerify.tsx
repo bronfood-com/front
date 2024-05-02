@@ -5,48 +5,34 @@ import styles from './SMSVerify.module.scss';
 import Button from '../Button/Button';
 import { PinInput } from 'react-input-pin-code';
 import { FC, useState } from 'react';
-import { Form, FieldValues, Control, FieldErrors } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 
 interface SMSVerify {
     /**
-     * Error message
-     */
-    errors: FieldErrors;
-    /**
      * Is called when the user submits the code.
      */
-    onSubmit: () => void;
-    /**
-     * This object contains methods for registering components into React Hook Form.
-     */
-    control?: Control<FieldValues>;
-    /**
-     * Values of pinInput
-     */
-    values: string[];
-    /**
-     * Setter for confirmationCode state
-     */
-    setCode: (values: string[]) => void;
+    onSubmit: (code: string) => void;
 }
 
 const SMSVerify: FC<SMSVerify> = (props) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const [showError, setShowError] = useState<boolean>(false);
+    const { control } = useForm();
 
-    const handleCompleteCode = (_value: string | string[], _index: number, values: string[]) => {
+    const [showError, setShowError] = useState<boolean>(false);
+    const [values, setValues] = useState<string[]>(['', '', '', '']);
+
+    const handleChange = (_value: string | string[], _index: number, values: string[]) => {
         setShowError(false);
-        if (values.length === 4) {
-            props.setCode(values);
-        }
+        setValues(values);
     };
 
     const onSubmit = () => {
-        if (props.values.join('').length !== 4) {
-            setShowError(true);
+        const code = values.join('');
+        if (code.length == 4) {
+            props.onSubmit(code);
         } else {
-            props.onSubmit();
+            setShowError(true);
         }
     };
 
@@ -58,9 +44,9 @@ const SMSVerify: FC<SMSVerify> = (props) => {
                 navigate('/');
             }}
         >
-            <div className={styles.SMSVerify__layout}>
-                <Form control={props.control} name="form-confirmation" onSubmit={onSubmit}>
-                    <PinInput values={props.values} name="PinInput" placeholder="" required={true} containerClassName={styles.SMSVerify__inputs} showState={showError} autoFocus={true} onChange={handleCompleteCode} validate={valTest} />
+            <div className={styles.sms_verify__layout}>
+                <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
+                    <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms_verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
                     <Button>{t('components.button.next')}</Button>
                 </Form>
             </div>

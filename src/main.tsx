@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <CurrentUserProvider>
             <RestaurantsProvider>
                 <BasketProvider>
-                        <RouterProvider router={router} />
+                    <RouterProvider router={router} />
                 </BasketProvider>
             </RestaurantsProvider>
         </CurrentUserProvider>

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Popup from '../../../components/Popups/Popup/Popup';
-import { Form, UseFormRegister, FieldValues, FieldErrors, SubmitHandler, Control } from 'react-hook-form';
+import { Form, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import InputPhone from '../../../components/InputPhone/InputPhone';
 import Button from '../../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -9,26 +9,26 @@ import styles from './QueryPhone.module.scss';
 
 interface QueryPhone {
     /**
-     * Method to register input
-     */
-    register: UseFormRegister<FieldValues>;
-    /**
-     * React Hook Forms error object
-     */
-    errors: FieldErrors;
-    /**
-     * This object contains methods for registering components into React Hook Form.
-     */
-    control: Control<FieldValues>;
-    /**
      * Submit form action
      */
-    onSubmit: SubmitHandler<FieldValues>;
+    onSubmit: (PhoneNumber: string) => void;
 }
 
 const QueryPhone: FC<QueryPhone> = (props) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const {
+        register,
+        formState: { errors },
+        control,
+    } = useForm();
+
+    const onSubmit: SubmitHandler<FieldValues> = (formFields) => {
+        const mappedPhoneNumber = formFields.data.phoneNumber.replace(/\D/g, '');
+        if (mappedPhoneNumber !== '' && mappedPhoneNumber.length > 10) {
+            props.onSubmit(mappedPhoneNumber);
+        }
+    };
 
     return (
         <Popup
@@ -38,8 +38,8 @@ const QueryPhone: FC<QueryPhone> = (props) => {
             }}
         >
             <div className={styles.query_phone__layout}>
-                <Form control={props.control} name="phoneNumber" onSubmit={props.onSubmit}>
-                    <InputPhone errors={props.errors} register={props.register} />
+                <Form control={control} name="phoneNumber" onSubmit={onSubmit}>
+                    <InputPhone errors={errors} register={register} />
                     <Button>{t('pages.passwordRecovery.continue')}</Button>
                 </Form>
             </div>
