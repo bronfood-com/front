@@ -36,7 +36,7 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: {mealId: string, features: Feature[] | never[]}) => void /* ({mealId, features}: {mealId: string, features: Feature[] | never[]}) => Promise<void>; */
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void /* ({mealId, features}: {mealId: string, features: Feature[] | never[]}) => Promise<void>; */;
     /**
      * Delete meal from basket
      */
@@ -64,8 +64,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const {mutate: addMeal, isPending: addMealPending} = useMutation({
-        mutationFn: ({ mealId, features }: {mealId: string, features: Feature[]}) => basketService.addMeal(mealId, features),
+    const { mutate: addMeal, isPending: addMealPending } = useMutation({
+        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => {
             if ('data' in result) {
                 const { restaurant, meals } = result.data;
@@ -116,13 +116,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         handleServerResponse(basket);
     }; */
     const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
-
         const basket = await basketService.deleteMeal(mealId, features);
 
         handleServerResponse(basket);
     };
     const emptyBasket = async () => {
-
         const basket = await basketService.emptyBasket();
 
         handleServerResponse(basket);
