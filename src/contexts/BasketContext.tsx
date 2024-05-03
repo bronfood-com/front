@@ -89,7 +89,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         const { restaurant, meals }: Basket = result.data;
         setRestaurant(restaurant);
         setMeals(meals);
-    }
+    };
     const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
