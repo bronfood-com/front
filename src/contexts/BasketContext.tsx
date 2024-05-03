@@ -36,11 +36,11 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void
+    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Removes restaurant and all meals from basket
      */
