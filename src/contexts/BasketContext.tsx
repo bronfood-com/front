@@ -66,43 +66,30 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const { mutate: addMeal, isPending: addMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
-        onSuccess: (result) => {
-            if ('data' in result) {
-                const { restaurant, meals }: Basket = result.data;
-                setRestaurant(restaurant);
-                setMeals(meals);
-            }
-        },
+        onSuccess: (result) => handleSuccess(result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
-        onSuccess: (result) => {
-            if ('data' in result) {
-                const { restaurant, meals }: Basket = result.data;
-                setRestaurant(restaurant);
-                setMeals(meals);
-            }
-        },
+        onSuccess: (result) => handleSuccess(result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const { mutate: emptyBasket, isPending: emptyBasketPending } = useMutation({
         mutationFn: () => basketService.emptyBasket(),
-        onSuccess: (result) => {
-            if ('data' in result) {
-                const { restaurant, meals }: Basket = result.data;
-                setRestaurant(restaurant);
-                setMeals(meals);
-            }
-        },
+        onSuccess: (result) => handleSuccess(result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
+    const handleSuccess = (result: { status: 'success'; data: Basket }) => {
+        const { restaurant, meals }: Basket = result.data;
+        setRestaurant(restaurant);
+        setMeals(meals);
+    }
     const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
