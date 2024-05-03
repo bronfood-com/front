@@ -64,7 +64,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const handleSuccess = (result: { status: 'success'; data: Basket }) => {
+    const handleSuccess = (result: { data: Basket }) => {
         const { restaurant, meals }: Basket = result.data;
         setRestaurant(restaurant);
         setMeals(meals);
