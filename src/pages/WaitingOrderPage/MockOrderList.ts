@@ -1,4 +1,4 @@
-import { OrderState } from './orderService';
+import { OrderState } from '../../utils/api/orderService/orderService';
 
 export const mockData: { orders: OrderState[] } = {
     orders: [

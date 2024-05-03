@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { OrderContextType } from '../../../contexts/OrderContext';
-import { cancelOrder, fetchOrderedMealByOrderId, fetchOrderIdByClientId } from '../../api/orderService/orderServiceMockReqs';
+import { cancelOrder, fetchOrderedMealByOrderId, fetchOrderIdByClientId } from '../../api/orderService/orderServiceMock';
 import { useTimers } from '../useTimer/useTimer';
 import { OrderState } from '../../api/orderService/orderService';
 import { useTranslation } from 'react-i18next';

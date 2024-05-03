@@ -1,5 +1,5 @@
 import { OrderState } from './orderService';
-import { mockData } from './MockDataOrder';
+import { mockData } from '../../../pages/WaitingOrderPage/MockOrderList';
 
 type ApiResponse<T> = {
     data: T | null;
