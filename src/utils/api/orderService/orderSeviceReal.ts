@@ -11,9 +11,10 @@ class ApiOrder {
         const response = await fetch(url, options);
         if (!response.ok) {
             const errorData = await response.json();
-            const errorMessage = errorData.key === 'UserIsAlreadyRegistered' // example error according to backend
-                ? 'User is already registered'
-                : `Error ${response.status}`;
+            const errorMessage =
+                errorData.key === 'UserIsAlreadyRegistered' // example error according to backend
+                    ? 'User is already registered'
+                    : `Error ${response.status}`;
             return { data: null, error: errorMessage };
         }
         const data: T = await response.json();
