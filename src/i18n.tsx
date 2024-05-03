@@ -118,6 +118,8 @@ i18n
                             phoneNumber: 'Телефон',
                             placeholder: '+7 (***)',
                             continue: 'Далее',
+                            ValidationError: 'Введен некорректный номер телефона.',
+                            UserWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
                         },
 
                         profile: {
@@ -136,6 +138,8 @@ i18n
                             server: 'Сервер не отвечает. Попробуйте позже',
                             validation: 'Данные заполненые неверно.',
                             duplicate: 'Такой номер телефона уже зарегистрирован',
+                            ValidationError: 'Некорректный ввод',
+                            invalidConformationCode: 'Введен неправильный код',
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',

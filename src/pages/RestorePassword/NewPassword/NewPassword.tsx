@@ -6,12 +6,30 @@ import InputPassword from '../../../components/InputPassword/InputPassword';
 import { useTranslation } from 'react-i18next';
 import { FC } from 'react';
 import Button from '../../../components/Button/Button';
+import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import Preloader from '../../../components/Preloader/Preloader';
 
 interface NewPassword {
     /**
      * Submit form action
      */
     onSubmit: (password: string, password_confirm: string) => void;
+    /**
+     * Flag that determines whether to show or not to show the error
+     */
+    isErrorVisible: boolean;
+    /**
+     * Error message
+     */
+    error: string;
+    /**
+     * Callback that clear error message
+     */
+    clearError: () => void;
+    /**
+     * Flag indicating whether the download is in progress
+     */
+    isLoading: boolean;
 }
 
 const NewPassword: FC<NewPassword> = (props) => {
@@ -43,13 +61,18 @@ const NewPassword: FC<NewPassword> = (props) => {
                 navigate('/');
             }}
         >
-            <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
-                <FormInputs>
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
-                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
-                    <Button>{t('pages.newPassword.button')}</Button>
-                </FormInputs>
-            </Form>
+            {props.isLoading ? (
+                <Preloader />
+            ) : (
+                <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
+                    <FormInputs>
+                        {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
+                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
+                        <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
+                        <Button>{t('pages.newPassword.button')}</Button>
+                    </FormInputs>
+                </Form>
+            )}
         </Popup>
     );
 };

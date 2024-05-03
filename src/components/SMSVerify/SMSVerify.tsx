@@ -6,8 +6,25 @@ import Button from '../Button/Button';
 import { PinInput } from 'react-input-pin-code';
 import { FC, useState } from 'react';
 import { Form, useForm } from 'react-hook-form';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 interface SMSVerify {
+    /**
+     * Flag indicating whether the download is in progress
+     */
+    isLoading: boolean;
+    /**
+     * Flag that determines whether to show or not to show the error
+     */
+    isErrorVisible: boolean;
+    /**
+     * Error message
+     */
+    error: string;
+    /**
+     * Callback that clear error message
+     */
+    clearError: () => void;
     /**
      * Is called when the user submits the code.
      */
@@ -24,6 +41,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
 
     const handleChange = (_value: string | string[], _index: number, values: string[]) => {
         setShowError(false);
+        props.clearError();
         setValues(values);
     };
 
@@ -45,6 +63,7 @@ const SMSVerify: FC<SMSVerify> = (props) => {
             }}
         >
             <div className={styles.sms_verify__layout}>
+                {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
                 <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
                     <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms_verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
                     <Button>{t('components.button.next')}</Button>
