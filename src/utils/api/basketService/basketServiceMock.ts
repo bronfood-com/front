@@ -43,7 +43,7 @@ export class BasketServiceMock implements BasketService {
             }
             return { data: this.basket };
         } else {
-            throw new Error('error');
+            throw new Error('serverError');
         }
     }
     async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
@@ -70,7 +70,7 @@ export class BasketServiceMock implements BasketService {
             });
             return { data: this.basket };
         } else {
-            throw new Error('error');
+            throw new Error('serverError');
         }
     }
     async emptyBasket(): Promise<{ data: Basket }> {
@@ -81,7 +81,7 @@ export class BasketServiceMock implements BasketService {
         if (success) {
             return { data: this.basket };
         } else {
-            throw new Error('error');
+            throw new Error('serverError');
         }
     }
 }
