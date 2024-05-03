@@ -16,7 +16,7 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
             navigate(`${pathname}/meal/${id}`);
             setIsMealPageOpen(true);
         } else {
-            addMeal(id, features);
+            addMeal({mealId: id, features});
         }
     };
     return (

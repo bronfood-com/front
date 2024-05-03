@@ -36,7 +36,7 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMealMutation: (mealId: string, features: Feature[] | never[]) => Promise<void>;
+    addMeal: (variables: {mealId: string, features: Feature[] | never[]}) => void /* ({mealId, features}: {mealId: string, features: Feature[] | never[]}) => Promise<void>; */
     /**
      * Delete meal from basket
      */
@@ -55,7 +55,7 @@ export const BasketContext = createContext<BasketContext>({
     errorMessage: '',
     waitingTime: 0,
     price: 0,
-    addMealMutation: () => Promise.resolve(),
+    addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
 });
@@ -64,19 +64,21 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const addMealMutation = useMutation({
-        mutationFn: ({ mealId, features }) => basketService.addMeal(mealId, features),
+    const {mutate: addMeal, isPending: addMealPending} = useMutation({
+        mutationFn: ({ mealId, features }: {mealId: string, features: Feature[]}) => basketService.addMeal(mealId, features),
         onSuccess: (result) => {
-            const { restaurant, meals } = result.data;
-            setRestaurant(restaurant);
-            setMeals(meals);
+            if ('data' in result) {
+                const { restaurant, meals } = result.data;
+                setRestaurant(restaurant);
+                setMeals(meals);
+            }
         },
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
 
-    const isLoading = addMealMutation.isPending;
+    const isLoading = addMealPending;
 
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
@@ -114,15 +116,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         handleServerResponse(basket);
     }; */
     const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
-        setIsLoading(true);
+
         const basket = await basketService.deleteMeal(mealId, features);
-        setIsLoading(false);
+
         handleServerResponse(basket);
     };
     const emptyBasket = async () => {
-        setIsLoading(true);
+
         const basket = await basketService.emptyBasket();
-        setIsLoading(false);
+
         handleServerResponse(basket);
     };
     return (
@@ -135,7 +137,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 errorMessage,
                 waitingTime,
                 price,
-                addMealMutation,
+                addMeal,
                 deleteMeal,
                 emptyBasket,
             }}

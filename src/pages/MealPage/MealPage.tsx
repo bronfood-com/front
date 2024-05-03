@@ -18,7 +18,7 @@ function MealPage() {
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsOnMap } = useRestaurants();
-    const { addMealMutation, isLoading } = useBasket();
+    const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
     const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
@@ -69,7 +69,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMealMutation.mutate({ mealId: meal.id, features: newFeatures });
+            await addMeal({mealId: meal.id, features: newFeatures});
             goBack();
         };
         return (
