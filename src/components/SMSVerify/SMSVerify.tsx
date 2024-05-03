@@ -10,10 +10,6 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 interface SMSVerify {
     /**
-     * Flag indicating whether the download is in progress
-     */
-    isLoading: boolean;
-    /**
      * Flag that determines whether to show or not to show the error
      */
     isErrorVisible: boolean;

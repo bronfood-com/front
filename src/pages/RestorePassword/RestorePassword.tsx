@@ -76,13 +76,13 @@ const RestorePassword = () => {
     const renderStage = () => {
         switch (stage) {
             case 'START':
-                return <QueryPhone isLoading={isLoading} clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitQueryPhone} />;
+                return <QueryPhone clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitQueryPhone} />;
 
             case 'PHONE-EXIST':
-                return <NewPassword isLoading={isLoading} clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitChangePassword} />;
+                return <NewPassword clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitChangePassword} />;
 
             case 'NEW-PASSWORD-GIVEN':
-                return <SMSVerify isLoading={isLoading} clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitApplyPassword} />;
+                return <SMSVerify clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitApplyPassword} />;
 
             case 'SUCCESS':
                 return <SuccessPasswordChange />;

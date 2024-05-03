@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { FC } from 'react';
 import Button from '../../../components/Button/Button';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
-import Preloader from '../../../components/Preloader/Preloader';
 
 interface NewPassword {
     /**
@@ -26,10 +25,6 @@ interface NewPassword {
      * Callback that clear error message
      */
     clearError: () => void;
-    /**
-     * Flag indicating whether the download is in progress
-     */
-    isLoading: boolean;
 }
 
 const NewPassword: FC<NewPassword> = (props) => {
@@ -61,18 +56,14 @@ const NewPassword: FC<NewPassword> = (props) => {
                 navigate('/');
             }}
         >
-            {props.isLoading ? (
-                <Preloader />
-            ) : (
-                <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
-                    <FormInputs>
-                        {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
-                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
-                        <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
-                        <Button>{t('pages.newPassword.button')}</Button>
-                    </FormInputs>
-                </Form>
-            )}
+            <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
+                <FormInputs>
+                    {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
+                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
+                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
+                    <Button>{t('pages.newPassword.button')}</Button>
+                </FormInputs>
+            </Form>
         </Popup>
     );
 };

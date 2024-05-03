@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './QueryPhone.module.scss';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
-import Preloader from '../../../components/Preloader/Preloader';
 
 interface QueryPhone {
     /**
@@ -26,10 +25,6 @@ interface QueryPhone {
      * Callback that clear error message
      */
     clearError: () => void;
-    /**
-     * Flag indicating whether the download is in progress
-     */
-    isLoading: boolean;
 }
 
 const QueryPhone: FC<QueryPhone> = (props) => {
@@ -56,17 +51,13 @@ const QueryPhone: FC<QueryPhone> = (props) => {
             }}
         >
             <div className={styles.query_phone__layout}>
-                {props.isLoading ? (
-                    <Preloader />
-                ) : (
-                    <>
-                        {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
-                        <Form control={control} name="phoneNumber" onSubmit={onSubmit} onSuccess={props.clearError}>
-                            <InputPhone errors={errors} register={register} clearError={props.clearError} />
-                            <Button>{t('pages.passwordRecovery.continue')}</Button>
-                        </Form>
-                    </>
-                )}
+                <>
+                    {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
+                    <Form control={control} name="phoneNumber" onSubmit={onSubmit} onSuccess={props.clearError}>
+                        <InputPhone errors={errors} register={register} clearError={props.clearError} />
+                        <Button>{t('pages.passwordRecovery.continue')}</Button>
+                    </Form>
+                </>
             </div>
         </Popup>
     );
