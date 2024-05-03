@@ -36,11 +36,11 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void /* ({mealId, features}: {mealId: string, features: Feature[] | never[]}) => Promise<void>; */;
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void
     /**
      * Delete meal from basket
      */
-    deleteMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
+    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void
     /**
      * Removes restaurant and all meals from basket
      */
@@ -77,9 +77,20 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-
-    const isLoading = addMealPending;
-
+    const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
+        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
+        onSuccess: (result) => {
+            if ('data' in result) {
+                const { restaurant, meals } = result.data;
+                setRestaurant(restaurant);
+                setMeals(meals);
+            }
+        },
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const isLoading = addMealPending || deleteMealPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -108,17 +119,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setRestaurant(restaurant);
             setMeals(meals);
         }
-    };
-    /*  const addMeal = async (mealId: string, features: Feature[] | never[]) => {
-        setIsLoading(true);
-        const basket = await basketService.addMeal(mealId, features);
-        setIsLoading(false);
-        handleServerResponse(basket);
-    }; */
-    const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
-        const basket = await basketService.deleteMeal(mealId, features);
-
-        handleServerResponse(basket);
     };
     const emptyBasket = async () => {
         const basket = await basketService.emptyBasket();
