@@ -43,7 +43,7 @@ export class BasketServiceMock implements BasketService {
             }
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('error');
         }
     }
     async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
@@ -70,7 +70,7 @@ export class BasketServiceMock implements BasketService {
             });
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('error');
         }
     }
     async emptyBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
@@ -81,7 +81,7 @@ export class BasketServiceMock implements BasketService {
         if (success) {
             return { status: 'success', data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('error');
         }
     }
 }
