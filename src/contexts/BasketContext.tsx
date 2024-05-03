@@ -65,7 +65,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const addMealMutation = useMutation({
-        mutationFn: ({mealId, features}) => basketService.addMeal(mealId, features),
+        mutationFn: ({ mealId, features }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => {
             const { restaurant, meals } = result.data;
             setRestaurant(restaurant);
@@ -73,10 +73,10 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         },
         onError: (error) => {
             setErrorMessage(error.message);
-        }
+        },
     });
-    
-    const isLoading = addMealMutation.isPending
+
+    const isLoading = addMealMutation.isPending;
 
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
@@ -107,7 +107,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setMeals(meals);
         }
     };
-   /*  const addMeal = async (mealId: string, features: Feature[] | never[]) => {
+    /*  const addMeal = async (mealId: string, features: Feature[] | never[]) => {
         setIsLoading(true);
         const basket = await basketService.addMeal(mealId, features);
         setIsLoading(false);
