@@ -60,7 +60,7 @@ const NewPassword: FC<NewPassword> = (props) => {
                 <FormInputs>
                     {props.isErrorVisible && <ErrorMessage message={t(`components.newPassword.${props.error}`)} />}
                     <InputPassword register={register} errors={errors} name="password" nameLabel={t('components.newPassword.nameLabel')} clearError={props.clearError} />
-                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} clearError={props.clearError}/>
+                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} clearError={props.clearError} />
                     <Button>{t('components.newPassword.button')}</Button>
                 </FormInputs>
             </Form>

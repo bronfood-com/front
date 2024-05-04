@@ -120,7 +120,7 @@ i18n
                         popupSignupSuccess: {
                             title: 'Спасибо за регистрацию!',
                         },
-                        
+
                         profile: {
                             title: 'Профиль',
                             placeholderUserName: 'Владислав Иванов',
