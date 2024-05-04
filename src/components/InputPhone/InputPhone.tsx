@@ -22,8 +22,7 @@ interface InputPhone {
     /**
      * Function that clear current error
      */
-    clearError?: ()=> void;
-
+    clearError?: () => void;
 }
 
 const InputPhone: FC<InputPhone> = (props) => {

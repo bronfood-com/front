@@ -44,24 +44,24 @@ const NewPassword: FC<NewPassword> = (props) => {
 
     const validatePasswords = (value: FieldValues): string | boolean => {
         if (watch('password') != value) {
-            return t('pages.newPassword.passwordDontMatch');
+            return t('components.newPassword.passwordDontMatch');
         }
         return true;
     };
 
     return (
         <Popup
-            title={t('pages.newPassword.title')}
+            title={t('components.newPassword.title')}
             onClose={() => {
                 navigate('/');
             }}
         >
             <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
                 <FormInputs>
-                    {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.newPassword.nameLabel')} />
-                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('pages.newPassword.nameLabelRepeat')} validate={validatePasswords} />
-                    <Button>{t('pages.newPassword.button')}</Button>
+                    {props.isErrorVisible && <ErrorMessage message={t(`components.newPassword.${props.error}`)} />}
+                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('components.newPassword.nameLabel')} clearError={props.clearError} />
+                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} clearError={props.clearError}/>
+                    <Button>{t('components.newPassword.button')}</Button>
                 </FormInputs>
             </Form>
         </Popup>

@@ -15,13 +15,6 @@ const RestorePassword = () => {
     const [tempDataCode, setTempDataCode] = useState<string>('');
     const [isError, setIsError] = useState<boolean>(false);
 
-    const startRestorePassword = () => {
-        setIsLoading(false);
-        setErrorMessage('');
-        setTempDataCode('');
-        setStage('START');
-    };
-
     const onSubmitQueryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
         const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
@@ -57,10 +50,6 @@ const RestorePassword = () => {
             setIsLoading(false);
             setStage('SUCCESS');
             localStorage.removeItem('phone');
-
-            setTimeout(() => {
-                startRestorePassword();
-            }, 3000);
         } else if (res.status === 'error') {
             setIsLoading(false);
             setErrorMessage(res.error_message);

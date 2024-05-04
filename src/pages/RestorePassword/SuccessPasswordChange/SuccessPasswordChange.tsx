@@ -8,7 +8,7 @@ const SuccessPasswordChange: FC = () => {
     const { t } = useTranslation();
 
     return (
-        <InfoPopup isOpened={true}>
+        <InfoPopup isOpened={true} >
             <div className={styles.success_password_change__layout}>
                 <div className={styles.success_password_change__success} />
                 <h2>{t('pages.passwordSaved.title')}</h2>

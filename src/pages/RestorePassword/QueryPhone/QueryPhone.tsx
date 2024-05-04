@@ -45,17 +45,17 @@ const QueryPhone: FC<QueryPhone> = (props) => {
 
     return (
         <Popup
-            title={t('pages.passwordRecovery.title')}
+            title={t('components.passwordRecovery.title')}
             onClose={() => {
                 navigate('/');
             }}
         >
             <div className={styles.query_phone__layout}>
                 <>
-                    {props.isErrorVisible && <ErrorMessage message={t(`pages.passwordRecovery.${props.error}`)} />}
+                    {props.isErrorVisible && <ErrorMessage message={t(`components.passwordRecovery.${props.error}`)} />}
                     <Form control={control} name="phoneNumber" onSubmit={onSubmit} onSuccess={props.clearError}>
                         <InputPhone errors={errors} register={register} clearError={props.clearError} />
-                        <Button>{t('pages.passwordRecovery.continue')}</Button>
+                        <Button>{t('components.passwordRecovery.continue')}</Button>
                     </Form>
                 </>
             </div>

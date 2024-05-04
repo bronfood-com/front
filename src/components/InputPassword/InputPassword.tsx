@@ -32,6 +32,10 @@ interface InputPassword {
      * Input required: True/False
      */
     required?: boolean;
+    /**
+     * Function that clear current error
+     */
+    clearError?: () => void;
 }
 
 const InputPassword: FC<InputPassword> = (props) => {
@@ -60,6 +64,7 @@ const InputPassword: FC<InputPassword> = (props) => {
                     },
                     validate: props.validate,
                 })}
+                onChange={props.clearError}
                 autoComplete="off"
             ></input>
             {visibilityIcon}

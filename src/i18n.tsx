@@ -45,7 +45,24 @@ i18n
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
                         },
+                        passwordRecovery: {
+                            title: 'Восстановить пароль',
+                            phoneNumber: 'Телефон',
+                            placeholder: '+7 (***)',
+                            continue: 'Далее',
+                            ValidationError: 'Введен некорректный номер телефона.',
+                            UserWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
+                        },
 
+                        newPassword: {
+                            title: 'Придумайте новый пароль',
+                            nameLabel: 'Новый пароль',
+                            nameLabelRepeat: 'Повторите пароль',
+                            button: 'Сохранить',
+                            ValidationError: 'Некорректный пароль',
+                            passwordDontMatch: 'Пароли не совпадают',
+                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
+                        },
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
                             editBankData: 'Редактировать банковские данные',
@@ -103,25 +120,7 @@ i18n
                         popupSignupSuccess: {
                             title: 'Спасибо за регистрацию!',
                         },
-
-                        newPassword: {
-                            title: 'Придумайте новый пароль',
-                            nameLabel: 'Новый пароль',
-                            nameLabelRepeat: 'Повторите пароль',
-                            button: 'Сохранить',
-                            passwordDontMatch: 'Пароли не совпадают',
-                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
-                        },
-
-                        passwordRecovery: {
-                            title: 'Восстановить пароль',
-                            phoneNumber: 'Телефон',
-                            placeholder: '+7 (***)',
-                            continue: 'Далее',
-                            ValidationError: 'Введен некорректный номер телефона.',
-                            UserWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
-                        },
-
+                        
                         profile: {
                             title: 'Профиль',
                             placeholderUserName: 'Владислав Иванов',
