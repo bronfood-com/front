@@ -11,10 +11,9 @@ class ApiOrder {
         const response = await fetch(url, options);
         if (!response.ok) {
             const errorData = await response.json();
-            const errorMessage =
-                errorData.key === 'UserIsAlreadyRegistered' // example error according to backend
-                    ? 'User is already registered'
-                    : `Error ${response.status}`;
+            const errorMessage = errorData.key === 'UserIsAlreadyRegistered' // example error according to backend contract
+                ? 'User is already registered' // example error
+                : `Error ${response.status}`;
             return { data: null, error: errorMessage };
         }
         const data: T = await response.json();
@@ -38,15 +37,12 @@ class ApiOrder {
     }
 
     async cancelOrder(id: string): Promise<ApiResponse<void>> {
-        const response = await fetch(`${API_URL}/orders/${id}`, {
+        const options = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cancellationStatus: 'requested', isCancellationRequested: true }),
-        });
-        if (!response.ok) {
-            return { data: null, error: `Error canceling the order with status ${response.status}` };
-        }
-        return { data: null, error: null };
+            body: JSON.stringify({ cancellationStatus: 'requested', isCancellationRequested: true })
+        };
+        return this.fetchResponse<void>(`${API_URL}/orders/${id}`, options);
     }
 }
 
