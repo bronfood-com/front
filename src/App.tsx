@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import YandexMap from './components/YandexMap/YandexMap';
@@ -23,9 +24,7 @@ function App() {
     const { pathname } = useLocation();
     const { currentUser } = useCurrentUser();
     useEffect(() => {
-        // Enable redirect to /restaurants in PR preview
-        const regex = /\/pr-preview\/pr-\d\d\//i;
-        if (currentUser && (regex.test(pathname) || pathname === '/')) {
+        if (currentUser && pathname === '/') {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
@@ -45,9 +44,10 @@ function App() {
                         <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
                     </Route>
                 </Route>
-                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')} />} />} />
-                <Route path={process.env.NODE_ENV === 'production' ? '/404' : '*'} element={<PageNotFound />} />
+                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')}/>} />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
+            <ReactQueryDevtools initialIsOpen={false} />
         </div>
     );
 }
