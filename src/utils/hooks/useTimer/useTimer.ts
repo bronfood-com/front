@@ -21,10 +21,10 @@ interface UseTimerProps {
 }
 
 export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancellationCountdown }: UseTimerProps) => {
-    const startTimeRef = useRef<{ prep: null | number, wait: null | number, cancel: null | number }>({
+    const startTimeRef = useRef<{ prep: null | number; wait: null | number; cancel: null | number }>({
         prep: null,
         wait: null,
-        cancel: null
+        cancel: null,
     });
 
     useEffect(() => {
@@ -32,7 +32,8 @@ export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancell
         startTimeRef.current.prep = Date.now();
         const interval = 60000;
         const orderTimer = window.setInterval(() => {
-            if (startTimeRef.current.prep != null) { // Добавляем проверку на null
+            if (startTimeRef.current.prep != null) {
+                // Добавляем проверку на null
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.prep) / interval);
                 setPreparationTime((prevTime) => prevTime - elapsed);
@@ -47,7 +48,8 @@ export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancell
         startTimeRef.current.wait = Date.now();
         const interval = 1000;
         const waitOrderCodeTimer = window.setInterval(() => {
-            if (startTimeRef.current.wait != null) { // Добавляем проверку на null
+            if (startTimeRef.current.wait != null) {
+                // Добавляем проверку на null
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.wait) / interval);
                 setWaitOrderCodeTime((prevTime) => prevTime - elapsed);
@@ -62,7 +64,8 @@ export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancell
         startTimeRef.current.cancel = Date.now();
         const interval = 1000;
         const cancellationTimer = window.setInterval(() => {
-            if (startTimeRef.current.cancel != null) { // Добавляем проверку на null
+            if (startTimeRef.current.cancel != null) {
+                // Добавляем проверку на null
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.cancel) / interval);
                 setCancellationCountdown((prevTime) => prevTime - elapsed);

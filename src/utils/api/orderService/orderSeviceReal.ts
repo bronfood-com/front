@@ -11,9 +11,10 @@ class ApiOrder {
         const response = await fetch(url, options);
         if (!response.ok) {
             const errorData = await response.json();
-            const errorMessage = errorData.key === 'UserIsAlreadyRegistered' // example error according to backend contract
-                ? 'User is already registered' // example error
-                : `Error ${response.status}`;
+            const errorMessage =
+                errorData.key === 'UserIsAlreadyRegistered' // example error according to backend contract
+                    ? 'User is already registered' // example error
+                    : `Error ${response.status}`;
             return { data: null, error: errorMessage };
         }
         const data: T = await response.json();
@@ -40,7 +41,7 @@ class ApiOrder {
         const options = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cancellationStatus: 'requested', isCancellationRequested: true })
+            body: JSON.stringify({ cancellationStatus: 'requested', isCancellationRequested: true }),
         };
         return this.fetchResponse<void>(`${API_URL}/orders/${id}`, options);
     }
