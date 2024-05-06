@@ -67,19 +67,6 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    /* const handleSuccess = (result: { data: Basket }) => {
-        const { restaurant, meals }: Basket = result.data;
-        setRestaurant(restaurant);
-        setMeals(meals);
-    };
-    const { mutate: addMeal, isPending: addMealPending } = useMutation({
-        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
-        onSuccess: (result) => handleSuccess(result),
-        onError: (error) => {
-            setErrorMessage(error.message);
-        },
-    }); */
-
     const user = localStorage.getItem('user');
     const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const { t } = useTranslation();
@@ -99,21 +86,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(res.data);
         },
     });
-    /* const signIn = useCallback(async (data: FieldValues) => {
-        setIsLoading(true);
-        setSignInErrorMessage(null);
-        const { password, phone } = data;
-        const res = await authService.login({ phone: phone.replace(/\D/g, ''), password });
-        if (res.status === 'error') {
-            setSignInErrorMessage(res.error_message);
-            setCurrentUser(null);
-            setIsLoading(false);
-        } else {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
-            setIsLoading(false);
-        }
-    }, []); */
 
     const signUp = async (data: FieldValues) => {
         setIsLoading(true);
