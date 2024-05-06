@@ -19,10 +19,6 @@ interface InputPhone {
      * Input Value
      */
     value?: string;
-    /**
-     * Function that clear current error
-     */
-    clearError?: () => void;
 }
 
 const InputPhone: FC<InputPhone> = (props) => {
@@ -31,7 +27,6 @@ const InputPhone: FC<InputPhone> = (props) => {
     const errorMessage = (props.errors['phoneNumber']?.message as string) || undefined;
     const id = useId();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (typeof props.clearError === 'function') props.clearError();
         setInputValue(e.target.value);
     };
 

@@ -19,10 +19,16 @@ const RestorePassword = () => {
         return str[0].toLowerCase() + str.slice(1);
     };
 
+    const clearError = () => {
+        setIsError(false);
+        setErrorMessage('');
+    };
+
     const onSubmitQueryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
         const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
         if (res.status === 'success') {
+            clearError();
             setIsLoading(false);
             setTempDataCode(res.data.temp_data_code);
             setStage('PHONE-EXIST');
@@ -37,6 +43,7 @@ const RestorePassword = () => {
         setIsLoading(true);
         const res = await restorePasswordService.setNewPassword(password, password_confirm, tempDataCode);
         if (res.status === 'success') {
+            clearError();
             setIsLoading(false);
             setTempDataCode(res.data.temp_data_code);
             setStage('NEW-PASSWORD-GIVEN');
@@ -51,6 +58,7 @@ const RestorePassword = () => {
         setIsLoading(true);
         const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
         if (res.status === 'success') {
+            clearError();
             setIsLoading(false);
             setStage('SUCCESS');
             localStorage.removeItem('phone');
@@ -61,21 +69,16 @@ const RestorePassword = () => {
         }
     };
 
-    const clearError = () => {
-        setIsError(false);
-        setErrorMessage('');
-    };
-
     const renderStage = () => {
         switch (stage) {
             case 'START':
-                return <QueryPhone clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitQueryPhone} />;
+                return <QueryPhone isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitQueryPhone} />;
 
             case 'PHONE-EXIST':
-                return <NewPassword clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitChangePassword} />;
+                return <NewPassword isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitChangePassword} />;
 
             case 'NEW-PASSWORD-GIVEN':
-                return <SMSVerify clearError={clearError} isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitApplyPassword} />;
+                return <SMSVerify isErrorVisible={isError} error={errorMessage} onSubmit={onSubmitApplyPassword} />;
 
             case 'SUCCESS':
                 return <SuccessPasswordChange />;

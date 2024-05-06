@@ -18,10 +18,6 @@ interface SMSVerify {
      */
     error: string;
     /**
-     * Callback that clear error message
-     */
-    clearError: () => void;
-    /**
      * Is called when the user submits the code.
      */
     onSubmit: (code: string) => void;
@@ -37,7 +33,6 @@ const SMSVerify: FC<SMSVerify> = (props) => {
 
     const handleChange = (_value: string | string[], _index: number, values: string[]) => {
         setShowError(false);
-        props.clearError();
         setValues(values);
     };
 

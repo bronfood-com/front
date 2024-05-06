@@ -21,10 +21,6 @@ interface QueryPhone {
      * Error message
      */
     error: string;
-    /**
-     * Callback that clear error message
-     */
-    clearError: () => void;
 }
 
 const QueryPhone: FC<QueryPhone> = (props) => {
@@ -53,8 +49,8 @@ const QueryPhone: FC<QueryPhone> = (props) => {
             <div className={styles.query_phone__layout}>
                 <>
                     {props.isErrorVisible && <ErrorMessage message={t(`components.passwordRecovery.${props.error}`)} />}
-                    <Form control={control} name="phoneNumber" onSubmit={onSubmit} onSuccess={props.clearError}>
-                        <InputPhone errors={errors} register={register} clearError={props.clearError} />
+                    <Form control={control} name="phoneNumber" onSubmit={onSubmit}>
+                        <InputPhone errors={errors} register={register} />
                         <Button>{t('components.passwordRecovery.continue')}</Button>
                     </Form>
                 </>
