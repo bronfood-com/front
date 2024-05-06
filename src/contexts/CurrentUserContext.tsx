@@ -1,13 +1,13 @@
 import { createContext, FC, useState, PropsWithChildren, useCallback } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { authService, User, UserExtra } from '../utils/api/authService';
+import { authService, LoginData, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
 type CurrentUserContent = {
     currentUser: User | null;
     isLogin: boolean;
-    signIn: UseMutationResult;
+    signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
     signUp: {
         mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
@@ -38,7 +38,7 @@ type CurrentUserContent = {
 export const CurrentUserContext = createContext<CurrentUserContent>({
     currentUser: null,
     isLogin: false,
-    signIn: null,
+    signIn: {},
     signUp: {
         mutation: () => Promise.resolve(''),
         isLoading: false,
@@ -93,7 +93,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const isLogin = !!currentUser;
     const signIn = useMutation({
-        mutationFn: (data: FieldValues) => authService.login(data),
+        mutationFn: (data: LoginData) => authService.login(data),
         onSuccess: (res) => {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
