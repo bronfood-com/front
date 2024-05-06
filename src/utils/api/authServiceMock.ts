@@ -20,12 +20,12 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
         await this._wait(500);
         if (phone && password && fullname) {
-            return { status: 'success', data: { temp_data_code: '1111' } };
+            return { data: { temp_data_code: '1111' } };
         } else {
-            return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
+            throw new Error('phoneNumberIsAlreadyUsed');
         }
     }
 

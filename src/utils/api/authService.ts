@@ -47,7 +47,7 @@ export interface UserExtra {
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { temp_data_code: string } }>;
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
 

@@ -24,7 +24,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
         const res = await fetch(`${API_URL}/client/request_to_signup/`, {
             method: 'POST',
             headers: {
