@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './WaitingOrder.module.scss';
 import Modal from '../../../components/Modal/Modal';
@@ -10,6 +10,7 @@ import { formatTime } from '../../../utils/serviceFuncs/formatTime';
 import { getMinutesForm } from '../../../utils/serviceFuncs/getMinutesForm';
 import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
+import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 const WaitingOrder: FC = () => {
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
@@ -31,6 +32,14 @@ const WaitingOrder: FC = () => {
             });
         }
     };
+
+    const handleOverlayClick = (e: MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            setShowConfirmationPopup(false);
+        }
+    };
+
+    useEsc(() => setShowConfirmationPopup(false), [showConfirmationPopup]);
 
     return (
         <>
@@ -69,7 +78,7 @@ const WaitingOrder: FC = () => {
                 )}
             </Modal>
             {showConfirmationPopup && (
-                <div className={styles.confirmationPopup__wrapper}>
+                <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
                 </div>
             )}
