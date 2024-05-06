@@ -25,12 +25,12 @@ export interface UpdateUser {
  temp_data_code: Temporary code that the server assign to the user in db during registration
  confirmation_code: 4-digit code that user shoud enter to confirm registration
  */
-export interface СonfirmRegisterPhoneData {
+export interface ConfirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
 }
 
-export interface СonfirmUpdateUser {
+export interface ConfirmUpdateUser {
     confirmation_code: string;
 }
 export interface User {

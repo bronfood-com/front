@@ -7,7 +7,6 @@ import Popup from '../../components/Popups/Popup/Popup';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import styles from './SignUp.module.scss';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
@@ -19,7 +18,6 @@ import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
     const { signUp, confirmSignUp } = useCurrentUser();
     const { t } = useTranslation();
     const {
@@ -27,7 +25,6 @@ const SignUp = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
@@ -35,18 +32,13 @@ const SignUp = () => {
     };
 
     const confirm = async (code: string) => {
-        const result = await confirmSignUp.mutation(code);
-        if (!result) {
-            setIsConfirmErrorVisible(true);
-        } else {
-            setIsInfoPopupOpen(true);
-        }
+        confirmSignUp.mutate({confirmation_code: code});
     };
 
     return (
         <>
             {signUp.isSuccess ? (
-                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
+                <SMSConfirm isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} isConfirmErrorVisible={confirmSignUp.isError} onSubmit={confirm} isInfoPopupOpen={confirmSignUp.isSuccess} popupSuccessOpened={<PopupSignupSuccess isOpened={confirmSignUp.isSuccess} />} />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}

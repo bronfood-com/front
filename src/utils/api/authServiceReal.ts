@@ -1,4 +1,4 @@
-import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
+import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -36,7 +36,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {
@@ -48,7 +48,6 @@ export class AuthServiceReal implements AuthService {
         const { auth_token } = resultWithToken.data;
         const result = { ...resultWithToken };
         localStorage.setItem('token', auth_token);
-
         delete result.data.auth_token;
         return result;
     }

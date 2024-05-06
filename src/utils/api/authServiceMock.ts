@@ -1,5 +1,5 @@
-import { AuthService, UserExtra, СonfirmUpdateUser } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
+import { AuthService, UserExtra, ConfirmUpdateUser } from './authService';
+import { User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser } from './authService';
 
 export class AuthServiceMock implements AuthService {
     async _wait(ms: number) {
@@ -29,13 +29,13 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
         await this._wait(500);
         if (temp_data_code && confirmation_code) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { phone: '74443332211', fullname: 'user registred' } };
+            return { data: { phone: '74443332211', fullname: 'user registered' } };
         } else {
-            return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
+            throw new Error('phoneNumberIsAlreadyUsed');
         }
     }
 
@@ -51,7 +51,7 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
         await this._wait(500);
         if (confirmation_code) {
             return { status: 'success', data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };

@@ -19,11 +19,7 @@ type CurrentUserContent = {
         isLoading: boolean;
         errorMessage: string | null;
     };
-    confirmSignUp: {
-        mutation: (data: string) => Promise<User | null>;
-        isLoading: boolean;
-        errorMessage: string | null;
-    };
+    confirmSignUp: UseMutationResult<{ data: User }, Error, { temp_data_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: {
         mutation: (data: string) => Promise<UserExtra | null>;
         isLoading: boolean;
@@ -46,11 +42,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
         isLoading: false,
         errorMessage: null,
     },
-    confirmSignUp: {
-        mutation: () => Promise.resolve<User | null>(null),
-        isLoading: false,
-        errorMessage: null,
-    },
+    confirmSignUp: {},
     confirmUpdateUser: {
         mutation: () => Promise.resolve<UserExtra | null>(null),
         isLoading: false,
@@ -69,33 +61,30 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
     const isLogin = !!currentUser;
     const signIn = useMutation({
-        mutationFn: (data: LoginData) => authService.login(data),
+        mutationFn: (variables: LoginData) => authService.login(variables),
         onSuccess: (res) => {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);
         },
+        onError: () => {
+            setCurrentUser(null);
+        },
     });
     const signUp = useMutation({
-        mutationFn: (data: RegisterData) => authService.register(data),
+        mutationFn: (variables: RegisterData) => authService.register(variables),
         onSuccess: (res) => setServerSMSCode(res.data.temp_data_code),
     });
-    const confirmSignUp = async (enteredCode: string) => {
-        setIsLoading(true);
-        const result = await authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: enteredCode });
-        if (result.status === 'error') {
-            setConfirmErrorMessage(result.error_message);
-            setCurrentUser(null);
-            setIsLoading(false);
-            return null;
-        } else {
-            setCurrentUser(result.data);
-            localStorage.setItem('user', JSON.stringify(result.data));
-            setIsLoading(false);
+    const confirmSignUp = useMutation({
+        mutationFn: ({confirmation_code}) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code}),
+        onSuccess: (res) => {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            setCurrentUser(res.data);
             setServerSMSCode('');
-            return result.data;
-        }
-    };
-
+        },
+        onError: () => {
+            setCurrentUser(null);
+        },
+    });
     const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
@@ -163,11 +152,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                     isLoading,
                     errorMessage: updateUserErrorMessage,
                 },
-                confirmSignUp: {
-                    mutation: confirmSignUp,
-                    isLoading,
-                    errorMessage: confirmErrorMessage,
-                },
+                confirmSignUp,
                 confirmUpdateUser: {
                     mutation: confirmUpdateUser,
                     isLoading,
