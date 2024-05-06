@@ -16,7 +16,7 @@ export class AuthServiceMock implements AuthService {
             localStorage.setItem('token', '23423434');
             return { data: { fullname: 'User', phone, role: 'CLIENT' } };
         } else {
-            throw new Error('invalidCredentials')
+            throw new Error('invalidCredentials');
         }
     }
 

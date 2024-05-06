@@ -67,7 +67,6 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-
     /* const handleSuccess = (result: { data: Basket }) => {
         const { restaurant, meals }: Basket = result.data;
         setRestaurant(restaurant);
