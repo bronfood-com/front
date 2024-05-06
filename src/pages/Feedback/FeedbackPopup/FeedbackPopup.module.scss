@@ -1,4 +1,55 @@
-.FeedbackPopup {
+@import '../../../styles/variables.scss';
+
+.feedback_popup {
     &__layout {
+        padding: 0 21px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        align-items: center;
+        height: 500px;
+    }
+
+    &__tel {
+        font: {
+            size: 15px;
+            weight: 400;
+        }
+    }
+
+    &__form{
+        width: 100%;
+    }
+
+    &__textarea {
+        background-color: $background;
+        padding: 15px;
+        height: 147px;
+        width: 100%;
+        resize: none;
+        border: 1px solid $line {
+            radius: 20px;
+        }
+
+        &::placeholder {
+            color: $light-gray;
+        }
+
+    }
+
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        margin-top: auto;
+        align-items: center;
+        color: $orange;
+        text-decoration: underline;
+        font: {
+            size: 15px;
+            weight: 500;
+        }
     }
 }
+

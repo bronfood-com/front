@@ -170,6 +170,15 @@ i18n
                             yes: 'Да',
                             serverError: 'Ошибка на сервере',
                         },
+                        feedback: {
+                            title: 'Обратная связь',
+                            placeholder: 'Опишите свою проблему или оставьте пожелания',
+                            button: 'Отправить',
+                            aboutUs: 'О нас',
+                            preview: 'Превью',
+                            offerAgreement: 'Договор оферты',
+                            privacyPolicy: 'Политика конфиденциальности'
+                        }
                     },
                 },
             },
