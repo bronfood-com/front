@@ -11,17 +11,17 @@ function FeedbackPopup() {
     const onClose = () => {
         navigate('/');
     };
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <Popup title={t('pages.feedback.title')} arrowBack onClose={onClose}>
             <div className={styles.feedback_popup__layout}>
                 <div className={styles.feedback_popup__tel}>+7 (999) 999-99-99</div>
                 <Form className={styles.feedback_popup__form} control={control}>
-                    <textarea className={styles.feedback_popup__textarea} name='input' placeholder={t('pages.feedback.placeholder')} autoComplete='off' autoFocus minLength={5} required wrap='soft' />
+                    <textarea className={styles.feedback_popup__textarea} name="input" placeholder={t('pages.feedback.placeholder')} autoComplete="off" autoFocus minLength={5} required wrap="soft" />
                     <Button>{t('pages.feedback.button')}</Button>
                 </Form>
-                <div className={styles.feedback_popup__links} >
+                <div className={styles.feedback_popup__links}>
                     <div>{t('pages.feedback.aboutUs')}</div>
                     <div>{t('pages.feedback.preview')}</div>
                     <div>{t('pages.feedback.offerAgreement')}</div>

@@ -177,8 +177,8 @@ i18n
                             aboutUs: 'О нас',
                             preview: 'Превью',
                             offerAgreement: 'Договор оферты',
-                            privacyPolicy: 'Политика конфиденциальности'
-                        }
+                            privacyPolicy: 'Политика конфиденциальности',
+                        },
                     },
                 },
             },
