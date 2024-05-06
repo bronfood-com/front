@@ -8,7 +8,7 @@ export class AuthServiceReal implements AuthService {
         return localStorage.getItem('token');
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async login({ phone, password }: LoginData): Promise<{ data: User }> {
         const res = await fetch(`${API_URL}/signin/`, {
             method: 'POST',
             headers: {
@@ -20,7 +20,6 @@ export class AuthServiceReal implements AuthService {
         const { auth_token } = resultWithToken.data;
         const result = { ...resultWithToken };
         localStorage.setItem('token', auth_token);
-
         delete result.data.auth_token;
         return result;
     }

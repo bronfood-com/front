@@ -10,11 +10,10 @@ import InputPassword from '../../components/InputPassword/InputPassword';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 
 const SignIn = () => {
-    const [isErrorVisible, setIsErrorVisible] = useState(false);
     const { currentUser, signIn } = useCurrentUser();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -32,10 +31,7 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
-        const result = await signIn.mutation({ phone: phoneNumber, password });
-        if (result !== null) {
-            setIsErrorVisible(true);
-        }
+        signIn.mutate({ phone: phoneNumber.replace(/\D/g, ''), password });
     };
 
     return (
@@ -43,13 +39,12 @@ const SignIn = () => {
             title={t('pages.signIn.signInHeading')}
             onClose={() => {
                 navigate('/');
-                setIsErrorVisible(false);
             }}
         >
-            {signIn.isLoading && <Preloader />}
+            {signIn.isPending && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
-                <fieldset className={styles.form__field} disabled={signIn.isLoading}>
+                {signIn.isError && <ErrorMessage message={t(`pages.signIn.${signIn.error.message}`)} />}
+                <fieldset className={styles.form__field} disabled={signIn.isPending}>
                     <FormInputs>
                         <InputPhone register={register} errors={errors}></InputPhone>
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
@@ -58,7 +53,7 @@ const SignIn = () => {
                 <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
                 </Link>
-                <Button disabled={signIn.isLoading}>{t('pages.signIn.loginButton')}</Button>
+                <Button disabled={signIn.isPending}>{t('pages.signIn.loginButton')}</Button>
                 <Link to="/signup" className={`${styles.link_registration} link`}>
                     {t('pages.signIn.registartion')}
                 </Link>

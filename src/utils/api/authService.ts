@@ -45,7 +45,7 @@ export interface UserExtra {
     auth_token: string;
 }
 export interface AuthService {
-    login: ({ phone, password }: LoginData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
     register: ({ fullname, phone, password }: RegisterData) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
 

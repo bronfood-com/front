@@ -10,13 +10,13 @@ export class AuthServiceMock implements AuthService {
         return localStorage.getItem('token');
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async login({ phone, password }: LoginData): Promise<{ data: User }> {
         await this._wait(500);
         if (phone && password) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { fullname: 'User', phone, role: 'CLIENT' } };
+            return { data: { fullname: 'User', phone, role: 'CLIENT' } };
         } else {
-            return { status: 'error', error_message: 'invalidCredentials' };
+            throw new Error('invalidCredentials')
         }
     }
 

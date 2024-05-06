@@ -2,15 +2,12 @@ import { createContext, FC, useState, PropsWithChildren, useCallback } from 'rea
 import { FieldValues } from 'react-hook-form';
 import { authService, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
 type CurrentUserContent = {
     currentUser: User | null;
     isLogin: boolean;
-    signIn: {
-        mutation: (data: FieldValues) => Promise<void>;
-        isLoading: boolean;
-        errorMessage: string | null;
-    };
+    signIn: UseMutationResult;
     signUp: {
         mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
@@ -41,11 +38,7 @@ type CurrentUserContent = {
 export const CurrentUserContext = createContext<CurrentUserContent>({
     currentUser: null,
     isLogin: false,
-    signIn: {
-        mutation: () => Promise.resolve(),
-        isLoading: false,
-        errorMessage: null,
-    },
+    signIn: null,
     signUp: {
         mutation: () => Promise.resolve(''),
         isLoading: false,
@@ -74,10 +67,23 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
+
+    /* const handleSuccess = (result: { data: Basket }) => {
+        const { restaurant, meals }: Basket = result.data;
+        setRestaurant(restaurant);
+        setMeals(meals);
+    };
+    const { mutate: addMeal, isPending: addMealPending } = useMutation({
+        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
+        onSuccess: (result) => handleSuccess(result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    }); */
+
     const user = localStorage.getItem('user');
     const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const { t } = useTranslation();
-    const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
     const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
@@ -87,8 +93,14 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
 
     const isLogin = !!currentUser;
-
-    const signIn = useCallback(async (data: FieldValues) => {
+    const signIn = useMutation({
+        mutationFn: (data: FieldValues) => authService.login(data),
+        onSuccess: (res) => {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            setCurrentUser(res.data);
+        },
+    });
+    /* const signIn = useCallback(async (data: FieldValues) => {
         setIsLoading(true);
         setSignInErrorMessage(null);
         const { password, phone } = data;
@@ -102,7 +114,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(res.data);
             setIsLoading(false);
         }
-    }, []);
+    }, []); */
 
     const signUp = async (data: FieldValues) => {
         setIsLoading(true);
@@ -191,11 +203,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             value={{
                 currentUser,
                 isLogin,
-                signIn: {
-                    mutation: signIn,
-                    isLoading,
-                    errorMessage: signInErrorMessage,
-                },
+                signIn,
                 signUp: {
                     mutation: signUp,
                     isLoading,
