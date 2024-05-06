@@ -94,9 +94,8 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                                     preset: 'islands#redDotIcon',
                                     iconLayout: 'default#image',
                                     iconImageHref: marked ? placeIconActive : placeIcon,
-                                    iconImageSize: [52, 52],
-                                    iconImageOffset: [-16, -16],
-                                    hideIconOnBalloonOpen: false,
+                                    iconImageSize: [30, 40],
+                                    iconImageOffset: [-15, -35],
                                 }}
                                 properties={{
                                     hintContent: place.name, //tooltip(hover)
