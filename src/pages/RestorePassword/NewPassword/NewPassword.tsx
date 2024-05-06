@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { FC } from 'react';
 import Button from '../../../components/Button/Button';
 import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
-
+import styles from './NewPassword.module.scss';
 interface NewPassword {
     /**
      * Submit form action
@@ -59,9 +59,11 @@ const NewPassword: FC<NewPassword> = (props) => {
             <Form control={control} name="form-restore-password" onSubmit={onSubmit}>
                 <FormInputs>
                     {props.isErrorVisible && <ErrorMessage message={t(`components.newPassword.${props.error}`)} />}
-                    <InputPassword register={register} errors={errors} name="password" nameLabel={t('components.newPassword.nameLabel')} clearError={props.clearError} />
-                    <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} clearError={props.clearError} />
-                    <Button>{t('components.newPassword.button')}</Button>
+                    <div className={styles.new_password__layout}>
+                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('components.newPassword.nameLabel')} clearError={props.clearError} />
+                        <InputPassword register={register} errors={errors} name="password_confirm" nameLabel={t('components.newPassword.nameLabelRepeat')} validate={validatePasswords} clearError={props.clearError} />
+                        <Button>{t('components.newPassword.button')}</Button>
+                    </div>
                 </FormInputs>
             </Form>
         </Popup>

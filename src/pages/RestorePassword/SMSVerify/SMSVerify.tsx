@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import Popup from '../Popups/Popup/Popup';
+import Popup from '../../../components/Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import styles from './SMSVerify.module.scss';
-import Button from '../Button/Button';
+import Button from '../../../components/Button/Button';
 import { PinInput } from 'react-input-pin-code';
 import { FC, useState } from 'react';
 import { Form, useForm } from 'react-hook-form';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 
 interface SMSVerify {
     /**

@@ -1,8 +1,10 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .sms_verify {
     &__layout {
         padding: 0 21px;
+        display: flex;
+        flex-direction: column;
     }
 
     &__inputs {

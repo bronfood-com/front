@@ -11,18 +11,24 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
 
     async queryPhoneNumber(phone: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
+        if (phone === '74444444444') {
+            return { status: 'error', error_message: "UserWithThatPhoneNotFound" };
+        }
         return { status: 'success', data: { temp_data_code: `${this.generateTempDataCode(phone)}` } };
     }
 
-    async setNewPassword(_password: string, _password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
+    async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
+        if ((password === 'error')&&(password_confirm === 'error')) {
+            return { status: 'error', error_message: "ValidationError" };
+        }
         return { status: 'success', data: { temp_data_code } };
     }
 
-    async verifyPasswordChange(temp_data_code: string, confirmation_code: string): Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError> {
+    async verifyPasswordChange(_temp_data_code: string, confirmation_code: string): Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
-        if (temp_data_code === '' || confirmation_code === '') {
-            return { status: 'error', error_message: 'temp_data_code or confirmation_code is empty' };
+        if (confirmation_code === '4444') {
+            return { status: 'error', error_message: 'invalidConformationCode' };
         }
         return { status: 'success', message: 'Password updated' };
     }

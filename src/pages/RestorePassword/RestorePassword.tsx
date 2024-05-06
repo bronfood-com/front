@@ -1,5 +1,5 @@
 import NewPassword from './NewPassword/NewPassword';
-import SMSVerify from '../../components/SMSVerify/SMSVerify';
+import SMSVerify from './SMSVerify/SMSVerify';
 import SuccessPasswordChange from './SuccessPasswordChange/SuccessPasswordChange';
 import QueryPhone from './QueryPhone/QueryPhone';
 import { restorePasswordService } from '../../utils/api/restorePasswordService/restorePasswordService';
@@ -15,6 +15,10 @@ const RestorePassword = () => {
     const [tempDataCode, setTempDataCode] = useState<string>('');
     const [isError, setIsError] = useState<boolean>(false);
 
+    const makeLowerCaseFirstLetter = (str: string) => {
+        return str[0].toLowerCase() + str.slice(1);
+    };
+
     const onSubmitQueryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
         const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
@@ -24,7 +28,7 @@ const RestorePassword = () => {
             setStage('PHONE-EXIST');
         } else if (res.status === 'error') {
             setIsLoading(false);
-            setErrorMessage(res.error_message);
+            setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
     };
@@ -38,7 +42,7 @@ const RestorePassword = () => {
             setStage('NEW-PASSWORD-GIVEN');
         } else if (res.status === 'error') {
             setIsLoading(false);
-            setErrorMessage(res.error_message);
+            setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
     };
@@ -52,7 +56,7 @@ const RestorePassword = () => {
             localStorage.removeItem('phone');
         } else if (res.status === 'error') {
             setIsLoading(false);
-            setErrorMessage(res.error_message);
+            setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
     };
