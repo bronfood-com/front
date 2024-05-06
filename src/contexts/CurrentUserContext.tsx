@@ -19,11 +19,11 @@ type CurrentUserContent = {
         isLoading: boolean;
         errorMessage: string | null;
     };
-    confirmSignUp: UseMutationResult<{ data: User }, Error, { temp_data_code: string }, unknown> | Record<string, never>;
+    confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: {
         mutation: (data: string) => Promise<UserExtra | null>;
         isLoading: boolean;
-        errorMessage: string | null;
+        errorMessage: string | undefined;
     };
 };
 
@@ -46,7 +46,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
     confirmUpdateUser: {
         mutation: () => Promise.resolve<UserExtra | null>(null),
         isLoading: false,
-        errorMessage: null,
+        errorMessage: '',
     },
 });
 
@@ -58,7 +58,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
-    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string>('');
     const isLogin = !!currentUser;
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
@@ -75,7 +75,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: (res) => setServerSMSCode(res.data.temp_data_code),
     });
     const confirmSignUp = useMutation({
-        mutationFn: ({ confirmation_code }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code }),
+        mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: variables.confirmation_code }),
         onSuccess: (res) => {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);

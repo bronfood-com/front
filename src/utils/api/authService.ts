@@ -49,11 +49,11 @@ export interface AuthService {
 
     register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { temp_data_code: string } }>;
 
-    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
 
     updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
 
-    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
+    confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
 
     logOut: () => Promise<void>;
 }
