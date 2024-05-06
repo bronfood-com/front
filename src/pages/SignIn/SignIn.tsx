@@ -33,7 +33,7 @@ const SignIn = () => {
         const { password, phoneNumber } = data;
         signIn.mutate({ phone: phoneNumber.replace(/\D/g, ''), password });
     };
-    
+
     return (
         <Popup
             title={t('pages.signIn.signInHeading')}
