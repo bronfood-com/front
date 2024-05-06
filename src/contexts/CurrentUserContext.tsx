@@ -75,7 +75,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: (res) => setServerSMSCode(res.data.temp_data_code),
     });
     const confirmSignUp = useMutation({
-        mutationFn: ({confirmation_code}) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code}),
+        mutationFn: ({ confirmation_code }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code }),
         onSuccess: (res) => {
             localStorage.setItem('user', JSON.stringify(res.data));
             setCurrentUser(res.data);

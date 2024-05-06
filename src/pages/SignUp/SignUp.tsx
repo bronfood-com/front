@@ -32,7 +32,7 @@ const SignUp = () => {
     };
 
     const confirm = async (code: string) => {
-        confirmSignUp.mutate({confirmation_code: code});
+        confirmSignUp.mutate({ confirmation_code: code });
     };
 
     return (
