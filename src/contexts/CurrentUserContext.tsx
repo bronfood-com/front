@@ -8,7 +8,7 @@ type CurrentUserContent = {
     currentUser: User | null;
     isLogin: boolean;
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
-    signUp: UseMutationResult<{ data: {temp_data_code: string} }, Error, RegisterData, unknown> | Record<string, never>;
+    signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
     logout: {
         mutation: () => Promise<void>;
         isLoading: boolean;
