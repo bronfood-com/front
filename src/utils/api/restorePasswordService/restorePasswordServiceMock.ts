@@ -12,15 +12,15 @@ export class RestorePasswordServiceMock implements RestorePasswordService {
     async queryPhoneNumber(phone: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
         if (phone === '74444444444') {
-            return { status: 'error', error_message: "UserWithThatPhoneNotFound" };
+            return { status: 'error', error_message: 'UserWithThatPhoneNotFound' };
         }
         return { status: 'success', data: { temp_data_code: `${this.generateTempDataCode(phone)}` } };
     }
 
     async setNewPassword(password: string, password_confirm: string, temp_data_code: string): Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError> {
         await this._wait(300);
-        if ((password === 'error')&&(password_confirm === 'error')) {
-            return { status: 'error', error_message: "ValidationError" };
+        if (password === 'error' && password_confirm === 'error') {
+            return { status: 'error', error_message: 'ValidationError' };
         }
         return { status: 'success', data: { temp_data_code } };
     }
