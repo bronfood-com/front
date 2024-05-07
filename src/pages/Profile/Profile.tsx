@@ -31,15 +31,13 @@ const Profile = () => {
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const res = await updateUser.mutate({
+        await updateUser.mutateAsync({
             phone: data.phoneNumber,
             fullname: data.username,
             password: data.newPassword || null,
             confirmPassword: data.newPasswordConfirm || null,
         });
-        if (res) {
-            setIsConfirmOpen(true);
-        }
+        setIsConfirmOpen(true);
     };
 
     useEffect(() => {
@@ -53,11 +51,10 @@ const Profile = () => {
     };
 
     const confirm = async (code: string) => {
-        const res = await confirmUpdateUser.mutate({ confirmation_code: code });
-        if (res) {
-            setIsConfirmOpen(false);
-        }
+        await confirmUpdateUser.mutateAsync({ confirmation_code: code });
+        setIsConfirmOpen(false);
     };
+    
     return (
         <>
             {isConfirmOpen ? (
