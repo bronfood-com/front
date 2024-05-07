@@ -34,7 +34,6 @@ const SignUp = () => {
     const confirm = async (code: string) => {
         confirmSignUp.mutate({ confirmation_code: code });
     };
-
     return (
         <>
             {signUp.isSuccess ? (

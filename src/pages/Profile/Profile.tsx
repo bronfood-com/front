@@ -28,14 +28,18 @@ const Profile = () => {
     const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        updateUser.mutate({
+        const res = await updateUser.mutate({
             phone: data.phoneNumber,
             fullname: data.username,
             password: data.newPassword || null,
             confirmPassword: data.newPasswordConfirm || null,
         });
+        if (res) {
+            setIsConfirmOpen(true);
+        }
     };
 
     useEffect(() => {
@@ -49,12 +53,14 @@ const Profile = () => {
     };
 
     const confirm = async (code: string) => {
-        confirmUpdateUser.mutate({ confirmation_code: code });
+        const res = await confirmUpdateUser.mutate({ confirmation_code: code });
+        if (res) {
+            setIsConfirmOpen(false);
+        }
     };
-
     return (
         <>
-            {updateUser.isSuccess ? (
+            {isConfirmOpen ? (
                 <SMSConfirm isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
             ) : (
                 <Popup
