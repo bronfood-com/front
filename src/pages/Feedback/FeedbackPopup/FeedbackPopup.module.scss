@@ -17,25 +17,6 @@
         }
     }
 
-    &__form {
-        width: 100%;
-    }
-
-    &__textarea {
-        background-color: $background;
-        padding: 15px;
-        height: 147px;
-        width: 100%;
-        resize: none;
-        border: 1px solid $line {
-            radius: 20px;
-        }
-
-        &::placeholder {
-            color: $light-gray;
-        }
-    }
-
     &__links {
         display: flex;
         flex-direction: column;

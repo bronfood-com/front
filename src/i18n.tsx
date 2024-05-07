@@ -175,9 +175,9 @@ i18n
                             serverError: 'Ошибка на сервере',
                         },
                         feedback: {
-                            title: 'Обратная связь',
-                            placeholder: 'Опишите свою проблему или оставьте пожелания',
-                            button: 'Отправить',
+                            feedback: 'Обратная связь',
+                            describeYourProblemOrLeaveFeedback: 'Опишите свою проблему или оставьте пожелания',
+                            submit: 'Отправить',
                             aboutUs: 'О нас',
                             preview: 'Превью',
                             offerAgreement: 'Договор оферты',

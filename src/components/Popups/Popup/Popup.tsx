@@ -17,6 +17,10 @@ interface Popup {
      */
     arrowBack?: boolean;
     /**
+     * Route that corresponds to the previous page
+     */
+    previousPageRoute?: string;
+    /**
      * Handle close popup
      */
     onClose: () => void;
@@ -30,7 +34,9 @@ const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
 
     const arrowBackClick = () => {
-        navigate(-1);
+        props.previousPageRoute
+        ? navigate(props.previousPageRoute)
+        : navigate(-1);
     };
 
     const handleCloseButton = () => {
