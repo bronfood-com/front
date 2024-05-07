@@ -52,6 +52,7 @@ i18n
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
                             editBankData: 'Редактировать банковские данные',
+                            aboutService: 'О сервисе',
                             signOut: 'Выйти',
                         },
                         confirmationPopup: {

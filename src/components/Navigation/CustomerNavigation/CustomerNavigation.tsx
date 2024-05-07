@@ -22,7 +22,7 @@ const CustomerNavigation: FC<CustomerNavigation> = (props) => {
             <li className={styles.nav__item}>
                 <div className={`${styles.nav__icon} ${styles.nav__icon_list}`}></div>
                 <Link to="/feedback" className={styles.nav__link} onClick={props.handleItemMenuClick}>
-                    {t('components.guestNavigation.aboutService')}
+                    {t('components.customerNavigation.aboutService')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
