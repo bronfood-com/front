@@ -42,7 +42,7 @@ export class AuthServiceMock implements AuthService {
     async updateUser({ fullname, phone }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
         await this._wait(500);
         if (phone && fullname) {
-            return {data: { temp_data_code: '1111' }};
+            return { data: { temp_data_code: '1111' } };
         } else {
             throw new Error('invalidCredentials');
         }
