@@ -9,11 +9,7 @@ type CurrentUserContent = {
     isLogin: boolean;
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
-    logout: {
-        mutation: () => Promise<void>;
-        isLoading: boolean;
-        errorMessage: string | null;
-    };
+    logout: UseMutationResult<{ data: { temp_data_code: string } }, Error, Record<string, never>, unknown> | Record<string, never>;
     updateUser: {
         mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
