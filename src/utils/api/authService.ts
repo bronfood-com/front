@@ -53,7 +53,7 @@ export interface AuthService {
 
     updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
-    confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
+    confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
     logOut: () => Promise<void>;
 }

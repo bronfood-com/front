@@ -48,12 +48,12 @@ export class AuthServiceMock implements AuthService {
         }
     }
 
-    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
         await this._wait(500);
         if (confirmation_code) {
-            return { status: 'success', data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
+            return { data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
         } else {
-            return { status: 'error', error_message: 'invalidValidation' };
+            throw new Error('invalidValidation');
         }
     }
 

@@ -25,11 +25,9 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-
     const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
-    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         updateUser.mutate({
@@ -51,20 +49,13 @@ const Profile = () => {
     };
 
     const confirm = async (code: string) => {
-        const result = await confirmUpdateUser.mutation(code);
-        if (!result) {
-            setIsConfirmErrorVisible(true);
-        } else {
-            setFullname(result.fullname);
-            setPhoneNumber(result.phone);
-            setIsConfirmOpen(false);
-        }
+        confirmUpdateUser.mutate({ confirmation_code: code });
     };
 
     return (
         <>
             {updateUser.isSuccess ? (
-                <SMSConfirm isLoading={confirmUpdateUser.isLoading} error={confirmUpdateUser.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} />
+                <SMSConfirm isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}

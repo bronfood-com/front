@@ -69,7 +69,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
         const res = await fetch(`${API_URL}/client/profile/`, {
             method: 'PATCH',
             headers: {
