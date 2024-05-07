@@ -64,7 +64,9 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         const token = this.getToken();
         if (token) {
-            localStorage.removeItem('token');
+            return
+        } else {
+            throw new Error('serverError');
         }
     }
 }

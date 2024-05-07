@@ -91,6 +91,5 @@ export class AuthServiceReal implements AuthService {
                 authorization: `Token ${token}`,
             },
         });
-        localStorage.removeItem('token');
     }
 }

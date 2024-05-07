@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useCallback } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { authService, LoginData, RegisterData, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ type CurrentUserContent = {
     isLogin: boolean;
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
-    logout: UseMutationResult<{ data: { temp_data_code: string } }, Error, Record<string, never>, unknown> | Record<string, never>;
+    logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
     updateUser: {
         mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
         isLoading: boolean;
@@ -28,11 +28,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
     isLogin: false,
     signIn: {},
     signUp: {},
-    logout: {
-        mutation: () => Promise.resolve(),
-        isLoading: false,
-        errorMessage: null,
-    },
+    logout: {},
     updateUser: {
         mutation: () => Promise.resolve(''),
         isLoading: false,
@@ -50,7 +46,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const user = localStorage.getItem('user');
     const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const { t } = useTranslation();
-    const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
     const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
@@ -122,14 +117,14 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
 
-    const logout = useCallback(async () => {
-        setLogoutErrorMessage(null);
-        setIsLoading(true);
-        await authService.logOut();
-        setCurrentUser(null);
-        localStorage.removeItem('user');
-        setIsLoading(false);
-    }, []);
+    const logout = useMutation({
+        mutationFn: () => authService.logOut(),
+        onSuccess: () => {
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            setCurrentUser(null);
+        },
+    });
 
     return (
         <CurrentUserContext.Provider
@@ -138,11 +133,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 isLogin,
                 signIn,
                 signUp,
-                logout: {
-                    mutation: logout,
-                    isLoading,
-                    errorMessage: logoutErrorMessage,
-                },
+                logout,
                 updateUser: {
                     mutation: updateUser,
                     isLoading,
