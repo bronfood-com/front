@@ -64,7 +64,7 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         const token = this.getToken();
         if (token) {
-            return
+            return;
         } else {
             throw new Error('serverError');
         }
