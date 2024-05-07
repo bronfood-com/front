@@ -22,7 +22,7 @@ function FeedbackPopup() {
                     <Button>{t('pages.feedback.button')}</Button>
                 </Form>
                 <div className={styles.feedback_popup__links}>
-                    <Link to='/about-us'>{t('pages.feedback.aboutUs')}</Link>
+                    <Link to="/about-us">{t('pages.feedback.aboutUs')}</Link>
                     <div>{t('pages.feedback.preview')}</div>
                     <div>{t('pages.feedback.offerAgreement')}</div>
                     <div>{t('pages.feedback.privacyPolicy')}</div>
