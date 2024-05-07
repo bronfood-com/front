@@ -13,9 +13,13 @@ function BasketDescription({ waitingTime, children }: BasketDescriptionProps) {
             <h1 className={styles.basket__name}>{t(`pages.basket.basket`)}</h1>
             {children}
             <div className={styles.basket__cooking_time}>
-                <p className={styles.basket__cooking_time__text}>{t(`pages.basket.waitingTime`)}</p>
+                <p className={styles.basket__cooking_time__text}>
+                    {t(`pages.basket.waitingTime`)}
+                </p>
                 <div className={styles.basket__cooking_time__icon} />
-                <span className={styles.basket__cooking_time__minutes}>{`${waitingTime} ${t(`pages.basket.min`)}`}</span>
+                <span
+                    className={styles.basket__cooking_time__minutes}
+                >{`${waitingTime} ${t(`pages.basket.min`)}`}</span>
             </div>
         </div>
     );

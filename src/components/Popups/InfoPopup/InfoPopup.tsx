@@ -34,10 +34,26 @@ const InfoPopup: FC<InfoPopup> = (props) => {
     }, [navigate]);
 
     return (
-        <div className={`${styles.popup__overlay} ${props.isOpened ? '' : styles.popup__overlay_hide}`}>
-            <div className={`${styles.popup} ${props.isOpened ? '' : styles.popup_hide}`}>
+        <div
+            className={`${styles.popup__overlay} ${
+                props.isOpened ? '' : styles.popup__overlay_hide
+            }`}
+        >
+            <div
+                className={`${styles.popup} ${
+                    props.isOpened ? '' : styles.popup_hide
+                }`}
+            >
                 {props.children}
-                {props.hasCloseButton ? <button className={styles.popup__close} type="button" onClick={props.onCloseInfoPopup}></button> : ''}
+                {props.hasCloseButton ? (
+                    <button
+                        className={styles.popup__close}
+                        type="button"
+                        onClick={props.onCloseInfoPopup}
+                    ></button>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );

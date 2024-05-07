@@ -31,7 +31,11 @@ const SMSVerify: FC<SMSVerify> = (props) => {
     const [showError, setShowError] = useState<boolean>(false);
     const [values, setValues] = useState<string[]>(['', '', '', '']);
 
-    const handleChange = (_value: string | string[], _index: number, values: string[]) => {
+    const handleChange = (
+        _value: string | string[],
+        _index: number,
+        values: string[]
+    ) => {
         setShowError(false);
         setValues(values);
     };
@@ -54,9 +58,25 @@ const SMSVerify: FC<SMSVerify> = (props) => {
             }}
         >
             <div className={styles.sms_verify__layout}>
-                {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
-                <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
-                    <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms_verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />
+                {props.isErrorVisible && (
+                    <ErrorMessage message={t(`pages.error.${props.error}`)} />
+                )}
+                <Form
+                    control={control}
+                    name="form-confirmation"
+                    onSubmit={onSubmit}
+                >
+                    <PinInput
+                        values={values}
+                        name="PinInput"
+                        placeholder=""
+                        required={true}
+                        containerClassName={styles.sms_verify__inputs}
+                        showState={showError}
+                        autoFocus={true}
+                        onChange={handleChange}
+                        validate={valTest}
+                    />
                     <Button>{t('components.button.next')}</Button>
                 </Form>
             </div>

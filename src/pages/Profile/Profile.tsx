@@ -70,7 +70,12 @@ const Profile = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmUpdateUser.isLoading} error={confirmUpdateUser.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} />
+                <SMSConfirm
+                    isLoading={confirmUpdateUser.isLoading}
+                    error={confirmUpdateUser.errorMessage}
+                    isConfirmErrorVisible={isConfirmErrorVisible}
+                    onSubmit={confirm}
+                />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}
@@ -81,15 +86,49 @@ const Profile = () => {
                 >
                     {updateUser.isLoading && <Preloader />}
                     <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                        {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
+                        {isErrorVisible && updateUser.errorMessage && (
+                            <ErrorMessage message={updateUser.errorMessage} />
+                        )}
                         <FormInputs>
-                            <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
-                            <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
-                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
+                            <Input
+                                type="text"
+                                name="username"
+                                placeholder={t(
+                                    'pages.profile.placeholderUserName'
+                                )}
+                                nameLabel={t('pages.profile.nameLabelUserName')}
+                                register={register}
+                                errors={errors}
+                                pattern={regexClientName}
+                                value={fullname}
+                            ></Input>
+                            <InputPhone
+                                register={register}
+                                errors={errors}
+                                value={phoneNumber}
+                            ></InputPhone>
+                            <InputPassword
+                                register={register}
+                                errors={errors}
+                                name="newPassword"
+                                nameLabel={t('pages.profile.nameLabelPassword')}
+                                required={false}
+                            />
+                            <InputPassword
+                                register={register}
+                                errors={errors}
+                                name="newPasswordConfirm"
+                                nameLabel={t(
+                                    'pages.profile.nameLabelRepeatPassword'
+                                )}
+                                validate={validatePasswordMatch}
+                                required={false}
+                            />
                         </FormInputs>
                         <div className={styles.profile__button_space}></div>
-                        <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
+                        <Button disabled={updateUser.isLoading}>
+                            {t('pages.profile.save')}
+                        </Button>
                     </Form>
                 </Popup>
             )}

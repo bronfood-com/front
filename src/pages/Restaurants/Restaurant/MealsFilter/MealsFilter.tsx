@@ -10,7 +10,12 @@ type MealsFilterProps = {
     deleteType: (type: MealType) => void;
 };
 
-function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterProps) {
+function MealsFilter({
+    types,
+    selectedTypes,
+    addType,
+    deleteType,
+}: MealsFilterProps) {
     const { t } = useTranslation();
     return (
         <ul className={`${styles.meals_filter}`}>
@@ -18,7 +23,13 @@ function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterP
                 const isActive = selectedTypes.includes(type);
                 return (
                     <li key={type}>
-                        <ChipWithIcon text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
+                        <ChipWithIcon
+                            text={t(`pages.restaurant.${type}`)}
+                            icon={type}
+                            isActive={isActive}
+                            add={() => addType(type)}
+                            delete={() => deleteType(type)}
+                        />
                     </li>
                 );
             })}

@@ -24,7 +24,9 @@ const PopupSignupSuccess: FC<PopupSignupSuccessProps> = (props) => {
     const { t } = useTranslation();
     return (
         <InfoPopup isOpened={props.isOpened}>
-            <h2 className={styles.popup__title}>{t('pages.popupSignupSuccess.title')}</h2>
+            <h2 className={styles.popup__title}>
+                {t('pages.popupSignupSuccess.title')}
+            </h2>
             <InfoImage mode="red_tube" />
         </InfoPopup>
     );

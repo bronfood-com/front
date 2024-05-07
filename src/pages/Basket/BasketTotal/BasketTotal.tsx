@@ -7,8 +7,12 @@ function BasketTotal({ price }: { price: number }) {
     return (
         <div className={styles.basket_total}>
             <div className={styles.basket_total__title}>
-                <p className={styles.basket_total__text}>{t(`pages.basket.total`)}</p>
-                <span className={styles.basket_total__price}>{`${price} ₸`}</span>
+                <p className={styles.basket_total__text}>
+                    {t(`pages.basket.total`)}
+                </p>
+                <span
+                    className={styles.basket_total__price}
+                >{`${price} ₸`}</span>
             </div>
             <div className={styles.basket_total__button}>
                 <Button>{t(`pages.basket.pay`)}</Button>

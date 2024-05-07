@@ -39,9 +39,12 @@ i18n
                         },
                         inputPassword: {
                             required: 'Обязательное поле',
-                            errorMessage: 'Неверный ввод. Только латинские буквы, цифры и символы - !@#$%^&*()-_+=<>?',
-                            minLengthErrorMessage: 'Минимальное количество символов -',
-                            maxLengthErrorMessage: 'Максимальное количество символом - '
+                            errorMessage:
+                                'Неверный ввод. Только латинские буквы, цифры и символы - !@#$%^&*()-_+=<>?',
+                            minLengthErrorMessage:
+                                'Минимальное количество символов -',
+                            maxLengthErrorMessage:
+                                'Максимальное количество символом - ',
                         },
                         input: {
                             required: 'Обязательное поле',
@@ -52,8 +55,10 @@ i18n
                             phoneNumber: 'Телефон',
                             placeholder: '+7 (***)',
                             continue: 'Далее',
-                            validationError: 'Введен некорректный номер телефона.',
-                            userWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
+                            validationError:
+                                'Введен некорректный номер телефона.',
+                            userWithThatPhoneNotFound:
+                                'Пользователь с данным номером телефона не существует.',
                         },
 
                         newPassword: {
@@ -63,7 +68,8 @@ i18n
                             button: 'Сохранить',
                             validationError: 'Некорректный пароль',
                             passwordDontMatch: 'Пароли не совпадают',
-                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
+                            invalidCredentials:
+                                'Пароль введен неверно, повторите попытку еще раз.',
                         },
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
@@ -80,7 +86,8 @@ i18n
                     pages: {
                         signIn: {
                             signInHeading: 'Вход',
-                            invalidCredentials: 'Телефон или пароль введен неверно, повторите попытку еще раз.',
+                            invalidCredentials:
+                                'Телефон или пароль введен неверно, повторите попытку еще раз.',
                             password: 'Пароль',
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',
@@ -90,7 +97,8 @@ i18n
                         },
                         signUp: {
                             signUpHeading: 'Регистрация',
-                            phoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
+                            phoneNumberIsAlreadyUsed:
+                                'Номер телефона уже используется.',
                             password: 'Пароль',
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',
@@ -109,7 +117,8 @@ i18n
                         },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',
-                            somethingWentWrong: 'Кажется что-то пошло не так...',
+                            somethingWentWrong:
+                                'Кажется что-то пошло не так...',
                         },
                         passwordSaved: {
                             title: 'Ваш пароль сохранен!',
@@ -138,7 +147,8 @@ i18n
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',
                             validation: 'Данные заполненые неверно.',
-                            duplicate: 'Такой номер телефона уже зарегистрирован',
+                            duplicate:
+                                'Такой номер телефона уже зарегистрирован',
                             validationError: 'Некорректный ввод',
                             invalidConformationCode: 'Введен неправильный код',
                         },
@@ -147,7 +157,8 @@ i18n
                         },
                         filter: {
                             filters: 'Фильтры',
-                            enterSearchString: 'Введите в поиске название блюда, продукта или заведение',
+                            enterSearchString:
+                                'Введите в поиске название блюда, продукта или заведение',
                             placeholder: 'Заведение, продукты, блюда',
                             chooseTypeOfVenue: 'Выберите тип заведения',
                             fastFood: 'Фаст фуд',
@@ -181,7 +192,8 @@ i18n
             kk: {
                 translation: {
                     guestNavigation: {
-                        signUpAsACatering: 'Қоғамдық тамақтану орны ретінде тіркеліңіз',
+                        signUpAsACatering:
+                            'Қоғамдық тамақтану орны ретінде тіркеліңіз',
                         signUpAsABuyer: 'Сатып алушы ретінде тіркелу',
                         signIn: 'Кіру',
                     },

@@ -3,7 +3,8 @@ import styles from './ButtonIconOrange.module.scss';
 
 /* Can be any button from this design: https://www.figma.com/file/9H7H1cGkW9CYB7iFRpm7x3/bronfood.com?type=design&node-id=222-4281&mode=design&t=ZP4xbFL1UkoD1zb6-4 */
 
-interface ButtonIconOrangeProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonIconOrangeProps
+    extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Button's state
      */
@@ -14,7 +15,11 @@ interface ButtonIconOrangeProps extends ButtonHTMLAttributes<HTMLButtonElement> 
     icon?: 'close' | 'add';
 }
 
-const ButtonIconOrange: FC<ButtonIconOrangeProps> = ({ isActive = false, icon = 'close', ...props }) => {
+const ButtonIconOrange: FC<ButtonIconOrangeProps> = ({
+    isActive = false,
+    icon = 'close',
+    ...props
+}) => {
     return (
         <button
             {...props}

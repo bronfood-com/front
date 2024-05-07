@@ -45,15 +45,47 @@ export interface UserExtra {
     auth_token: string;
 }
 export interface AuthService {
-    login: ({ phone, password }: LoginData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    login: ({
+        phone,
+        password,
+    }: LoginData) => Promise<
+        | { status: 'success'; data: User }
+        | { status: 'error'; error_message: string }
+    >;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    register: ({
+        fullname,
+        phone,
+        password,
+    }: RegisterData) => Promise<
+        | { status: 'success'; data: { temp_data_code: string } }
+        | { status: 'error'; error_message: string }
+    >;
 
-    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    confirmRegisterPhone: ({
+        temp_data_code,
+        confirmation_code,
+    }: СonfirmRegisterPhoneData) => Promise<
+        | { status: 'success'; data: User }
+        | { status: 'error'; error_message: string }
+    >;
 
-    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    updateUser: ({
+        fullname,
+        phone,
+        password,
+        confirmPassword,
+    }: UpdateUser) => Promise<
+        | { status: 'success'; data: { temp_data_code: string } }
+        | { status: 'error'; error_message: string }
+    >;
 
-    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
+    confirmUpdateUser: ({
+        confirmation_code,
+    }: СonfirmUpdateUser) => Promise<
+        | { status: 'success'; data: UserExtra }
+        | { status: 'error'; error_message: string }
+    >;
 
     logOut: () => Promise<void>;
 }

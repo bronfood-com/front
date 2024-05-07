@@ -33,7 +33,11 @@ const SignUp = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
+        const result = await signUp.mutation({
+            phone: phoneNumber,
+            password,
+            name: username,
+        });
         if (result !== null) {
             setIsErrorVisible(true);
         }
@@ -52,7 +56,16 @@ const SignUp = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
+                <SMSConfirm
+                    isLoading={confirmSignUp.isLoading}
+                    error={confirmSignUp.errorMessage}
+                    isConfirmErrorVisible={isConfirmErrorVisible}
+                    onSubmit={confirm}
+                    isInfoPopupOpen={isInfoPopupOpen}
+                    popupSuccessOpened={
+                        <PopupSignupSuccess isOpened={isInfoPopupOpen} />
+                    }
+                />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}
@@ -63,15 +76,45 @@ const SignUp = () => {
                 >
                     {signUp.isLoading && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
-                        <fieldset className={styles.form__field} disabled={signUp.isLoading}>
+                        {isErrorVisible && signUp.errorMessage && (
+                            <ErrorMessage
+                                message={t(
+                                    `pages.signUp.${signUp.errorMessage}`
+                                )}
+                            />
+                        )}
+                        <fieldset
+                            className={styles.form__field}
+                            disabled={signUp.isLoading}
+                        >
                             <FormInputs>
-                                <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
-                                <InputPhone register={register} errors={errors}></InputPhone>
-                                <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} required={true} />
+                                <Input
+                                    type="text"
+                                    name="username"
+                                    placeholder={t(
+                                        'pages.signUp.namePlaceholder'
+                                    )}
+                                    nameLabel={t('pages.signUp.name')}
+                                    register={register}
+                                    errors={errors}
+                                    pattern={regexClientName}
+                                ></Input>
+                                <InputPhone
+                                    register={register}
+                                    errors={errors}
+                                ></InputPhone>
+                                <InputPassword
+                                    register={register}
+                                    errors={errors}
+                                    name="password"
+                                    nameLabel={t('pages.signUp.password')}
+                                    required={true}
+                                />
                             </FormInputs>
                         </fieldset>
-                        <Button disabled={signUp.isLoading}>{t('pages.signUp.registerButton')}</Button>
+                        <Button disabled={signUp.isLoading}>
+                            {t('pages.signUp.registerButton')}
+                        </Button>
                     </Form>
                 </Popup>
             )}

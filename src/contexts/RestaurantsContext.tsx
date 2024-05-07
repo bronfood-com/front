@@ -111,14 +111,33 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
-    const restaurantsOnMap: Restaurant[] = isSuccess && 'data' in data ? data.data : [];
+    const restaurantsOnMap: Restaurant[] =
+        isSuccess && 'data' in data ? data.data : [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-    const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
-    const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
-    const typeNames: string[] = selectedVenueTypes.map((type) => type.name.toLowerCase());
-    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
+    const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>(
+        []
+    );
+    const optionNames: string[] = selectedOptions.map((option) =>
+        option.name.toLowerCase()
+    );
+    const typeNames: string[] = selectedVenueTypes.map((type) =>
+        type.name.toLowerCase()
+    );
+    const restaurantsFiltered: Restaurant[] =
+        selectedOptions.length === 0 && selectedVenueTypes.length === 0
+            ? restaurantsOnMap
+            : restaurantsOnMap.filter(
+                  (restaurant) =>
+                      restaurant.meals.some((meal) =>
+                          optionNames.includes(meal.name.toLowerCase())
+                      ) ||
+                      optionNames.includes(restaurant.name.toLowerCase()) ||
+                      typeNames.includes(restaurant.type.toLowerCase())
+              );
     const addOption = (option: Option) => {
-        const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
+        const isDouble = selectedOptions.find(
+            (opt: Option) => opt.id === option.id
+        );
         if (isDouble) {
             return;
         } else {
@@ -126,13 +145,19 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
     const deleteOption = (option: Option) => {
-        setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
+        setSelectedOptions(
+            selectedOptions.filter((opt: Option) => opt.id !== option.id)
+        );
     };
     const addVenueType = (venueType: VenueType) => {
         setSelectedVenueTypes([...selectedVenueTypes, venueType]);
     };
     const deleteVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
+        setSelectedVenueTypes(
+            selectedVenueTypes.filter(
+                (type: VenueType) => type.id !== venueType.id
+            )
+        );
     };
 
     return (

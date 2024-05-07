@@ -66,11 +66,30 @@ const SMSConfirm: FC<SMSConfirm> = (props) => {
                 >
                     {props.isLoading && <Preloader />}
 
-                    <Form name="form-confirmation" onSubmit={handleSubmit(onSubmit)}>
-                        {props.isConfirmErrorVisible && <ErrorMessage message={t(`pages.confirmation.${props.error}`)} />}
-                        <h2 className={styles.confirmation__title}>{t('pages.confirmation.enterSmsCode')}</h2>
-                        <StatefulPinInput length={4} placeholder="" required={true} containerClassName={inputClassName} showState={false} autoFocus={true} onComplete={handleCompleteCode} />
-                        <Button disabled={props.isLoading}>{t('components.button.next')}</Button>
+                    <Form
+                        name="form-confirmation"
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        {props.isConfirmErrorVisible && (
+                            <ErrorMessage
+                                message={t(`pages.confirmation.${props.error}`)}
+                            />
+                        )}
+                        <h2 className={styles.confirmation__title}>
+                            {t('pages.confirmation.enterSmsCode')}
+                        </h2>
+                        <StatefulPinInput
+                            length={4}
+                            placeholder=""
+                            required={true}
+                            containerClassName={inputClassName}
+                            showState={false}
+                            autoFocus={true}
+                            onComplete={handleCompleteCode}
+                        />
+                        <Button disabled={props.isLoading}>
+                            {t('components.button.next')}
+                        </Button>
                     </Form>
                 </Popup>
             )}

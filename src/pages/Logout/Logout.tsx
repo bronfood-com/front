@@ -36,9 +36,18 @@ const Logout: FC = () => {
 
     return (
         <div className={styles.logout} onClick={handleOverlayClick}>
-            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={() => navigate('/')} onSubmit={handleLogout}>
+            <ConfirmationPopup
+                title={t(`pages.logout.areYouSure`)}
+                confirmButtonText={t(`pages.logout.signout`)}
+                onCancel={() => navigate('/')}
+                onSubmit={handleLogout}
+            >
                 {logout.isLoading && <Preloader />}
-                {isErrorVisible && logout.errorMessage && <ErrorMessage message={t(`pages.logout.${logout.errorMessage}`)} />}
+                {isErrorVisible && logout.errorMessage && (
+                    <ErrorMessage
+                        message={t(`pages.logout.${logout.errorMessage}`)}
+                    />
+                )}
             </ConfirmationPopup>
         </div>
     );

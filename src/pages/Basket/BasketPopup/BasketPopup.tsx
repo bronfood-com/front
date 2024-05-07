@@ -9,17 +9,29 @@ type BasketPopupProps = {
     children?: ReactNode;
 };
 
-const BasketPopup = ({ close, isConfirmationPopupOpen, children }: BasketPopupProps) => {
+const BasketPopup = ({
+    close,
+    isConfirmationPopupOpen,
+    children,
+}: BasketPopupProps) => {
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
         }
     };
-    useEsc(() => !isConfirmationPopupOpen && close(), [isConfirmationPopupOpen, close]);
+    useEsc(
+        () => !isConfirmationPopupOpen && close(),
+        [isConfirmationPopupOpen, close]
+    );
     return (
-        <div className={styles.basket_popup_overlay} onClick={handleOverlayClick}>
+        <div
+            className={styles.basket_popup_overlay}
+            onClick={handleOverlayClick}
+        >
             <div className={styles.basket_popup}>
-                <div className={`${styles.basket_popup_button} ${styles.basket_popup_button_close}`}>
+                <div
+                    className={`${styles.basket_popup_button} ${styles.basket_popup_button_close}`}
+                >
                     <Button type="button" onClick={close} icon="close" />
                 </div>
                 {children}

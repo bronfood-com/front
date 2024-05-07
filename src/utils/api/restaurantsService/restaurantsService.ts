@@ -112,7 +112,10 @@ export type Restaurant = {
 };
 
 export interface RestaurantsService {
-    getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
+    getRestaurants: () => Promise<
+        | { status: 'success'; data: Restaurant[] }
+        | { status: 'error'; error_message: string }
+    >;
 }
 
 // export const restaurantsService = new RestaurantsServiceReal();

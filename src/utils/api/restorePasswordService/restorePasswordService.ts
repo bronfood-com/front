@@ -41,9 +41,24 @@ export type CompleteChangePasswordResponse = {
 };
 
 export interface RestorePasswordService {
-    queryPhoneNumber: (phone: string) => Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError>;
-    setNewPassword: (phone: string, newPassword: string, verificationCode: string) => Promise<RequestChangePasswordResponse | RequestChangePasswordResponseError>;
-    verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError>;
+    queryPhoneNumber: (
+        phone: string
+    ) => Promise<
+        RequestChangePasswordResponse | RequestChangePasswordResponseError
+    >;
+    setNewPassword: (
+        phone: string,
+        newPassword: string,
+        verificationCode: string
+    ) => Promise<
+        RequestChangePasswordResponse | RequestChangePasswordResponseError
+    >;
+    verifyPasswordChange: (
+        temp_data_code: string,
+        confirmation_code: string
+    ) => Promise<
+        CompleteChangePasswordResponse | RequestChangePasswordResponseError
+    >;
 }
 
 // export const restorePasswordService = new RestorePasswordServiceReal();

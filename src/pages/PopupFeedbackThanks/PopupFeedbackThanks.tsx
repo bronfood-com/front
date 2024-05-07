@@ -17,7 +17,9 @@ const PopupFeedbackThanks = () => {
         <Popup onClose={() => navigate('/')}>
             <div className={styles.feedback__thanks}>
                 <InfoImage mode="stars_tube" />
-                <h2 className={styles.feedback__title}>{t('pages.popupFeedbackThanks.title')}</h2>
+                <h2 className={styles.feedback__title}>
+                    {t('pages.popupFeedbackThanks.title')}
+                </h2>
             </div>
         </Popup>
     );

@@ -1,5 +1,9 @@
 import { BasketService, Basket } from './basketService';
-import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import {
+    Feature,
+    Meal,
+    Restaurant,
+} from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
 
 export class BasketServiceMock implements BasketService {
@@ -10,20 +14,37 @@ export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
-    async addMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
+    async addMeal(
+        mealId: string,
+        features: Feature[] | never[]
+    ): Promise<{ data: Basket }> {
         await this._wait(500);
-        const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
-            const found = restaurant.meals.find((meal) => meal.id === mealId);
-            if (found) {
-                return restaurant;
+        const restaurantFound = mockRestaurants.find(
+            (restaurant: Restaurant) => {
+                const found = restaurant.meals.find(
+                    (meal) => meal.id === mealId
+                );
+                if (found) {
+                    return restaurant;
+                }
             }
-        });
-        const hasRestaurantChanged = restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
-        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features));
-        const mealFoundInRestaurants = restaurantFound && restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
+        );
+        const hasRestaurantChanged =
+            restaurantFound && this.basket.restaurant.id !== restaurantFound.id;
+        const mealFoundInBasket = this.basket.meals.find(
+            ({ meal }) =>
+                meal.id === mealId &&
+                JSON.stringify(meal.features) === JSON.stringify(features)
+        );
+        const mealFoundInRestaurants =
+            restaurantFound &&
+            restaurantFound.meals.find((meal: Meal) => meal.id === mealId);
         if (mealFoundInBasket) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
-                if (meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features)) {
+                if (
+                    meal.id === mealId &&
+                    JSON.stringify(meal.features) === JSON.stringify(features)
+                ) {
                     return { meal, count: count + 1 };
                 } else {
                     return { meal, count };
@@ -34,24 +55,55 @@ export class BasketServiceMock implements BasketService {
             if (this.basket.meals.length === 0 || hasRestaurantChanged) {
                 this.basket.restaurant = restaurantFound;
                 if (features.length > 0) {
-                    this.basket.meals = [{ meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id }, count: 1 }];
+                    this.basket.meals = [
+                        {
+                            meal: {
+                                ...mealFoundInRestaurants,
+                                features,
+                                id: mealFoundInRestaurants.id,
+                            },
+                            count: 1,
+                        },
+                    ];
                 } else {
-                    this.basket.meals = [{ meal: mealFoundInRestaurants, count: 1 }];
+                    this.basket.meals = [
+                        { meal: mealFoundInRestaurants, count: 1 },
+                    ];
                 }
             } else {
-                this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id }, count: 1 }];
+                this.basket.meals = [
+                    ...this.basket.meals,
+                    {
+                        meal: {
+                            ...mealFoundInRestaurants,
+                            features,
+                            id: mealFoundInRestaurants.id,
+                        },
+                        count: 1,
+                    },
+                ];
             }
             return { data: this.basket };
         } else {
             throw new Error('serverError');
         }
     }
-    async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
+    async deleteMeal(
+        mealId: string,
+        features: Feature[] | never[]
+    ): Promise<{ data: Basket }> {
         await this._wait(500);
-        const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features));
+        const mealFoundInBasket = this.basket.meals.find(
+            ({ meal }) =>
+                meal.id === mealId &&
+                JSON.stringify(meal.features) === JSON.stringify(features)
+        );
         if (mealFoundInBasket && mealFoundInBasket.count > 1) {
             this.basket.meals = this.basket.meals.map(({ meal, count }) => {
-                if (meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features)) {
+                if (
+                    meal.id === mealId &&
+                    JSON.stringify(meal.features) === JSON.stringify(features)
+                ) {
                     return { meal, count: count - 1 };
                 } else {
                     return { meal, count };
@@ -62,7 +114,9 @@ export class BasketServiceMock implements BasketService {
             this.basket.meals = this.basket.meals.filter(({ meal }) => {
                 if (meal.id !== mealId) {
                     return true;
-                } else if (JSON.stringify(meal.features) !== JSON.stringify(features)) {
+                } else if (
+                    JSON.stringify(meal.features) !== JSON.stringify(features)
+                ) {
                     return true;
                 } else {
                     return false;

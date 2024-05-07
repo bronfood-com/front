@@ -14,13 +14,21 @@ const CustomerNavigation: FC<CustomerNavigation> = (props) => {
     return (
         <ul className={`${styles.nav__menu} ${styles.nav__menu_user}`}>
             <li className={styles.nav__item}>
-                <div className={`${styles.nav__icon} ${styles.nav__icon_customer}`}></div>
-                <Link to="/profile" className={styles.nav__link} onClick={props.handleItemMenuClick}>
+                <div
+                    className={`${styles.nav__icon} ${styles.nav__icon_customer}`}
+                ></div>
+                <Link
+                    to="/profile"
+                    className={styles.nav__link}
+                    onClick={props.handleItemMenuClick}
+                >
                     {t('components.customerNavigation.editPersonalData')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
-                <div className={`${styles.nav__icon} ${styles.nav__icon_exit}`}></div>
+                <div
+                    className={`${styles.nav__icon} ${styles.nav__icon_exit}`}
+                ></div>
                 <Link
                     to="/logout"
                     className={styles.nav__link}

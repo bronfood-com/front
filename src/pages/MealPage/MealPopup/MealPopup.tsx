@@ -19,10 +19,14 @@ const MealPopup = ({ goBack, close, children }: MealPopupProps) => {
     return (
         <div className={styles.meal_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.meal_popup}>
-                <div className={`${styles.meal_popup_button} ${styles.meal_popup_button_back}`}>
+                <div
+                    className={`${styles.meal_popup_button} ${styles.meal_popup_button_back}`}
+                >
                     <Button type="button" onClick={goBack} icon="back" />
                 </div>
-                <div className={`${styles.meal_popup_button} ${styles.meal_popup_button_close}`}>
+                <div
+                    className={`${styles.meal_popup_button} ${styles.meal_popup_button_close}`}
+                >
                     <Button type="button" onClick={close} icon="close" />
                 </div>
                 {children}

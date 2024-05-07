@@ -32,10 +32,29 @@ const ChipWithIcon = (props: ChipWithIconProps) => {
         }
     };
     return (
-        <label className={`${styles.chip_with_icon} ${props.isActive ? styles.chip_with_icon_active : ''}`}>
-            <input className={styles.chip_with_icon_input} type="checkbox" defaultChecked={false} onChange={handleChange} />
-            <div className={`${styles.chip_with_icon_icon} ${styles[`chip_with_icon_${props.icon}`]}`} />
-            <span className={`${styles.chip_with_icon_text} ${props.isActive ? styles.chip_with_icon_text_active : ''}`}>{props.text}</span>
+        <label
+            className={`${styles.chip_with_icon} ${
+                props.isActive ? styles.chip_with_icon_active : ''
+            }`}
+        >
+            <input
+                className={styles.chip_with_icon_input}
+                type="checkbox"
+                defaultChecked={false}
+                onChange={handleChange}
+            />
+            <div
+                className={`${styles.chip_with_icon_icon} ${
+                    styles[`chip_with_icon_${props.icon}`]
+                }`}
+            />
+            <span
+                className={`${styles.chip_with_icon_text} ${
+                    props.isActive ? styles.chip_with_icon_text_active : ''
+                }`}
+            >
+                {props.text}
+            </span>
         </label>
     );
 };

@@ -48,18 +48,42 @@ const SignIn = () => {
         >
             {signIn.isLoading && <Preloader />}
             <Form name="form-auth" onSubmit={handleSubmit(onSubmit)}>
-                {isErrorVisible && signIn.errorMessage && <ErrorMessage message={t(`pages.signIn.${signIn.errorMessage}`)} />}
-                <fieldset className={styles.form__field} disabled={signIn.isLoading}>
+                {isErrorVisible && signIn.errorMessage && (
+                    <ErrorMessage
+                        message={t(`pages.signIn.${signIn.errorMessage}`)}
+                    />
+                )}
+                <fieldset
+                    className={styles.form__field}
+                    disabled={signIn.isLoading}
+                >
                     <FormInputs>
-                        <InputPhone register={register} errors={errors}></InputPhone>
-                        <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
+                        <InputPhone
+                            register={register}
+                            errors={errors}
+                        ></InputPhone>
+                        <InputPassword
+                            register={register}
+                            errors={errors}
+                            name="password"
+                            nameLabel={t('pages.signIn.password')}
+                            required={true}
+                        />
                     </FormInputs>
                 </fieldset>
-                <Link to="/restore-password" className={`${styles.link_recovery} link`}>
+                <Link
+                    to="/restore-password"
+                    className={`${styles.link_recovery} link`}
+                >
                     {t('pages.signIn.forgotPassword')}
                 </Link>
-                <Button disabled={signIn.isLoading}>{t('pages.signIn.loginButton')}</Button>
-                <Link to="/signup" className={`${styles.link_registration} link`}>
+                <Button disabled={signIn.isLoading}>
+                    {t('pages.signIn.loginButton')}
+                </Button>
+                <Link
+                    to="/signup"
+                    className={`${styles.link_registration} link`}
+                >
                     {t('pages.signIn.registartion')}
                 </Link>
             </Form>

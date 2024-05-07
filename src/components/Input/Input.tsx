@@ -44,9 +44,12 @@ interface Input {
 }
 
 const Input: FC<Input> = (props) => {
-    const [inputValue, setInputValue] = useState(props.value === undefined ? '' : props.value);
+    const [inputValue, setInputValue] = useState(
+        props.value === undefined ? '' : props.value
+    );
     const { t } = useTranslation();
-    const errorMessage = (props.errors[props.name]?.message as string) || undefined;
+    const errorMessage =
+        (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -54,7 +57,12 @@ const Input: FC<Input> = (props) => {
 
     return (
         <div className={styles.input}>
-            <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
+            <label
+                htmlFor={id}
+                className={`${styles.input__label} ${
+                    errorMessage ? styles.input__label__error : ''
+                }`}
+            >
                 {props.nameLabel}
             </label>
             <input
@@ -73,7 +81,9 @@ const Input: FC<Input> = (props) => {
                 onChange={handleInputChange}
                 value={inputValue}
             ></input>
-            {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
+            {errorMessage && (
+                <p className={styles.input__error}>{errorMessage}</p>
+            )}
         </div>
     );
 };

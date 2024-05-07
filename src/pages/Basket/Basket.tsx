@@ -11,25 +11,43 @@ import BasketConfirmation from './BasketConfirmation/BasketConfirmation';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 function Basket() {
-    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] =
+        useState(false);
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, price, waitingTime, isLoading } = useBasket();
+    const { isEmpty, restaurant, meals, price, waitingTime, isLoading } =
+        useBasket();
     const close = () => navigate(-1);
     return (
         <>
-            <BasketPopup close={close} isConfirmationPopupOpen={isConfirmationPopupOpen}>
+            <BasketPopup
+                close={close}
+                isConfirmationPopupOpen={isConfirmationPopupOpen}
+            >
                 {isEmpty ? (
                     <BasketEmpty />
                 ) : (
                     <>
-                        <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
+                        <BasketDescription waitingTime={waitingTime}>
+                            {restaurant && (
+                                <BasketRestaurant
+                                    restaurant={restaurant}
+                                    emptyBasket={() =>
+                                        setIsConfirmationPopupOpen(true)
+                                    }
+                                />
+                            )}
+                        </BasketDescription>
                         <BasketMealsList meals={meals} />
                         <BasketTotal price={price} />
                     </>
                 )}
                 {isLoading && <Preloader />}
             </BasketPopup>
-            {isConfirmationPopupOpen && <BasketConfirmation close={() => setIsConfirmationPopupOpen(false)} />}
+            {isConfirmationPopupOpen && (
+                <BasketConfirmation
+                    close={() => setIsConfirmationPopupOpen(false)}
+                />
+            )}
         </>
     );
 }

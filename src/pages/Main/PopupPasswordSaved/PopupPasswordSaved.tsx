@@ -26,7 +26,9 @@ const PopupPasswordSaved: FC<PopupPasswordSaved> = (props) => {
         <InfoPopup isOpened={props.isOpened}>
             <div className={styles.block}>
                 <div className={styles.block__success}></div>
-                <h2 className={styles.block__text}>{t('pages.passwordSaved.title')}</h2>
+                <h2 className={styles.block__text}>
+                    {t('pages.passwordSaved.title')}
+                </h2>
                 <InfoImage mode="red_tube"></InfoImage>
             </div>
         </InfoPopup>

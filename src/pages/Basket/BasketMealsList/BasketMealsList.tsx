@@ -8,7 +8,9 @@ const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
             {meals.map((meal) => {
                 const idPostfix = meal.meal.features
                     .map((feature) => {
-                        const choice = feature.choices.find((choice) => choice.chosen);
+                        const choice = feature.choices.find(
+                            (choice) => choice.chosen
+                        );
                         if (choice) {
                             return choice.name;
                         }

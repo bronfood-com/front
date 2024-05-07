@@ -1,6 +1,13 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
-import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
+import {
+    Feature,
+    Restaurant,
+} from '../utils/api/restaurantsService/restaurantsService';
+import {
+    MealInBasket,
+    Basket,
+    basketService,
+} from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useMutation } from '@tanstack/react-query';
 
@@ -36,11 +43,17 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    addMeal: (variables: {
+        mealId: string;
+        features: Feature[] | never[];
+    }) => void;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    deleteMeal: (variables: {
+        mealId: string;
+        features: Feature[] | never[];
+    }) => void;
     /**
      * Removes restaurant and all meals from basket
      */
@@ -61,7 +74,9 @@ export const BasketContext = createContext<BasketContext>({
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
+    const [restaurant, setRestaurant] = useState<
+        Restaurant | Record<string, never>
+    >({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const handleSuccess = (result: { data: Basket }) => {
@@ -70,14 +85,26 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         setMeals(meals);
     };
     const { mutate: addMeal, isPending: addMealPending } = useMutation({
-        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
+        mutationFn: ({
+            mealId,
+            features,
+        }: {
+            mealId: string;
+            features: Feature[];
+        }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => handleSuccess(result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
-        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
+        mutationFn: ({
+            mealId,
+            features,
+        }: {
+            mealId: string;
+            features: Feature[];
+        }) => basketService.deleteMeal(mealId, features),
         onSuccess: (result) => handleSuccess(result),
         onError: (error) => {
             setErrorMessage(error.message);
@@ -97,11 +124,17 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 acc +
                 current.count *
                     sumBy(current.meal.features, (feature) => {
-                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        const isChosen = feature.choices.some(
+                            (choice) => choice.chosen
+                        );
                         if (isChosen) {
-                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                            return feature.choices.filter(
+                                (choice) => choice.chosen
+                            )[0].price;
                         } else {
-                            return feature.choices.filter((choice) => choice.default)[0].price;
+                            return feature.choices.filter(
+                                (choice) => choice.default
+                            )[0].price;
                         }
                     })
             );
@@ -109,7 +142,13 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         return acc + current.count * current.meal.price;
     }, 0);
     // Longest cooking time among meals in basket
-    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
+    const waitingTime = meals.some((meal) => meal.count > 0)
+        ? Math.max(
+              ...meals.map(({ meal, count }) =>
+                  count > 0 ? meal.waitingTime : 0
+              )
+          )
+        : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
     return (
         <BasketContext.Provider

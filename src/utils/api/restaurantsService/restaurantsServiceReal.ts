@@ -8,7 +8,10 @@ export class RestaurantsServiceReal implements RestaurantsService {
         return localStorage.getItem('token');
     }
 
-    async getRestaurants(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
+    async getRestaurants(): Promise<
+        | { status: 'success'; data: Restaurant[] }
+        | { status: 'error'; error_message: string }
+    > {
         const token = this._getToken();
         const res = await fetch(`${API_URL}/restaurant/`, {
             method: 'GET',

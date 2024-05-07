@@ -36,15 +36,35 @@ function App() {
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
-                <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-                <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
-                    <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />}>
-                        <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
+                <Route
+                    path="/profile"
+                    element={<ProtectedRoute component={<Profile />} />}
+                />
+                <Route
+                    path="/logout"
+                    element={<ProtectedRoute component={<Logout />} />}
+                />
+                <Route
+                    path="/restaurants"
+                    element={<ProtectedRoute component={<Restaurants />} />}
+                >
+                    <Route
+                        path=":restaurantId"
+                        element={<ProtectedRoute component={<Restaurant />} />}
+                    >
+                        <Route
+                            path="meal/:mealId"
+                            element={
+                                <ProtectedRoute component={<MealPage />} />
+                            }
+                        />
                     </Route>
                 </Route>
                 <Route path="/restore-password" element={<RestorePassword />} />
-                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
+                <Route
+                    path="/basket"
+                    element={<ProtectedRoute component={<Basket />} />}
+                />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />

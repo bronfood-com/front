@@ -20,7 +20,8 @@ export const mockRestaurants: Restaurant[] = [
             {
                 id: uniqueId(),
                 name: 'Куриный донер',
-                description: 'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
+                description:
+                    'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
                 photo: meal1,
                 price: 1350,
                 type: 'food',
@@ -177,7 +178,8 @@ export const mockRestaurants: Restaurant[] = [
             {
                 id: uniqueId(),
                 name: 'Куриный донер',
-                description: 'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
+                description:
+                    'Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.',
                 photo: meal1,
                 price: 1350,
                 type: 'food',

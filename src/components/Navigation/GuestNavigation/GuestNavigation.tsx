@@ -13,14 +13,26 @@ const GuestNavigation: FC<GuestNavigation> = (props) => {
     return (
         <ul className={`${styles.nav__menu}`}>
             <li className={styles.nav__item}>
-                <div className={`${styles.nav__icon} ${styles.nav__icon_customer}`}></div>
-                <Link to="/signup" className={styles.nav__link} onClick={props.handleItemMenuClick}>
+                <div
+                    className={`${styles.nav__icon} ${styles.nav__icon_customer}`}
+                ></div>
+                <Link
+                    to="/signup"
+                    className={styles.nav__link}
+                    onClick={props.handleItemMenuClick}
+                >
                     {t('components.guestNavigation.signUpAsABuyer')}
                 </Link>
             </li>
             <li className={styles.nav__item}>
-                <div className={`${styles.nav__icon} ${styles.nav__icon_enter}`}></div>
-                <Link to="/signin" className={styles.nav__link} onClick={props.handleItemMenuClick}>
+                <div
+                    className={`${styles.nav__icon} ${styles.nav__icon_enter}`}
+                ></div>
+                <Link
+                    to="/signin"
+                    className={styles.nav__link}
+                    onClick={props.handleItemMenuClick}
+                >
                     {t('components.guestNavigation.signIn')}
                 </Link>
             </li>

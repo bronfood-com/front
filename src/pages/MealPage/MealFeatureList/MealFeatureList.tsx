@@ -1,6 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import styles from './MealFeatureList.module.scss';
-import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsService/restaurantsService';
+import {
+    Choice as ChoiceType,
+    Feature,
+} from '../../../utils/api/restaurantsService/restaurantsService';
 
 const MealFeatureList = ({ features }: { features: Feature[] | [] }) => {
     return (
@@ -24,24 +27,48 @@ function MealFeature({ feature }: { feature: Feature }) {
     );
 }
 
-function ChoiceList({ featureName, choices }: { featureName: string; choices: ChoiceType[] }) {
+function ChoiceList({
+    featureName,
+    choices,
+}: {
+    featureName: string;
+    choices: ChoiceType[];
+}) {
     return (
         <fieldset name={featureName} className={styles.choice_list}>
             {choices.map((choice) => (
-                <Choice key={choice.id} featureName={featureName} choice={choice} />
+                <Choice
+                    key={choice.id}
+                    featureName={featureName}
+                    choice={choice}
+                />
             ))}
         </fieldset>
     );
 }
 
-function Choice({ featureName, choice }: { featureName: string; choice: ChoiceType }) {
+function Choice({
+    featureName,
+    choice,
+}: {
+    featureName: string;
+    choice: ChoiceType;
+}) {
     const { register } = useFormContext();
     return (
         <div className={styles.choice}>
             <label className={styles.choice__container}>
-                <input type="radio" value={choice.name} defaultChecked={choice.default} className={styles.radioButton} {...register(featureName)} />
+                <input
+                    type="radio"
+                    value={choice.name}
+                    defaultChecked={choice.default}
+                    className={styles.radioButton}
+                    {...register(featureName)}
+                />
                 <span className={styles.choice__name}>{choice.name}</span>
-                <span className={styles.choice__price}>{`${choice.price.toFixed(0)} ₸`}</span>
+                <span className={styles.choice__price}>{`${choice.price.toFixed(
+                    0
+                )} ₸`}</span>
             </label>
         </div>
     );

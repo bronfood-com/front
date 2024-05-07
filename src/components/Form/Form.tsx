@@ -15,7 +15,11 @@ interface Form {
 
 const Form: FC<Form> = (props) => {
     return (
-        <form className={styles.form} name={props.name} onSubmit={props.onSubmit}>
+        <form
+            className={styles.form}
+            name={props.name}
+            onSubmit={props.onSubmit}
+        >
             {props.children}
         </form>
     );

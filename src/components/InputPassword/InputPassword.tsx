@@ -36,15 +36,32 @@ interface InputPassword {
 
 const InputPassword: FC<InputPassword> = (props) => {
     const { t } = useTranslation();
-    const errorMessage = (props.errors[props.name]?.message as string) || undefined;
+    const errorMessage =
+        (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
     const [isPasswordInvisible, setIsPasswordInvisible] = useState(true);
-    const togglePasswordVisibility = () => setIsPasswordInvisible(!isPasswordInvisible);
-    const visibilityIcon = isPasswordInvisible ? <HidePasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} /> : <ShowPasswordIcon className={styles.input__hideIcon} onClick={togglePasswordVisibility} />;
+    const togglePasswordVisibility = () =>
+        setIsPasswordInvisible(!isPasswordInvisible);
+    const visibilityIcon = isPasswordInvisible ? (
+        <HidePasswordIcon
+            className={styles.input__hideIcon}
+            onClick={togglePasswordVisibility}
+        />
+    ) : (
+        <ShowPasswordIcon
+            className={styles.input__hideIcon}
+            onClick={togglePasswordVisibility}
+        />
+    );
 
     return (
         <div className={styles.input}>
-            <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>
+            <label
+                htmlFor={id}
+                className={`${styles.input__label} ${
+                    errorMessage ? styles.input__label__error : ''
+                }`}
+            >
                 {props.nameLabel}
             </label>
             <input
@@ -53,25 +70,35 @@ const InputPassword: FC<InputPassword> = (props) => {
                 type={isPasswordInvisible ? 'password' : 'text'}
                 placeholder={isPasswordInvisible ? '******' : '123456'}
                 {...props.register(props.name, {
-                    required: props.required && t('components.inputPassword.required'),
+                    required:
+                        props.required &&
+                        t('components.inputPassword.required'),
                     pattern: {
                         value: regexPassword,
                         message: t('components.inputPassword.errorMessage'),
                     },
                     minLength: {
                         value: 4,
-                        message: t('components.inputPassword.minLengthErrorMessage') + ' 4',
+                        message:
+                            t(
+                                'components.inputPassword.minLengthErrorMessage'
+                            ) + ' 4',
                     },
                     maxLength: {
                         value: 256,
-                        message: t('components.inputPassword.maxLengthErrorMessage') + ' 256',
+                        message:
+                            t(
+                                'components.inputPassword.maxLengthErrorMessage'
+                            ) + ' 256',
                     },
                     validate: props.validate,
                 })}
                 autoComplete="off"
             ></input>
             {visibilityIcon}
-            {errorMessage && <p className={styles.input__error}>{errorMessage}</p>}
+            {errorMessage && (
+                <p className={styles.input__error}>{errorMessage}</p>
+            )}
         </div>
     );
 };

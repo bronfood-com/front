@@ -10,7 +10,12 @@ interface Button extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<Button> = ({ ...props }) => {
     return (
-        <button {...props} className={`${styles.button} ${props.disabled ? styles.button_disabled : ''}`}>
+        <button
+            {...props}
+            className={`${styles.button} ${
+                props.disabled ? styles.button_disabled : ''
+            }`}
+        >
             {props.children}
         </button>
     );

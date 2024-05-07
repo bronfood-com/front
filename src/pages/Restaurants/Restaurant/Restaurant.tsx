@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
-import { Meal, MealType, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
+import {
+    Meal,
+    MealType,
+    Restaurant as RestaurantProps,
+} from '../../../utils/api/restaurantsService/restaurantsService';
 import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
 import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
@@ -19,7 +23,9 @@ function Restaurant() {
     const params = useParams();
     const { restaurantsFiltered, isLoading } = useRestaurants();
     const { isLoading: isBasketLoading } = useBasket();
-    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find(
+        (restaurant) => restaurant.id === params.restaurantId
+    );
     const close = () => {
         navigate('/restaurants');
     };
@@ -27,18 +33,45 @@ function Restaurant() {
         setSelectedMealTypes([...selectedMealTypes, mealType]);
     };
     const deleteMealType = (mealType: MealType) => {
-        setSelectedMealTypes(selectedMealTypes.filter((type: MealType) => type !== mealType));
+        setSelectedMealTypes(
+            selectedMealTypes.filter((type: MealType) => type !== mealType)
+        );
     };
     if (restaurant) {
-        const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
-        const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
+        const types = restaurant.meals
+            .map(({ type }) => type)
+            .filter((type, i, ar) => ar.indexOf(type) === i);
+        const mealsFiltered: Meal[] =
+            selectedMealTypes.length === 0
+                ? restaurant.meals
+                : restaurant.meals.filter((meal) =>
+                      selectedMealTypes.includes(meal.type)
+                  );
         return (
             <>
-                <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen}>
+                <RestaurantPopup
+                    close={close}
+                    isMealPageOpen={isMealPageOpen}
+                    setIsMealPageOpen={setIsMealPageOpen}
+                >
                     <RestaurantImage image={restaurant.photo} />
-                    <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
-                    <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                    <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />
+                    <RestaurantDescription
+                        name={restaurant.name}
+                        address={restaurant.address}
+                        workingTime={restaurant.workingTime}
+                        rating={restaurant.rating}
+                        reviews="(123+)"
+                    />
+                    <MealsFilter
+                        types={types}
+                        selectedTypes={selectedMealTypes}
+                        addType={addMealType}
+                        deleteType={deleteMealType}
+                    />
+                    <MealsList
+                        meals={mealsFiltered}
+                        setIsMealPageOpen={setIsMealPageOpen}
+                    />
                     {isBasketLoading && <Preloader />}
                 </RestaurantPopup>
                 <Outlet />

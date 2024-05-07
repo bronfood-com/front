@@ -7,7 +7,11 @@ import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 
-const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
+const YandexMap = ({
+    setCity,
+}: {
+    setCity: Dispatch<SetStateAction<string>>;
+}) => {
     const [version, setVersion] = useState(0);
     const { t } = useTranslation();
     const [isPlaceActive, setIsPlaceActive] = useState(false);
@@ -29,7 +33,10 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     }, []);
 
     return (
-        <YMaps key={version} query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
+        <YMaps
+            key={version}
+            query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}
+        >
             <div className={styles.yamap}>
                 <Map
                     state={{ center: [latitude, longitude], zoom: 15 }}
@@ -40,17 +47,30 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     modules={['geocode']}
                     onLoad={(ymaps) => {
-                        ymaps.geocode([latitude, longitude], { kind: 'locality' }).then((res) => {
-                            const city = res.geoObjects.get(0).properties.get('name', { kind: 'locality', name: t('components.header.placeName') });
-                            setCity(city.toString());
-                            ymaps.Map;
-                        });
+                        ymaps
+                            .geocode([latitude, longitude], {
+                                kind: 'locality',
+                            })
+                            .then((res) => {
+                                const city = res.geoObjects
+                                    .get(0)
+                                    .properties.get('name', {
+                                        kind: 'locality',
+                                        name: t('components.header.placeName'),
+                                    });
+                                setCity(city.toString());
+                                ymaps.Map;
+                            });
                     }}
                     instanceRef={(map) => {
                         if (map) {
                             if (isLogin) {
-                                const currentGlobalPixelCenter = map.getGlobalPixelCenter();
-                                const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 150];
+                                const currentGlobalPixelCenter =
+                                    map.getGlobalPixelCenter();
+                                const newGlobalPixelCenter = [
+                                    currentGlobalPixelCenter[0],
+                                    currentGlobalPixelCenter[1] + 150,
+                                ];
                                 map.setGlobalPixelCenter(newGlobalPixelCenter);
                             }
                         }
@@ -75,7 +95,9 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                         options={{
                             preset: 'islands#redDotIcon',
                             iconLayout: 'default#image',
-                            iconImageHref: isPlaceActive ? placeIconActive : placeIcon,
+                            iconImageHref: isPlaceActive
+                                ? placeIconActive
+                                : placeIcon,
                             iconImageSize: [52, 52],
                             iconImageOffset: [-16, -16],
                         }}

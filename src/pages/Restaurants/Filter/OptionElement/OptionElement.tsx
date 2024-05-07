@@ -17,9 +17,20 @@ type OptionProps = {
 
 const OptionElement = (props: OptionProps) => {
     return (
-        <div onClick={!props.selected ? props.onClick : undefined} className={`${styles.option} ${props.selected ? styles.option_selected : ''}`}>
+        <div
+            onClick={!props.selected ? props.onClick : undefined}
+            className={`${styles.option} ${
+                props.selected ? styles.option_selected : ''
+            }`}
+        >
             <span className={styles.option__text}>{props.text}</span>
-            <button type="button" onClick={props.onClick} className={`${styles.option__icon} ${props.selected ? styles.option__icon_visible : ''}`} />
+            <button
+                type="button"
+                onClick={props.onClick}
+                className={`${styles.option__icon} ${
+                    props.selected ? styles.option__icon_visible : ''
+                }`}
+            />
         </div>
     );
 };

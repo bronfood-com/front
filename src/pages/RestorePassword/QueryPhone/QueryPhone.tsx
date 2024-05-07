@@ -33,7 +33,10 @@ const QueryPhone: FC<QueryPhone> = (props) => {
     } = useForm();
 
     const onSubmit: SubmitHandler<FieldValues> = (formFields) => {
-        const mappedPhoneNumber = formFields.data.phoneNumber.replace(/\D/g, '');
+        const mappedPhoneNumber = formFields.data.phoneNumber.replace(
+            /\D/g,
+            ''
+        );
         if (mappedPhoneNumber !== '' && mappedPhoneNumber.length > 10) {
             props.onSubmit(mappedPhoneNumber);
         }
@@ -48,10 +51,22 @@ const QueryPhone: FC<QueryPhone> = (props) => {
         >
             <div className={styles.query_phone__layout}>
                 <>
-                    {props.isErrorVisible && <ErrorMessage message={t(`components.passwordRecovery.${props.error}`)} />}
-                    <Form control={control} name="phoneNumber" onSubmit={onSubmit}>
+                    {props.isErrorVisible && (
+                        <ErrorMessage
+                            message={t(
+                                `components.passwordRecovery.${props.error}`
+                            )}
+                        />
+                    )}
+                    <Form
+                        control={control}
+                        name="phoneNumber"
+                        onSubmit={onSubmit}
+                    >
                         <InputPhone errors={errors} register={register} />
-                        <Button>{t('components.passwordRecovery.continue')}</Button>
+                        <Button>
+                            {t('components.passwordRecovery.continue')}
+                        </Button>
                     </Form>
                 </>
             </div>

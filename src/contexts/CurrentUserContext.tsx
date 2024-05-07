@@ -1,4 +1,10 @@
-import { createContext, FC, useState, PropsWithChildren, useCallback } from 'react';
+import {
+    createContext,
+    FC,
+    useState,
+    PropsWithChildren,
+    useCallback,
+} from 'react';
 import { FieldValues } from 'react-hook-form';
 import { authService, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
@@ -75,16 +81,28 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const user = localStorage.getItem('user');
-    const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
+    const [currentUser, setCurrentUser] = useState<User | null>(
+        user && JSON.parse(user)
+    );
     const { t } = useTranslation();
-    const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(null);
-    const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(null);
-    const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(null);
-    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
+    const [signInErrorMessage, setSignInErrorMessage] = useState<string | null>(
+        null
+    );
+    const [signUpErrorMessage, setSignUpErrorMessage] = useState<string | null>(
+        null
+    );
+    const [logoutErrorMessage, setLogoutErrorMessage] = useState<string | null>(
+        null
+    );
+    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<
+        string | null
+    >(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
-    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string | null>(null);
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState<
+        string | null
+    >(null);
 
     const isLogin = !!currentUser;
 
@@ -92,7 +110,10 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignInErrorMessage(null);
         const { password, phone } = data;
-        const res = await authService.login({ phone: phone.replace(/\D/g, ''), password });
+        const res = await authService.login({
+            phone: phone.replace(/\D/g, ''),
+            password,
+        });
         if (res.status === 'error') {
             setSignInErrorMessage(res.error_message);
             setCurrentUser(null);
@@ -108,7 +129,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setSignUpErrorMessage(null);
         const { password, phone, name } = data;
-        const res = await authService.register({ fullname: name, phone: phone.replace(/\D/g, ''), password });
+        const res = await authService.register({
+            fullname: name,
+            phone: phone.replace(/\D/g, ''),
+            password,
+        });
         if (res.status === 'error') {
             setUpdateUserErrorMessage(res.error_message);
             setIsLoading(false);
@@ -121,7 +146,10 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     const confirmSignUp = async (enteredCode: string) => {
         setIsLoading(true);
-        const result = await authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: enteredCode });
+        const result = await authService.confirmRegisterPhone({
+            temp_data_code: serverSMSCode,
+            confirmation_code: enteredCode,
+        });
         if (result.status === 'error') {
             setConfirmErrorMessage(result.error_message);
             setCurrentUser(null);
@@ -140,7 +168,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
         const { phone, fullname, password, confirmPassword } = data;
-        const res = await authService.updateUser({ phone: phone, fullname: fullname, password: password, confirmPassword: confirmPassword });
+        const res = await authService.updateUser({
+            phone: phone,
+            fullname: fullname,
+            password: password,
+            confirmPassword: confirmPassword,
+        });
         if (res.status === 'error') {
             if (res.error_message === 'ValidationError') {
                 setUpdateUserErrorMessage(t(`pages.error.validation`));
@@ -159,7 +192,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const confirmUpdateUser = async (enteredCode: string) => {
         setIsLoading(true);
-        const result = await authService.confirmUpdateUser({ confirmation_code: enteredCode });
+        const result = await authService.confirmUpdateUser({
+            confirmation_code: enteredCode,
+        });
         if (result.status === 'error') {
             if (result.error_message === 'ValidationError') {
                 setConfirmErrorMessage(t(`pages.error.validation`));
@@ -169,7 +204,10 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
             return null;
         } else {
-            const user = { phone: result.data.phone, fullname: result.data.fullname };
+            const user = {
+                phone: result.data.phone,
+                fullname: result.data.fullname,
+            };
             setCurrentUser(user);
             localStorage.setItem('user', JSON.stringify(user));
             setIsLoading(false);
