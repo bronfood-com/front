@@ -1,6 +1,7 @@
-import { FC, ReactNode, useEffect, MouseEvent } from 'react';
+import { FC, ReactNode, MouseEvent } from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 interface Popup {
     /**
@@ -41,13 +42,8 @@ const Popup: FC<Popup> = (props) => {
             props.onClose();
         }
     };
-
-    useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && props.onClose();
-        document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
-
+    const { onClose } = props;
+    useEsc(() => onClose(), [onClose]);
     return (
         <div className={styles.popup_overlay} onClick={handleOverlayClick}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>

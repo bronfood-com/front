@@ -69,7 +69,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal(meal.id, newFeatures);
+            await addMeal({ mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (

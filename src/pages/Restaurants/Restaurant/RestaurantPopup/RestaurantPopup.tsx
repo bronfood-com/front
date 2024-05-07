@@ -1,23 +1,29 @@
-import { useEffect, MouseEvent, ReactNode } from 'react';
+import { Dispatch, MouseEvent, ReactNode, SetStateAction, useEffect } from 'react';
 import styles from './RestaurantPopup.module.scss';
 import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
+import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
+import { useParams } from 'react-router-dom';
 
 type RestaurantPopupProps = {
     close: () => void;
+    isMealPageOpen: boolean;
+    setIsMealPageOpen: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
 };
 
-const RestaurantPopup = ({ close, children }: RestaurantPopupProps) => {
+const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children }: RestaurantPopupProps) => {
+    const { mealId } = useParams();
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
         }
     };
+    useEsc(() => !isMealPageOpen && close(), [isMealPageOpen, close]);
     useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && close();
-        document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
+        if (!mealId) {
+            setIsMealPageOpen(false);
+        }
+    }, [mealId, setIsMealPageOpen]);
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>

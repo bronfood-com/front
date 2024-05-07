@@ -2,6 +2,7 @@ import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
+import { useMutation } from '@tanstack/react-query';
 
 type BasketContext = {
     /**
@@ -35,15 +36,15 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (mealId: string, features: Feature[] | never[]) => Promise<void>;
+    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Removes restaurant and all meals from basket
      */
-    emptyBasket: () => Promise<void>;
+    emptyBasket: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -62,8 +63,34 @@ export const BasketContext = createContext<BasketContext>({
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
     const [meals, setMeals] = useState<Array<MealInBasket>>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const handleSuccess = (result: { data: Basket }) => {
+        const { restaurant, meals }: Basket = result.data;
+        setRestaurant(restaurant);
+        setMeals(meals);
+    };
+    const { mutate: addMeal, isPending: addMealPending } = useMutation({
+        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
+        onSuccess: (result) => handleSuccess(result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
+        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
+        onSuccess: (result) => handleSuccess(result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const { mutate: emptyBasket, isPending: emptyBasketPending } = useMutation({
+        mutationFn: () => basketService.emptyBasket(),
+        onSuccess: (result) => handleSuccess(result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -84,33 +111,6 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
-    const handleServerResponse = (basket: { status: 'success'; data: Basket } | { status: 'error'; error_message: string }) => {
-        if (basket.status === 'error') {
-            setErrorMessage(basket.error_message);
-        } else {
-            const { restaurant, meals } = basket.data;
-            setRestaurant(restaurant);
-            setMeals(meals);
-        }
-    };
-    const addMeal = async (mealId: string, features: Feature[] | never[]) => {
-        setIsLoading(true);
-        const basket = await basketService.addMeal(mealId, features);
-        setIsLoading(false);
-        handleServerResponse(basket);
-    };
-    const deleteMeal = async (mealId: string, features: Feature[] | never[]) => {
-        setIsLoading(true);
-        const basket = await basketService.deleteMeal(mealId, features);
-        setIsLoading(false);
-        handleServerResponse(basket);
-    };
-    const emptyBasket = async () => {
-        setIsLoading(true);
-        const basket = await basketService.emptyBasket();
-        setIsLoading(false);
-        handleServerResponse(basket);
-    };
     return (
         <BasketContext.Provider
             value={{
