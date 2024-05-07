@@ -58,6 +58,14 @@ const InputPassword: FC<InputPassword> = (props) => {
                         value: regexPassword,
                         message: t('components.inputPassword.errorMessage'),
                     },
+                    minLength: {
+                        value: 4,
+                        message: t('components.inputPassword.minLengthErrorMessage') + ' 4',
+                    },
+                    maxLength: {
+                        value: 256,
+                        message: t('components.inputPassword.maxLengthErrorMessage') + ' 256',
+                    },
                     validate: props.validate,
                 })}
                 autoComplete="off"

@@ -39,7 +39,9 @@ i18n
                         },
                         inputPassword: {
                             required: 'Обязательное поле',
-                            errorMessage: 'Неверный ввод',
+                            errorMessage: 'Неверный ввод. Только латинские буквы, цифры и символы - !@#$%^&*()-_+=<>?',
+                            minLengthErrorMessage: 'Минимальное количество символов -',
+                            maxLengthErrorMessage: 'Максимальное количество символом - '
                         },
                         input: {
                             required: 'Обязательное поле',
