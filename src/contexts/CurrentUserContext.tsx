@@ -1,6 +1,5 @@
 import { createContext, FC, useState, PropsWithChildren } from 'react';
-import { FieldValues } from 'react-hook-form';
-import { authService, LoginData, RegisterData, User, UserExtra } from '../utils/api/authService';
+import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useTranslation } from 'react-i18next';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
@@ -10,11 +9,7 @@ type CurrentUserContent = {
     signIn: UseMutationResult<{ data: User }, Error, LoginData, unknown> | Record<string, never>;
     signUp: UseMutationResult<{ data: { temp_data_code: string } }, Error, RegisterData, unknown> | Record<string, never>;
     logout: UseMutationResult<void, Error, void, unknown> | Record<string, never>;
-    updateUser: {
-        mutation: (data: FieldValues) => Promise<string | null>; // string is temp_data_code (sms confirm)/ null is error
-        isLoading: boolean;
-        errorMessage: string | null;
-    };
+    updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: {
         mutation: (data: string) => Promise<UserExtra | null>;
@@ -29,11 +24,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
     signIn: {},
     signUp: {},
     logout: {},
-    updateUser: {
-        mutation: () => Promise.resolve(''),
-        isLoading: false,
-        errorMessage: null,
-    },
+    updateUser: {},
     confirmSignUp: {},
     confirmUpdateUser: {
         mutation: () => Promise.resolve<UserExtra | null>(null),
@@ -46,7 +37,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const user = localStorage.getItem('user');
     const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const { t } = useTranslation();
-    const [updateUserErrorMessage, setUpdateUserErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
     const [confirmErrorMessage, setConfirmErrorMessage] = useState<string>('');
@@ -76,7 +66,10 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(null);
         },
     });
-    const updateUser = async (data: FieldValues) => {
+    const updateUser = useMutation({
+        mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
+    });
+    /* const updateUser = async (data: FieldValues) => {
         setIsLoading(true);
         setUpdateUserErrorMessage(null);
         const { phone, fullname, password, confirmPassword } = data;
@@ -95,7 +88,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setIsLoading(false);
             return res.data.temp_data_code;
         }
-    };
+    }; */
 
     const confirmUpdateUser = async (enteredCode: string) => {
         setIsLoading(true);
@@ -134,11 +127,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 signIn,
                 signUp,
                 logout,
-                updateUser: {
-                    mutation: updateUser,
-                    isLoading,
-                    errorMessage: updateUserErrorMessage,
-                },
+                updateUser,
                 confirmSignUp,
                 confirmUpdateUser: {
                     mutation: confirmUpdateUser,

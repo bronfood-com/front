@@ -27,23 +27,17 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
-    const [isErrorVisible, setIsErrorVisible] = useState(false);
     const [fullname, setFullname] = useState(currentUser?.fullname);
     const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
-    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const result = await updateUser.mutation({
+        updateUser.mutate({
             phone: data.phoneNumber,
             fullname: data.username,
             password: data.newPassword || null,
             confirmPassword: data.newPasswordConfirm || null,
         });
-        if (result !== null) {
-            setIsErrorVisible(true);
-        }
-        setIsConfirmOpen(true);
     };
 
     useEffect(() => {
@@ -69,19 +63,18 @@ const Profile = () => {
 
     return (
         <>
-            {isConfirmOpen ? (
+            {updateUser.isSuccess ? (
                 <SMSConfirm isLoading={confirmUpdateUser.isLoading} error={confirmUpdateUser.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}
                     onClose={() => {
                         navigate('/');
-                        setIsErrorVisible(false);
                     }}
                 >
-                    {updateUser.isLoading && <Preloader />}
+                    {updateUser.isPending && <Preloader />}
                     <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                        {isErrorVisible && updateUser.errorMessage && <ErrorMessage message={updateUser.errorMessage} />}
+                        {updateUser.isError && <ErrorMessage message={updateUser.error.message} />}
                         <FormInputs>
                             <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
                             <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
@@ -89,7 +82,7 @@ const Profile = () => {
                             <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
                         </FormInputs>
                         <div className={styles.profile__button_space}></div>
-                        <Button disabled={updateUser.isLoading}>{t('pages.profile.save')}</Button>
+                        <Button disabled={updateUser.isPending}>{t('pages.profile.save')}</Button>
                     </Form>
                 </Popup>
             )}

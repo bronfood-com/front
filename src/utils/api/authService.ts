@@ -51,7 +51,7 @@ export interface AuthService {
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
 
-    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
 
