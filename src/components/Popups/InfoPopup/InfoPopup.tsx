@@ -25,9 +25,12 @@ const InfoPopup: FC<InfoPopup> = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setTimeout(() => {
+        const timeoutRoute = setTimeout(() => {
             navigate('/');
         }, 3000);
+        return () => {
+            clearTimeout(timeoutRoute);
+        };
     }, [navigate]);
 
     return (

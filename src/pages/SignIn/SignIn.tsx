@@ -50,7 +50,7 @@ const SignIn = () => {
                         <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signIn.password')} required={true} />
                     </FormInputs>
                 </fieldset>
-                <Link to="/recovery_pass" className={`${styles.link_recovery} link`}>
+                <Link to="/restore-password" className={`${styles.link_recovery} link`}>
                     {t('pages.signIn.forgotPassword')}
                 </Link>
                 <Button disabled={signIn.isPending}>{t('pages.signIn.loginButton')}</Button>

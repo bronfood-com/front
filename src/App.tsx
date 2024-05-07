@@ -15,6 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Main from './pages/Main/Main';
 import YandexMap from './components/YandexMap/YandexMap';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
+import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                         <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
                     </Route>
                 </Route>
+                <Route path="/restore-password" element={<RestorePassword />} />
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
