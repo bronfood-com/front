@@ -16,6 +16,9 @@
     &__icon {
         width: 25px;
         height: 25px;
+        &_list {
+            background-image: url(../../vendor/images/icons/list-icon.svg);
+        }
         &_customer {
             background-image: url(../../vendor/images/icons/client-icon.svg);
         }
