@@ -11,7 +11,7 @@ function FeedbackPopup() {
     const { t } = useTranslation();
 
     return (
-        <Popup title={t('pages.feedback.feedback')} arrowBack previousPageRoute='/' onClose={onClose}>
+        <Popup title={t('pages.feedback.feedback')} arrowBack previousPageRoute="/" onClose={onClose}>
             <div className={styles.feedback_popup__layout}>
                 <div className={styles.feedback_popup__tel}>+7 (999) 999-99-99</div>
                 <div className={styles.feedback_popup__links}>

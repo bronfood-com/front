@@ -34,9 +34,7 @@ const Popup: FC<Popup> = (props) => {
     const navigate = useNavigate();
 
     const arrowBackClick = () => {
-        props.previousPageRoute
-        ? navigate(props.previousPageRoute)
-        : navigate(-1);
+        props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1);
     };
 
     const handleCloseButton = () => {
