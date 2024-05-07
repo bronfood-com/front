@@ -54,7 +54,7 @@ const Profile = () => {
         await confirmUpdateUser.mutateAsync({ confirmation_code: code });
         setIsConfirmOpen(false);
     };
-    
+
     return (
         <>
             {isConfirmOpen ? (
