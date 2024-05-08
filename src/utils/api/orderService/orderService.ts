@@ -1,4 +1,4 @@
-import { Meal } from "../restaurantsService/restaurantsService";
+import { Meal } from '../restaurantsService/restaurantsService';
 
 export interface OrderedMeal {
     /** Ordered Meal type */

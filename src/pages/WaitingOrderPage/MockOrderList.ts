@@ -23,9 +23,9 @@ export const mockData: { orders: OrderState[] } = {
                         price: 1300,
                         type: 'food',
                         waitingTime: 10,
-                        features: []
+                        features: [],
                     },
-                    quantity: 1
+                    quantity: 1,
                 },
                 {
                     orderedMeal: {
@@ -36,9 +36,9 @@ export const mockData: { orders: OrderState[] } = {
                         price: 500,
                         type: 'drink',
                         waitingTime: 5,
-                        features: []
+                        features: [],
                     },
-                    quantity: 3
+                    quantity: 3,
                 },
                 {
                     orderedMeal: {
@@ -49,9 +49,9 @@ export const mockData: { orders: OrderState[] } = {
                         price: 2000,
                         type: 'food',
                         waitingTime: 7,
-                        features: []
+                        features: [],
                     },
-                    quantity: 1
+                    quantity: 1,
                 },
                 {
                     orderedMeal: {
@@ -62,10 +62,10 @@ export const mockData: { orders: OrderState[] } = {
                         price: 300,
                         type: 'drink',
                         waitingTime: 0,
-                        features: []
+                        features: [],
                     },
-                    quantity: 1
-                }
+                    quantity: 1,
+                },
             ],
         },
         // Для второго заказа данные аналогичны
