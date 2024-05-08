@@ -35,7 +35,7 @@ export class AuthServiceMock implements AuthService {
             localStorage.setItem('token', '23423434');
             return { data: { phone: '74443332211', fullname: 'user registered' } };
         } else {
-            throw new Error('phoneNumberIsAlreadyUsed');
+            throw new Error('validationError');
         }
     }
 
@@ -53,7 +53,7 @@ export class AuthServiceMock implements AuthService {
         if (confirmation_code) {
             return { data: { phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
         } else {
-            throw new Error('invalidValidation');
+            throw new Error('validationError');
         }
     }
 
