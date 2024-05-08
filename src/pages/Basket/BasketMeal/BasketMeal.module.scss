@@ -22,14 +22,25 @@
         box-sizing: content-box;
         display: flex;
         flex-direction: column;
-        row-gap: 10px;
-        padding: 10px 0 10px 0;
+        justify-content: space-between;
     }
     &__name {
         font-size: 15px;
         font-weight: 400;
         line-height: 1.4;
         color: $black;
+    }
+    &__feature {
+        font-size: 8px;
+        font-weight: 400;
+        line-height: 1.22;
+        color: $grey;
+    }
+    &__size {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.22;
+        color: $light-gray;
     }
     &__price {
         font-size: 17px;

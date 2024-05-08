@@ -18,6 +18,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                   }
               })
             : price;
+    const size = features.filter(feature => feature.name === 'Размер')[0].choices.filter(choice => choice.chosen)[0].name;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
@@ -25,7 +26,25 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                 <div className={styles.basket_meal__image} style={{ backgroundImage: `url(${photo})` }} />
                 <div className={styles.basket_meal__description}>
                     <p className={styles.basket_meal__name}>{name}</p>
-                    <span className={styles.basket_meal__price}>{`${mealPrice.toFixed(0)} ₸`}</span>
+                    <ul>
+                        {features
+                            .filter((feature) => feature.name !== 'Размер')
+                            .map((feature) => {
+                                const choice = feature.choices.find((choice) => choice.chosen);
+                                if (choice) {
+                                    return (
+                                        <li key={feature.id}>
+                                            <p className={styles.basket_meal__feature}>{choice.name}</p>
+                                        </li>
+                                    );
+                                }
+                            })
+                        }
+                    </ul>
+                    <p className={styles.basket_meal__size}>
+                        {size}
+                        <span className={styles.basket_meal__price}>{` ${mealPrice.toFixed(0)} ₸`}</span>
+                    </p>
                 </div>
                 <div className={styles.basket_meal__counter}>
                     <Counter count={count} increment={() => addMeal({ mealId: id, features })} decrement={() => deleteMeal({ mealId: id, features })} />
