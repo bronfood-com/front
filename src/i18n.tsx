@@ -23,6 +23,7 @@ i18n
                         guestNavigation: {
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
+                            aboutService: 'О сервисе',
                         },
                         header: {
                             burgerTitleHover: 'Меню',
@@ -41,7 +42,7 @@ i18n
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод. Только латинские буквы, цифры и символы - !@#$%^&*()-_+=<>?',
                             minLengthErrorMessage: 'Минимальное количество символов -',
-                            maxLengthErrorMessage: 'Максимальное количество символом - '
+                            maxLengthErrorMessage: 'Максимальное количество символов - ',
                         },
                         input: {
                             required: 'Обязательное поле',
@@ -68,6 +69,7 @@ i18n
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
                             editBankData: 'Редактировать банковские данные',
+                            aboutService: 'О сервисе',
                             signOut: 'Выйти',
                         },
                         confirmationPopup: {
@@ -174,6 +176,15 @@ i18n
                             emptyBasket: 'Очистить корзину?',
                             yes: 'Да',
                             serverError: 'Ошибка на сервере',
+                        },
+                        feedback: {
+                            feedback: 'Обратная связь',
+                            describeYourProblemOrLeaveFeedback: 'Опишите свою проблему или оставьте пожелания',
+                            submit: 'Отправить',
+                            aboutUs: 'О нас',
+                            preview: 'Превью',
+                            offerAgreement: 'Договор оферты',
+                            privacyPolicy: 'Политика конфиденциальности',
                         },
                     },
                 },
