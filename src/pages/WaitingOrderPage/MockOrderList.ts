@@ -7,36 +7,67 @@ export const mockData: { orders: OrderState[] } = {
             id: 'NHG347',
             totalAmount: 4100,
             confirmationStatus: 'waiting',
-            preparationTime: 11,
+            preparationTime: 7,
             paymentStatus: 'paid',
             reviewStatus: 'waiting',
             cancellationTime: 120,
             cancellationStatus: 'none',
             isCancellationRequested: false,
             orderedMeal: [
-                { id: '1', name: 'Куриный донер', price: 1300, quantity: 1 },
-                { id: '2', name: 'Coffee', price: 500, quantity: 3 },
-                { id: '3', name: 'Салат Цезарь с курицей и сухариками', price: 2000, quantity: 1 },
-                { id: '4', name: 'Вода негазированная', price: 300, quantity: 1 },
+                {
+                    orderedMeal: {
+                        id: '1',
+                        name: 'Куриный донер',
+                        description: 'Вкусный куриный донер с овощами',
+                        photo: 'url_to_photo',
+                        price: 1300,
+                        type: 'food',
+                        waitingTime: 10,
+                        features: []
+                    },
+                    quantity: 1
+                },
+                {
+                    orderedMeal: {
+                        id: '2',
+                        name: 'Coffee',
+                        description: 'Свежесваренный кофе',
+                        photo: 'url_to_photo',
+                        price: 500,
+                        type: 'drink',
+                        waitingTime: 5,
+                        features: []
+                    },
+                    quantity: 3
+                },
+                {
+                    orderedMeal: {
+                        id: '3',
+                        name: 'Салат Цезарь с курицей и сухариками',
+                        description: 'Классический салат Цезарь',
+                        photo: 'url_to_photo',
+                        price: 2000,
+                        type: 'food',
+                        waitingTime: 7,
+                        features: []
+                    },
+                    quantity: 1
+                },
+                {
+                    orderedMeal: {
+                        id: '4',
+                        name: 'Вода негазированная',
+                        description: 'Охлажденная вода без добавок',
+                        photo: 'url_to_photo',
+                        price: 300,
+                        type: 'drink',
+                        waitingTime: 0,
+                        features: []
+                    },
+                    quantity: 1
+                }
             ],
         },
-        {
-            userId: 'clientId2',
-            id: 'NHG348',
-            totalAmount: 5800,
-            confirmationStatus: 'waiting',
-            preparationTime: 5,
-            paymentStatus: 'paid',
-            reviewStatus: 'waiting',
-            cancellationTime: 4,
-            cancellationStatus: 'none',
-            isCancellationRequested: false,
-            orderedMeal: [
-                { id: '1', name: 'Куриный донер', price: 1300, quantity: 1 },
-                { id: '2', name: 'Coffee', price: 500, quantity: 3 },
-                { id: '3', name: 'Салат Цезарь с курицей и сухариками', price: 2000, quantity: 1 },
-                { id: '4', name: 'Вода негазированная', price: 300, quantity: 1 },
-            ],
-        },
+        // Для второго заказа данные аналогичны
     ],
 };

@@ -18,6 +18,9 @@ export const fetchOrderIdByClientId = async (userId: string): Promise<ApiRespons
 };
 
 export const fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
+    // timeout to simulate waiting for order confirmation
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+
     const order = mockData.orders.find((order) => order.id === id);
     if (!order) {
         return { data: null, error: 'Order details not found' };

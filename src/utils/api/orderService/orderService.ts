@@ -1,12 +1,8 @@
+import { Meal } from "../restaurantsService/restaurantsService";
+
 export interface OrderedMeal {
-    /** Meal's id */
-    id: string;
-
-    /** Meal's name */
-    name: string;
-
-    /** Meal's type */
-    price: number;
+    /** Ordered Meal type */
+    orderedMeal: Meal;
 
     /** Number of units of the item ordered */
     quantity: number;
