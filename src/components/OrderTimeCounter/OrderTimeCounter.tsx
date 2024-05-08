@@ -6,17 +6,17 @@ import styles from './OrderTimeCounter.module.scss';
 type OrderTimeCounterProps = {
     remainingTime: number;
     initialTime: number;
-    confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
+    preparationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
 };
 
-const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime, confirmationStatus }) => {
+const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime, preparationStatus }) => {
     const { t } = useTranslation();
 
     const sign = remainingTime < 0 ? '-' : '';
     const formattedTime = `${sign}${Math.abs(remainingTime)}`;
 
     const getStatusMessage = () => {
-        switch (confirmationStatus) {
+        switch (preparationStatus) {
             case 'waiting':
                 return 'components.orderTimeCounter.yourOrderIsAlreadyBeingPrepared';
             case 'confirmed':

@@ -6,12 +6,12 @@ import styles from './OrderListArticle.module.scss';
 type OrderListArticleProps = {
     order: OrderState;
 };
-const OrderListArticle1: FC<OrderListArticleProps> = ({ order }) => {
+const OrderListArticle: FC<OrderListArticleProps> = ({ order }) => {
     return (
         <article className={styles.orderListArticle}>
             <ul className={styles.orderListArticle__list}>
                 {order.orderedMeal.map((item) => (
-                    <OrderListItem item={item} key={item.id} />
+                    <OrderListItem item={item} key={item.orderedMeal.id} />
                 ))}
             </ul>
             <div className={styles.orderListArticle__amount}>
@@ -22,4 +22,4 @@ const OrderListArticle1: FC<OrderListArticleProps> = ({ order }) => {
     );
 };
 
-export default OrderListArticle1;
+export default OrderListArticle;

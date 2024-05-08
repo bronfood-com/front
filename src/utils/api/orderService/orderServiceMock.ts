@@ -6,7 +6,7 @@ type ApiResponse<T> = {
     error: string | null;
 };
 
-export const fetchOrderIdByClientId = async (userId: string): Promise<ApiResponse<string>> => {
+export const fetchOrderIdByUserId = async (userId: string): Promise<ApiResponse<string>> => {
     // timeout to simulate waiting for order confirmation
     await new Promise((resolve) => setTimeout(resolve, 4000));
 

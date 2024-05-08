@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import { OrderContextType } from '../../../contexts/OrderContext';
-import { cancelOrder, fetchOrderedMealByOrderId, fetchOrderIdByClientId } from '../../api/orderService/orderServiceMock';
+import { cancelOrder, fetchOrderedMealByOrderId, fetchOrderIdByUserId } from '../../api/orderService/orderServiceMock';
 import { useTimers } from '../useTimer/useTimer';
 import { OrderState } from '../../api/orderService/orderService';
 import { useTranslation } from 'react-i18next';
 
-export const useOrderProvider = (clientId: string): OrderContextType => {
+export const useOrderProvider = (userId: string): OrderContextType => {
     const { t } = useTranslation();
 
-    const WAIT_CODE_IN_SECONDS = 5 * 60;
     const [orderedMeal, setOrderedMeal] = useState<OrderState | null>(null);
     const [preparationTime, setPreparationTime] = useState<number>(0);
     const [initialPreparationTime, setInitialPreparationTime] = useState<number>(0);
     const [cancellationCountdown, setCancellationCountdown] = useState<number>(0);
-    const [waitOrderCodeTime, setWaitOrderCodeTime] = useState<number>(WAIT_CODE_IN_SECONDS);
+    const [waitOrderCodeTime, setWaitOrderCodeTime] = useState<number>(0);
     const [showConfirmationPopup, setShowConfirmationPopup] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -23,7 +22,7 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
     useEffect(() => {
         const fetchOrder = async () => {
             setIsLoading(true);
-            const orderIdResponse = await fetchOrderIdByClientId(clientId);
+            const orderIdResponse = await fetchOrderIdByUserId(userId);
             if (orderIdResponse.error || orderIdResponse.data === null) {
                 setErrorMessage(orderIdResponse.error || t('components.waitingOrder.orderDoesNotExist'));
                 setIsLoading(false);
@@ -40,15 +39,16 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
             const details = orderedMealResponse.data;
             setOrderedMeal({
                 ...details,
-                confirmationStatus: details.confirmationStatus,
+                preparationStatus: details.preparationStatus,
             });
             setPreparationTime(details.preparationTime);
             setInitialPreparationTime(details.preparationTime);
             setCancellationCountdown(details.cancellationTime);
+            setWaitOrderCodeTime(details.waitOrderIdTime);
             setIsLoading(false);
         };
         fetchOrder();
-    }, [clientId, t]);
+    }, [userId, t]);
 
     const handleCancelOrder = async (orderId: string) => {
         setIsLoading(true);
@@ -65,7 +65,7 @@ export const useOrderProvider = (clientId: string): OrderContextType => {
         setPreparationTime(0);
         setInitialPreparationTime(0);
         setCancellationCountdown(0);
-        setWaitOrderCodeTime(WAIT_CODE_IN_SECONDS);
+        setWaitOrderCodeTime(0);
     };
 
     return {

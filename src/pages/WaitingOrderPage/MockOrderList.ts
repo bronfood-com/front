@@ -4,9 +4,10 @@ export const mockData: { orders: OrderState[] } = {
     orders: [
         {
             userId: 'u12345',
+            waitOrderIdTime: 60,
             id: 'NHG347',
             totalAmount: 4100,
-            confirmationStatus: 'waiting',
+            preparationStatus: 'waiting',
             preparationTime: 7,
             paymentStatus: 'paid',
             reviewStatus: 'waiting',
@@ -68,6 +69,5 @@ export const mockData: { orders: OrderState[] } = {
                 },
             ],
         },
-        // Для второго заказа данные аналогичны
     ],
 };

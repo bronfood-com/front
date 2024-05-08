@@ -12,6 +12,9 @@ export interface OrderState {
     /** Unique identifier for the client */
     userId: string;
 
+    /** Time to wait orderId */
+    waitOrderIdTime: number;
+
     /** Unique identifier for the order */
     id: string;
 
@@ -19,7 +22,7 @@ export interface OrderState {
     totalAmount: number;
 
     /** Confirmation status of the order */
-    confirmationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
+    preparationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
 
     /** Time required to prepare the order, in minutes */
     preparationTime: number;

@@ -21,8 +21,8 @@ class ApiOrder {
         return { data, error: null };
     }
 
-    async fetchOrderIdByClientId(clientId: string): Promise<ApiResponse<string>> {
-        const response = await this.fetchResponse<{ id: string }[]>(`${API_URL}/orders?clientId=${clientId}`);
+    async fetchOrderIdByUserId(userId: string): Promise<ApiResponse<string>> {
+        const response = await this.fetchResponse<{ id: string }[]>(`${API_URL}/orders?clientId=${userId}`);
         if (response.error || !response.data || response.data.length === 0) {
             return { data: null, error: response.error || 'No orders found for this client' };
         }

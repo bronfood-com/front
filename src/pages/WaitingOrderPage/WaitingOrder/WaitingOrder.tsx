@@ -48,7 +48,7 @@ const WaitingOrder: FC = () => {
                     <>
                         <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
                         <h1 className={styles.waitingOrder__orderCode}>{orderedMeal.id}</h1>
-                        <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} confirmationStatus={orderedMeal.confirmationStatus} />
+                        <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} preparationStatus={orderedMeal.preparationStatus} />
                         <div className={styles.waitingOrder__separator} />
                         <OrderListArticle order={orderedMeal} />
                         {cancellationCountdown > 0 && (
