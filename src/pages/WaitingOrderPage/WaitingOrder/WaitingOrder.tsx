@@ -13,12 +13,14 @@ import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 const WaitingOrder: FC = () => {
+
+    const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
+
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
-    const WAIT_CODE_IN_SECONDS = 5 * 60; // секунды для ожидания кода заказа (запросить у бэка)
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderCodeTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder } = useOrderContext();
+    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderIdTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -72,7 +74,7 @@ const WaitingOrder: FC = () => {
                         <p className={styles.waitingOrder__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
                         <span className={styles.waitingOrder__img} />
                         <div className={styles.waitingOrder__separator} />
-                        <ProgressBar initialTime={WAIT_CODE_IN_SECONDS} currentTime={waitOrderCodeTime} />
+                        <ProgressBar initialTime={WAIT_ORDER_ID_INITIAL_TIME} currentTime={waitOrderIdTime} />
                         <p className={styles.waitingOrder__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
                     </>
                 )}

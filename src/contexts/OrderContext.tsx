@@ -11,8 +11,10 @@ export interface OrderContextType {
     setInitialPreparationTime: React.Dispatch<React.SetStateAction<number>>;
     cancellationCountdown: number;
     setCancellationCountdown: React.Dispatch<React.SetStateAction<number>>;
-    waitOrderCodeTime: number;
-    setWaitOrderCodeTime: React.Dispatch<React.SetStateAction<number>>;
+    // initialWaitOrderIdTime: number;
+    // setInitialWaitOrderIdTime: React.Dispatch<React.SetStateAction<number>>;
+    waitOrderIdTime: number;
+    setWaitOrderIdTime: React.Dispatch<React.SetStateAction<number>>;
     showConfirmationPopup: boolean;
     setShowConfirmationPopup: React.Dispatch<React.SetStateAction<boolean>>;
     isLoading: boolean;
@@ -31,8 +33,10 @@ const defaultOrderContextValue: OrderContextType = {
     setInitialPreparationTime: () => {},
     cancellationCountdown: 0,
     setCancellationCountdown: () => {},
-    waitOrderCodeTime: 0,
-    setWaitOrderCodeTime: () => {},
+    // initialWaitOrderIdTime: 0,
+    // setInitialWaitOrderIdTime: () => {},
+    waitOrderIdTime: 0,
+    setWaitOrderIdTime: () => {},
     showConfirmationPopup: false,
     setShowConfirmationPopup: () => {},
     isLoading: true,

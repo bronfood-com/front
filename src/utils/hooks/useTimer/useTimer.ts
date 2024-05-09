@@ -1,26 +1,34 @@
+/**
+ * Custom hook to manage multiple timers for different application states such as preparation time,
+ * wait order ID time, and cancellation countdown. This hook abstracts the complexity of managing
+ * intervals and ensures that timers are cleaned up when not needed.
+ *
+ * @param {Object} props The properties required to manage the timers.
+ * @param {TimerCallback} [props.setPreparationTime] Function to update the preparation time.
+ *                                                   This function should take the previous time
+ *                                                   and return the new time.
+ * @param {TimerCallback} [props.setWaitOrderIdTime] Function to decrement the wait order ID time.
+ *                                                   Executes every second until time reaches zero
+ *                                                   or it's manually stopped.
+ * @param {TimerCallback} [props.setCancellationCountdown] Function to decrement the cancellation
+ *                                                         countdown. Similar to setWaitOrderIdTime,
+ *                                                         but for managing cancellation timing.
+ * @param {Function} [props.stopWaitOrderIdTimer] Optional function to be called when the wait
+ *                                                order ID timer reaches zero or needs to be stopped.
+ */
+
 import { useEffect, useRef } from 'react';
 
 type TimerCallback = (prevTime: number) => number;
 
-/**
- * Custom hook to manage and update various timers.
- * The hook initializes and manages timers based on provided callback functions for updating state.
- * It leverages `setInterval` to periodically update each of the three different time values.
- *
- * @param {UseTimerProps} props - The properties that define the necessary update functions for the timers.
- * @returns {void}
- */
-
 interface UseTimerProps {
-    /** Function to update the preparation time. Receives a callback that expects the previous time and returns the new time. */
     setPreparationTime?: (updateFn: TimerCallback) => void;
-    /** Function to update the wait time for order code. Receives a callback similar to setPreparationTime. */
-    setWaitOrderCodeTime?: (updateFn: TimerCallback) => void;
-    /** Function to update the cancellation countdown. Receives a callback similar to setPreparationTime. */
+    setWaitOrderIdTime?: (updateFn: TimerCallback) => void;
     setCancellationCountdown?: (updateFn: TimerCallback) => void;
+    stopWaitOrderIdTimer?: () => void;
 }
 
-export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancellationCountdown }: UseTimerProps) => {
+export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown, stopWaitOrderIdTimer }: UseTimerProps) => {
     const startTimeRef = useRef<{ prep: null | number; wait: null | number; cancel: null | number }>({
         prep: null,
         wait: null,
@@ -28,36 +36,37 @@ export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancell
     });
 
     useEffect(() => {
+        if (!setWaitOrderIdTime) return;
+        const interval = setInterval(() => {
+            setWaitOrderIdTime(prevTime => {
+                if (prevTime <= 0) {
+                    clearInterval(interval);
+                    if (stopWaitOrderIdTimer) {
+                        stopWaitOrderIdTimer();
+                    }
+                    return prevTime;
+                }
+                return prevTime - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [setWaitOrderIdTime, stopWaitOrderIdTimer]);
+
+    useEffect(() => {
         if (!setPreparationTime) return;
         startTimeRef.current.prep = Date.now();
         const interval = 60000;
         const orderTimer = window.setInterval(() => {
             if (startTimeRef.current.prep != null) {
-                // Добавляем проверку на null
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.prep) / interval);
                 setPreparationTime((prevTime) => prevTime - elapsed);
-                startTimeRef.current.prep = now; // Обновляем время начала после каждого тика
+                startTimeRef.current.prep = now;
             }
         }, interval);
         return () => clearInterval(orderTimer);
     }, [setPreparationTime]);
-
-    useEffect(() => {
-        if (!setWaitOrderCodeTime) return;
-        startTimeRef.current.wait = Date.now();
-        const interval = 1000;
-        const waitOrderCodeTimer = window.setInterval(() => {
-            if (startTimeRef.current.wait != null) {
-                // Добавляем проверку на null
-                const now = Date.now();
-                const elapsed = Math.floor((now - startTimeRef.current.wait) / interval);
-                setWaitOrderCodeTime((prevTime) => prevTime - elapsed);
-                startTimeRef.current.wait = now;
-            }
-        }, interval);
-        return () => clearInterval(waitOrderCodeTimer);
-    }, [setWaitOrderCodeTime]);
 
     useEffect(() => {
         if (!setCancellationCountdown) return;
@@ -65,7 +74,6 @@ export const useTimers = ({ setPreparationTime, setWaitOrderCodeTime, setCancell
         const interval = 1000;
         const cancellationTimer = window.setInterval(() => {
             if (startTimeRef.current.cancel != null) {
-                // Добавляем проверку на null
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.cancel) / interval);
                 setCancellationCountdown((prevTime) => prevTime - elapsed);

@@ -12,9 +12,6 @@ export interface OrderState {
     /** Unique identifier for the client */
     userId: string;
 
-    /** Time to wait orderId */
-    waitOrderIdTime: number;
-
     /** Unique identifier for the order */
     id: string;
 

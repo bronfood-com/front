@@ -4,7 +4,6 @@ export const mockData: { orders: OrderState[] } = {
     orders: [
         {
             userId: 'u12345',
-            waitOrderIdTime: 60,
             id: 'NHG347',
             totalAmount: 4100,
             preparationStatus: 'waiting',

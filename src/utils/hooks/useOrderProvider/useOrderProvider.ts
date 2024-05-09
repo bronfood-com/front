@@ -12,43 +12,36 @@ export const useOrderProvider = (userId: string): OrderContextType => {
     const [preparationTime, setPreparationTime] = useState<number>(0);
     const [initialPreparationTime, setInitialPreparationTime] = useState<number>(0);
     const [cancellationCountdown, setCancellationCountdown] = useState<number>(0);
-    const [waitOrderCodeTime, setWaitOrderCodeTime] = useState<number>(0);
+    const [waitOrderIdTime, setWaitOrderIdTime] = useState<number>(120);
     const [showConfirmationPopup, setShowConfirmationPopup] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    useTimers({ setPreparationTime, setWaitOrderCodeTime, setCancellationCountdown });
+    useTimers({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown });
 
     useEffect(() => {
-        const fetchOrder = async () => {
-            setIsLoading(true);
+        const interval = setInterval(async () => {
             const orderIdResponse = await fetchOrderIdByUserId(userId);
-            if (orderIdResponse.error || orderIdResponse.data === null) {
+            if (orderIdResponse.data) {
+                clearInterval(interval);
+                const details = await fetchOrderedMealByOrderId(orderIdResponse.data);
+                if (details.data) {
+                    setOrderedMeal(details.data);
+                    setInitialPreparationTime(details.data.preparationTime);
+                    setPreparationTime(details.data.preparationTime);
+                    setCancellationCountdown(details.data.cancellationTime);
+                    setWaitOrderIdTime(0);
+                } else {
+                    setErrorMessage(details.error || t('components.waitingOrder.errorReceivingOrderData'));
+                }
+                setIsLoading(false);
+            } else {
                 setErrorMessage(orderIdResponse.error || t('components.waitingOrder.orderDoesNotExist'));
-                setIsLoading(false);
-                return;
             }
+        }, 5000);
 
-            const orderedMealResponse = await fetchOrderedMealByOrderId(orderIdResponse.data);
-            if (orderedMealResponse.error || orderedMealResponse.data === null) {
-                setErrorMessage(orderedMealResponse.error || t('components.waitingOrder.errorReceivingOrderData'));
-                setIsLoading(false);
-                return;
-            }
-
-            const details = orderedMealResponse.data;
-            setOrderedMeal({
-                ...details,
-                preparationStatus: details.preparationStatus,
-            });
-            setPreparationTime(details.preparationTime);
-            setInitialPreparationTime(details.preparationTime);
-            setCancellationCountdown(details.cancellationTime);
-            setWaitOrderCodeTime(details.waitOrderIdTime);
-            setIsLoading(false);
-        };
-        fetchOrder();
-    }, [userId, t]);
+        return () => clearInterval(interval);
+    }, [userId, setWaitOrderIdTime, t]);
 
     const handleCancelOrder = async (orderId: string) => {
         setIsLoading(true);
@@ -65,7 +58,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         setPreparationTime(0);
         setInitialPreparationTime(0);
         setCancellationCountdown(0);
-        setWaitOrderCodeTime(0);
+        setWaitOrderIdTime(0);
     };
 
     return {
@@ -77,8 +70,8 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         setInitialPreparationTime,
         cancellationCountdown,
         setCancellationCountdown,
-        waitOrderCodeTime,
-        setWaitOrderCodeTime,
+        waitOrderIdTime,
+        setWaitOrderIdTime,
         showConfirmationPopup,
         setShowConfirmationPopup,
         isLoading,
