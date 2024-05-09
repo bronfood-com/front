@@ -36,23 +36,23 @@ type BasketContext = {
     /**
      * Loads restaurant and all meals in basket from server
      */
-    getBasket: () => void;
+    getBasket: () => Basket;
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => Basket;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => Basket;
     /**
      * Removes restaurant and all meals from basket on client and server side
      */
-    emptyBasket: () => void;
+    emptyBasket: () => Basket;
     /**
      * Removes restaurant and all meals from basket on client side only (i.e. on log out)
      */
-    emptyBasketOnClientSideOnly: () => void;
+    emptyBasketOnClientSideOnly: () => Basket;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -131,7 +131,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const emptyBasketOnClientSideOnly = useCallback(() => {
         setRestaurant({});
         setMeals([]);
-    }, [])
+    }, []);
     return (
         <BasketContext.Provider
             value={{

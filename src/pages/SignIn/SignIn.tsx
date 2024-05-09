@@ -12,9 +12,11 @@ import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
+import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const SignIn = () => {
     const { currentUser, signIn } = useCurrentUser();
+    const {getBasket} = useBasket();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -31,7 +33,8 @@ const SignIn = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
-        signIn.mutate({ phone: phoneNumber.replace(/\D/g, ''), password });
+        await signIn.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password });
+        getBasket();
     };
 
     return (
