@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
+import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -36,15 +36,15 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => Basket;
+    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => Basket;
+    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Removes restaurant and all meals from basket on client and server side
      */
-    emptyBasket: () => Basket;
+    emptyBasket: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
