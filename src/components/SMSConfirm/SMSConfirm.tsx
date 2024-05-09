@@ -18,7 +18,7 @@ interface SMSConfirm {
     /**
      * Error message
      */
-    error: string | null;
+    error: string | undefined;
     /**
      * Create error message
      */

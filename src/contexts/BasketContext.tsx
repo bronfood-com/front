@@ -1,8 +1,8 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
+import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
-import { useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 type BasketContext = {
     /**
@@ -42,7 +42,7 @@ type BasketContext = {
      */
     deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
-     * Removes restaurant and all meals from basket
+     * Removes restaurant and all meals from basket on client and server side
      */
     emptyBasket: () => void;
 };
@@ -61,31 +61,31 @@ export const BasketContext = createContext<BasketContext>({
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [restaurant, setRestaurant] = useState<Restaurant | Record<string, never>>({});
-    const [meals, setMeals] = useState<Array<MealInBasket>>([]);
+    const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
-    const handleSuccess = (result: { data: Basket }) => {
-        const { restaurant, meals }: Basket = result.data;
-        setRestaurant(restaurant);
-        setMeals(meals);
-    };
+    const { data, isSuccess } = useQuery({
+        queryKey: ['basket'],
+        queryFn: () => basketService.getBasket(),
+    });
+    const restaurant = isSuccess ? data.data.restaurant : {};
+    const meals = isSuccess ? data.data.meals : [];
     const { mutate: addMeal, isPending: addMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
-        onSuccess: (result) => handleSuccess(result),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
-        onSuccess: (result) => handleSuccess(result),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
     const { mutate: emptyBasket, isPending: emptyBasketPending } = useMutation({
         mutationFn: () => basketService.emptyBasket(),
-        onSuccess: (result) => handleSuccess(result),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
