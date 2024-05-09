@@ -21,8 +21,8 @@ const Logout: FC = () => {
                 data: {
                     restaurant: {},
                     meals: [],
-                }
-            }
+                },
+            };
         });
     };
     const handleOverlayClick = (e: MouseEvent) => {

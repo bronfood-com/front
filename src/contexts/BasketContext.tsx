@@ -63,7 +63,7 @@ export const BasketContext = createContext<BasketContext>({
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
-    const {data, isSuccess} = useQuery({
+    const { data, isSuccess } = useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
     });

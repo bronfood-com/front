@@ -34,7 +34,7 @@ const SignIn = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         await signIn.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password });
-        queryClient.invalidateQueries({queryKey: ['basket'], exact: true})
+        queryClient.invalidateQueries({ queryKey: ['basket'], exact: true });
     };
 
     return (
