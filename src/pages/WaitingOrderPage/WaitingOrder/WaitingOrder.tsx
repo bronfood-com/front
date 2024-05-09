@@ -13,7 +13,6 @@ import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 const WaitingOrder: FC = () => {
-
     const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);

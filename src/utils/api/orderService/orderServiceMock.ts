@@ -8,15 +8,15 @@ type ApiResponse<T> = {
 
 export const fetchOrderIdByUserId = async (userId: string): Promise<ApiResponse<string>> => {
     // Имитация задержки ответа и фильтрация по userId
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    const order = mockData.orders.find(order => order.userId === userId);
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    const order = mockData.orders.find((order) => order.userId === userId);
     return order ? { data: order.id, error: null } : { data: null, error: 'No confirmed orders found for this client' };
 };
 
 export const fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
     // Имитация задержки ответа и фильтрация по orderId
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    const order = mockData.orders.find(order => order.id === id);
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    const order = mockData.orders.find((order) => order.id === id);
     return order ? { data: order, error: null } : { data: null, error: 'Order details not found' };
 };
 

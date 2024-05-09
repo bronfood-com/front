@@ -38,7 +38,7 @@ export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellat
     useEffect(() => {
         if (!setWaitOrderIdTime) return;
         const interval = setInterval(() => {
-            setWaitOrderIdTime(prevTime => {
+            setWaitOrderIdTime((prevTime) => {
                 if (prevTime <= 0) {
                     clearInterval(interval);
                     if (stopWaitOrderIdTimer) {
