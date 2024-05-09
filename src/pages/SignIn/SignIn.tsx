@@ -12,11 +12,11 @@ import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useEffect } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SignIn = () => {
+    const queryClient = useQueryClient();
     const { currentUser, signIn } = useCurrentUser();
-    const { getBasket } = useBasket();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
@@ -34,7 +34,7 @@ const SignIn = () => {
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber } = data;
         await signIn.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password });
-        getBasket();
+        queryClient.invalidateQueries({queryKey: ['basket'], exact: true})
     };
 
     return (

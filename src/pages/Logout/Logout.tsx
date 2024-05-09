@@ -6,17 +6,24 @@ import ConfirmationPopup from '../../components/Popups/ConfirmationPopup/Confirm
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 import { useEsc } from '../../utils/hooks/useEsc/useEsc';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Logout: FC = () => {
+    const queryClient = useQueryClient();
     const { currentUser, logout } = useCurrentUser();
-    const { emptyBasketOnClientSideOnly } = useBasket();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = async () => {
         await logout.mutateAsync();
-        emptyBasketOnClientSideOnly();
+        queryClient.setQueryData(['basket'], () => {
+            return {
+                data: {
+                    restaurant: {},
+                    meals: [],
+                }
+            }
+        });
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
