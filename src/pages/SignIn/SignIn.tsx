@@ -16,7 +16,7 @@ import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const SignIn = () => {
     const { currentUser, signIn } = useCurrentUser();
-    const {getBasket} = useBasket();
+    const { getBasket } = useBasket();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const {
