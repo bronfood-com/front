@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useState } from 'react';
+import { createContext, FC, PropsWithChildren, useCallback, useState } from 'react';
 import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, Basket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
@@ -34,6 +34,10 @@ type BasketContext = {
      */
     price: number;
     /**
+     * Loads restaurant and all meals in basket from server
+     */
+    getBasket: () => void;
+    /**
      * Add meal to basket
      */
     addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
@@ -42,9 +46,13 @@ type BasketContext = {
      */
     deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
     /**
-     * Removes restaurant and all meals from basket
+     * Removes restaurant and all meals from basket on client and server side
      */
     emptyBasket: () => void;
+    /**
+     * Removes restaurant and all meals from basket on client side only (i.e. on log out)
+     */
+    emptyBasketOnClientSideOnly: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -55,9 +63,11 @@ export const BasketContext = createContext<BasketContext>({
     errorMessage: '',
     waitingTime: 0,
     price: 0,
+    getBasket: () => Promise.resolve(),
     addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
+    emptyBasketOnClientSideOnly: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -69,6 +79,13 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         setRestaurant(restaurant);
         setMeals(meals);
     };
+    const { mutate: getBasket, isPending: getBasketPending } = useMutation({
+        mutationFn: () => basketService.getBasket(),
+        onSuccess: (result) => handleSuccess(result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
     const { mutate: addMeal, isPending: addMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => handleSuccess(result),
@@ -90,7 +107,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
+    const isLoading = getBasketPending || addMealPending || deleteMealPending || emptyBasketPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -111,6 +128,10 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
+    const emptyBasketOnClientSideOnly = useCallback(() => {
+        setRestaurant({});
+        setMeals([]);
+    }, [])
     return (
         <BasketContext.Provider
             value={{
@@ -121,9 +142,11 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 errorMessage,
                 waitingTime,
                 price,
+                getBasket,
                 addMeal,
                 deleteMeal,
                 emptyBasket,
+                emptyBasketOnClientSideOnly,
             }}
         >
             {children}

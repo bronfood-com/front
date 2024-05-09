@@ -10,6 +10,15 @@ export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
+    async getBasket(): Promise<{ data: Basket }> {
+        await this._wait(500);
+        const success = true;
+        if (success) {
+            return { data: this.basket };
+        } else {
+            throw new Error('serverError');
+        }
+    }
     async addMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
         await this._wait(500);
         const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {

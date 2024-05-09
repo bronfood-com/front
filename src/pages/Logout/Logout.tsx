@@ -11,14 +11,12 @@ import { useEsc } from '../../utils/hooks/useEsc/useEsc';
 
 const Logout: FC = () => {
     const { currentUser, logout } = useCurrentUser();
-    const { emptyBasket } = useBasket();
+    const { emptyBasketOnClientSideOnly } = useBasket();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleLogout = async () => {
-        const result = await logout.mutate();
-        if (result !== null) {
-            emptyBasket();
-        }
+        await logout.mutateAsync();
+        emptyBasketOnClientSideOnly();
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
