@@ -1,6 +1,6 @@
-import { OrderState } from './orderService';
-import { mockData } from '../../../pages/WaitingOrderPage/MockOrderList';
 import i18n from 'i18next';
+import { mockData } from './MockOrderList';
+import { OrderState } from './orderService';
 
 type ApiResponse<T> = {
     data: T | null;
