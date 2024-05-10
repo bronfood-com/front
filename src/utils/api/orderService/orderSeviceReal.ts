@@ -6,7 +6,7 @@ type ApiResponse<T> = {
     error: string | null;
 };
 
-class ApiOrder {
+class OrderServiceReal {
     async fetchResponse<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {
         const response = await fetch(url, options);
         if (!response.ok) {
@@ -47,4 +47,4 @@ class ApiOrder {
     }
 }
 
-export const apiClient = new ApiOrder();
+export default OrderServiceReal;
