@@ -17,30 +17,24 @@ class OrderServiceMock {
             return { data: result, error: null };
         }
         return { data: null, error: errorMessage };
-    }
+    };
 
     fetchOrderIdByUserId = async (userId: string): Promise<ApiResponse<string>> => {
-        return this._fetchResponse(
-            () => mockData.orders.find(order => order.userId === userId)?.id,
-            'No confirmed orders found for this client'
-        );
-    }
+        return this._fetchResponse(() => mockData.orders.find((order) => order.userId === userId)?.id, 'No confirmed orders found for this client');
+    };
 
     fetchOrderedMealByOrderId = async (id: string): Promise<ApiResponse<OrderState>> => {
-        return this._fetchResponse(
-            () => mockData.orders.find(order => order.id === id),
-            'Order details not found'
-        );
-    }
+        return this._fetchResponse(() => mockData.orders.find((order) => order.id === id), 'Order details not found');
+    };
 
     cancelOrder = async (id: string): Promise<ApiResponse<void>> => {
-        const orderExists = mockData.orders.some(order => order.id === id);
+        const orderExists = mockData.orders.some((order) => order.id === id);
         if (!orderExists) {
             return { data: null, error: 'Error canceling the order' };
         }
 
         return { data: null, error: null };
-    }
+    };
 }
 
 export default OrderServiceMock;
