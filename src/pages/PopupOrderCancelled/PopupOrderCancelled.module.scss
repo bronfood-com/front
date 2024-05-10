@@ -19,10 +19,17 @@
         font-weight: 400;
         line-height: 19.6px;
         color: $grey-subtitle;
+        max-width: 266px;
+        text-align: center;
     }
 
     &__image {
         width: 254px;
+        height: 181px;
         margin-top: 48px;
+        background-image: url('../../vendor/images/waiting-screen.svg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 }
