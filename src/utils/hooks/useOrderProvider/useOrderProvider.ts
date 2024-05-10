@@ -18,46 +18,43 @@ export const useOrderProvider = (userId: string): OrderContextType => {
 
     const orderService = useMemo(() => new OrderServiceMock(), []);
 
-    const handleCancelOrder = useCallback(async (id: string) => {
-        setIsLoading(true);
-        const result = await orderService.cancelOrder(id);
-        if (result.error) {
-            setErrorMessage(result.error);
-        } else {
-            setPreparationTime(0);
-            setInitialPreparationTime(0);
-            setCancellationCountdown(0);
-            setWaitOrderIdTime(120);
-        }
-        setIsLoading(false);
-    }, [orderService]);
+    const handleCancelOrder = useCallback(
+        async (id: string) => {
+            setIsLoading(true);
+            const result = await orderService.cancelOrder(id);
+            if (result.error) {
+                setErrorMessage(result.error);
+            } else {
+                setPreparationTime(0);
+                setInitialPreparationTime(0);
+                setCancellationCountdown(0);
+                setWaitOrderIdTime(120);
+            }
+            setIsLoading(false);
+        },
+        [orderService],
+    );
 
-    const state = useMemo(() => ({
-        orderedMeal,
-        setOrderedMeal,
-        preparationTime,
-        setPreparationTime,
-        initialPreparationTime,
-        setInitialPreparationTime,
-        cancellationCountdown,
-        setCancellationCountdown,
-        waitOrderIdTime,
-        setWaitOrderIdTime,
-        isLoading,
-        setIsLoading,
-        errorMessage,
-        setErrorMessage,
-        cancelOrder: handleCancelOrder,
-    }), [
-        orderedMeal,
-        preparationTime,
-        initialPreparationTime,
-        cancellationCountdown,
-        waitOrderIdTime,
-        isLoading,
-        errorMessage,
-        handleCancelOrder
-    ]);
+    const state = useMemo(
+        () => ({
+            orderedMeal,
+            setOrderedMeal,
+            preparationTime,
+            setPreparationTime,
+            initialPreparationTime,
+            setInitialPreparationTime,
+            cancellationCountdown,
+            setCancellationCountdown,
+            waitOrderIdTime,
+            setWaitOrderIdTime,
+            isLoading,
+            setIsLoading,
+            errorMessage,
+            setErrorMessage,
+            cancelOrder: handleCancelOrder,
+        }),
+        [orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder],
+    );
 
     useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationCountdown: state.setCancellationCountdown });
 
