@@ -16,10 +16,11 @@ const WaitingOrder: FC = () => {
     const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
+    const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderIdTime, showConfirmationPopup, setShowConfirmationPopup, cancelOrder } = useOrderContext();
+    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderIdTime, cancelOrder } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -57,7 +58,8 @@ const WaitingOrder: FC = () => {
                                 <p className={styles.waitingOrder__subtitleNote}>
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        {formatTime(cancellationCountdown)} {t(getMinutesForm(cancellationCountdown))}
+                                        {formatTime(cancellationCountdown)}
+                                        {' '}{t(getMinutesForm(cancellationCountdown))}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>

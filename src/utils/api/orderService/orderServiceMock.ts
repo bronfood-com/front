@@ -29,6 +29,8 @@ class OrderServiceMock {
     };
 
     cancelOrder = async (id: string): Promise<ApiResponse<void>> => {
+        await this._delayedResponse(2000);
+
         const orderExists = mockData.orders.some((order) => order.id === id);
         if (!orderExists) {
             return { data: null, error: 'components.waitingOrder.errorWhileCancellingTheOrder' };

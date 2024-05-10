@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
-import { OrderContextType } from '../../../contexts/OrderContext';
-import OrderServiceMock from '../../api/orderService/orderServiceMock';
-import { useTimers } from '../useTimer/useTimer';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { OrderState } from '../../api/orderService/orderService';
+import OrderServiceMock from '../../api/orderService/orderServiceMock';
 import { useTranslation } from 'react-i18next';
+import { useTimers } from '../useTimer/useTimer';
+import { OrderContextType } from '../../../contexts/OrderContext';
 
 export const useOrderProvider = (userId: string): OrderContextType => {
     const { t } = useTranslation();
@@ -13,13 +13,53 @@ export const useOrderProvider = (userId: string): OrderContextType => {
     const [initialPreparationTime, setInitialPreparationTime] = useState<number>(0);
     const [cancellationCountdown, setCancellationCountdown] = useState<number>(0);
     const [waitOrderIdTime, setWaitOrderIdTime] = useState<number>(120);
-    const [showConfirmationPopup, setShowConfirmationPopup] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    useTimers({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown });
-
     const orderService = useMemo(() => new OrderServiceMock(), []);
+
+    const handleCancelOrder = useCallback(async (id: string) => {
+        setIsLoading(true);
+        const result = await orderService.cancelOrder(id);
+        if (result.error) {
+            setErrorMessage(result.error);
+        } else {
+            setPreparationTime(0);
+            setInitialPreparationTime(0);
+            setCancellationCountdown(0);
+            setWaitOrderIdTime(120);
+        }
+        setIsLoading(false);
+    }, [orderService]);
+
+    const state = useMemo(() => ({
+        orderedMeal,
+        setOrderedMeal,
+        preparationTime,
+        setPreparationTime,
+        initialPreparationTime,
+        setInitialPreparationTime,
+        cancellationCountdown,
+        setCancellationCountdown,
+        waitOrderIdTime,
+        setWaitOrderIdTime,
+        isLoading,
+        setIsLoading,
+        errorMessage,
+        setErrorMessage,
+        cancelOrder: handleCancelOrder,
+    }), [
+        orderedMeal,
+        preparationTime,
+        initialPreparationTime,
+        cancellationCountdown,
+        waitOrderIdTime,
+        isLoading,
+        errorMessage,
+        handleCancelOrder
+    ]);
+
+    useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationCountdown: state.setCancellationCountdown });
 
     useEffect(() => {
         const interval = setInterval(async () => {
@@ -43,43 +83,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [userId, setWaitOrderIdTime, t, orderService]);
+    }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationCountdown, setWaitOrderIdTime, setIsLoading, setErrorMessage]);
 
-    const handleCancelOrder = async (orderId: string) => {
-        setIsLoading(true);
-        const result = await orderService.cancelOrder(orderId);
-        if (result.error) {
-            setErrorMessage(result.error);
-        } else {
-            resetStates();
-        }
-        setIsLoading(false);
-    };
-
-    const resetStates = () => {
-        setPreparationTime(0);
-        setInitialPreparationTime(0);
-        setCancellationCountdown(0);
-        setWaitOrderIdTime(0);
-    };
-
-    return {
-        orderedMeal,
-        setOrderedMeal,
-        preparationTime,
-        setPreparationTime,
-        initialPreparationTime,
-        setInitialPreparationTime,
-        cancellationCountdown,
-        setCancellationCountdown,
-        waitOrderIdTime,
-        setWaitOrderIdTime,
-        showConfirmationPopup,
-        setShowConfirmationPopup,
-        isLoading,
-        setIsLoading,
-        cancelOrder: handleCancelOrder,
-        errorMessage,
-        setErrorMessage,
-    };
+    return state;
 };
