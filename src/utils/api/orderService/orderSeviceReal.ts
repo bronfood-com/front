@@ -47,7 +47,6 @@ class OrderServiceReal {
         }
         return { data: null, error: null };
     }
-
 }
 
 export default OrderServiceReal;
