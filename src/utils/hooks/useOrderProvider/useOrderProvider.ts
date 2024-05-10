@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { OrderContextType } from '../../../contexts/OrderContext';
-import { cancelOrder, fetchOrderedMealByOrderId, fetchOrderIdByUserId } from '../../api/orderService/orderServiceMock';
+import OrderServiceMock from '../../api/orderService/orderServiceMock';
 import { useTimers } from '../useTimer/useTimer';
 import { OrderState } from '../../api/orderService/orderService';
 import { useTranslation } from 'react-i18next';
@@ -19,12 +19,14 @@ export const useOrderProvider = (userId: string): OrderContextType => {
 
     useTimers({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown });
 
+    const orderService = useMemo(() => new OrderServiceMock(), []);
+
     useEffect(() => {
         const interval = setInterval(async () => {
-            const orderIdResponse = await fetchOrderIdByUserId(userId);
+            const orderIdResponse = await orderService.fetchOrderIdByUserId(userId);
             if (orderIdResponse.data) {
                 clearInterval(interval);
-                const details = await fetchOrderedMealByOrderId(orderIdResponse.data);
+                const details = await orderService.fetchOrderedMealByOrderId(orderIdResponse.data);
                 if (details.data) {
                     setOrderedMeal(details.data);
                     setInitialPreparationTime(details.data.preparationTime);
@@ -41,11 +43,11 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [userId, setWaitOrderIdTime, t]);
+    }, [userId, setWaitOrderIdTime, t, orderService]);
 
     const handleCancelOrder = async (orderId: string) => {
         setIsLoading(true);
-        const result = await cancelOrder(orderId);
+        const result = await orderService.cancelOrder(orderId);
         if (result.error) {
             setErrorMessage(result.error);
         } else {

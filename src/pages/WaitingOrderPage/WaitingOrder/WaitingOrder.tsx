@@ -40,7 +40,7 @@ const WaitingOrder: FC = () => {
         }
     };
 
-    useEsc(() => setShowConfirmationPopup(false), [showConfirmationPopup]);
+    useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
     return (
         <>
@@ -58,7 +58,7 @@ const WaitingOrder: FC = () => {
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
                                         {formatTime(cancellationCountdown)}
-                                        {t(getMinutesForm(cancellationCountdown))}
+                                        {' '}{t(getMinutesForm(cancellationCountdown))}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>

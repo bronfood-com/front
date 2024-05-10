@@ -16,16 +16,34 @@
  * @param {Function} [props.stopWaitOrderIdTimer] Optional function to be called when the wait
  *                                                order ID timer reaches zero or needs to be stopped.
  */
-
 import { useEffect, useRef } from 'react';
 
 type TimerCallback = (prevTime: number) => number;
 
 interface UseTimerProps {
+    /**
+    * Function to update the preparation time.
+    * This function should take the previous time
+    * and return the new time.
+    */
     setPreparationTime?: (updateFn: TimerCallback) => void;
+    /**
+    * Function to decrement the wait order ID time.
+    * Executes every second until time reaches zero
+    * or it's manually stopped.
+    */
     setWaitOrderIdTime?: (updateFn: TimerCallback) => void;
-    setCancellationCountdown?: (updateFn: TimerCallback) => void;
+    /**
+    * Optional function to be called when the wait
+    * order ID timer reaches zero or needs to be stopped.
+    */
     stopWaitOrderIdTimer?: () => void;
+    /**
+    * Function to decrement the cancellation
+    * countdown. Similar to setWaitOrderIdTime,
+    * but for managing cancellation timing.
+    */
+    setCancellationCountdown?: (updateFn: TimerCallback) => void;
 }
 
 export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown, stopWaitOrderIdTimer }: UseTimerProps) => {
@@ -38,7 +56,7 @@ export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellat
     useEffect(() => {
         if (!setWaitOrderIdTime) return;
         const interval = setInterval(() => {
-            setWaitOrderIdTime((prevTime) => {
+            setWaitOrderIdTime(prevTime => {
                 if (prevTime <= 0) {
                     clearInterval(interval);
                     if (stopWaitOrderIdTimer) {

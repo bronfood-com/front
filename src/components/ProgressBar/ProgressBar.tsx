@@ -22,7 +22,6 @@ interface ProgressBarProps {
  * It calculates the progress percentage based on the initial total time and the current remaining time.
  * The progress bar color changes when the remaining time falls below zero, indicating an overdue status.
  */
-
 const ProgressBar: FC<ProgressBarProps> = ({ initialTime, currentTime }) => {
     const [progress, setProgress] = useState(0);
 
