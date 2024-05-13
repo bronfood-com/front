@@ -1,11 +1,10 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+
 
 function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
-    const { setActiveRestaurant } = useRestaurants();
     const ref = useRef(null);
 
     const isInView = useInView(ref, {
@@ -13,12 +12,6 @@ function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; i
         root: container,
         margin: '-18% 0px -18% 0px',
     });
-
-    useEffect(() => {
-        if (isInView) {
-            setActiveRestaurant(card.id);
-        }
-    }, [card.id, isInView, setActiveRestaurant]);
 
     return (
         <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>

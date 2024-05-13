@@ -7,23 +7,19 @@ import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useNavigate } from 'react-router-dom';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
     const { t } = useTranslation();
-    const { restaurantsFiltered } = useRestaurants();
+    const navigate = useNavigate();
+    const { restaurantsFiltered, inView } = useRestaurants();
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [userLatitude, setUserLatitude] = useState(43.246345);
     const [userLongitude, setUserLongitude] = useState(76.921552);
     const { isLogin } = useCurrentUser();
     const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
-
-    const handlePlacemarkClick = (placeId: string, latitude: number, longitude: number) => {
-        setActivePlaceId(placeId);
-        setLatitude(latitude);
-        setLongitude(longitude);
-    };
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -34,6 +30,24 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (inView) {
+            setActivePlaceId(inView);
+            const place = restaurantsFiltered.find((place) => place.id === inView);
+            if (place) {
+                setLatitude(place.coordinates.latitude);
+                setLongitude(place.coordinates.longitude);
+            }
+        }
+    }, [inView, restaurantsFiltered]);
+
+    const handlePlacemarkClick = (placeId: string, latitude: number, longitude: number) => {
+        setActivePlaceId(placeId);
+        setLatitude(latitude);
+        setLongitude(longitude);
+        navigate(`/restaurants/${placeId}`);
+    };
 
     const center = activePlaceId ? [latitude, longitude] : [userLatitude, userLongitude];
 
@@ -74,8 +88,8 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                                 preset: 'islands#redDotIcon',
                                 iconLayout: 'default#image', // icon mark on map
                                 iconImageHref: navigationIcon,
-                                iconImageSize: [40, 40],
-                                iconImageOffset: [-16, -16],
+                                iconImageSize: [30, 40],
+                                iconImageOffset: [-15, -35],
                             }}
                             properties={{
                                 hintContent: 'Вы здесь',
