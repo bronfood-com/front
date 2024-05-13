@@ -24,13 +24,19 @@ const Header = ({ city }: { city: string }) => {
                     <p className={styles.header__place_name}>{city}</p>
                 </div>
                 <div className={styles.header__buttons}>
-                    {isLogin ? <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button> : ''}
-                    <Link to="/basket">
-                        <div className={styles.header__basket}>
-                            <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                            {meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
-                        </div>
-                    </Link>
+                    {isLogin ? (
+                        <>
+                            <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
+                            <Link to="/basket">
+                                <div className={styles.header__basket}>
+                                    <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
+                                    {meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
+                                </div>
+                            </Link>
+                        </>
+                    ) : (
+                        <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
+                    )}
                 </div>
             </div>
             <div className={`${styles.header__menu} ${isMenuActive ? styles.header__menu_active : ''}`}>
