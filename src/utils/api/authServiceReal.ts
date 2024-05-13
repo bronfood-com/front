@@ -39,7 +39,7 @@ export class AuthServiceReal implements AuthService {
         if (!res.ok) {
             throw new Error(result.error_message);
         } else {
-        return result
+            return result;
         }
     }
 
@@ -78,7 +78,7 @@ export class AuthServiceReal implements AuthService {
         if (!res.ok) {
             throw new Error(result.error_message);
         } else {
-        return result
+            return result;
         }
     }
 
