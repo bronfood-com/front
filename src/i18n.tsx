@@ -103,6 +103,7 @@ i18n
                             enterSmsCode: 'Ввведите код из смс',
                             validationError: 'Неверный код',
                             serverError: 'Ошибка сервера',
+                            invalidConformationCode: 'Введен неправильный код',
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',

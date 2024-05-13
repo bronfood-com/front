@@ -16,12 +16,15 @@ export class AuthServiceReal implements AuthService {
             },
             body: JSON.stringify({ phone, password }),
         });
-        const resultWithToken = await res.json();
-        const { auth_token } = resultWithToken.data;
-        const result = { ...resultWithToken };
-        localStorage.setItem('token', auth_token);
-        delete result.data.auth_token;
-        return result;
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error_message);
+        } else {
+            const { auth_token } = result.data;
+            localStorage.setItem('token', auth_token);
+            delete result.data.auth_token;
+            return result;
+        }
     }
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
@@ -33,7 +36,11 @@ export class AuthServiceReal implements AuthService {
             body: JSON.stringify({ phone, password, fullname }),
         });
         const result = await res.json();
-        return result;
+        if (!res.ok) {
+            throw new Error(result.error_message);
+        } else {
+        return result
+        }
     }
 
     async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
@@ -44,12 +51,15 @@ export class AuthServiceReal implements AuthService {
             },
             body: JSON.stringify({ temp_data_code, confirmation_code }),
         });
-        const resultWithToken = await res.json();
-        const { auth_token } = resultWithToken.data;
-        const result = { ...resultWithToken };
-        localStorage.setItem('token', auth_token);
-        delete result.data.auth_token;
-        return result;
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.error_message);
+        } else {
+            const { auth_token } = result.data;
+            localStorage.setItem('token', auth_token);
+            delete result.data.auth_token;
+            return result;
+        }
     }
 
     async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
@@ -64,9 +74,12 @@ export class AuthServiceReal implements AuthService {
             },
             body: JSON.stringify(requestData),
         });
-
         const result = await res.json();
-        return result;
+        if (!res.ok) {
+            throw new Error(result.error_message);
+        } else {
+        return result
+        }
     }
 
     async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
@@ -78,9 +91,13 @@ export class AuthServiceReal implements AuthService {
             body: JSON.stringify({ confirmation_code }),
         });
         const result = await res.json();
-        delete result.data.auth_token;
-        delete result.data.role;
-        return result;
+        if (!res.ok) {
+            throw new Error(result.error_message);
+        } else {
+            delete result.data.auth_token;
+            delete result.data.role;
+            return result;
+        }
     }
 
     async logOut() {
