@@ -63,6 +63,7 @@ export class AuthServiceReal implements AuthService {
     }
 
     async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
+        const token = this.getToken();
         let requestData: UpdateUser = { fullname, phone };
         if (password && confirmPassword) {
             requestData = { ...requestData, password, confirmPassword };
@@ -71,6 +72,7 @@ export class AuthServiceReal implements AuthService {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
             },
             body: JSON.stringify(requestData),
         });
