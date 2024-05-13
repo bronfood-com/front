@@ -1,7 +1,8 @@
-import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { useQuery } from '@tanstack/react-query';
 
 export type Option = {
     /**
@@ -46,6 +47,10 @@ type RestaurantsContext = {
      * Indicates whether restaurants are loading
      */
     isLoading: boolean;
+    /**
+     * Indicates whether query encountered an error
+     */
+    isError: boolean;
     /**
      * Options' states and controls. Options come from user's input
      */
@@ -96,6 +101,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsOnMap: [],
     restaurantsFiltered: [],
     isLoading: false,
+    isError: false,
     options: {
         all: [],
         selectedOptions: [],
@@ -112,12 +118,16 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
-    const [restaurantsOnMap, setRestaurantsOnMap] = useState<Restaurant[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const { isPending, isError, isSuccess, data } = useQuery({
+        queryKey: ['restaurants'],
+        queryFn: () => restaurantsService.getRestaurants(),
+    });
+    const restaurantsOnMap: Restaurant[] = isSuccess && 'data' in data ? data.data : [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
     const typeNames: string[] = selectedVenueTypes.map((type) => type.name.toLowerCase());
+    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
     const addOption = (option: Option) => {
         const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
         if (isDouble) {
@@ -138,21 +148,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const deleteVenueType = (venueType: VenueType) => {
         setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
     };
-    const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
-    useEffect(() => {
-        const fetchRestaurants = async () => {
-            setIsLoading(true);
-            const res = await restaurantsService.getRestaurants();
-            if (res.status === 'error') {
-                setRestaurantsOnMap([]);
-                setIsLoading(false);
-            } else {
-                setRestaurantsOnMap(res.data);
-                setIsLoading(false);
-            }
-        };
-        fetchRestaurants();
-    }, []);
+
     return (
         <RestaurantsContext.Provider
             value={{
@@ -160,7 +156,8 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 inView,
                 restaurantsOnMap,
                 restaurantsFiltered,
-                isLoading,
+                isLoading: isPending,
+                isError,
                 options: {
                     all: options,
                     selectedOptions,

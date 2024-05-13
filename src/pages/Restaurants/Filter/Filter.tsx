@@ -1,10 +1,11 @@
-import { useEffect, MouseEvent, useState, useId, ChangeEvent } from 'react';
+import { MouseEvent, useState, useId, ChangeEvent } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { Option } from '../../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
+import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 type OptionListTypes = {
     /**
@@ -49,11 +50,7 @@ const Filter = ({ close }: { close: () => void }) => {
             close();
         }
     };
-    useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && close();
-        document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
+    useEsc(() => close(), [close]);
     return (
         <div className={styles.filter_overlay} onClick={handleOverlayClick}>
             <div className={styles.filter}>

@@ -18,6 +18,16 @@
         margin: 0 auto 30px;
     }
 
+    &__arrow-back {
+        position: absolute;
+        top: 15px;
+        left: 22px;
+        width: 35px;
+        height: 35px;
+        background-image: url(../../../vendor/images/icons/arrow-back.svg);
+        cursor: pointer;
+    }
+
     &__close {
         position: absolute;
         width: 35px;
@@ -26,6 +36,7 @@
         right: 5px;
         background-color: transparent;
         margin: 0 auto;
+        cursor: pointer;
 
         &:before {
             content: '';
@@ -49,6 +60,7 @@
             transform: rotate(45deg);
         }
     }
+
     &_overlay {
         position: absolute; //fixed --> without scroll
         top: 0;

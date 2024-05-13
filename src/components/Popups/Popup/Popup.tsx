@@ -1,5 +1,7 @@
-import { FC, ReactNode, useEffect, MouseEvent } from 'react';
+import { FC, ReactNode, MouseEvent } from 'react';
 import styles from './Popup.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 interface Popup {
     /**
@@ -11,6 +13,14 @@ interface Popup {
      */
     mode?: 'info';
     /**
+     * Flag that sets whether or not to show the back button
+     */
+    arrowBack?: boolean;
+    /**
+     * Route that corresponds to the previous page
+     */
+    previousPageRoute?: string;
+    /**
      * Handle close popup
      */
     onClose: () => void;
@@ -21,24 +31,29 @@ interface Popup {
 }
 
 const Popup: FC<Popup> = (props) => {
+    const navigate = useNavigate();
+
+    const arrowBackClick = () => {
+        props.previousPageRoute ? navigate(props.previousPageRoute) : navigate(-1);
+    };
+
     const handleCloseButton = () => {
         props.onClose();
     };
+
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             props.onClose();
         }
     };
-    useEffect(() => {
-        const handleCloseByEsc = (e: KeyboardEvent) => (e.key === 'Escape' || e.key === 'Esc') && props.onClose();
-        document.addEventListener('keydown', handleCloseByEsc);
-        return () => document.removeEventListener('keydown', handleCloseByEsc);
-    });
+    const { onClose } = props;
+    useEsc(() => onClose(), [onClose]);
     return (
         <div className={styles.popup_overlay} onClick={handleOverlayClick}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
                 {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
+                {props.arrowBack && <button className={`${styles['popup__arrow-back']} button`} type="button" onClick={arrowBackClick} />}
                 <button className={`${styles.popup__close} ${styles[`popup__close_${props.mode}`]} button`} type="button" onClick={handleCloseButton}></button>
             </div>
         </div>

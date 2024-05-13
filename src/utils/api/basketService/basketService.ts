@@ -24,9 +24,10 @@ export type Basket = {
 };
 
 export interface BasketService {
-    addMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
-    deleteMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
-    emptyBasket: () => Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }>;
+    getBasket: () => Promise<{ data: Basket }>;
+    addMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    deleteMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    emptyBasket: () => Promise<{ data: Basket }>;
 }
 
 export const basketService = new BasketServiceMock();

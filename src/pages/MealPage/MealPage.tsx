@@ -11,6 +11,7 @@ import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { sumBy } from 'lodash';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
@@ -68,7 +69,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal(meal.id, newFeatures);
+            await addMeal({ mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (
@@ -84,7 +85,7 @@ function MealPage() {
                 </form>
             </FormProvider>
         );
-    }
+    } else return <PageNotFound />;
 }
 
 export default MealPage;

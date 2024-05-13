@@ -1,4 +1,4 @@
-import { AuthService, СonfirmUpdateUser, User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
+import { AuthService, ConfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
 import { API_URL } from '../consts';
 
 export class AuthServiceReal implements AuthService {
@@ -8,7 +8,7 @@ export class AuthServiceReal implements AuthService {
         return localStorage.getItem('token');
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async login({ phone, password }: LoginData): Promise<{ data: User }> {
         const res = await fetch(`${API_URL}/signin/`, {
             method: 'POST',
             headers: {
@@ -20,12 +20,11 @@ export class AuthServiceReal implements AuthService {
         const { auth_token } = resultWithToken.data;
         const result = { ...resultWithToken };
         localStorage.setItem('token', auth_token);
-
         delete result.data.auth_token;
         return result;
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
         const res = await fetch(`${API_URL}/client/request_to_signup/`, {
             method: 'POST',
             headers: {
@@ -37,7 +36,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
         const res = await fetch(`${API_URL}/client/signup/`, {
             method: 'POST',
             headers: {
@@ -49,12 +48,11 @@ export class AuthServiceReal implements AuthService {
         const { auth_token } = resultWithToken.data;
         const result = { ...resultWithToken };
         localStorage.setItem('token', auth_token);
-
         delete result.data.auth_token;
         return result;
     }
 
-    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
         let requestData: UpdateUser = { fullname, phone };
         if (password && confirmPassword) {
             requestData = { ...requestData, password, confirmPassword };
@@ -71,7 +69,7 @@ export class AuthServiceReal implements AuthService {
         return result;
     }
 
-    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
         const res = await fetch(`${API_URL}/client/profile/`, {
             method: 'PATCH',
             headers: {
