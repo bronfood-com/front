@@ -210,7 +210,7 @@ i18n
 
                     errors: {
                         anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
-                    }
+                    },
                 },
             },
             kk: {

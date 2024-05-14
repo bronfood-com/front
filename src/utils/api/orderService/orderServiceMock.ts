@@ -27,12 +27,12 @@ class OrderServiceMock {
         }
     };
 
-    async fetchOrderIdByUserId (userId: string): Promise<ApiResponse<string>> {
+    async fetchOrderIdByUserId(userId: string): Promise<ApiResponse<string>> {
         await this._delayedResponse(5000);
         return this._fetchResponse(() => mockData.orders.find((order) => order.userId === userId)?.id, 'components.waitingOrder.orderDoesNotExist');
     }
 
-    async fetchOrderedMealByOrderId (id: string): Promise<ApiResponse<OrderState>> {
+    async fetchOrderedMealByOrderId(id: string): Promise<ApiResponse<OrderState>> {
         return this._fetchResponse(() => mockData.orders.find((order) => order.id === id), 'components.waitingOrder.errorReceivingOrderData');
     }
 
@@ -50,7 +50,7 @@ class OrderServiceMock {
 
     async checkPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
         return this._fetchResponse(() => {
-            const order = mockData.orders.find(order => order.userId === userId);
+            const order = mockData.orders.find((order) => order.userId === userId);
             return order ? order.preparationStatus : undefined;
         }, 'components.waitingOrder.orderDoesNotExist');
     }
@@ -78,7 +78,7 @@ class OrderServiceMock {
      * remove functions checkAndConfirmPreparationStatus and checkAndNotConfirmPreparationStatus after testing
      */
     async checkAndConfirmPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
-        const order = mockData.orders.find(order => order.userId === userId);
+        const order = mockData.orders.find((order) => order.userId === userId);
         if (order) {
             return await this._confirmOrderStatus(order);
         }
@@ -86,7 +86,7 @@ class OrderServiceMock {
     }
 
     async checkAndNotConfirmPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
-        const order = mockData.orders.find(order => order.userId === userId);
+        const order = mockData.orders.find((order) => order.userId === userId);
         if (order) {
             return await this._notConfirmOrderStatus(order);
         }
