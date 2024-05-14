@@ -53,6 +53,7 @@ i18n
                             phoneNumber: 'Телефон',
                             placeholder: '+7 (***)',
                             continue: 'Далее',
+                            serverDoesntRespond: 'Сервер не отвечает. Попытайтесь еще раз позже',
                             validationError: 'Введен некорректный номер телефона.',
                             userWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
                         },
@@ -65,6 +66,7 @@ i18n
                             validationError: 'Некорректный пароль',
                             passwordDontMatch: 'Пароли не совпадают',
                             invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
+                            serverDoesntRespond: 'Сервер не отвечает. Попытайтесь еще раз позже',
                         },
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
@@ -143,6 +145,7 @@ i18n
                             duplicate: 'Такой номер телефона уже зарегистрирован',
                             validationError: 'Некорректный ввод',
                             invalidConformationCode: 'Введен неправильный код',
+                            serverDoesntRespond: 'Сервер не отвечает. Попытайтесь еще раз позже',
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',
