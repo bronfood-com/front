@@ -9,27 +9,27 @@ type TimerCallback = (prevTime: number) => number;
  */
 interface UseTimerProps {
     /**
-    * Function to update the preparation time.
-    * This function should take the previous time
-    * and return the new time.
-    */
+     * Function to update the preparation time.
+     * This function should take the previous time
+     * and return the new time.
+     */
     setPreparationTime?: (updateFn: TimerCallback) => void;
     /**
-    * Function to decrement the wait order ID time.
-    * Executes every second until time reaches zero
-    * or it's manually stopped.
-    */
+     * Function to decrement the wait order ID time.
+     * Executes every second until time reaches zero
+     * or it's manually stopped.
+     */
     setWaitOrderIdTime?: (updateFn: TimerCallback) => void;
     /**
-    * Function to decrement the cancellation
-    * countdown. Similar to setWaitOrderIdTime,
-    * but for managing cancellation timing.
-    */
+     * Function to decrement the cancellation
+     * countdown. Similar to setWaitOrderIdTime,
+     * but for managing cancellation timing.
+     */
     setCancellationCountdown?: (updateFn: TimerCallback) => void;
     /**
-    * Optional function to be called when the wait
-    * order ID timer reaches zero or needs to be stopped.
-    */
+     * Optional function to be called when the wait
+     * order ID timer reaches zero or needs to be stopped.
+     */
     stopWaitOrderIdTimer?: () => void;
 }
 
@@ -45,7 +45,7 @@ export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellat
 
         // Starts an interval to decrement the wait order ID time every second
         const interval = setInterval(() => {
-            setWaitOrderIdTime(prevTime => {
+            setWaitOrderIdTime((prevTime) => {
                 if (prevTime <= 0) {
                     // Stops the timer when the time reaches zero and calls the optional stop function
                     clearInterval(interval);
