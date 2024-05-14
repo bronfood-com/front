@@ -20,7 +20,7 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, initialPreparationTime, cancellationCountdown, waitOrderIdTime, cancelOrder } = useOrderContext();
+    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, cancelOrder} = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -50,7 +50,7 @@ const WaitingOrder: FC = () => {
                     <>
                         <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
                         <h1 className={styles.waitingOrder__orderCode}>{orderedMeal.id}</h1>
-                        <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} preparationStatus={orderedMeal.preparationStatus} />
+                        <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} preparationStatus={preparationStatus} />
                         <div className={styles.waitingOrder__separator} />
                         <OrderListArticle order={orderedMeal} />
                         {cancellationCountdown > 0 && (
@@ -58,7 +58,8 @@ const WaitingOrder: FC = () => {
                                 <p className={styles.waitingOrder__subtitleNote}>
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        {formatTime(cancellationCountdown)} {t(getMinutesForm(cancellationCountdown))}
+                                        {formatTime(cancellationCountdown)}
+                                        {' '}{t(getMinutesForm(cancellationCountdown))}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>

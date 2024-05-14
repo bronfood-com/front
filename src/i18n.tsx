@@ -207,6 +207,10 @@ i18n
                             serverError: 'Ошибка на сервере',
                         },
                     },
+
+                    errors: {
+                        anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
+                    }
                 },
             },
             kk: {

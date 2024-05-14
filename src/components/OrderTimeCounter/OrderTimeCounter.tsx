@@ -6,7 +6,7 @@ import styles from './OrderTimeCounter.module.scss';
 type OrderTimeCounterProps = {
     remainingTime: number;
     initialTime: number;
-    preparationStatus: 'waiting' | 'confirmed' | 'notConfirmed';
+    preparationStatus: string;
 };
 
 const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTime, preparationStatus }) => {

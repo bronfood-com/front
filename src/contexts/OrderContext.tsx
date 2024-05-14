@@ -5,6 +5,7 @@ import { OrderState } from '../utils/api/orderService/orderService';
 export interface OrderContextType {
     orderedMeal: OrderState | null;
     preparationTime: number;
+    preparationStatus: string;
     initialPreparationTime: number;
     cancellationCountdown: number;
     waitOrderIdTime: number;
@@ -16,6 +17,7 @@ export interface OrderContextType {
 const defaultOrderContextValue: OrderContextType = {
     orderedMeal: null,
     preparationTime: 0,
+    preparationStatus: '',
     initialPreparationTime: 0,
     cancellationCountdown: 0,
     waitOrderIdTime: 0,
