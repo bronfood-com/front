@@ -11,6 +11,7 @@ import { getMinutesForm } from '../../../utils/serviceFuncs/getMinutesForm';
 import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
+import Preloader from '../../../components/Preloader/Preloader';
 
 const WaitingOrder: FC = () => {
     /**
@@ -24,7 +25,7 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, cancelOrder } = useOrderContext();
+    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, cancelOrder } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -85,6 +86,7 @@ const WaitingOrder: FC = () => {
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
+                    {isLoading && <Preloader />}
                 </div>
             )}
             {showOrderCancelledPopup && <PopupOrderCancelled />}
