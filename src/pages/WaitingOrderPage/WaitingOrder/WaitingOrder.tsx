@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent } from 'react';
+import { FC, useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './WaitingOrder.module.scss';
 import Modal from '../../../components/Modal/Modal';
@@ -25,7 +25,7 @@ const WaitingOrder: FC = () => {
 
     const { t } = useTranslation();
 
-    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, cancelOrder } = useOrderContext();
+    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, cancelOrder } = useOrderContext();
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
@@ -48,6 +48,12 @@ const WaitingOrder: FC = () => {
 
     useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
+    useEffect(() => {
+        if (cancellationTime <= 0 && showConfirmationPopup) {
+            setShowConfirmationPopup(false);
+        }
+    }, [cancellationTime, showConfirmationPopup]);
+
     return (
         <>
             <Modal>
@@ -58,12 +64,12 @@ const WaitingOrder: FC = () => {
                         <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} preparationStatus={preparationStatus} />
                         <div className={styles.waitingOrder__separator} />
                         <OrderListArticle order={orderedMeal} />
-                        {cancellationCountdown > 0 && (
+                        {cancellationTime > 0 && (
                             <div className={styles.waitingOrder__cancelSection}>
                                 <p className={styles.waitingOrder__subtitleNote}>
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        {formatTime(cancellationCountdown)} {t(getMinutesForm(cancellationCountdown))}
+                                        {formatTime(cancellationTime)} {t(getMinutesForm(cancellationTime))}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>

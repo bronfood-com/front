@@ -27,11 +27,11 @@ interface UseTimerProps {
     /**
      * This timer updates the state every second by counting
      * down the remaining time until the order can no longer
-     * be cancelled. The setCancellationCountdown function is
+     * be cancelled. The setCancellationTime function is
      * called every second (1000 milliseconds) and takes an
      * update function that decreases the remaining time.
      */
-    setCancellationCountdown?: (updateFn: TimerCallback) => void;
+    setCancellationTime?: (updateFn: TimerCallback) => void;
     /**
      * The stopWaitOrderIdTimer function is used to manually
      * stop the timer for waiting to receive the order code
@@ -42,7 +42,7 @@ interface UseTimerProps {
     stopWaitOrderIdTimer?: () => void;
 }
 
-export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellationCountdown, stopWaitOrderIdTimer }: UseTimerProps) => {
+export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellationTime, stopWaitOrderIdTimer }: UseTimerProps) => {
     const startTimeRef = useRef<{ prep: null | number; waitOrderId: null | number; cancel: null | number }>({
         prep: null,
         waitOrderId: null,
@@ -92,24 +92,24 @@ export const useTimers = ({ setPreparationTime, setWaitOrderIdTime, setCancellat
     }, [setPreparationTime]);
 
     useEffect(() => {
-        if (!setCancellationCountdown) return;
+        if (!setCancellationTime) return;
 
         // Timer for counting down and updating the UI counter after which the order cannot be cancelled
         startTimeRef.current.cancel = Date.now();
         const interval = 1000;
 
-        // Starts an interval to update the cancellation countdown every second based on elapsed time
+        // Starts an interval to update the cancellation Time every second based on elapsed time
         const cancellationTimer = window.setInterval(() => {
             // We add a check for null to ensure that the timer hasn't been cleared
             // If the timer is cleared elsewhere in the code, this check prevents errors
             if (startTimeRef.current.cancel != null) {
                 const now = Date.now();
                 const elapsed = Math.floor((now - startTimeRef.current.cancel) / interval);
-                setCancellationCountdown((prevTime) => prevTime - elapsed);
+                setCancellationTime((prevTime) => prevTime - elapsed);
                 startTimeRef.current.cancel = now;
             }
         }, interval);
 
         return () => clearInterval(cancellationTimer);
-    }, [setCancellationCountdown]);
+    }, [setCancellationTime]);
 };

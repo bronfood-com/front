@@ -11,7 +11,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
     const [orderedMeal, setOrderedMeal] = useState<OrderState | null>(null);
     const [preparationTime, setPreparationTime] = useState<number>(0);
     const [initialPreparationTime, setInitialPreparationTime] = useState<number>(0);
-    const [cancellationCountdown, setCancellationCountdown] = useState<number>(0);
+    const [cancellationTime, setCancellationTime] = useState<number>(0);
     const [waitOrderIdTime, setWaitOrderIdTime] = useState<number>(120);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -28,7 +28,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             } else {
                 setPreparationTime(0);
                 setInitialPreparationTime(0);
-                setCancellationCountdown(0);
+                setCancellationTime(0);
                 setWaitOrderIdTime(120);
                 setPreparationStatus('waiting');
             }
@@ -47,8 +47,8 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             setPreparationStatus,
             initialPreparationTime,
             setInitialPreparationTime,
-            cancellationCountdown,
-            setCancellationCountdown,
+            cancellationTime,
+            setCancellationTime,
             waitOrderIdTime,
             setWaitOrderIdTime,
             isLoading,
@@ -57,10 +57,10 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             setErrorMessage,
             cancelOrder: handleCancelOrder,
         }),
-        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder]
+        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder]
     );
 
-    useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationCountdown: state.setCancellationCountdown });
+    useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationTime: state.setCancellationTime });
 
     /**
      * uncomment this func after testing
@@ -86,7 +86,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
                     setOrderedMeal(details.data);
                     setInitialPreparationTime(details.data.preparationTime);
                     setPreparationTime(details.data.preparationTime);
-                    setCancellationCountdown(details.data.cancellationTime);
+                    setCancellationTime(details.data.cancellationTime);
                     setWaitOrderIdTime(0);
                 } else {
                     setErrorMessage(details.error || t('components.waitingOrder.errorReceivingOrderData'));
@@ -98,7 +98,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         };
 
         fetchOrderData();
-    }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationCountdown, setWaitOrderIdTime, setIsLoading, setErrorMessage]);
+    }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationTime, setWaitOrderIdTime, setIsLoading, setErrorMessage]);
 
     /**
      * uncomment this useEffect after testing

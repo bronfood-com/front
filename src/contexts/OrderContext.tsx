@@ -7,7 +7,7 @@ export interface OrderContextType {
     preparationTime: number;
     preparationStatus: string;
     initialPreparationTime: number;
-    cancellationCountdown: number;
+    cancellationTime: number;
     waitOrderIdTime: number;
     isLoading: boolean;
     cancelOrder: (id: string) => Promise<void>;
@@ -19,7 +19,7 @@ const defaultOrderContextValue: OrderContextType = {
     preparationTime: 0,
     preparationStatus: '',
     initialPreparationTime: 0,
-    cancellationCountdown: 0,
+    cancellationTime: 0,
     waitOrderIdTime: 0,
     isLoading: true,
     cancelOrder: async () => {},
