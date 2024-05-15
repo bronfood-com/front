@@ -1,17 +1,17 @@
 import Popup from '../../components/Popups/Popup/Popup';
 import styles from './PopupOrderCancelled.module.scss';
 import { useNavigate } from 'react-router-dom';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const PopupOrderCancelled = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         navigate('/');
-    //     }, 5000);
-    // }, [navigate]);
+    useEffect(() => {
+        setTimeout(() => {
+            navigate('/');
+        }, 5000);
+    }, [navigate]);
     return (
         <Popup onClose={() => navigate('/')}>
             <div className={styles.popupOrderCancelled}>
