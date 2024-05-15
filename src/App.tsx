@@ -16,7 +16,10 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import WaitingOrderPage from './pages/WaitingOrderPage/WaitingOrderPage';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
+import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
+import AboutUs from './components/AboutUs/AboutUs';
+import Feedback from './pages/Feedback/Feedback';
 
 function App() {
     const [city, setCity] = useState('');
@@ -44,7 +47,10 @@ function App() {
                         <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
                     </Route>
                 </Route>
-                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')} />} />} />
+                <Route path="/restore-password" element={<RestorePassword />} />
+                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />

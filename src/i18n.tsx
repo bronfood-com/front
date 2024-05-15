@@ -23,6 +23,7 @@ i18n
                         guestNavigation: {
                             signUpAsABuyer: 'Зарегистрироваться как покупатель',
                             signIn: 'Войти',
+                            aboutService: 'О сервисе',
                         },
                         header: {
                             burgerTitleHover: 'Меню',
@@ -39,16 +40,36 @@ i18n
                         },
                         inputPassword: {
                             required: 'Обязательное поле',
-                            errorMessage: 'Неверный ввод',
+                            errorMessage: 'Неверный ввод. Только латинские буквы, цифры и символы - !@#$%^&*()-_+=<>?',
+                            minLengthErrorMessage: 'Минимальное количество символов -',
+                            maxLengthErrorMessage: 'Максимальное количество символов - ',
                         },
                         input: {
                             required: 'Обязательное поле',
                             errorMessage: 'Неверный ввод',
                         },
+                        passwordRecovery: {
+                            title: 'Восстановить пароль',
+                            phoneNumber: 'Телефон',
+                            placeholder: '+7 (***)',
+                            continue: 'Далее',
+                            validationError: 'Введен некорректный номер телефона.',
+                            userWithThatPhoneNotFound: 'Пользователь с данным номером телефона не существует.',
+                        },
 
+                        newPassword: {
+                            title: 'Придумайте новый пароль',
+                            nameLabel: 'Новый пароль',
+                            nameLabelRepeat: 'Повторите пароль',
+                            button: 'Сохранить',
+                            validationError: 'Некорректный пароль',
+                            passwordDontMatch: 'Пароли не совпадают',
+                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
+                        },
                         customerNavigation: {
                             editPersonalData: 'Редактировать личные данные',
                             editBankData: 'Редактировать банковские данные',
+                            aboutService: 'О сервисе',
                             signOut: 'Выйти',
                         },
                         confirmationPopup: {
@@ -140,22 +161,6 @@ i18n
                             youWillReceiveYourMoneyBackWithin15Minutes: 'В течение 15 минут вам вернут деньги',
                         },
 
-                        newPassword: {
-                            title: 'Придумайте новый пароль',
-                            nameLabel: 'Новый пароль',
-                            nameLabelRepeat: 'Повторите пароль',
-                            button: 'Сохранить',
-                            passwordDontMatch: 'Пароли не совпадают',
-                            invalidCredentials: 'Пароль введен неверно, повторите попытку еще раз.',
-                        },
-
-                        passwordRecovery: {
-                            title: 'Восстановить пароль',
-                            phoneNumber: 'Телефон',
-                            placeholder: '+7 (***)',
-                            continue: 'Далее',
-                        },
-
                         profile: {
                             title: 'Профиль',
                             placeholderUserName: 'Владислав Иванов',
@@ -172,6 +177,8 @@ i18n
                             server: 'Сервер не отвечает. Попробуйте позже',
                             validation: 'Данные заполненые неверно.',
                             duplicate: 'Такой номер телефона уже зарегистрирован',
+                            validationError: 'Некорректный ввод',
+                            invalidConformationCode: 'Введен неправильный код',
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',
@@ -205,6 +212,15 @@ i18n
                             emptyBasket: 'Очистить корзину?',
                             yes: 'Да',
                             serverError: 'Ошибка на сервере',
+                        },
+                        feedback: {
+                            feedback: 'Обратная связь',
+                            describeYourProblemOrLeaveFeedback: 'Опишите свою проблему или оставьте пожелания',
+                            submit: 'Отправить',
+                            aboutUs: 'О нас',
+                            preview: 'Превью',
+                            offerAgreement: 'Договор оферты',
+                            privacyPolicy: 'Политика конфиденциальности',
                         },
                     },
 

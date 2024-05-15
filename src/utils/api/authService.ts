@@ -25,12 +25,12 @@ export interface UpdateUser {
  temp_data_code: Temporary code that the server assign to the user in db during registration
  confirmation_code: 4-digit code that user shoud enter to confirm registration
  */
-export interface СonfirmRegisterPhoneData {
+export interface ConfirmRegisterPhoneData {
     temp_data_code: string;
     confirmation_code: string;
 }
 
-export interface СonfirmUpdateUser {
+export interface ConfirmUpdateUser {
     confirmation_code: string;
 }
 export interface User {
@@ -47,15 +47,15 @@ export interface UserExtra {
     auth_token: string;
 }
 export interface AuthService {
-    login: ({ phone, password }: LoginData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
-    register: ({ fullname, phone, password }: RegisterData) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    register: ({ fullname, phone, password }: RegisterData) => Promise<{ data: { temp_data_code: string } }>;
 
-    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData) => Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }>;
+    confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
 
-    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }>;
+    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
-    confirmUpdateUser: ({ confirmation_code }: СonfirmUpdateUser) => Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }>;
+    confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
     logOut: () => Promise<void>;
 }

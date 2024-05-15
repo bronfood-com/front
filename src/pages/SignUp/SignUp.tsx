@@ -19,8 +19,6 @@ import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const [isConfirmErrorVisible, setIsConfirmErrorVisible] = useState(false);
     const { signUp, confirmSignUp } = useCurrentUser();
     const { t } = useTranslation();
     const {
@@ -30,48 +28,39 @@ const SignUp = () => {
     } = useForm();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const { password, phoneNumber, username } = data;
-        const result = await signUp.mutation({ phone: phoneNumber, password, name: username });
-        if (result !== null) {
-            setIsErrorVisible(true);
-        }
+        await signUp.mutateAsync({ phone: phoneNumber.replace(/\D/g, ''), password, fullname: username });
         setIsConfirmOpen(true);
     };
-
     const confirm = async (code: string) => {
-        const result = await confirmSignUp.mutation(code);
-        if (!result) {
-            setIsConfirmErrorVisible(true);
-        } else {
-            setIsInfoPopupOpen(true);
-        }
+        await confirmSignUp.mutateAsync({ confirmation_code: code });
+        signUp.reset();
+        setIsInfoPopupOpen(true);
     };
 
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmSignUp.isLoading} error={confirmSignUp.errorMessage} isConfirmErrorVisible={isConfirmErrorVisible} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
+                <SMSConfirm isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} isConfirmErrorVisible={confirmSignUp.isError} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}
                     onClose={() => {
                         navigate('/');
-                        setIsErrorVisible(false);
                     }}
                 >
-                    {signUp.isLoading && <Preloader />}
+                    {signUp.isPending && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {isErrorVisible && signUp.errorMessage && <ErrorMessage message={t(`pages.signUp.${signUp.errorMessage}`)} />}
-                        <fieldset className={styles.form__field} disabled={signUp.isLoading}>
+                        {signUp.isError && <ErrorMessage message={t(`pages.signUp.${signUp.error.message}`)} />}
+                        <fieldset className={styles.form__field} disabled={signUp.isPending}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
                                 <InputPhone register={register} errors={errors}></InputPhone>
                                 <InputPassword register={register} errors={errors} name="password" nameLabel={t('pages.signUp.password')} required={true} />
                             </FormInputs>
                         </fieldset>
-                        <Button disabled={signUp.isLoading}>{t('pages.signUp.registerButton')}</Button>
+                        <Button disabled={signUp.isPending}>{t('pages.signUp.registerButton')}</Button>
                     </Form>
                 </Popup>
             )}

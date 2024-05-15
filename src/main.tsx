@@ -23,5 +23,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </RestaurantsProvider>
             </CurrentUserProvider>
         </QueryClientProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
 );

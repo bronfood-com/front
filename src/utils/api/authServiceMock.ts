@@ -1,5 +1,5 @@
-import { AuthService, UserExtra, СonfirmUpdateUser } from './authService';
-import { User, LoginData, RegisterData, СonfirmRegisterPhoneData, UpdateUser } from './authService';
+import { AuthService, UserExtra, ConfirmUpdateUser } from './authService';
+import { User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser } from './authService';
 
 export class AuthServiceMock implements AuthService {
     async _wait(ms: number) {
@@ -10,53 +10,50 @@ export class AuthServiceMock implements AuthService {
         return localStorage.getItem('token');
     }
 
-    async login({ phone, password }: LoginData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async login({ phone, password }: LoginData): Promise<{ data: User }> {
         await this._wait(500);
         if (phone && password) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { userId: 'u12345', fullname: 'User', phone, role: 'CLIENT' } };
+            return { data: { userId: 'u12345', fullname: 'User', phone, role: 'CLIENT' } };
         } else {
-            return { status: 'error', error_message: 'invalidCredentials' };
+            throw new Error('invalidCredentials');
         }
     }
 
-    async register({ fullname, phone, password }: RegisterData): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
         await this._wait(500);
         if (phone && password && fullname) {
-            return { status: 'success', data: { temp_data_code: '1111' } };
+            return { data: { temp_data_code: '1111' } };
         } else {
-            return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
+            throw new Error('phoneNumberIsAlreadyUsed');
         }
     }
 
-    async confirmRegisterPhone({ temp_data_code, confirmation_code }: СonfirmRegisterPhoneData): Promise<{ status: 'success'; data: User } | { status: 'error'; error_message: string }> {
+    async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
         await this._wait(500);
         if (temp_data_code && confirmation_code) {
             localStorage.setItem('token', '23423434');
-            return { status: 'success', data: { userId: 'u67890', phone: '74443332211', fullname: 'user registred' } };
+            return { data: { userId: 'u67890', phone: '74443332211', fullname: 'user registered' } };
         } else {
-            return { status: 'error', error_message: 'phoneNumberIsAlreadyUsed' };
+            throw new Error('validationError');
         }
     }
 
-    async updateUser({ fullname, phone }: UpdateUser): Promise<{ status: 'success'; data: { temp_data_code: string } } | { status: 'error'; error_message: string }> {
+    async updateUser({ fullname, phone }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
         await this._wait(500);
         if (phone && fullname) {
-            return {
-                status: 'success',
-                data: { temp_data_code: '1111' },
-            };
+            return { data: { temp_data_code: '1111' } };
         } else {
-            return { status: 'error', error_message: 'invalidCredentials' };
+            throw new Error('invalidCredentials');
         }
     }
 
-    async confirmUpdateUser({ confirmation_code }: СonfirmUpdateUser): Promise<{ status: 'success'; data: UserExtra } | { status: 'error'; error_message: string }> {
+    async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
         await this._wait(500);
         if (confirmation_code) {
-            return { status: 'success', data: { userId: 'u56789', phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
+            return { data: { userId: 'u56789', phone: '74449998877', fullname: 'user changed', auth_token: '23423434' } };
         } else {
-            return { status: 'error', error_message: 'invalidValidation' };
+            throw new Error('validationError');
         }
     }
 
@@ -64,7 +61,9 @@ export class AuthServiceMock implements AuthService {
         await this._wait(500);
         const token = this.getToken();
         if (token) {
-            localStorage.removeItem('token');
+            return;
+        } else {
+            throw new Error('serverError');
         }
     }
 }

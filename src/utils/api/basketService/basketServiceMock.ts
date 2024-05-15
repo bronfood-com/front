@@ -10,7 +10,16 @@ export class BasketServiceMock implements BasketService {
     async _wait(ms: number) {
         return new Promise((res) => setTimeout(res, ms));
     }
-    async addMeal(mealId: string, features: Feature[] | never[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
+    async getBasket(): Promise<{ data: Basket }> {
+        await this._wait(500);
+        const success = true;
+        if (success) {
+            return { data: this.basket };
+        } else {
+            throw new Error('serverError');
+        }
+    }
+    async addMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
         await this._wait(500);
         const restaurantFound = mockRestaurants.find((restaurant: Restaurant) => {
             const found = restaurant.meals.find((meal) => meal.id === mealId);
@@ -29,7 +38,7 @@ export class BasketServiceMock implements BasketService {
                     return { meal, count };
                 }
             });
-            return { status: 'success', data: this.basket };
+            return { data: this.basket };
         } else if (mealFoundInRestaurants) {
             if (this.basket.meals.length === 0 || hasRestaurantChanged) {
                 this.basket.restaurant = restaurantFound;
@@ -41,12 +50,12 @@ export class BasketServiceMock implements BasketService {
             } else {
                 this.basket.meals = [...this.basket.meals, { meal: { ...mealFoundInRestaurants, features, id: mealFoundInRestaurants.id }, count: 1 }];
             }
-            return { status: 'success', data: this.basket };
+            return { data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('serverError');
         }
     }
-    async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
+    async deleteMeal(mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
         await this._wait(500);
         const mealFoundInBasket = this.basket.meals.find(({ meal }) => meal.id === mealId && JSON.stringify(meal.features) === JSON.stringify(features));
         if (mealFoundInBasket && mealFoundInBasket.count > 1) {
@@ -57,7 +66,7 @@ export class BasketServiceMock implements BasketService {
                     return { meal, count };
                 }
             });
-            return { status: 'success', data: this.basket };
+            return { data: this.basket };
         } else if (mealFoundInBasket && mealFoundInBasket.count === 1) {
             this.basket.meals = this.basket.meals.filter(({ meal }) => {
                 if (meal.id !== mealId) {
@@ -68,20 +77,20 @@ export class BasketServiceMock implements BasketService {
                     return false;
                 }
             });
-            return { status: 'success', data: this.basket };
+            return { data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('serverError');
         }
     }
-    async emptyBasket(): Promise<{ status: 'success'; data: Basket } | { status: 'error'; error_message: string }> {
+    async emptyBasket(): Promise<{ data: Basket }> {
         await this._wait(500);
         this.basket.restaurant = {};
         this.basket.meals = [];
         const success = true;
         if (success) {
-            return { status: 'success', data: this.basket };
+            return { data: this.basket };
         } else {
-            return { status: 'error', error_message: 'serverError' };
+            throw new Error('serverError');
         }
     }
 }

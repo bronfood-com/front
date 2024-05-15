@@ -28,7 +28,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     <span className={styles.basket_meal__price}>{`${mealPrice.toFixed(0)} ₸`}</span>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal(id, features)} decrement={() => deleteMeal(id, features)} />
+                    <Counter count={count} increment={() => addMeal({ mealId: id, features })} decrement={() => deleteMeal({ mealId: id, features })} />
                 </div>
             </div>
         </div>
