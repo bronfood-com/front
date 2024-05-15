@@ -86,7 +86,11 @@ const WaitingOrder: FC = () => {
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
-                    {isLoading && <Preloader />}
+                    { isLoading &&
+                    <div className={styles.preloader__wrapper}>
+                        <Preloader />
+                    </div>
+                    }
                 </div>
             )}
             {showOrderCancelledPopup && <PopupOrderCancelled />}
