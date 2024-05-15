@@ -13,6 +13,10 @@ import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 
 const WaitingOrder: FC = () => {
+    /**
+     * This time represents the total duration of the ProgressBar movement
+     * for waiting for the order code, as specified by the client's design requirements.
+     */
     const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
