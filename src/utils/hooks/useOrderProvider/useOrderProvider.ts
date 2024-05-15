@@ -34,7 +34,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             }
             setIsLoading(false);
         },
-        [orderService],
+        [orderService]
     );
 
     const state = useMemo(
@@ -57,7 +57,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             setErrorMessage,
             cancelOrder: handleCancelOrder,
         }),
-        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder],
+        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationCountdown, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder]
     );
 
     useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationCountdown: state.setCancellationCountdown });
