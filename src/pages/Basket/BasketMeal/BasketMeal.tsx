@@ -7,6 +7,7 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price, features } = meal;
+    const featureName = 'Размер';
     const mealPrice =
         meal.features.length > 0
             ? sumBy(meal.features, (feature) => {
@@ -18,7 +19,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                   }
               })
             : price;
-    const size = features.length > 0 ? features.filter((feature) => feature.name === 'Размер')[0].choices.filter((choice) => choice.chosen)[0].name : null;
+    const size = features.length > 0 ? features.filter((feature) => feature.name === featureName)[0].choices.filter((choice) => choice.chosen)[0].name : null;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
@@ -29,7 +30,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     {features.length > 0 && (
                         <ul>
                             {features
-                                .filter((feature) => feature.name !== 'Размер')
+                                .filter((feature) => feature.name !== featureName)
                                 .map((feature) => {
                                     const choice = feature.choices.find((choice) => choice.chosen);
                                     if (choice) {
