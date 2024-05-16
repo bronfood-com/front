@@ -27,6 +27,9 @@
         background-image: url(../../vendor/images/icons/basket.svg);
         cursor: pointer;
     }
+    &__search {
+        background-image: url(../../vendor/images/icons/search-icon.svg);
+    }
     &__favorite {
         position: absolute;
         top: 0;
