@@ -7,7 +7,6 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price, features } = meal;
-    const featureName = 'Размер';
     const mealPrice =
         meal.features.length > 0
             ? sumBy(meal.features, (feature) => {
@@ -19,6 +18,8 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                   }
               })
             : price;
+    const featureName = 'Размер';
+    const toppings = features.length > 0 && features.filter((feature) => feature.name !== featureName);
     const size = features.length > 0 ? features.filter((feature) => feature.name === featureName)[0].choices.filter((choice) => choice.chosen)[0].name : null;
     const { addMeal, deleteMeal } = useBasket();
     return (
@@ -27,10 +28,8 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                 <div className={styles.basket_meal__image} style={{ backgroundImage: `url(${photo})` }} />
                 <div className={styles.basket_meal__description}>
                     <p className={styles.basket_meal__name}>{name}</p>
-                    {features.length > 0 && (
                         <ul>
-                            {features
-                                .filter((feature) => feature.name !== featureName)
+                            {toppings && toppings
                                 .map((feature) => {
                                     const choice = feature.choices.find((choice) => choice.chosen);
                                     if (choice) {
@@ -40,9 +39,9 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                                             </li>
                                         );
                                     }
-                                })}
+                                })
+                            }
                         </ul>
-                    )}
                     <p className={styles.basket_meal__size}>
                         {size}
                         <span className={styles.basket_meal__price}>{` ${mealPrice.toFixed(0)} ₸`}</span>
