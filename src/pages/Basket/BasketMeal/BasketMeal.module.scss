@@ -36,6 +36,11 @@
         line-height: 1.22;
         color: $grey;
     }
+    &__price_container {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
     &__size {
         font-size: 13px;
         font-weight: 400;
