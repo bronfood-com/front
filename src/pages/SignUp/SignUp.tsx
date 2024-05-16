@@ -42,7 +42,7 @@ const SignUp = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} isConfirmErrorVisible={confirmSignUp.isError} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
+                <SMSConfirm onClose={confirmSignUp.reset} isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} isConfirmErrorVisible={confirmSignUp.isError} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
             ) : (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}

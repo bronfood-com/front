@@ -58,7 +58,7 @@ const Profile = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
+                <SMSConfirm onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}
