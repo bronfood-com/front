@@ -28,20 +28,19 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                 <div className={styles.basket_meal__image} style={{ backgroundImage: `url(${photo})` }} />
                 <div className={styles.basket_meal__description}>
                     <p className={styles.basket_meal__name}>{name}</p>
-                        <ul>
-                            {toppings && toppings
-                                .map((feature) => {
-                                    const choice = feature.choices.find((choice) => choice.chosen);
-                                    if (choice) {
-                                        return (
-                                            <li key={feature.id}>
-                                                <p className={styles.basket_meal__feature}>{choice.name}</p>
-                                            </li>
-                                        );
-                                    }
-                                })
-                            }
-                        </ul>
+                    <ul>
+                        {toppings &&
+                            toppings.map((feature) => {
+                                const choice = feature.choices.find((choice) => choice.chosen);
+                                if (choice) {
+                                    return (
+                                        <li key={feature.id}>
+                                            <p className={styles.basket_meal__feature}>{choice.name}</p>
+                                        </li>
+                                    );
+                                }
+                            })}
+                    </ul>
                     <p className={styles.basket_meal__size}>
                         {size}
                         <span className={styles.basket_meal__price}>{` ${mealPrice.toFixed(0)} ₸`}</span>
