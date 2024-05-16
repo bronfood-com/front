@@ -41,6 +41,7 @@ const SignIn = () => {
         <Popup
             title={t('pages.signIn.signInHeading')}
             onClose={() => {
+                signIn.reset();
                 navigate('/');
             }}
         >

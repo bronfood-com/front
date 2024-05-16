@@ -63,6 +63,7 @@ const Profile = () => {
                 <Popup
                     title={t('pages.profile.title')}
                     onClose={() => {
+                        updateUser.reset();
                         navigate('/');
                     }}
                 >

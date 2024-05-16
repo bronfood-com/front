@@ -47,6 +47,7 @@ const SignUp = () => {
                 <Popup
                     title={t('pages.signUp.signUpHeading')}
                     onClose={() => {
+                        signUp.reset();
                         navigate('/');
                     }}
                 >

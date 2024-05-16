@@ -70,6 +70,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
             setCurrentUser(null);
+            u;
         },
     });
 
