@@ -42,13 +42,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                             })}
                     </ul>
                     <div className={styles.basket_meal__price_container}>
-                        {
-                            size && (
-                                <p className={styles.basket_meal__size}>
-                                    {size}
-                                </p>
-                            )
-                        }
+                        {size && <p className={styles.basket_meal__size}>{size}</p>}
                         <span className={styles.basket_meal__price}>{`${mealPrice.toFixed(0)} ₸`}</span>
                     </div>
                 </div>
