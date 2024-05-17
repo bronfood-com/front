@@ -7,7 +7,6 @@ import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/Conf
 import ProgressBar from '../../../components/ProgressBar/ProgressBar';
 import { useOrderContext } from '../../../utils/hooks/useOrderContext/useOrderContext';
 import { formatTime } from '../../../utils/serviceFuncs/formatTime';
-import { getMinutesForm } from '../../../utils/serviceFuncs/getMinutesForm';
 import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
@@ -69,7 +68,7 @@ const WaitingOrder: FC = () => {
                                 <p className={styles.waitingOrder__subtitleNote}>
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        {formatTime(cancellationTime)} {t(getMinutesForm(cancellationTime))}
+                                        {formatTime(cancellationTime)} {t('components.orderTimeCounter.min')}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>

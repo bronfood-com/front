@@ -41,7 +41,7 @@ const OrderTimeCounter: FC<OrderTimeCounterProps> = ({ remainingTime, initialTim
                     <span className={`${styles.orderTimeCounter__image} ${containerStyle.image}`} />
                     <p className={`${styles.orderTimeCounter__time_number} ${containerStyle.number}`}>
                         {formattedTime}
-                        {t('components.orderTimeCounter.minutes')}
+                        {t('components.orderTimeCounter.min')}
                     </p>
                 </div>
                 <div className={styles.orderTimeCounter__separator}>
