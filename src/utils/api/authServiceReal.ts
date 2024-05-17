@@ -104,12 +104,20 @@ export class AuthServiceReal implements AuthService {
 
     async logOut() {
         const token = this.getToken();
-        await fetch(`${API_URL}/client/signout/`, {
+        const res = await fetch(`${API_URL}/client/signout/`, {
             method: 'POST',
             headers: {
                 authorization: `Token ${token}`,
             },
         });
-        localStorage.removeItem('token');
+        const result = await res.json();
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('unauthorized');
+            }
+            throw new Error(result.error_message);
+        } else {
+            return result;
+        }
     }
 }

@@ -35,7 +35,7 @@ const Logout: FC = () => {
             navigate('/');
         }
     }, [currentUser, navigate]);
-    useEsc(() => navigate('/'), [navigate]);
+    useEsc(() => {logout.reset(); navigate('/')}, [navigate]);
 
     return (
         <div className={styles.logout} onClick={handleOverlayClick}>

@@ -109,6 +109,7 @@ i18n
                             areYouSure: 'Вы уверены, что хотите выйти?',
                             signout: 'Выйти',
                             serverError: 'Ошибка на сервере',
+                            unauthorized: 'Вы не авторизованы',
                         },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',
