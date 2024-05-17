@@ -93,7 +93,7 @@ export class BasketServiceMock implements BasketService {
                 id: 'mockOrderId',
                 totalAmount: meals.reduce((acc, meal) => acc + meal.orderedMeal.price * meal.quantity, 0),
                 preparationStatus: 'waiting',
-                preparationTime: Math.max(...meals.map(meal => meal.orderedMeal.waitingTime)),
+                preparationTime: Math.max(...meals.map((meal) => meal.orderedMeal.waitingTime)),
                 paymentStatus: 'notPaid',
                 reviewStatus: 'waiting',
                 cancellationTime: 120,

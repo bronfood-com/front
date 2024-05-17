@@ -377,4 +377,4 @@ export const mockOrders: { orders: OrderState[] } = {
             ],
         },
     ],
-}
+};

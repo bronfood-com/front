@@ -47,7 +47,7 @@ type BasketContext = {
     emptyBasket: () => void;
     /**
      * Sends order to server
-    */
+     */
     submitOrder: () => void;
 };
 
@@ -98,10 +98,13 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // sdfsdfsdfsfsf _____________________------------>>
 
     const { mutate: submitOrder, isPending: submitOrderPending } = useMutation({
-        mutationFn: () => basketService.submitOrder(meals.map(meal => ({
-            orderedMeal: meal.meal,
-            quantity: meal.count
-        }))),
+        mutationFn: () =>
+            basketService.submitOrder(
+                meals.map((meal) => ({
+                    orderedMeal: meal.meal,
+                    quantity: meal.count,
+                }))
+            ),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
