@@ -11,8 +11,10 @@ import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
 import OrderListArticle from '../OrderListArticle/OrderListArticle';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 import Preloader from '../../../components/Preloader/Preloader';
+import { useNavigate } from 'react-router-dom';
 
 const WaitingOrder: FC = () => {
+    const navigate = useNavigate();
     /**
      * This time represents the total duration of the ProgressBar movement
      * for waiting for the order code, as specified by the client's design requirements.
@@ -52,6 +54,16 @@ const WaitingOrder: FC = () => {
             setShowConfirmationPopup(false);
         }
     }, [cancellationTime, showConfirmationPopup]);
+
+    useEffect(() => {
+        if (preparationStatus === 'confirmed') {
+            const timer = setTimeout(() => {
+               navigate('/leave-review');
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [preparationStatus, navigate]);
 
     return (
         <>
