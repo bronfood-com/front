@@ -24,8 +24,17 @@ const RestorePassword = () => {
         setErrorMessage('');
     };
 
+    const timeoutRequest = () => {
+        return setTimeout(()=> {
+            setIsLoading(false);
+            setErrorMessage(makeLowerCaseFirstLetter('serverDoesntRespond'));
+            setIsError(true);
+        }, 10000);
+    };
+
     const onSubmitQueryPhone = async (phoneNumber: string) => {
         setIsLoading(true);
+        const timeoutQueryPhone = timeoutRequest();
         const res = await restorePasswordService.queryPhoneNumber(phoneNumber);
         if (res.status === 'success') {
             clearError();
@@ -37,10 +46,12 @@ const RestorePassword = () => {
             setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
+        clearTimeout(timeoutQueryPhone);
     };
 
     const onSubmitChangePassword = async (password: string, password_confirm: string) => {
         setIsLoading(true);
+        const timeoutChangePassword = timeoutRequest();
         const res = await restorePasswordService.setNewPassword(password, password_confirm, tempDataCode);
         if (res.status === 'success') {
             clearError();
@@ -52,10 +63,12 @@ const RestorePassword = () => {
             setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
+        clearTimeout(timeoutChangePassword);
     };
 
     const onSubmitApplyPassword = async (code: string) => {
         setIsLoading(true);
+        const timeoutApplyPassword = timeoutRequest();
         const res = await restorePasswordService.verifyPasswordChange(tempDataCode, code);
         if (res.status === 'success') {
             clearError();
@@ -67,6 +80,7 @@ const RestorePassword = () => {
             setErrorMessage(makeLowerCaseFirstLetter(res.error_message));
             setIsError(true);
         }
+        clearTimeout(timeoutApplyPassword);
     };
 
     const renderStage = () => {
