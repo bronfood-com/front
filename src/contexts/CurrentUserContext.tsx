@@ -73,7 +73,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         },
     });
     useEffect(() => {
-        setCurrentUser(user);
+        setCurrentUser(user && JSON.parse(user));
     }, [user]);
     return (
         <CurrentUserContext.Provider
