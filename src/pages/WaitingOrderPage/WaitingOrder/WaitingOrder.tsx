@@ -58,7 +58,7 @@ const WaitingOrder: FC = () => {
     useEffect(() => {
         if (preparationStatus === 'confirmed') {
             const timer = setTimeout(() => {
-               navigate('/leave-review');
+                navigate('/leave-review');
             }, 5000);
 
             return () => clearTimeout(timer);
