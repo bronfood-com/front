@@ -36,6 +36,16 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         },
         [orderService]
     );
+    //ыва
+    const updateOrder = useCallback((order: OrderState) => {
+        setOrderedMeal(order);
+        setInitialPreparationTime(order.preparationTime);
+        setPreparationTime(order.preparationTime);
+        setCancellationTime(order.cancellationTime);
+        setWaitOrderIdTime(0);
+        setPreparationStatus(order.preparationStatus);
+    }, []);
+    //ыва
 
     const state = useMemo(
         () => ({
@@ -56,8 +66,9 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             errorMessage,
             setErrorMessage,
             cancelOrder: handleCancelOrder,
+            updateOrder,
         }),
-        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder]
+        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder, updateOrder]
     );
 
     useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationTime: state.setCancellationTime });
@@ -98,7 +109,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         };
 
         fetchOrderData();
-    }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationTime, setWaitOrderIdTime, setIsLoading, setErrorMessage]);
+    }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationTime, setWaitOrderIdTime, setIsLoading, setErrorMessage, orderedMeal]);
 
     /**
      * uncomment this useEffect after testing

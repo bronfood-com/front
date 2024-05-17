@@ -10,11 +10,17 @@ import Preloader from '../../components/Preloader/Preloader';
 import BasketConfirmation from './BasketConfirmation/BasketConfirmation';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
-function Basket({ onPayOrder }: { onPayOrder: () => void }) {
+function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, price, waitingTime, isLoading } = useBasket();
+    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, submitOrder } = useBasket();
     const close = () => navigate(-1);
+
+    const handlePayOrderClick = () => {
+        submitOrder();
+        navigate('/waiting-order');
+    };
+
     return (
         <>
             <BasketPopup close={close} isConfirmationPopupOpen={isConfirmationPopupOpen}>
@@ -24,7 +30,7 @@ function Basket({ onPayOrder }: { onPayOrder: () => void }) {
                     <>
                         <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         <BasketMealsList meals={meals} />
-                        <BasketTotal price={price} onPayOrderClick={onPayOrder} />
+                        <BasketTotal price={price} onPayOrderClick={handlePayOrderClick} />
                     </>
                 )}
                 {isLoading && <Preloader />}

@@ -12,6 +12,8 @@ export interface OrderContextType {
     isLoading: boolean;
     cancelOrder: (id: string) => Promise<void>;
     errorMessage: string;
+    // sdf
+    updateOrder: (order: OrderState) => void;
 }
 
 const defaultOrderContextValue: OrderContextType = {
@@ -24,6 +26,8 @@ const defaultOrderContextValue: OrderContextType = {
     isLoading: true,
     cancelOrder: async () => {},
     errorMessage: '',
+    // sdf
+    updateOrder: () => {},
 };
 
 interface OrderProviderProps {

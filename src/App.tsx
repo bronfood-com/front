@@ -20,6 +20,7 @@ import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
+import { OrderProvider } from './contexts/OrderContext';
 
 function App() {
     const [city, setCity] = useState('');
@@ -36,7 +37,7 @@ function App() {
             <Header city={city} />
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
-                <Route path="/waiting-order" element={<WaitingOrderPage />} />
+                {/* <Route path="/waiting-order" element={<WaitingOrderPage />} /> */}
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -48,7 +49,29 @@ function App() {
                     </Route>
                 </Route>
                 <Route path="/restore-password" element={<RestorePassword />} />
-                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')} />} />} />
+                {/* <Route path="/basket" element={<ProtectedRoute component={<Basket  />} />} /> */}
+
+                <Route
+                    path="/basket"
+                    element={
+                        <ProtectedRoute
+                            component={
+                                <OrderProvider userId={currentUser?.userId || ''}>
+                                    <Basket />
+                                </OrderProvider>
+                            }
+                        />
+                    }
+                />
+                <Route
+                    path="/waiting-order"
+                    element={
+                        <OrderProvider userId={currentUser?.userId || ''}>
+                            <WaitingOrderPage />
+                        </OrderProvider>
+                    }
+                />
+
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="*" element={<PageNotFound />} />

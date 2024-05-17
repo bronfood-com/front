@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { mockData } from './MockOrderList';
+import { mockOrders } from '../../../pages/Restaurants/MockRestaurantsAndOrdersList';
 import { OrderState } from './orderService';
 
 type ApiResponse<T> = {
@@ -29,18 +29,18 @@ class OrderServiceMock {
 
     async fetchOrderIdByUserId(userId: string): Promise<ApiResponse<string>> {
         await this._delayedResponse(5000);
-        return this._fetchResponse(() => mockData.orders.find((order) => order.userId === userId)?.id, 'components.waitingOrder.orderDoesNotExist');
+        return this._fetchResponse(() => mockOrders.orders.find((order) => order.userId === userId)?.id, 'components.waitingOrder.orderDoesNotExist');
     }
 
     async fetchOrderedMealByOrderId(id: string): Promise<ApiResponse<OrderState>> {
-        return this._fetchResponse(() => mockData.orders.find((order) => order.id === id), 'components.waitingOrder.errorReceivingOrderData');
+        return this._fetchResponse(() => mockOrders.orders.find((order) => order.id === id), 'components.waitingOrder.errorReceivingOrderData');
     }
 
     async cancelOrder(id: string): Promise<ApiResponse<void>> {
         await this._delayedResponse(5000);
 
         return this._fetchResponse(() => {
-            const orderExists = mockData.orders.some((order) => order.id === id);
+            const orderExists = mockOrders.orders.some((order) => order.id === id);
             if (!orderExists) {
                 return undefined;
             }
@@ -50,7 +50,7 @@ class OrderServiceMock {
 
     async checkPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
         return this._fetchResponse(() => {
-            const order = mockData.orders.find((order) => order.userId === userId);
+            const order = mockOrders.orders.find((order) => order.userId === userId);
             return order ? order.preparationStatus : undefined;
         }, 'components.waitingOrder.orderDoesNotExist');
     }
@@ -78,7 +78,7 @@ class OrderServiceMock {
      * remove functions checkAndConfirmPreparationStatus and checkAndNotConfirmPreparationStatus after testing
      */
     async checkAndConfirmPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
-        const order = mockData.orders.find((order) => order.userId === userId);
+        const order = mockOrders.orders.find((order) => order.userId === userId);
         if (order) {
             return await this._confirmOrderStatus(order);
         }
@@ -86,7 +86,7 @@ class OrderServiceMock {
     }
 
     async checkAndNotConfirmPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
-        const order = mockData.orders.find((order) => order.userId === userId);
+        const order = mockOrders.orders.find((order) => order.userId === userId);
         if (order) {
             return await this._notConfirmOrderStatus(order);
         }

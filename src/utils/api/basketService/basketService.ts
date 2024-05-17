@@ -1,5 +1,6 @@
 import { BasketServiceMock } from './basketServiceMock';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
+import { OrderedMeal, OrderState } from '../orderService/orderService';
 
 export type MealInBasket = {
     /**
@@ -28,6 +29,7 @@ export interface BasketService {
     addMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
     deleteMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
     emptyBasket: () => Promise<{ data: Basket }>;
+    submitOrder(meals: OrderedMeal[]): Promise<OrderState>;
 }
 
 export const basketService = new BasketServiceMock();

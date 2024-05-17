@@ -1,6 +1,7 @@
 import { BasketService, Basket } from './basketService';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
+import { OrderedMeal, OrderState } from '../orderService/orderService';
 
 export class BasketServiceMock implements BasketService {
     private basket: Basket = {
@@ -82,6 +83,30 @@ export class BasketServiceMock implements BasketService {
             throw new Error('serverError');
         }
     }
+    //sdfsfsf
+    async submitOrder(meals: OrderedMeal[]): Promise<OrderState> {
+        await this._wait(500);
+        const success = true;
+        if (success) {
+            const orderState: OrderState = {
+                userId: 'mockUserId',
+                id: 'mockOrderId',
+                totalAmount: meals.reduce((acc, meal) => acc + meal.orderedMeal.price * meal.quantity, 0),
+                preparationStatus: 'waiting',
+                preparationTime: Math.max(...meals.map(meal => meal.orderedMeal.waitingTime)),
+                paymentStatus: 'notPaid',
+                reviewStatus: 'waiting',
+                cancellationTime: 120,
+                cancellationStatus: 'none',
+                isCancellationRequested: false,
+                orderedMeal: meals,
+            };
+            return orderState;
+        } else {
+            throw new Error('serverError');
+        }
+    }
+    // sdfsdfsf
     async emptyBasket(): Promise<{ data: Basket }> {
         await this._wait(500);
         this.basket.restaurant = {};
