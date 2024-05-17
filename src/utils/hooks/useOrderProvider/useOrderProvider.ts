@@ -62,20 +62,6 @@ export const useOrderProvider = (userId: string): OrderContextType => {
 
     useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationTime: state.setCancellationTime });
 
-    /**
-     * uncomment this func after testing
-     */
-    // const checkPreparationStatus = useCallback(async () => {
-    //     setIsLoading(true);
-    //     const statusResponse = await orderService.checkPreparationStatus(userId);
-    //     if (statusResponse.data) {
-    //         setPreparationStatus(statusResponse.data);
-    //     } else {
-    //         setErrorMessage(statusResponse.error || 'Error while checking preparation status');
-    //     }
-    //     setIsLoading(false);
-    // }, [orderService, userId]);
-
     useEffect(() => {
         const fetchOrderData = async () => {
             setIsLoading(true);
@@ -101,18 +87,7 @@ export const useOrderProvider = (userId: string): OrderContextType => {
     }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationTime, setWaitOrderIdTime, setIsLoading, setErrorMessage]);
 
     /**
-     * uncomment this useEffect after testing
-     */
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         checkPreparationStatus();
-    //     }, 60000);
-
-    //     return () => clearInterval(interval);
-    // }, [checkPreparationStatus]);
-
-    /**
-     * this useEffect is just for testing preparation status, to be removed after testing
+     * this useEffect is just for testing preparationStatus, to be removed after testing
      */
     useEffect(() => {
         if (preparationStatus === 'waiting') {
