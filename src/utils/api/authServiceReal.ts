@@ -119,7 +119,7 @@ export class AuthServiceReal implements AuthService {
             throw new Error(res.statusText);
         } else {
             clearLocalStorage();
-            return
+            return;
         }
     }
 }
