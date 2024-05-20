@@ -25,7 +25,7 @@ const RestorePassword = () => {
     };
 
     const timeoutRequest = () => {
-        return setTimeout(()=> {
+        return setTimeout(() => {
             setIsLoading(false);
             setErrorMessage(makeLowerCaseFirstLetter('serverDoesntRespond'));
             setIsError(true);
