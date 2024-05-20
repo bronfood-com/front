@@ -13,11 +13,11 @@ import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, submitOrder } = useBasket();
+    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, placeOrder } = useBasket();
     const close = () => navigate(-1);
 
     const handlePayOrderClick = () => {
-        submitOrder();
+        placeOrder();
         navigate('/waiting-order');
     };
 

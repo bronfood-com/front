@@ -45,10 +45,7 @@ type BasketContext = {
      * Removes restaurant and all meals from basket on client and server side
      */
     emptyBasket: () => void;
-    /**
-     * Sends order to server
-     */
-    submitOrder: () => void;
+    placeOrder: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -62,7 +59,7 @@ export const BasketContext = createContext<BasketContext>({
     addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
-    submitOrder: () => Promise.resolve(),
+    placeOrder: () => Promise.resolve(),
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -95,24 +92,17 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    // sdfsdfsdfsfsf _____________________------------>>
-
-    const { mutate: submitOrder, isPending: submitOrderPending } = useMutation({
-        mutationFn: () =>
-            basketService.submitOrder(
-                meals.map((meal) => ({
-                    orderedMeal: meal.meal,
-                    quantity: meal.count,
-                }))
-            ),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
+    const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
+        mutationFn: () => basketService.placeOrder(),
+        onSuccess: () => {
+            queryClient.setQueryData(['basket'], { data: { restaurant: {}, meals: [] } });
+            setErrorMessage('');
+        },
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-
-    // sdfdsfsfsf____________--------------->>>>
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || submitOrderPending;
+    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || placeOrderPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -146,7 +136,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 emptyBasket,
-                submitOrder,
+                placeOrder,
             }}
         >
             {children}

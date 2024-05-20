@@ -1,7 +1,6 @@
 import { BasketService, Basket } from './basketService';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
-import { OrderedMeal, OrderState } from '../orderService/orderService';
 
 export class BasketServiceMock implements BasketService {
     private basket: Basket = {
@@ -83,30 +82,6 @@ export class BasketServiceMock implements BasketService {
             throw new Error('serverError');
         }
     }
-    //sdfsfsf
-    async submitOrder(meals: OrderedMeal[]): Promise<OrderState> {
-        await this._wait(500);
-        const success = true;
-        if (success) {
-            const orderState: OrderState = {
-                userId: 'mockUserId',
-                id: 'mockOrderId',
-                totalAmount: meals.reduce((acc, meal) => acc + meal.orderedMeal.price * meal.quantity, 0),
-                preparationStatus: 'waiting',
-                preparationTime: Math.max(...meals.map((meal) => meal.orderedMeal.waitingTime)),
-                paymentStatus: 'notPaid',
-                reviewStatus: 'waiting',
-                cancellationTime: 120,
-                cancellationStatus: 'none',
-                isCancellationRequested: false,
-                orderedMeal: meals,
-            };
-            return orderState;
-        } else {
-            throw new Error('serverError');
-        }
-    }
-    // sdfsdfsf
     async emptyBasket(): Promise<{ data: Basket }> {
         await this._wait(500);
         this.basket.restaurant = {};
@@ -116,6 +91,47 @@ export class BasketServiceMock implements BasketService {
             return { data: this.basket };
         } else {
             throw new Error('serverError');
+        }
+    }
+
+    async placeOrder(): Promise<{ data: { message: string } }> {
+        await this._wait(500);
+
+        const success = true;
+
+        if (success) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const order = {
+                restaurant: this.basket.restaurant,
+                meals: this.basket.meals.map(({ meal, count }) => ({
+                    mealId: meal.id,
+                    count,
+                    features: meal.features,
+                })),
+            };
+
+            // console.log('Order:', order);
+
+            // const response = await fetch('https://sdf.ru/api/orders', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(order)
+            // });
+
+            // if (response.ok) {
+            //     const data = await response.json();
+            //     this.basket.restaurant = {};
+            //     this.basket.meals = [];
+            //     return { data: { message: 'Order placed successfully' } };
+            // } else {
+            //     throw new Error('serverError');
+            // }
+
+            this.basket.restaurant = {};
+            this.basket.meals = [];
+            return { data: { message: 'Order placed successfully' } };
+        } else {
+            throw new Error('No items in the basket');
         }
     }
 }

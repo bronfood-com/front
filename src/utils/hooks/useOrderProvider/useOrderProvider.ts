@@ -36,16 +36,6 @@ export const useOrderProvider = (userId: string): OrderContextType => {
         },
         [orderService]
     );
-    //ыва
-    const updateOrder = useCallback((order: OrderState) => {
-        setOrderedMeal(order);
-        setInitialPreparationTime(order.preparationTime);
-        setPreparationTime(order.preparationTime);
-        setCancellationTime(order.cancellationTime);
-        setWaitOrderIdTime(0);
-        setPreparationStatus(order.preparationStatus);
-    }, []);
-    //ыва
 
     const state = useMemo(
         () => ({
@@ -66,26 +56,11 @@ export const useOrderProvider = (userId: string): OrderContextType => {
             errorMessage,
             setErrorMessage,
             cancelOrder: handleCancelOrder,
-            updateOrder,
         }),
-        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder, updateOrder]
+        [orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, errorMessage, handleCancelOrder]
     );
 
     useTimers({ setPreparationTime: state.setPreparationTime, setWaitOrderIdTime: state.setWaitOrderIdTime, setCancellationTime: state.setCancellationTime });
-
-    /**
-     * uncomment this func after testing
-     */
-    // const checkPreparationStatus = useCallback(async () => {
-    //     setIsLoading(true);
-    //     const statusResponse = await orderService.checkPreparationStatus(userId);
-    //     if (statusResponse.data) {
-    //         setPreparationStatus(statusResponse.data);
-    //     } else {
-    //         setErrorMessage(statusResponse.error || 'Error while checking preparation status');
-    //     }
-    //     setIsLoading(false);
-    // }, [orderService, userId]);
 
     useEffect(() => {
         const fetchOrderData = async () => {
@@ -110,17 +85,6 @@ export const useOrderProvider = (userId: string): OrderContextType => {
 
         fetchOrderData();
     }, [userId, t, orderService, setOrderedMeal, setInitialPreparationTime, setPreparationTime, setCancellationTime, setWaitOrderIdTime, setIsLoading, setErrorMessage, orderedMeal]);
-
-    /**
-     * uncomment this useEffect after testing
-     */
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         checkPreparationStatus();
-    //     }, 60000);
-
-    //     return () => clearInterval(interval);
-    // }, [checkPreparationStatus]);
 
     /**
      * this useEffect is just for testing preparation status, to be removed after testing
