@@ -32,7 +32,7 @@ const Profile = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
-            phone: data.phoneNumber,
+            phone: data.phoneNumber.replace(/\D/g, ''),
             fullname: data.username,
             password: data.newPassword || null,
             confirmPassword: data.newPasswordConfirm || null,
