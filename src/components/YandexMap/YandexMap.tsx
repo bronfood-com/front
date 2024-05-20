@@ -14,18 +14,15 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { restaurantsFiltered, inView } = useRestaurants();
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
-    const [userLatitude, setUserLatitude] = useState(43.246345);
-    const [userLongitude, setUserLongitude] = useState(76.921552);
+    const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+    const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
     const { isLogin } = useCurrentUser();
     const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
 
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                setUserLatitude(position.coords.latitude);
-                setUserLongitude(position.coords.longitude);
+                setUserLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
                 setVersion((version) => version + 1);
             });
         }
@@ -36,21 +33,17 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
             setActivePlaceId(inView);
             const place = restaurantsFiltered.find((place) => place.id === inView);
             if (place) {
-                setLatitude(place.coordinates.latitude);
-                setLongitude(place.coordinates.longitude);
+                setLocation({ latitude: place.coordinates.latitude, longitude: place.coordinates.longitude });
             }
         }
     }, [inView, restaurantsFiltered]);
 
     const handlePlacemarkClick = (placeId: string, latitude: number, longitude: number) => {
-        setActivePlaceId(placeId);
-        setLatitude(latitude);
-        setLongitude(longitude);
+        setLocation({ latitude, longitude });
         navigate(`/restaurants/${placeId}`);
     };
 
-    const center = activePlaceId ? [latitude, longitude] : [userLatitude, userLongitude];
-
+    const center = activePlaceId ? [location.latitude, location.longitude] : [userLocation.latitude, userLocation.longitude];
     return (
         <YMaps key={version} query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
             <div className={styles.yamap}>
@@ -64,7 +57,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     modules={['geocode']}
                     onLoad={(ymaps) => {
-                        ymaps.geocode([userLatitude, userLongitude], { kind: 'locality' }).then((res) => {
+                        ymaps.geocode([userLocation.latitude, userLocation.longitude], { kind: 'locality' }).then((res) => {
                             const city = res.geoObjects.get(0).properties.get('name', { kind: 'locality', name: t('components.header.placeName') });
                             setCity(city.toString());
                         });
@@ -79,11 +72,11 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                         }
                     }}
                 >
-                    {userLatitude && userLongitude && (
+                    {userLocation && (
                         //* user
                         <Placemark
                             className={styles.grayscaleMap}
-                            geometry={[userLatitude, userLongitude]}
+                            geometry={[userLocation.latitude, userLocation.longitude]}
                             options={{
                                 preset: 'islands#redDotIcon',
                                 iconLayout: 'default#image', // icon mark on map
