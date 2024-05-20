@@ -59,7 +59,13 @@
 
         &_orange {
             color: $orange;
+            display: inline-block;
         }
+    }
+
+    &__subtitleNoteTimer {
+        display: inline-block;
+        width: 30px;
     }
 
     &__button {

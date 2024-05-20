@@ -80,7 +80,8 @@ const WaitingOrder: FC = () => {
                                 <p className={styles.waitingOrder__subtitleNote}>
                                     {t('components.waitingOrder.youCanCancelTheOrderWithin')}
                                     <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        {formatTime(cancellationTime)} {t('components.orderTimeCounter.min')}
+                                        <span className={styles.waitingOrder__subtitleNoteTimer}>{formatTime(cancellationTime)}</span>
+                                        {t('components.orderTimeCounter.min')}
                                     </span>
                                 </p>
                                 <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>
