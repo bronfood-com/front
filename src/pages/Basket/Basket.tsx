@@ -14,7 +14,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { isEmpty, restaurant, meals, price, waitingTime, isLoading, errorMessage, reset } = useBasket();
     const close = () => {
