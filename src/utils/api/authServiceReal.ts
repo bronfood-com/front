@@ -66,7 +66,7 @@ export class AuthServiceReal implements AuthService {
         const token = this.getToken();
         let requestData: UpdateUser = { fullname, phone };
         if (password && confirmPassword) {
-            requestData = { ...requestData, password, password_confirm: confirmPassword };
+            requestData = { ...requestData, password, confirmPassword };
         }
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
