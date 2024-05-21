@@ -74,21 +74,33 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const restaurant = isSuccess ? data.data.restaurant : {};
     const meals = isSuccess ? data.data.meals : [];
-    const { mutate: addMeal, isPending: addMealPending, reset: resetAddMeal } = useMutation({
+    const {
+        mutate: addMeal,
+        isPending: addMealPending,
+        reset: resetAddMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: deleteMeal, isPending: deleteMealPending, reset: resetDeleteMeal } = useMutation({
+    const {
+        mutate: deleteMeal,
+        isPending: deleteMealPending,
+        reset: resetDeleteMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: emptyBasket, isPending: emptyBasketPending, reset: resetEmptyBasket } = useMutation({
+    const {
+        mutate: emptyBasket,
+        isPending: emptyBasketPending,
+        reset: resetEmptyBasket,
+    } = useMutation({
         mutationFn: () => basketService.emptyBasket(),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
@@ -120,7 +132,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         resetAddMeal();
         resetDeleteMeal();
         resetEmptyBasket();
-    }
+    };
     return (
         <BasketContext.Provider
             value={{
