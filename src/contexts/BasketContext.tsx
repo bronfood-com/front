@@ -129,6 +129,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
     const reset = () => {
+        setErrorMessage('');
         resetAddMeal();
         resetDeleteMeal();
         resetEmptyBasket();
