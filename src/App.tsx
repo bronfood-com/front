@@ -48,7 +48,7 @@ function App() {
                     </Route>
                 </Route>
                 <Route path="/restore-password" element={<RestorePassword />} />
-                <Route path="/basket" element={<ProtectedRoute component={<Basket onPayOrder={() => navigate('/waiting-order')} />} />} />
+                <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="*" element={<PageNotFound />} />

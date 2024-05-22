@@ -45,6 +45,10 @@ type BasketContext = {
      * Removes restaurant and all meals from basket on client and server side
      */
     emptyBasket: () => void;
+    /**
+     * Places order
+     */
+    placeOrder: (userId: string) => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -58,6 +62,7 @@ export const BasketContext = createContext<BasketContext>({
     addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
+    placeOrder: () => Promise.resolve(),
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -67,8 +72,10 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
     });
-    const restaurant = isSuccess ? data.data.restaurant : {};
-    const meals = isSuccess ? data.data.meals : [];
+    // To ensure that `restaurant` is an empty object if data is not yet loaded or there's no restaurant data
+    const restaurant = (isSuccess && data?.data?.restaurant) || {};
+    // To ensure that `meals` is an empty array if data is not yet loaded or there's no meals data
+    const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
     const { mutate: addMeal, isPending: addMealPending } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
@@ -90,7 +97,15 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
+    // func to place order
+    const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
+        mutationFn: (userId: string) => basketService.placeOrder(userId),
+        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || placeOrderPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -124,6 +139,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 emptyBasket,
+                placeOrder,
             }}
         >
             {children}
