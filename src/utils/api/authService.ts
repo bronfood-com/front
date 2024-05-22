@@ -1,4 +1,3 @@
-// import { AuthServiceMock } from './authServiceMock';
 import { AuthServiceReal } from './authServiceReal';
 
 /**
@@ -58,5 +57,4 @@ export interface AuthService {
     logOut: () => Promise<void>;
 }
 
-// export const authService = new AuthServiceMock();
 export const authService = new AuthServiceReal();
