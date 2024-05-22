@@ -144,7 +144,7 @@ class OrderServiceMock {
         await this._delayedResponse(5000);
         const url = `${API_BASE_URL}/orders/${id}`;
         const options = {
-            method: 'DELETE'
+            method: 'DELETE',
         };
         try {
             const response = await fetch(url, options);

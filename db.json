@@ -1,427 +1,427 @@
 {
-  "orders": [
-    {
-      "userId": "u12345",
-      "id": "NHG347",
-      "totalAmount": 4100,
-      "preparationStatus": "confirmed",
-      "preparationTime": 2,
-      "paymentStatus": "paid",
-      "reviewStatus": "waiting",
-      "cancellationTime": 120,
-      "cancellationStatus": "none",
-      "isCancellationRequested": false,
-      "orderedMeal": [
+    "orders": [
         {
-          "orderedMeal": {
+            "userId": "u12345",
+            "id": "NHG347",
+            "totalAmount": 4100,
+            "preparationStatus": "confirmed",
+            "preparationTime": 2,
+            "paymentStatus": "paid",
+            "reviewStatus": "waiting",
+            "cancellationTime": 120,
+            "cancellationStatus": "none",
+            "isCancellationRequested": false,
+            "orderedMeal": [
+                {
+                    "orderedMeal": {
+                        "id": "1",
+                        "name": "Куриный донер",
+                        "description": "Вкусный куриный донер с овощами",
+                        "photo": "url_to_photo",
+                        "price": 1300,
+                        "type": "food",
+                        "waitingTime": 10,
+                        "features": []
+                    },
+                    "quantity": 1
+                },
+                {
+                    "orderedMeal": {
+                        "id": "2",
+                        "name": "Coffee",
+                        "description": "Свежесваренный кофе",
+                        "photo": "url_to_photo",
+                        "price": 500,
+                        "type": "drink",
+                        "waitingTime": 5,
+                        "features": []
+                    },
+                    "quantity": 3
+                },
+                {
+                    "orderedMeal": {
+                        "id": "3",
+                        "name": "Салат Цезарь с курицей и сухариками",
+                        "description": "Классический салат Цезарь",
+                        "photo": "url_to_photo",
+                        "price": 2000,
+                        "type": "food",
+                        "waitingTime": 7,
+                        "features": []
+                    },
+                    "quantity": 1
+                },
+                {
+                    "orderedMeal": {
+                        "id": "4",
+                        "name": "Вода негазированная",
+                        "description": "Охлажденная вода без добавок",
+                        "photo": "url_to_photo",
+                        "price": 300,
+                        "type": "drink",
+                        "waitingTime": 0,
+                        "features": []
+                    },
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "restaurants": [
+        {
             "id": "1",
-            "name": "Куриный донер",
-            "description": "Вкусный куриный донер с овощами",
-            "photo": "url_to_photo",
-            "price": 1300,
-            "type": "food",
-            "waitingTime": 10,
-            "features": []
-          },
-          "quantity": 1
+            "photo": "restaurant3.png",
+            "name": "Jahu",
+            "rating": 4.8,
+            "address": "ул. Березовая 21",
+            "workingTime": "09:00 - 22.00",
+            "meals": [
+                {
+                    "id": "1",
+                    "name": "Куриный донер",
+                    "description": "Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.",
+                    "photo": "meal1.png",
+                    "price": 1350,
+                    "type": "food",
+                    "waitingTime": 10,
+                    "features": [
+                        {
+                            "id": "1",
+                            "name": "Размер",
+                            "choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Маленький",
+                                    "price": 1050,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Средний",
+                                    "price": 1350,
+                                    "default": true,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Большой",
+                                    "price": 1650,
+                                    "default": false,
+                                    "chosen": false
+                                }
+                            ]
+                        },
+                        {
+                            "id": "2",
+                            "name": "Соусы",
+                            "choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Кетчуп",
+                                    "price": 100,
+                                    "default": true,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Чесночный",
+                                    "price": 200,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Сырный",
+                                    "price": 300,
+                                    "default": false,
+                                    "chosen": false
+                                }
+                            ]
+                        },
+                        {
+                            "id": "3",
+                            "name": "Овощи",
+                            "choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Томаты",
+                                    "price": 100,
+                                    "default": true,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Огурцы",
+                                    "price": 200,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Оливки",
+                                    "price": 300,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Маринованные огурцы",
+                                    "price": 400,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Зелень",
+                                    "price": 500,
+                                    "default": false,
+                                    "chosen": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "2",
+                    "name": "Говяжий донер",
+                    "description": "Говядина",
+                    "photo": "meal1.png",
+                    "price": 1350,
+                    "type": "food",
+                    "waitingTime": 10,
+                    "features": []
+                },
+                {
+                    "id": "3",
+                    "name": "Американо",
+                    "description": "Кофе",
+                    "photo": "drink1.png",
+                    "price": 200,
+                    "type": "drink",
+                    "waitingTime": 5,
+                    "features": []
+                },
+                {
+                    "id": "4",
+                    "name": "Говяжий донер",
+                    "description": "Говядина",
+                    "photo": "meal1.png",
+                    "price": 1350,
+                    "type": "food",
+                    "waitingTime": 10,
+                    "features": []
+                },
+                {
+                    "id": "5",
+                    "name": "Пуддинг",
+                    "description": "Пуддинг",
+                    "photo": "dessert1.png",
+                    "price": 350,
+                    "type": "dessert",
+                    "waitingTime": 5,
+                    "features": []
+                }
+            ],
+            "type": "cafe"
         },
         {
-          "orderedMeal": {
             "id": "2",
-            "name": "Coffee",
-            "description": "Свежесваренный кофе",
-            "photo": "url_to_photo",
-            "price": 500,
-            "type": "drink",
-            "waitingTime": 5,
-            "features": []
-          },
-          "quantity": 3
+            "photo": "restaurant2.png",
+            "name": "Boom",
+            "rating": 4.9,
+            "address": "ул. Морозова 56/1",
+            "workingTime": "10:00 - 23.00",
+            "meals": [
+                {
+                    "id": "6",
+                    "name": "Куриный донер",
+                    "description": "Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.",
+                    "photo": "meal1.png",
+                    "price": 1350,
+                    "type": "food",
+                    "waitingTime": 10,
+                    "features": [
+                        {
+                            "id": "1",
+                            "name": "Размер",
+                            "choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Маленький",
+                                    "price": 1050,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Средний",
+                                    "price": 1350,
+                                    "default": true,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Большой",
+                                    "price": 1650,
+                                    "default": false,
+                                    "chosen": false
+                                }
+                            ]
+                        },
+                        {
+                            "id": "2",
+                            "name": "Соусы",
+                            "choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Кетчуп",
+                                    "price": 100,
+                                    "default": true,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Чесночный",
+                                    "price": 200,
+                                    "default": false,
+                                    "chosen": false
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Сырный",
+                                    "price": 300,
+                                    "default": false,
+                                    "chosen": false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "type": "cafe"
         },
         {
-          "orderedMeal": {
             "id": "3",
-            "name": "Салат Цезарь с курицей и сухариками",
-            "description": "Классический салат Цезарь",
-            "photo": "url_to_photo",
-            "price": 2000,
-            "type": "food",
-            "waitingTime": 7,
-            "features": []
-          },
-          "quantity": 1
+            "photo": "restaurant4.png",
+            "name": "Moon",
+            "rating": 5,
+            "address": "пр. Мира 36",
+            "workingTime": "12:00 - 01.00",
+            "meals": [
+                {
+                    "id": "7",
+                    "name": "Американо",
+                    "description": "Кофе",
+                    "photo": "drink1.png",
+                    "price": 200,
+                    "type": "drink",
+                    "waitingTime": 5,
+                    "features": []
+                }
+            ],
+            "type": "cafe"
         },
         {
-          "orderedMeal": {
             "id": "4",
-            "name": "Вода негазированная",
-            "description": "Охлажденная вода без добавок",
-            "photo": "url_to_photo",
-            "price": 300,
-            "type": "drink",
-            "waitingTime": 0,
-            "features": []
-          },
-          "quantity": 1
-        }
-      ]
-    }
-  ],
-  "restaurants": [
-    {
-      "id": "1",
-      "photo": "restaurant3.png",
-      "name": "Jahu",
-      "rating": 4.8,
-      "address": "ул. Березовая 21",
-      "workingTime": "09:00 - 22.00",
-      "meals": [
-        {
-          "id": "1",
-          "name": "Куриный донер",
-          "description": "Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.",
-          "photo": "meal1.png",
-          "price": 1350,
-          "type": "food",
-          "waitingTime": 10,
-          "features": [
-            {
-              "id": "1",
-              "name": "Размер",
-              "choices": [
+            "photo": "restaurant1.png",
+            "name": "Ready",
+            "rating": 4.8,
+            "address": "ул. Березовая 21",
+            "workingTime": "09:00 - 22.00",
+            "meals": [
                 {
-                  "id": "1",
-                  "name": "Маленький",
-                  "price": 1050,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "2",
-                  "name": "Средний",
-                  "price": 1350,
-                  "default": true,
-                  "chosen": false
-                },
-                {
-                  "id": "3",
-                  "name": "Большой",
-                  "price": 1650,
-                  "default": false,
-                  "chosen": false
+                    "id": "8",
+                    "name": "Пуддинг",
+                    "description": "Пуддинг",
+                    "photo": "dessert1.png",
+                    "price": 350,
+                    "type": "dessert",
+                    "waitingTime": 5,
+                    "features": []
                 }
-              ]
-            },
-            {
-              "id": "2",
-              "name": "Соусы",
-              "choices": [
-                {
-                  "id": "1",
-                  "name": "Кетчуп",
-                  "price": 100,
-                  "default": true,
-                  "chosen": false
-                },
-                {
-                  "id": "2",
-                  "name": "Чесночный",
-                  "price": 200,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "3",
-                  "name": "Сырный",
-                  "price": 300,
-                  "default": false,
-                  "chosen": false
-                }
-              ]
-            },
-            {
-              "id": "3",
-              "name": "Овощи",
-              "choices": [
-                {
-                  "id": "1",
-                  "name": "Томаты",
-                  "price": 100,
-                  "default": true,
-                  "chosen": false
-                },
-                {
-                  "id": "2",
-                  "name": "Огурцы",
-                  "price": 200,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "3",
-                  "name": "Оливки",
-                  "price": 300,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "4",
-                  "name": "Маринованные огурцы",
-                  "price": 400,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "5",
-                  "name": "Зелень",
-                  "price": 500,
-                  "default": false,
-                  "chosen": false
-                }
-              ]
-            }
-          ]
+            ],
+            "type": "fastFood"
         },
         {
-          "id": "2",
-          "name": "Говяжий донер",
-          "description": "Говядина",
-          "photo": "meal1.png",
-          "price": 1350,
-          "type": "food",
-          "waitingTime": 10,
-          "features": []
-        },
-        {
-          "id": "3",
-          "name": "Американо",
-          "description": "Кофе",
-          "photo": "drink1.png",
-          "price": 200,
-          "type": "drink",
-          "waitingTime": 5,
-          "features": []
-        },
-        {
-          "id": "4",
-          "name": "Говяжий донер",
-          "description": "Говядина",
-          "photo": "meal1.png",
-          "price": 1350,
-          "type": "food",
-          "waitingTime": 10,
-          "features": []
-        },
-        {
-          "id": "5",
-          "name": "Пуддинг",
-          "description": "Пуддинг",
-          "photo": "dessert1.png",
-          "price": 350,
-          "type": "dessert",
-          "waitingTime": 5,
-          "features": []
-        }
-      ],
-      "type": "cafe"
-    },
-    {
-      "id": "2",
-      "photo": "restaurant2.png",
-      "name": "Boom",
-      "rating": 4.9,
-      "address": "ул. Морозова 56/1",
-      "workingTime": "10:00 - 23.00",
-      "meals": [
-        {
-          "id": "6",
-          "name": "Куриный донер",
-          "description": "Лаваш, курица, соленый огурец, помидор, капуста, лук, морковь, зелень.",
-          "photo": "meal1.png",
-          "price": 1350,
-          "type": "food",
-          "waitingTime": 10,
-          "features": [
-            {
-              "id": "1",
-              "name": "Размер",
-              "choices": [
+            "id": "5",
+            "photo": "restaurant3.png",
+            "name": "Bar",
+            "rating": 5,
+            "address": "пр. Мира 36",
+            "workingTime": "12:00 - 01.00",
+            "meals": [
                 {
-                  "id": "1",
-                  "name": "Маленький",
-                  "price": 1050,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "2",
-                  "name": "Средний",
-                  "price": 1350,
-                  "default": true,
-                  "chosen": false
-                },
-                {
-                  "id": "3",
-                  "name": "Большой",
-                  "price": 1650,
-                  "default": false,
-                  "chosen": false
+                    "id": "9",
+                    "name": "Капуччино",
+                    "description": "Кофе",
+                    "photo": "drink1.png",
+                    "price": 1,
+                    "type": "drink",
+                    "waitingTime": 5,
+                    "features": []
                 }
-              ]
-            },
-            {
-              "id": "2",
-              "name": "Соусы",
-              "choices": [
-                {
-                  "id": "1",
-                  "name": "Кетчуп",
-                  "price": 100,
-                  "default": true,
-                  "chosen": false
-                },
-                {
-                  "id": "2",
-                  "name": "Чесночный",
-                  "price": 200,
-                  "default": false,
-                  "chosen": false
-                },
-                {
-                  "id": "3",
-                  "name": "Сырный",
-                  "price": 300,
-                  "default": false,
-                  "chosen": false
-                }
-              ]
-            }
-          ]
+            ],
+            "type": "cafeBar"
         }
-      ],
-      "type": "cafe"
-    },
-    {
-      "id": "3",
-      "photo": "restaurant4.png",
-      "name": "Moon",
-      "rating": 5,
-      "address": "пр. Мира 36",
-      "workingTime": "12:00 - 01.00",
-      "meals": [
+    ],
+    "options": [
         {
-          "id": "7",
-          "name": "Американо",
-          "description": "Кофе",
-          "photo": "drink1.png",
-          "price": 200,
-          "type": "drink",
-          "waitingTime": 5,
-          "features": []
-        }
-      ],
-      "type": "cafe"
-    },
-    {
-      "id": "4",
-      "photo": "restaurant1.png",
-      "name": "Ready",
-      "rating": 4.8,
-      "address": "ул. Березовая 21",
-      "workingTime": "09:00 - 22.00",
-      "meals": [
+            "id": 1,
+            "name": "Куриный донер"
+        },
         {
-          "id": "8",
-          "name": "Пуддинг",
-          "description": "Пуддинг",
-          "photo": "dessert1.png",
-          "price": 350,
-          "type": "dessert",
-          "waitingTime": 5,
-          "features": []
-        }
-      ],
-      "type": "fastFood"
-    },
-    {
-      "id": "5",
-      "photo": "restaurant3.png",
-      "name": "Bar",
-      "rating": 5,
-      "address": "пр. Мира 36",
-      "workingTime": "12:00 - 01.00",
-      "meals": [
+            "id": 2,
+            "name": "Jahu"
+        },
         {
-          "id": "9",
-          "name": "Капуччино",
-          "description": "Кофе",
-          "photo": "drink1.png",
-          "price": 1,
-          "type": "drink",
-          "waitingTime": 5,
-          "features": []
+            "id": 3,
+            "name": "Говяжий донер"
+        },
+        {
+            "id": 4,
+            "name": "Американо"
+        },
+        {
+            "id": 5,
+            "name": "Пуддинг"
+        },
+        {
+            "id": 6,
+            "name": "Boom"
+        },
+        {
+            "id": 7,
+            "name": "Moon"
+        },
+        {
+            "id": 8,
+            "name": "Ready"
+        },
+        {
+            "id": 9,
+            "name": "Bar"
+        },
+        {
+            "id": 10,
+            "name": "Капуччино"
         }
-      ],
-      "type": "cafeBar"
-    }
-  ],
-  "options": [
-    {
-      "id": 1,
-      "name": "Куриный донер"
-    },
-    {
-      "id": 2,
-      "name": "Jahu"
-    },
-    {
-      "id": 3,
-      "name": "Говяжий донер"
-    },
-    {
-      "id": 4,
-      "name": "Американо"
-    },
-    {
-      "id": 5,
-      "name": "Пуддинг"
-    },
-    {
-      "id": 6,
-      "name": "Boom"
-    },
-    {
-      "id": 7,
-      "name": "Moon"
-    },
-    {
-      "id": 8,
-      "name": "Ready"
-    },
-    {
-      "id": 9,
-      "name": "Bar"
-    },
-    {
-      "id": 10,
-      "name": "Капуччино"
-    }
-  ],
-  "types": [
-    {
-      "id": 1,
-      "name": "fastFood",
-      "selected": false
-    },
-    {
-      "id": 2,
-      "name": "cafe",
-      "selected": false
-    },
-    {
-      "id": 3,
-      "name": "cafeBar",
-      "selected": false
-    }
-  ]
+    ],
+    "types": [
+        {
+            "id": 1,
+            "name": "fastFood",
+            "selected": false
+        },
+        {
+            "id": 2,
+            "name": "cafe",
+            "selected": false
+        },
+        {
+            "id": 3,
+            "name": "cafeBar",
+            "selected": false
+        }
+    ]
 }

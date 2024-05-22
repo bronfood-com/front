@@ -96,7 +96,7 @@ export class BasketServiceMock implements BasketService {
             throw new Error('serverError');
         }
     }
-    async placeOrder(userId: string): Promise<{ data: string | null, error: string | null }> {
+    async placeOrder(userId: string): Promise<{ data: string | null; error: string | null }> {
         await this._wait(2000);
         const order = {
             userId,
@@ -109,7 +109,7 @@ export class BasketServiceMock implements BasketService {
             cancellationTime: 120,
             cancellationStatus: 'none',
             isCancellationRequested: false,
-            orderedMeal: this.basket.meals.map(({ meal, count }) => ({ orderedMeal: meal, quantity: count }))
+            orderedMeal: this.basket.meals.map(({ meal, count }) => ({ orderedMeal: meal, quantity: count })),
         };
         return fetch(`${API_BASE_URL}/orders`, {
             method: 'POST',
@@ -118,14 +118,14 @@ export class BasketServiceMock implements BasketService {
             },
             body: JSON.stringify(order),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to place order'); // to be checked when error keys will be added
-            }
-            return { data: order.id, error: null };
-        })
-        .catch(error => {
-            return { data: null, error: error.message };
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to place order'); // to be checked when error keys will be added
+                }
+                return { data: order.id, error: null };
+            })
+            .catch((error) => {
+                return { data: null, error: error.message };
+            });
     }
 }
