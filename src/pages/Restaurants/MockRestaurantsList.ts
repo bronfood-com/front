@@ -15,6 +15,10 @@ export const mockRestaurants: Restaurant[] = [
         name: 'Jahu',
         rating: 4.8,
         address: 'ул. Березовая 21',
+        coordinates: {
+            latitude: 43.243523441782585,
+            longitude: 76.91477137561034,
+        },
         workingTime: '09:00 - 22.00',
         meals: [
             {
@@ -172,6 +176,10 @@ export const mockRestaurants: Restaurant[] = [
         name: 'Boom',
         rating: 4.9,
         address: 'ул. Морозова 56/1',
+        coordinates: {
+            latitude: 43.239536903817104,
+            longitude: 76.9312294101257,
+        },
         workingTime: '10:00 - 23.00',
         meals: [
             {
@@ -248,6 +256,10 @@ export const mockRestaurants: Restaurant[] = [
         name: 'Moon',
         rating: 5.0,
         address: 'пр. Мира 36',
+        coordinates: {
+            latitude: 43.23818774310171,
+            longitude: 76.9074543094177,
+        },
         workingTime: '12:00 - 01.00',
         meals: [
             {
@@ -269,6 +281,10 @@ export const mockRestaurants: Restaurant[] = [
         name: 'Ready',
         rating: 4.8,
         address: 'ул. Березовая 21',
+        coordinates: {
+            latitude: 43.23531675447601,
+            longitude: 76.91690641398621,
+        },
         workingTime: '09:00 - 22.00',
         meals: [
             {
@@ -290,6 +306,10 @@ export const mockRestaurants: Restaurant[] = [
         name: 'Bar',
         rating: 5.0,
         address: 'пр. Мира 36',
+        coordinates: {
+            latitude: 43.24301948193668,
+            longitude: 76.909664449646,
+        },
         workingTime: '12:00 - 01.00',
         meals: [
             {

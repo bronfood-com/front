@@ -98,6 +98,13 @@ export type Restaurant = {
      */
     address: string;
     /**
+     * Venue's map coordinates
+     */
+    coordinates: {
+        latitude: number;
+        longitude: number;
+    };
+    /**
      * Venue's open hours
      */
     workingTime: string;

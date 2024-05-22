@@ -32,7 +32,7 @@ const Profile = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
-            phone: data.phoneNumber,
+            phone: data.phoneNumber.replace(/\D/g, ''),
             fullname: data.username,
             password: data.newPassword || null,
             confirmPassword: data.newPasswordConfirm || null,
@@ -58,11 +58,12 @@ const Profile = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
+                <SMSConfirm onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}
                     onClose={() => {
+                        updateUser.reset();
                         navigate('/');
                     }}
                 >

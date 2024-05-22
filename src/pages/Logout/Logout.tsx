@@ -30,16 +30,22 @@ const Logout: FC = () => {
             navigate('/');
         }
     };
+    const onClose = () => {
+        logout.reset();
+        navigate('/');
+    };
     useEffect(() => {
         if (!currentUser) {
             navigate('/');
         }
     }, [currentUser, navigate]);
-    useEsc(() => navigate('/'), [navigate]);
+    useEsc(() => {
+        onClose();
+    }, []);
 
     return (
         <div className={styles.logout} onClick={handleOverlayClick}>
-            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={() => navigate('/')} onSubmit={handleLogout}>
+            <ConfirmationPopup title={t(`pages.logout.areYouSure`)} confirmButtonText={t(`pages.logout.signout`)} onCancel={onClose} onSubmit={handleLogout}>
                 {logout.isPending && <Preloader />}
                 {logout.isError && <ErrorMessage message={t(`pages.logout.${logout.error.message}`)} />}
             </ConfirmationPopup>

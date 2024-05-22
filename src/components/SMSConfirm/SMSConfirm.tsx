@@ -35,6 +35,10 @@ interface SMSConfirm {
      * Opening popup
      */
     popupSuccessOpened?: React.ReactNode;
+    /**
+     * Function invoked when popup closed
+     */
+    onClose: () => void;
 }
 
 const SMSConfirm: FC<SMSConfirm> = (props) => {
@@ -61,6 +65,7 @@ const SMSConfirm: FC<SMSConfirm> = (props) => {
                 <Popup
                     title={t('pages.confirmation.phoneConfirmation')}
                     onClose={() => {
+                        props.onClose();
                         navigate('/');
                     }}
                 >

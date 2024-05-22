@@ -3,13 +3,16 @@ import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 
+
 function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
     const ref = useRef(null);
+
     const isInView = useInView(ref, {
         amount: 'all',
         root: container,
         margin: '-18% 0px -18% 0px',
     });
+
     return (
         <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
             <div className={styles.card__container}>

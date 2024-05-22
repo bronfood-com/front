@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
 import Filter from '../Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 
 const Drawer = () => {
@@ -14,6 +14,17 @@ const Drawer = () => {
     const { restaurantsFiltered, isLoading, isError } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
+    const navigate = useNavigate();
+    const [isClicked, setIsClicked] = useState('');
+    const { setActiveRestaurant } = useRestaurants();
+
+    useEffect(() => {
+        setActiveRestaurant(isClicked);
+    }, [isClicked, setActiveRestaurant]);
+
+    const handleClick = (id: string) => {
+        isClicked === id ? navigate(`/restaurants/${id}`) : setIsClicked(id);
+    };
 
     if (isError) {
         return <PageNotFound />;
@@ -31,10 +42,8 @@ const Drawer = () => {
                     {isLoading && <Preloader />}
                     <ul ref={container} className={styles.drawer__list}>
                         {restaurantsFiltered.map((card) => (
-                            <li key={card.id} className={styles.drawer__list_item}>
-                                <Link to={`/restaurants/${card.id}`}>
-                                    <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
-                                </Link>
+                            <li key={card.id} className={styles.drawer__list_item} onClick={() => handleClick(card.id)}>
+                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
                             </li>
                         ))}
                     </ul>
@@ -44,5 +53,4 @@ const Drawer = () => {
         );
     }
 };
-
 export default Drawer;
