@@ -84,14 +84,13 @@ export class BasketServiceMock implements BasketService {
     }
     async emptyBasket(): Promise<{ data: Basket }> {
         await this._wait(500);
-        /* this.basket.restaurant = {};
+        this.basket.restaurant = {};
         this.basket.meals = [];
         const success = true;
         if (success) {
             return { data: this.basket };
         } else {
             throw new Error('serverError');
-        } */
-        throw new Error('serverError');
+        }
     }
 }
