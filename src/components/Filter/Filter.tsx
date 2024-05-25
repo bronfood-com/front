@@ -35,7 +35,7 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
     );
 };
 
-const Filter = ({ name, close }: {name?: string; close: () => void }) => {
+const Filter = ({ name, close }: { name?: string; close: () => void }) => {
     const { options, venueTypes } = useRestaurants();
     const [input, setInput] = useState('');
     const { t } = useTranslation();

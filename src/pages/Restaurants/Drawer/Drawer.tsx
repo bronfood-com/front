@@ -48,7 +48,7 @@ const Drawer = () => {
                         ))}
                     </ul>
                 </div>
-                {isFilterOpen && <Filter name='filters' close={() => setIsFilterOpen(false)} />}
+                {isFilterOpen && <Filter name="filters" close={() => setIsFilterOpen(false)} />}
             </div>
         );
     }
