@@ -35,7 +35,7 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
     );
 };
 
-const Filter = ({ close }: { close: () => void }) => {
+const Filter = ({ name, close }: {name?: string; close: () => void }) => {
     const { options, venueTypes } = useRestaurants();
     const [input, setInput] = useState('');
     const { t } = useTranslation();
@@ -56,7 +56,7 @@ const Filter = ({ close }: { close: () => void }) => {
             <div className={styles.filter}>
                 <div className={styles.filter__title_container}>
                     <button className={styles.filter__icon_back} type="button" onClick={close} />
-                    <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t('pages.filter.filters')}</p>
+                    {name && <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t(`pages.filter.${name}`)}</p>}
                 </div>
                 <div className={styles.filter__search_container}>
                     <label htmlFor={textId} className={styles.filter__text}>
