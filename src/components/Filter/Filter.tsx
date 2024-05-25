@@ -2,10 +2,10 @@ import { MouseEvent, useState, useId, ChangeEvent } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
-import { Option } from '../../../contexts/RestaurantsContext';
+import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { Option } from '../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
-import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
+import { useEsc } from '../../utils/hooks/useEsc/useEsc';
 
 type OptionListTypes = {
     /**

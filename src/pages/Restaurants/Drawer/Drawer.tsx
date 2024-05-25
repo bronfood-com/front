@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import RestaurantCard from '../../../components/Cards/RestaurantCard/RestaurantCard';
 import styles from './Drawer.module.scss';
-import Filter from '../Filter/Filter';
+import Filter from '../../../components/Filter/Filter';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import Preloader from '../../../components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';

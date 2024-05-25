@@ -1,4 +1,4 @@
-@import '../../../styles/variables.scss';
+@import '../../styles/variables.scss';
 
 .filter {
     position: relative;
@@ -24,7 +24,7 @@
         width: 35px;
         height: 35px;
         border: none;
-        background-image: url('../../../vendor/images/icons/arrow-back.svg');
+        background-image: url('../../vendor/images/icons/arrow-back.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-color: transparent;
