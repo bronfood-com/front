@@ -56,7 +56,13 @@ const Filter = ({ name, close }: { name?: string; close: () => void }) => {
             <div className={styles.filter}>
                 <div className={styles.filter__title_container}>
                     <button className={styles.filter__icon_back} type="button" onClick={close} />
-                    {name && <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t(`pages.filter.${name}`)}</p>}
+                    {name ? (
+                        <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t(`pages.filter.${name}`)}</p>
+                    ) : (
+                        <div className={styles.filter__empty_div}></div>
+                    )
+                }
+
                 </div>
                 <div className={styles.filter__search_container}>
                     <label htmlFor={textId} className={styles.filter__text}>
