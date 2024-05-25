@@ -6,19 +6,22 @@ import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants'
 
 const Search = () => {
     const navigate = useNavigate();
-    const {restaurantsFiltered} = useRestaurants();
+    const { restaurantsFiltered } = useRestaurants();
 
     return (
         <div className={styles.search}>
-            <Filter close={() => navigate('/')} children={
-                <ul className={styles.search__list}>
-                    {restaurantsFiltered.map((card) => (
-                        <li key={card.id} className={styles.search__list_item}>
-                            <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} />
-                        </li>
-                    ))}
-                </ul>
-            }/>
+            <Filter
+                close={() => navigate('/')}
+                children={
+                    <ul className={styles.search__list}>
+                        {restaurantsFiltered.map((card) => (
+                            <li key={card.id} className={styles.search__list_item}>
+                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} />
+                            </li>
+                        ))}
+                    </ul>
+                }
+            />
         </div>
     );
 };
