@@ -19,6 +19,7 @@ import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
+import Search from './pages/Search/Search';
 
 function App() {
     const [city, setCity] = useState('');
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />
