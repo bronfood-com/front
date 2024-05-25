@@ -1,4 +1,4 @@
-import { MouseEvent, useState, useId, ChangeEvent } from 'react';
+import { MouseEvent, useState, useId, ChangeEvent, ReactNode } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
@@ -35,7 +35,7 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
     );
 };
 
-const Filter = ({ name, close }: { name?: string; close: () => void }) => {
+const Filter = ({ name, close, children }: { name?: string; close: () => void; children?: ReactNode }) => {
     const { options, venueTypes } = useRestaurants();
     const [input, setInput] = useState('');
     const { t } = useTranslation();
@@ -88,6 +88,7 @@ const Filter = ({ name, close }: { name?: string; close: () => void }) => {
                         })}
                     </ul>
                 </div>
+                {children}
             </div>
         </div>
     );
