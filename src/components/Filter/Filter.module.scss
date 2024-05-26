@@ -5,6 +5,7 @@
     top: -28px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     row-gap: 25px;
     width: 100%;
     background-color: $background;
@@ -13,12 +14,14 @@
     padding: 15px 15px 30px 15px;
 
     &__title_container {
+        align-self: flex-start;
         position: relative;
         display: flex;
         justify-content: center;
     }
     &__icon_back {
         position: absolute;
+        align-self:baseline;
         left: 0;
         top: -7px;
         width: 35px;

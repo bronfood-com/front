@@ -1,6 +1,6 @@
 import styles from './Search.module.scss';
 import Filter from '../../components/Filter/Filter';
-import RestaurantCard from '../../components/Cards/RestaurantCard/RestaurantCard';
+import RestaurantCardLarge from '../../components/Cards/RestaurantCardLarge/RestaurantCardLarge';
 import { useNavigate } from 'react-router-dom';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 
@@ -16,7 +16,7 @@ const Search = () => {
                     <ul className={styles.search__list}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.search__list_item}>
-                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} />
+                                <RestaurantCardLarge card={card} />
                             </li>
                         ))}
                     </ul>
