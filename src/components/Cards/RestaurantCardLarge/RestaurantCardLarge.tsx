@@ -1,8 +1,7 @@
-import styles from './RestaurantCardLarge.module.scss'
+import styles from './RestaurantCardLarge.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 
 function RestaurantCardLarge({ card }: { card: Restaurant }) {
-
     return (
         <div className={styles.card}>
             <div className={styles.card__container}>
