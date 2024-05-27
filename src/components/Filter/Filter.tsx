@@ -37,13 +37,13 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
 
 const Filter = ({ name, close, children }: { name?: string; close: () => void; children?: ReactNode }) => {
     const { options, venueTypes } = useRestaurants();
-    const [input, setInput] = useState('');
+    const [inputValue, setInputValue] = useState('');
     const { t } = useTranslation();
     const textId = useId();
     const buttonId = useId();
-    const suggestedOptions: Option[] = input ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(input.toLowerCase()) !== -1) : [];
+    const suggestedOptions: Option[] = inputValue ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) : [];
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value);
+        setInputValue(e.target.value);
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
@@ -65,7 +65,7 @@ const Filter = ({ name, close, children }: { name?: string; close: () => void; c
                     <div className={styles.filter__options_container}>
                         <div className={styles.filter__input_container}>
                             <div className={styles.filter__icon_search} />
-                            <input id={textId} onChange={handleChange} value={input} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
+                            <input id={textId} onChange={handleChange} value={inputValue} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
                             <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
