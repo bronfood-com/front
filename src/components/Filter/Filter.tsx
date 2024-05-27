@@ -69,9 +69,7 @@ const Filter = ({ name, close, children }: { name?: string; close: () => void; c
                             <input id={textId} onChange={handleChange} value={inputValue} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
-                            {
-                                nothingFound ? <p>Ничего не найдено</p> : <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
-                            }
+                            {nothingFound ? <p>{t('pages.filter.nothingFound')}</p> : <OptionList options={suggestedOptions} selected={false} action={options.addOption} />}
                             <OptionList options={options.selectedOptions} selected={true} action={options.deleteOption} />
                         </div>
                     </div>

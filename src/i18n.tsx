@@ -160,6 +160,7 @@ i18n
                             fastFood: 'Фаст фуд',
                             cafe: 'Кафе',
                             cafeBar: 'Кофейня',
+                            nothingFound: 'Ничего не найдено',
                         },
                         restaurant: {
                             food: 'Еда',
