@@ -6,7 +6,7 @@ export const mockData: { orders: OrderState[] } = {
             userId: 'u12345',
             id: 'NHG347',
             totalAmount: 4100,
-            preparationStatus: 'confirmed',
+            preparationStatus: 'waiting',
             preparationTime: 2,
             paymentStatus: 'paid',
             reviewStatus: 'waiting',

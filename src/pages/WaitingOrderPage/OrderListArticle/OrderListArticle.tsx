@@ -6,6 +6,7 @@ import styles from './OrderListArticle.module.scss';
 type OrderListArticleProps = {
     order: OrderState;
 };
+
 const OrderListArticle: FC<OrderListArticleProps> = ({ order }) => {
     return (
         <article className={styles.orderListArticle}>

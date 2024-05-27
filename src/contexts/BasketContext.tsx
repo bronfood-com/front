@@ -3,6 +3,7 @@ import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurants
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OrderState } from '../utils/api/orderService/orderService';
 
 type BasketContext = {
     /**
@@ -46,9 +47,13 @@ type BasketContext = {
      */
     emptyBasket: () => void;
     /**
-     * Places order
+     * Place order based on meals in basket by userId
      */
     placeOrder: (userId: string) => void;
+    /**
+     * Placed order based on OrderState
+     */
+    placedOrder: OrderState | null;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -63,9 +68,11 @@ export const BasketContext = createContext<BasketContext>({
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
     placeOrder: () => Promise.resolve(),
+    placedOrder: null,
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [placedOrder, setPlacedOrder] = useState<OrderState | null>(null);
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
     const { data, isSuccess } = useQuery({
@@ -97,10 +104,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    // func to place order
     const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
         mutationFn: (userId: string) => basketService.placeOrder(userId),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
+        onSuccess: (result) => {
+            queryClient.setQueryData(['basket'], result);
+            setPlacedOrder(result);
+        },
         onError: (error) => {
             setErrorMessage(error.message);
         },
@@ -140,6 +149,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 deleteMeal,
                 emptyBasket,
                 placeOrder,
+                placedOrder,
             }}
         >
             {children}

@@ -1,43 +1,74 @@
-import { FC, useState, MouseEvent, useEffect } from 'react';
+import { FC, useState, useEffect, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './WaitingOrder.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useOrderData } from '../../../utils/hooks/useOrderData/useOrderData';
+import { useTimers } from '../../../utils/hooks/useTimer/useTimer';
 import Modal from '../../../components/Modal/Modal';
 import OrderTimeCounter from '../../../components/OrderTimeCounter/OrderTimeCounter';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import ProgressBar from '../../../components/ProgressBar/ProgressBar';
-import { useOrderContext } from '../../../utils/hooks/useOrderContext/useOrderContext';
-import { formatTime } from '../../../utils/serviceFuncs/formatTime';
-import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
-import OrderListArticle from '../OrderListArticle/OrderListArticle';
-import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 import Preloader from '../../../components/Preloader/Preloader';
-import { useNavigate } from 'react-router-dom';
+import OrderListArticle from '../OrderListArticle/OrderListArticle';
+import PopupOrderCancelled from '../../PopupOrderCancelled/PopupOrderCancelled';
+import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
+import { formatTime } from '../../../utils/serviceFuncs/formatTime';
+import styles from './WaitingOrder.module.scss';
+import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
+import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
+
+const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
 const WaitingOrder: FC = () => {
+    const { currentUser } = useCurrentUser();
+    const userId = currentUser?.userId;
     const navigate = useNavigate();
-    /**
-     * This time represents the total duration of the ProgressBar movement
-     * for waiting for the order code, as specified by the client's design requirements.
-     */
-    const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
-
+    const { t } = useTranslation();
+    const [waitOrderIdTime, setWaitOrderIdTime] = useState(WAIT_ORDER_ID_INITIAL_TIME);
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+    const { placedOrder } = useBasket();
 
-    const { t } = useTranslation();
+    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder } = useOrderData(userId ?? '', placedOrder);
 
-    const { orderedMeal, preparationTime, preparationStatus, initialPreparationTime, cancellationTime, waitOrderIdTime, isLoading, cancelOrder } = useOrderContext();
+    useTimers({
+        setPreparationTime,
+        setWaitOrderIdTime,
+        setCancellationTime,
+        stopTimer: () => setWaitOrderIdTime(0),
+    });
+
+    useEffect(() => {
+        if (placedOrder?.id) {
+            setWaitOrderIdTime(0);
+        }
+    }, [placedOrder?.id]);
+
+    useEffect(() => {
+        const handleOrderCancelled = () => {
+            setShowOrderCancelledPopup(true);
+            setPreparationTime(0);
+            setCancellationTime(0);
+        };
+
+        if (cancelOrder.isSuccess) {
+            handleOrderCancelled();
+        }
+    }, [cancelOrder.isSuccess, setPreparationTime, setCancellationTime]);
 
     const handleCancelOrder = () => {
         setShowConfirmationPopup(true);
     };
 
-    const handleConfirmCancellOrder = () => {
-        if (orderedMeal && orderedMeal.id) {
-            cancelOrder(orderedMeal.id).then(() => {
-                setShowConfirmationPopup(false);
-                setShowOrderCancelledPopup(true);
-            });
+    useEffect(() => {
+        if (cancellationTime === 0) {
+            setShowConfirmationPopup(false);
+        }
+    }, [cancellationTime]);
+
+    const handleConfirmCancelOrder = () => {
+        if (placedOrder?.id) {
+            cancelOrder.mutate(placedOrder.id);
+            setShowConfirmationPopup(false);
         }
     };
 
@@ -50,61 +81,53 @@ const WaitingOrder: FC = () => {
     useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
     useEffect(() => {
-        if (cancellationTime <= 0 && showConfirmationPopup) {
-            setShowConfirmationPopup(false);
-        }
-    }, [cancellationTime, showConfirmationPopup]);
-
-    useEffect(() => {
-        if (preparationStatus === 'confirmed') {
+        if (placedOrder?.preparationStatus === 'confirmed') {
+            setPreparationTime(0);
             const timer = setTimeout(() => {
                 navigate('/leave-review');
             }, 5000);
-
             return () => clearTimeout(timer);
         }
-    }, [preparationStatus, navigate]);
+    }, [placedOrder?.preparationStatus, navigate, setPreparationTime]);
 
     return (
         <>
-            <Modal>
-                {orderedMeal ? (
-                    <>
-                        <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
-                        <h1 className={styles.waitingOrder__orderCode}>{orderedMeal.id}</h1>
-                        <OrderTimeCounter remainingTime={preparationTime} initialTime={initialPreparationTime} preparationStatus={preparationStatus} />
-                        <div className={styles.waitingOrder__separator} />
-                        <OrderListArticle order={orderedMeal} />
-                        {cancellationTime > 0 && (
-                            <div className={styles.waitingOrder__cancelSection}>
-                                <p className={styles.waitingOrder__subtitleNote}>
-                                    {t('components.waitingOrder.youCanCancelTheOrderWithin')}
-                                    <span className={styles.waitingOrder__subtitleNote_orange}>
-                                        <span className={styles.waitingOrder__subtitleNoteTimer}>{formatTime(cancellationTime)}</span>
-                                        {t('components.orderTimeCounter.min')}
-                                    </span>
-                                </p>
-                                <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>
-                                    {t('components.waitingOrder.cancelOrder')}
-                                </button>
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    <>
-                        <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
-                        <p className={styles.waitingOrder__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
-                        <span className={styles.waitingOrder__img} />
-                        <div className={styles.waitingOrder__separator} />
-                        <ProgressBar initialTime={WAIT_ORDER_ID_INITIAL_TIME} currentTime={waitOrderIdTime} />
-                        <p className={styles.waitingOrder__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
-                    </>
-                )}
-            </Modal>
+            {!placedOrder ? (
+                <Modal>
+                    <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.pleaseWaitForTheOrderConfirmation')}</h2>
+                    <p className={styles.waitingOrder__subtitle}>{t('components.waitingOrder.preparationWillBeginUponConfirmation')}</p>
+                    <span className={styles.waitingOrder__img} />
+                    <div className={styles.waitingOrder__separator} />
+                    <ProgressBar initialTime={WAIT_ORDER_ID_INITIAL_TIME} currentTime={waitOrderIdTime} />
+                    <p className={styles.waitingOrder__subtitleNote}>{t('components.waitingOrder.pleaseWaitForTheOrderCode')}</p>
+                </Modal>
+            ) : (
+                <Modal>
+                    <h2 className={styles.waitingOrder__title}>{t('components.waitingOrder.orderCode')}</h2>
+                    <h1 className={styles.waitingOrder__orderCode}>{placedOrder.id}</h1>
+                    <OrderTimeCounter remainingTime={preparationTime ?? 0} initialTime={placedOrder.preparationTime} preparationStatus={placedOrder.preparationStatus} />
+                    <div className={styles.waitingOrder__separator} />
+                    <OrderListArticle order={placedOrder} />
+                    {cancellationTime !== null && cancellationTime > 0 && (
+                        <div className={styles.waitingOrder__cancelSection}>
+                            <p className={styles.waitingOrder__subtitleNote}>
+                                {t('components.waitingOrder.youCanCancelTheOrderWithin')}
+                                <span className={styles.waitingOrder__subtitleNote_orange}>
+                                    <span className={styles.waitingOrder__subtitleNoteTimer}>{formatTime(cancellationTime ?? 0)}</span>
+                                    {t('components.orderTimeCounter.min')}
+                                </span>
+                            </p>
+                            <button className={styles.waitingOrder__button} type="button" onClick={handleCancelOrder}>
+                                {t('components.waitingOrder.cancelOrder')}
+                            </button>
+                        </div>
+                    )}
+                </Modal>
+            )}
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
-                    <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancellOrder} />
-                    {isLoading && (
+                    <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancelOrder} />
+                    {cancelOrder.status === 'pending' && (
                         <div className={styles.preloader__wrapper}>
                             <Preloader />
                         </div>

@@ -14,12 +14,12 @@ import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
-import WaitingOrderPage from './pages/WaitingOrderPage/WaitingOrderPage';
 import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
+import WaitingOrder from './pages/WaitingOrderPage/WaitingOrder/WaitingOrder';
 
 function App() {
     const [city, setCity] = useState('');
@@ -36,7 +36,7 @@ function App() {
             <Header city={city} />
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
-                <Route path="/waiting-order" element={<WaitingOrderPage />} />
+                <Route path="/waiting-order" element={<WaitingOrder />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
