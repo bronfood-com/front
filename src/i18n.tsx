@@ -136,11 +136,13 @@ i18n
                             enterSmsCode: 'Ввведите код из смс',
                             validationError: 'Неверный код',
                             serverError: 'Ошибка сервера',
+                            invalidConformationCode: 'Введен неправильный код',
                         },
                         logout: {
                             areYouSure: 'Вы уверены, что хотите выйти?',
                             signout: 'Выйти',
                             serverError: 'Ошибка на сервере',
+                            Unauthorized: 'Вы не авторизованы',
                         },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',

@@ -54,6 +54,10 @@ type BasketContext = {
      * Placed order based on OrderState
      */
     placedOrder: OrderState | null;
+    /**
+     * Cleans mutations' internal state (resets mutations to initial state)
+     */
+    reset: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -69,6 +73,7 @@ export const BasketContext = createContext<BasketContext>({
     emptyBasket: () => Promise.resolve(),
     placeOrder: () => Promise.resolve(),
     placedOrder: null,
+    reset: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -83,21 +88,33 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const restaurant = (isSuccess && data?.data?.restaurant) || {};
     // To ensure that `meals` is an empty array if data is not yet loaded or there's no meals data
     const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
-    const { mutate: addMeal, isPending: addMealPending } = useMutation({
+    const {
+        mutate: addMeal,
+        isPending: addMealPending,
+        reset: resetAddMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
+    const {
+        mutate: deleteMeal,
+        isPending: deleteMealPending,
+        reset: resetDeleteMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: emptyBasket, isPending: emptyBasketPending } = useMutation({
+    const {
+        mutate: emptyBasket,
+        isPending: emptyBasketPending,
+        reset: resetEmptyBasket,
+    } = useMutation({
         mutationFn: () => basketService.emptyBasket(),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
@@ -135,6 +152,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
+    const reset = () => {
+        setErrorMessage('');
+        resetAddMeal();
+        resetDeleteMeal();
+        resetEmptyBasket();
+    };
     return (
         <BasketContext.Provider
             value={{
@@ -150,6 +173,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 emptyBasket,
                 placeOrder,
                 placedOrder,
+                reset,
             }}
         >
             {children}

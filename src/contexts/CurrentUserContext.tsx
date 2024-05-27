@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
@@ -72,7 +72,9 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(null);
         },
     });
-
+    useEffect(() => {
+        setCurrentUser(user && JSON.parse(user));
+    }, [user]);
     return (
         <CurrentUserContext.Provider
             value={{

@@ -1,5 +1,4 @@
-import { AuthServiceMock } from './authServiceMock';
-// import { AuthServiceReal } from './authServiceReal';
+import { AuthServiceReal } from './authServiceReal';
 
 /**
  11 digits string, no space, brackets, or +
@@ -60,5 +59,4 @@ export interface AuthService {
     logOut: () => Promise<void>;
 }
 
-export const authService = new AuthServiceMock();
-// export const authService = new AuthServiceReal();
+export const authService = new AuthServiceReal();
