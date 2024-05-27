@@ -42,6 +42,7 @@ const Filter = ({ name, close, children }: { name?: string; close: () => void; c
     const textId = useId();
     const buttonId = useId();
     const suggestedOptions: Option[] = inputValue ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) : [];
+    const nothingFound = suggestedOptions.length === 0 && inputValue !== '';
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
@@ -68,7 +69,9 @@ const Filter = ({ name, close, children }: { name?: string; close: () => void; c
                             <input id={textId} onChange={handleChange} value={inputValue} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
-                            <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
+                            {
+                                nothingFound ? <p>Ничего не найдено</p> : <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
+                            }
                             <OptionList options={options.selectedOptions} selected={true} action={options.deleteOption} />
                         </div>
                     </div>
