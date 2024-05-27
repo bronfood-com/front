@@ -37,9 +37,7 @@ function Basket() {
                     <BasketEmpty />
                 ) : (
                     <>
-                        <BasketDescription waitingTime={waitingTime}>
-                            {restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}
-                        </BasketDescription>
+                        <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         {errorMessage && <ErrorMessage message={t(`pages.basket.${errorMessage}`)} />}
                         <BasketMealsList meals={meals} />
                         <BasketTotal price={price} onPayOrderClick={handlePayOrder} />
