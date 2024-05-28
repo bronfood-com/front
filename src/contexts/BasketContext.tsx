@@ -3,6 +3,7 @@ import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurants
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OrderState } from '../utils/api/orderService/orderService';
 
 type BasketContext = {
     /**
@@ -45,6 +46,18 @@ type BasketContext = {
      * Removes restaurant and all meals from basket on client and server side
      */
     emptyBasket: () => void;
+    /**
+     * Place order based on meals in basket by userId
+     */
+    placeOrder: (userId: string) => void;
+    /**
+     * Placed order based on OrderState
+     */
+    placedOrder: OrderState | null;
+    /**
+     * Cleans mutations' internal state (resets mutations to initial state)
+     */
+    reset: () => void;
 };
 
 export const BasketContext = createContext<BasketContext>({
@@ -58,39 +71,67 @@ export const BasketContext = createContext<BasketContext>({
     addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
+    placeOrder: () => Promise.resolve(),
+    placedOrder: null,
+    reset: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [placedOrder, setPlacedOrder] = useState<OrderState | null>(null);
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
     const { data, isSuccess } = useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
     });
-    const restaurant = isSuccess ? data.data.restaurant : {};
-    const meals = isSuccess ? data.data.meals : [];
-    const { mutate: addMeal, isPending: addMealPending } = useMutation({
+    // To ensure that `restaurant` is an empty object if data is not yet loaded or there's no restaurant data
+    const restaurant = (isSuccess && data?.data?.restaurant) || {};
+    // To ensure that `meals` is an empty array if data is not yet loaded or there's no meals data
+    const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
+    const {
+        mutate: addMeal,
+        isPending: addMealPending,
+        reset: resetAddMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: deleteMeal, isPending: deleteMealPending } = useMutation({
+    const {
+        mutate: deleteMeal,
+        isPending: deleteMealPending,
+        reset: resetDeleteMeal,
+    } = useMutation({
         mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const { mutate: emptyBasket, isPending: emptyBasketPending } = useMutation({
+    const {
+        mutate: emptyBasket,
+        isPending: emptyBasketPending,
+        reset: resetEmptyBasket,
+    } = useMutation({
         mutationFn: () => basketService.emptyBasket(),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
         },
     });
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
+    const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
+        mutationFn: (userId: string) => basketService.placeOrder(userId),
+        onSuccess: (result) => {
+            queryClient.setQueryData(['basket'], result);
+            setPlacedOrder(result);
+        },
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || placeOrderPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -111,6 +152,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     // Longest cooking time among meals in basket
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
+    const reset = () => {
+        setErrorMessage('');
+        resetAddMeal();
+        resetDeleteMeal();
+        resetEmptyBasket();
+    };
     return (
         <BasketContext.Provider
             value={{
@@ -124,6 +171,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 emptyBasket,
+                placeOrder,
+                placedOrder,
+                reset,
             }}
         >
             {children}

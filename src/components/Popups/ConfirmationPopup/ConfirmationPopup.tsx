@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
-import styles from './ConfirmPopup.module.scss';
 import { useTranslation } from 'react-i18next';
+import styles from './ConfirmPopup.module.scss';
 
 type ConfirmationPopupProps = {
     title: string;
@@ -12,6 +12,7 @@ type ConfirmationPopupProps = {
 
 const ConfirmationPopup: FC<ConfirmationPopupProps> = ({ title, confirmButtonText, onCancel, onSubmit, children }) => {
     const { t } = useTranslation();
+
     return (
         <div className={styles.confirmPopup}>
             <h2 className={styles.confirmPopup__title}>{title}</h2>

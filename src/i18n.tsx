@@ -77,9 +77,40 @@ i18n
                         },
                         confirmationPopup: {
                             cancel: 'Отмена',
+                            areYouSureYouWantToCancelTheOrder: 'Вы уверены, что хотите отменить заказ?',
+                            yes: 'Да',
+                        },
+
+                        orderTimeCounter: {
+                            min: 'мин.',
+                            yourOrderIsAlreadyBeingPrepared: 'Ваш заказ уже готовят',
+                            yourOrderWillBeReadySoon: 'Ваш заказ скоро будет готов',
+                            yourOrderIsReady: 'Ваш заказ уже готов',
+                            statusUnknown: 'Статус неизвестен',
+                        },
+
+                        waitingOrder: {
+                            orderCode: 'Код заказа',
+                            youCanCancelTheOrderWithin: 'Вы можете отменить заказ в течение ',
+                            minutes: 'минут',
+                            cancelOrder: 'Отменить заказ',
+                            pleaseWaitForTheOrderConfirmation: 'Ожидайте подтверждения заказа',
+                            preparationWillBeginUponConfirmation: 'Приготовление начнётся с момента подтверждения',
+                            pleaseWaitForTheOrderCode: 'Ожидайте код заказа',
+                            theWaitingTimeHasExpiredPleaseTryAgain: 'Время ожидания истекло. Попробуйте ещё раз',
+                            anErrorOccurredWhileConfirmingTheOrderPleaseTryAgain: 'Произошла ошибка. Попробуйте ещё раз',
+                            errorReceivingOrderData: 'Ошибка при получении данных о заказе',
+                            errorWhileCancellingTheOrder: 'Ошибка при отмене заказа',
+                            orderDoesNotExist: 'Заказ не существует',
                         },
                         button: {
                             next: 'Далее',
+                        },
+
+                        minutesForm: {
+                            minutes_one: 'минута',
+                            minutes_few: 'минуты',
+                            minutes_many: 'минут',
                         },
                     },
                     pages: {
@@ -128,6 +159,11 @@ i18n
 
                         popupSignupSuccess: {
                             title: 'Спасибо за регистрацию!',
+                        },
+
+                        popupOrderCancelled: {
+                            yourOrderHasBeeCancelled: 'Ваш заказ отменен',
+                            youWillReceiveYourMoneyBackWithin15Minutes: 'В течение 15 минут вам вернут деньги',
                         },
 
                         profile: {
@@ -197,6 +233,10 @@ i18n
                             error_load: 'Ошибка загрузки',
                             list_empty: 'Ваш список избранного пуст...',
                         },
+                    },
+
+                    errors: {
+                        anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
                     },
                 },
             },
