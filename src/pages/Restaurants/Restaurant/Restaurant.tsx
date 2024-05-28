@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
@@ -11,10 +11,13 @@ import MealsFilter from './MealsFilter/MealsFilter';
 import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
+import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 
 function Restaurant() {
+    const { data: favoriterestaurants, isLoading: favoritesLoading } = useGetFavorites();
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
+    const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
     const { restaurantsFiltered, isLoading } = useRestaurants();
@@ -29,12 +32,26 @@ function Restaurant() {
     const deleteMealType = (mealType: MealType) => {
         setSelectedMealTypes(selectedMealTypes.filter((type: MealType) => type !== mealType));
     };
-    if (restaurant) {
+
+    useEffect(() => {
+        if (favoriterestaurants && restaurant) {
+            const found = favoriterestaurants.some((item: string) => item === restaurant.id);
+            if (found) {
+                setIsLiked(true);
+            }
+        }
+    }, [favoriterestaurants, restaurant, setIsLiked]);
+
+    const handleLikeFavorite = () => {
+        setIsLiked(!isLiked);
+    };
+
+    if (favoriterestaurants && restaurant) {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
         return (
             <>
-                <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen}>
+                <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurantId={restaurant.id} isLiked={isLiked} handleLikeFavorite={handleLikeFavorite}>
                     <RestaurantImage image={restaurant.photo} />
                     <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                     <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
@@ -44,7 +61,7 @@ function Restaurant() {
                 <Outlet />
             </>
         );
-    } else if (isLoading) {
+    } else if (isLoading || favoritesLoading) {
         return (
             <div className={styles.restaurant_popup_overlay}>
                 <div className={styles.restaurant_popup}>

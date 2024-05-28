@@ -3,7 +3,6 @@ import { useInView } from 'framer-motion';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 
-
 function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
     const ref = useRef(null);
 

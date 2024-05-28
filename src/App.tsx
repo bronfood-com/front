@@ -19,6 +19,7 @@ import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
+import Favorites from './pages/Favorites/Favorites';
 
 function App() {
     const [city, setCity] = useState('');
@@ -30,6 +31,7 @@ function App() {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
+
     return (
         <div>
             <Header city={city} />
@@ -50,6 +52,7 @@ function App() {
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="*" element={<PageNotFound />} />
+                <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />
         </div>
