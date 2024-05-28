@@ -8,7 +8,8 @@ type ApiResponse<T> = {
 };
 
 class OrderServiceReal {
-    async _wait(ms: number) { // to be removed after testing
+    async _wait(ms: number) {
+        // to be removed after testing
         return new Promise((res) => setTimeout(res, ms));
     }
     async _fetchResponse<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {

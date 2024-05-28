@@ -28,15 +28,7 @@ const WaitingOrder: FC = () => {
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
     const { placedOrder } = useBasket();
 
-    const {
-        preparationTime,
-        setPreparationTime,
-        cancellationTime,
-        setCancellationTime,
-        cancelOrder,
-        isLoading,
-        preparationStatus,
-    } = useOrderData(userId ?? '', placedOrder);
+    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder, isLoading, preparationStatus } = useOrderData(userId ?? '', placedOrder);
 
     useTimers({
         setPreparationTime,
