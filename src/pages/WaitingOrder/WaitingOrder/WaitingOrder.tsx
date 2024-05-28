@@ -28,7 +28,15 @@ const WaitingOrder: FC = () => {
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
     const { placedOrder } = useBasket();
 
-    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder } = useOrderData(userId ?? '', placedOrder);
+    const {
+        preparationTime,
+        setPreparationTime,
+        cancellationTime,
+        setCancellationTime,
+        cancelOrder,
+        isLoading,
+        preparationStatus,
+    } = useOrderData(userId ?? '', placedOrder);
 
     useTimers({
         setPreparationTime,
@@ -68,7 +76,6 @@ const WaitingOrder: FC = () => {
     const handleConfirmCancelOrder = () => {
         if (placedOrder?.id) {
             cancelOrder.mutate(placedOrder.id);
-            setShowConfirmationPopup(false);
         }
     };
 
@@ -81,14 +88,10 @@ const WaitingOrder: FC = () => {
     useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
     useEffect(() => {
-        if (placedOrder?.preparationStatus === 'confirmed') {
-            setPreparationTime(0);
-            const timer = setTimeout(() => {
-                navigate('/leave-review');
-            }, 5000);
-            return () => clearTimeout(timer);
+        if (preparationStatus === 'confirmed') {
+            navigate('/leave-review');
         }
-    }, [placedOrder?.preparationStatus, navigate, setPreparationTime]);
+    }, [preparationStatus, navigate]);
 
     return (
         <>
@@ -127,7 +130,7 @@ const WaitingOrder: FC = () => {
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancelOrder} />
-                    {cancelOrder.status === 'pending' && (
+                    {isLoading && (
                         <div className={styles.preloader__wrapper}>
                             <Preloader />
                         </div>
