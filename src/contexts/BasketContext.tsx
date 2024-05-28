@@ -3,6 +3,7 @@ import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurants
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { OrderState } from '../utils/api/orderService/orderService';
 
 type BasketContext = {
     /**
@@ -46,6 +47,14 @@ type BasketContext = {
      */
     emptyBasket: () => void;
     /**
+     * Place order based on meals in basket by userId
+     */
+    placeOrder: (userId: string) => void;
+    /**
+     * Placed order based on OrderState
+     */
+    placedOrder: OrderState | null;
+    /**
      * Cleans mutations' internal state (resets mutations to initial state)
      */
     reset: () => void;
@@ -62,18 +71,23 @@ export const BasketContext = createContext<BasketContext>({
     addMeal: () => Promise.resolve(),
     deleteMeal: () => Promise.resolve(),
     emptyBasket: () => Promise.resolve(),
+    placeOrder: () => Promise.resolve(),
+    placedOrder: null,
     reset: () => {},
 });
 
 export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
+    const [placedOrder, setPlacedOrder] = useState<OrderState | null>(null);
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
     const { data, isSuccess } = useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
     });
-    const restaurant = isSuccess ? data.data.restaurant : {};
-    const meals = isSuccess ? data.data.meals : [];
+    // To ensure that `restaurant` is an empty object if data is not yet loaded or there's no restaurant data
+    const restaurant = (isSuccess && data?.data?.restaurant) || {};
+    // To ensure that `meals` is an empty array if data is not yet loaded or there's no meals data
+    const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
     const {
         mutate: addMeal,
         isPending: addMealPending,
@@ -107,7 +121,17 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending;
+    const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
+        mutationFn: (userId: string) => basketService.placeOrder(userId),
+        onSuccess: (result) => {
+            queryClient.setQueryData(['basket'], result);
+            setPlacedOrder(result);
+        },
+        onError: (error) => {
+            setErrorMessage(error.message);
+        },
+    });
+    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || placeOrderPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features.length > 0) {
             return (
@@ -147,6 +171,8 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 emptyBasket,
+                placeOrder,
+                placedOrder,
                 reset,
             }}
         >
