@@ -35,7 +35,9 @@ const Header = ({ city }: { city: string }) => {
                             </Link>
                         </>
                     ) : (
-                        <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
+                        <Link to="/search">
+                            <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__search} ${styles.header__icon}`}></button>
+                        </Link>
                     )}
                 </div>
             </div>

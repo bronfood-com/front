@@ -1,11 +1,11 @@
-import { MouseEvent, useState, useId, ChangeEvent } from 'react';
+import { MouseEvent, useState, useId, ChangeEvent, ReactNode } from 'react';
 import styles from './Filter.module.scss';
 import { useTranslation } from 'react-i18next';
 import OptionElement from './OptionElement/OptionElement';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
-import { Option } from '../../../contexts/RestaurantsContext';
+import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { Option } from '../../contexts/RestaurantsContext';
 import Chip from './Chip/Chip';
-import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
+import { useEsc } from '../../utils/hooks/useEsc/useEsc';
 
 type OptionListTypes = {
     /**
@@ -35,15 +35,17 @@ const OptionList = ({ options, selected, action }: OptionListTypes) => {
     );
 };
 
-const Filter = ({ close }: { close: () => void }) => {
+const Filter = ({ name, close, children }: { name?: string; close: () => void; children?: ReactNode }) => {
     const { options, venueTypes } = useRestaurants();
-    const [input, setInput] = useState('');
+    const [inputValue, setInputValue] = useState('');
     const { t } = useTranslation();
     const textId = useId();
     const buttonId = useId();
-    const suggestedOptions: Option[] = input ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(input.toLowerCase()) !== -1) : [];
+    const searchValue = inputValue.trim();
+    const suggestedOptions: Option[] = searchValue ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) : [];
+    const nothingFound = suggestedOptions.length === 0 && inputValue !== '';
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value);
+        setInputValue(e.target.value);
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
@@ -56,7 +58,7 @@ const Filter = ({ close }: { close: () => void }) => {
             <div className={styles.filter}>
                 <div className={styles.filter__title_container}>
                     <button className={styles.filter__icon_back} type="button" onClick={close} />
-                    <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t('pages.filter.filters')}</p>
+                    {name ? <p className={`${styles.filter__text} ${styles.filter__text_bold}`}>{t(`pages.filter.${name}`)}</p> : <div className={styles.filter__empty_div}></div>}
                 </div>
                 <div className={styles.filter__search_container}>
                     <label htmlFor={textId} className={styles.filter__text}>
@@ -65,10 +67,10 @@ const Filter = ({ close }: { close: () => void }) => {
                     <div className={styles.filter__options_container}>
                         <div className={styles.filter__input_container}>
                             <div className={styles.filter__icon_search} />
-                            <input id={textId} onChange={handleChange} value={input} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
+                            <input id={textId} onChange={handleChange} value={inputValue} className={styles.filter__input} type="text" placeholder={t('pages.filter.placeholder')} />
                         </div>
                         <div className={styles.filter__options_list}>
-                            <OptionList options={suggestedOptions} selected={false} action={options.addOption} />
+                            {nothingFound ? <p className={styles.filter__nothingFound}>{t('pages.filter.nothingFound')}</p> : <OptionList options={suggestedOptions} selected={false} action={options.addOption} />}
                             <OptionList options={options.selectedOptions} selected={true} action={options.deleteOption} />
                         </div>
                     </div>
@@ -88,6 +90,7 @@ const Filter = ({ close }: { close: () => void }) => {
                         })}
                     </ul>
                 </div>
+                {children}
             </div>
         </div>
     );
