@@ -18,7 +18,11 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         }
     }, [placedOrder]);
 
-    const cancelOrder = useMutation({
+    const {
+        mutate: cancelOrderMutate,
+        isPending: isCancelOrderPending,
+        isSuccess: isCancelOrderSuccess,
+    } = useMutation({
         mutationFn: (orderId: string) => orderService.cancelOrder(orderId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['order', userId] });
@@ -36,10 +40,10 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
             return response.data;
         },
         enabled: !!userId && !!placedOrder,
-        refetchInterval: 60000,
+        refetchInterval: 10000,
     };
 
-    const { data: preparationStatus, error: statusError, isFetching } = useQuery(queryOptions);
+    const { data: preparationStatus, error: statusError, isFetching: isQueryFetching } = useQuery(queryOptions);
 
     useEffect(() => {
         if (statusError) {
@@ -48,14 +52,18 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         }
     }, [statusError]);
 
-    const isLoading = isFetching || cancelOrder.isPending;
+    const isLoading = isQueryFetching || isCancelOrderPending;
 
     return {
         preparationTime,
         setPreparationTime,
         cancellationTime,
         setCancellationTime,
-        cancelOrder,
+        cancelOrder: {
+            mutate: cancelOrderMutate,
+            isPending: isCancelOrderPending,
+            isSuccess: isCancelOrderSuccess,
+        },
         errorMessage: errorMessage || statusError,
         isLoading,
         preparationStatus,
