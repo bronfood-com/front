@@ -1,6 +1,10 @@
 import { BasketService, Basket } from './basketService';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList';
+import { OrderState } from '../orderService/orderService';
+
+// temporary url for testing by fake server
+// const API_BASE_URL = 'http://localhost:3000';
 
 export class BasketServiceMock implements BasketService {
     private basket: Basket = {
@@ -92,5 +96,33 @@ export class BasketServiceMock implements BasketService {
         } else {
             throw new Error('serverError');
         }
+    }
+
+    private generateOrderId(): string {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let orderId = '';
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            orderId += characters[randomIndex];
+        }
+        return orderId.toUpperCase();
+    }
+
+    async placeOrder(userId: string): Promise<OrderState> {
+        await this._wait(3000);
+        const order: OrderState = {
+            userId,
+            id: this.generateOrderId(),
+            totalAmount: this.basket.meals.reduce((sum, { meal, count }) => sum + meal.price * count, 0),
+            preparationStatus: 'waiting',
+            preparationTime: this.basket.meals.reduce((maxTime, { meal }) => Math.max(maxTime, meal.waitingTime), 0),
+            paymentStatus: 'paid',
+            reviewStatus: 'waiting',
+            cancellationTime: 120,
+            cancellationStatus: 'none',
+            isCancellationRequested: false,
+            orderedMeal: this.basket.meals.map(({ meal, count }) => ({ orderedMeal: meal, quantity: count })),
+        };
+        return order;
     }
 }
