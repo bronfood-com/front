@@ -41,7 +41,8 @@ const Filter = ({ name, close, children }: { name?: string; close: () => void; c
     const { t } = useTranslation();
     const textId = useId();
     const buttonId = useId();
-    const suggestedOptions: Option[] = inputValue ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) : [];
+    const searchValue = inputValue.trim();
+    const suggestedOptions: Option[] = searchValue ? options.all.filter((opt) => opt.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) : [];
     const nothingFound = suggestedOptions.length === 0 && inputValue !== '';
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
