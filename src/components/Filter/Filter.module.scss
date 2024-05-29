@@ -112,6 +112,7 @@
         margin-bottom: 5px;
         flex-wrap: nowrap;
         text-wrap: nowrap;
+        overflow-x: auto;
         cursor: pointer;
     }
     &__nothingFound {
