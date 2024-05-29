@@ -114,6 +114,12 @@
         text-wrap: nowrap;
         cursor: pointer;
     }
+    &__nothingFound {
+        margin-bottom: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
+    }
     &__types {
         width: 100%;
         display: flex;
