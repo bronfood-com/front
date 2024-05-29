@@ -1,10 +1,11 @@
-@import '../../../styles/variables.scss';
+@import '../../styles/variables.scss';
 
 .filter {
     position: relative;
     top: -28px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     row-gap: 25px;
     width: 100%;
     background-color: $background;
@@ -13,9 +14,11 @@
     padding: 15px 15px 30px 15px;
 
     &__title_container {
+        width: 100%;
         position: relative;
         display: flex;
         justify-content: center;
+        align-items: center;
     }
     &__icon_back {
         position: absolute;
@@ -24,7 +27,7 @@
         width: 35px;
         height: 35px;
         border: none;
-        background-image: url('../../../vendor/images/icons/arrow-back.svg');
+        background-image: url('../../vendor/images/icons/arrow-back.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-color: transparent;
@@ -38,6 +41,9 @@
     }
     &__text_bold {
         font-weight: 500;
+    }
+    &__empty_div {
+        height: 21px;
     }
     &__search_container {
         display: flex;
@@ -95,7 +101,6 @@
         padding: 15px 0 15px 0;
     }
     &__options {
-        width: 100%;
         display: flex;
         flex-wrap: wrap;
         padding: 0 6px 0 6px;
@@ -103,11 +108,18 @@
         column-gap: 4px;
     }
     &__options_nowrap {
-        width: 100%;
+        max-width: 345px;
         margin-bottom: 5px;
         flex-wrap: nowrap;
         text-wrap: nowrap;
+        overflow-x: auto;
         cursor: pointer;
+    }
+    &__nothingFound {
+        margin-bottom: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
     }
     &__types {
         width: 100%;
