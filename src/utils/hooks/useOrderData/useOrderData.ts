@@ -10,7 +10,6 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [preparationTime, setPreparationTime] = useState<number | null>(null);
     const [cancellationTime, setCancellationTime] = useState<number | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (placedOrder) {
@@ -21,17 +20,12 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
 
     const cancelOrder = useMutation({
         mutationFn: (orderId: string) => orderService.cancelOrder(orderId),
-        onMutate: () => {
-            setIsLoading(true);
-        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['order', userId] });
-            setIsLoading(false);
         },
         onError: (error) => {
             const errorMsg = typeof error === 'string' ? error : i18n.t('errors.anUnexpectedErrorHasOccurred');
             setErrorMessage(errorMsg);
-            setIsLoading(false);
         },
     });
 
@@ -42,10 +36,10 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
             return response.data;
         },
         enabled: !!userId && !!placedOrder,
-        refetchInterval: 10000,
+        refetchInterval: 60000,
     };
 
-    const { data: preparationStatus, error: statusError } = useQuery(queryOptions);
+    const { data: preparationStatus, error: statusError, isFetching } = useQuery(queryOptions);
 
     useEffect(() => {
         if (statusError) {
@@ -53,6 +47,8 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
             setErrorMessage(errorMsg);
         }
     }, [statusError]);
+
+    const isLoading = isFetching || cancelOrder.isPending;
 
     return {
         preparationTime,
