@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -17,17 +17,21 @@ function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, placeOrder, errorMessage, reset } = useBasket();
+    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, placeOrder, errorMessage, placedOrder, reset } = useBasket();
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
     const close = () => {
         reset();
         navigate(-1);
     };
+    useEffect(() => {
+        if (placedOrder) {
+            navigate('/waiting-order', { state: { placedOrder } });
+        }
+    }, [placedOrder, navigate]);
     const handlePayOrder = async () => {
         if (userId) {
             await placeOrder(userId);
-            navigate('/waiting-order');
         }
     };
     return (

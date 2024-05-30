@@ -20,7 +20,7 @@ import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
 import Search from './pages/Search/Search';
-import WaitingOrder from './pages/WaitingOrderPage/WaitingOrder/WaitingOrder';
+import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 
 function App() {
     const [city, setCity] = useState('');
