@@ -19,7 +19,7 @@ const ReviewForm: React.FC = () => {
         submitReview({ rating, review });
     };
 
-    const submitReview = async (data: { rating: number, review: string }) => {
+    const submitReview = async (data: { rating: number; review: string }) => {
         try {
             const response = await fetch('/api/reviews', {
                 method: 'POST',
