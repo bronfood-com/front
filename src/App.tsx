@@ -21,6 +21,7 @@ import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
+import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 
 function App() {
     const [city, setCity] = useState('');
@@ -37,6 +38,7 @@ function App() {
             <Header city={city} />
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
+                <Route path="/leave-order-feedback" element={<LeaveOrderFeedback />} />
                 <Route path="/waiting-order" element={<WaitingOrder />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
