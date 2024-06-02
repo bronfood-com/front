@@ -57,8 +57,8 @@ class OrderServiceReal {
         return { data: null, error: null };
     }
 
-    async checkPreparationStatus(userId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
-        const response = await this._fetchResponse<OrderState[]>(`${API_URL}/orders?clientId=${userId}`);
+    async checkPreparationStatus(orderId: string): Promise<ApiResponse<'confirmed' | 'waiting' | 'notConfirmed'>> {
+        const response = await this._fetchResponse<OrderState[]>(`${API_URL}/orders?id=${orderId}`);
         if (response.error || !response.data || response.data.length === 0) {
             return { data: null, error: 'components.waitingOrder.orderDoesNotExist' };
         }

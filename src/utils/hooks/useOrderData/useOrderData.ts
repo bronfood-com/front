@@ -34,10 +34,20 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
     });
 
     const queryOptions: UseQueryOptions<'confirmed' | 'waiting' | 'notConfirmed' | null> = {
-        queryKey: ['checkPreparationStatus', userId],
+        queryKey: ['checkPreparationStatus', placedOrder?.id],
+        
+        // uncomment below queryFn for realservice
+
+        // queryFn: async () => {
+        //     const response = await orderService.checkPreparationStatus(placedOrder?.id ?? '');
+        //     return response.data;
+        // },
+
+        // below queryFn is used for testing
         queryFn: async () => {
-            const response = await orderService.checkPreparationStatus(userId);
-            return response.data;
+            // Симуляция возврата статуса 'confirmed' через 5 секунд
+            await new Promise(res => setTimeout(res, 5000));
+            return 'confirmed' as 'confirmed' | 'waiting' | 'notConfirmed';
         },
         enabled: !!userId && !!placedOrder,
         refetchInterval: 10000,
@@ -67,5 +77,6 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         errorMessage: errorMessage || statusError,
         isLoading,
         preparationStatus,
+        placedOrder,
     };
 };

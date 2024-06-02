@@ -80,10 +80,10 @@ const WaitingOrder: FC = () => {
     useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
     useEffect(() => {
-        if (preparationStatus === 'confirmed') {
-            navigate('/leave-review');
+        if (preparationStatus === 'confirmed' && placedOrder) {
+            navigate('/leave-order-feedback', { state: { restaurantId: placedOrder.restaurantId } });
         }
-    }, [preparationStatus, navigate]);
+    }, [preparationStatus, navigate, placedOrder]);
 
     return (
         <>
