@@ -123,7 +123,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
         // mutationFn: (userId: string) => basketService.placeOrder(userId),
-        mutationFn: ({ userId, restaurantId }: { userId: string, restaurantId: string }) => basketService.placeOrder(userId, restaurantId),
+        mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: string }) => basketService.placeOrder(userId, restaurantId),
         onSuccess: (result) => {
             queryClient.setQueryData(['basket'], result);
             setPlacedOrder(result);
