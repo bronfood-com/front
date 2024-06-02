@@ -67,26 +67,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onRatingChange, showError, trig
 
     return (
         <form className={styles.review_form} onSubmit={handleSubmit}>
-            <StarRating
-                maxRating={5}
-                onRatingChange={handleRatingChange}
-                showError={showError}
-                resetError={resetError}
-            />
+            <StarRating maxRating={5} onRatingChange={handleRatingChange} showError={showError} resetError={resetError} />
             <div className={styles.review_form__input}>
                 <h3 className={styles.review_form__subtitle}>{t('pages.leaveOrderFeedback.leaveFeedback')}</h3>
-                <textarea
-                    className={styles.review_form__textarea}
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    placeholder="Напишите свой отзыв"
-                    maxLength={1000}
-                />
+                <textarea className={styles.review_form__textarea} value={review} onChange={(e) => setReview(e.target.value)} placeholder="Напишите свой отзыв" maxLength={1000} />
             </div>
-            <Button
-                type="submit"
-                disabled={isSubmitting || rating === 0}
-            >
+            <Button type="submit" disabled={isSubmitting || rating === 0}>
                 Отправить
             </Button>
             <NavLink className={styles.review_form__link} to="/" onClick={handleSkipOrClose}>

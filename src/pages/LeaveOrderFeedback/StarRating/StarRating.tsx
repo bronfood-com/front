@@ -25,10 +25,13 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, showErro
                 }, i * 200);
                 timeouts.push(timeout);
             }
-            const clearRedStarsTimeout = setTimeout(() => {
-                setRedStars([]);
-                resetError();
-            }, maxRating * 200 + 1000);
+            const clearRedStarsTimeout = setTimeout(
+                () => {
+                    setRedStars([]);
+                    resetError();
+                },
+                maxRating * 200 + 1000
+            );
 
             return () => {
                 timeouts.forEach(clearTimeout);
