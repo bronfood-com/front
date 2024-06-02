@@ -108,7 +108,7 @@ export class BasketServiceMock implements BasketService {
         return orderId.toUpperCase();
     }
 
-    async placeOrder(userId: string): Promise<OrderState> {
+    async placeOrder(userId: string, restaurantId: string): Promise<OrderState> {
         await this._wait(3000);
         const order: OrderState = {
             userId,
@@ -122,6 +122,7 @@ export class BasketServiceMock implements BasketService {
             cancellationStatus: 'none',
             isCancellationRequested: false,
             orderedMeal: this.basket.meals.map(({ meal, count }) => ({ orderedMeal: meal, quantity: count })),
+            restaurantId,
         };
         return order;
     }
