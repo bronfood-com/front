@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useOrderData } from '../../../utils/hooks/useOrderData/useOrderData';
 import { useTimers } from '../../../utils/hooks/useTimer/useTimer';
 import Modal from '../../../components/Modal/Modal';
@@ -14,7 +14,6 @@ import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
 import { formatTime } from '../../../utils/serviceFuncs/formatTime';
 import styles from './WaitingOrder.module.scss';
 import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
-import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 const WAIT_ORDER_ID_INITIAL_TIME = 2 * 60;
 
@@ -26,9 +25,10 @@ const WaitingOrder: FC = () => {
     const [waitOrderIdTime, setWaitOrderIdTime] = useState(WAIT_ORDER_ID_INITIAL_TIME);
     const [showOrderCancelledPopup, setShowOrderCancelledPopup] = useState(false);
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
-    const { placedOrder } = useBasket();
+    const location = useLocation();
+    const { placedOrder } = location.state || {};
 
-    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder } = useOrderData(userId ?? '', placedOrder);
+    const { preparationTime, setPreparationTime, cancellationTime, setCancellationTime, cancelOrder, isLoading, preparationStatus } = useOrderData(userId ?? '', placedOrder);
 
     useTimers({
         setPreparationTime,
@@ -68,7 +68,6 @@ const WaitingOrder: FC = () => {
     const handleConfirmCancelOrder = () => {
         if (placedOrder?.id) {
             cancelOrder.mutate(placedOrder.id);
-            setShowConfirmationPopup(false);
         }
     };
 
@@ -81,14 +80,10 @@ const WaitingOrder: FC = () => {
     useEsc(() => setShowConfirmationPopup(false), [setShowConfirmationPopup]);
 
     useEffect(() => {
-        if (placedOrder?.preparationStatus === 'confirmed') {
-            setPreparationTime(0);
-            const timer = setTimeout(() => {
-                navigate('/leave-review');
-            }, 5000);
-            return () => clearTimeout(timer);
+        if (preparationStatus === 'confirmed') {
+            navigate('/leave-review');
         }
-    }, [placedOrder?.preparationStatus, navigate, setPreparationTime]);
+    }, [preparationStatus, navigate]);
 
     return (
         <>
@@ -127,7 +122,7 @@ const WaitingOrder: FC = () => {
             {showConfirmationPopup && (
                 <div className={styles.confirmationPopup__wrapper} onClick={handleOverlayClick}>
                     <ConfirmationPopup title={t('components.confirmationPopup.areYouSureYouWantToCancelTheOrder')} confirmButtonText={t('components.confirmationPopup.yes')} onCancel={() => setShowConfirmationPopup(false)} onSubmit={handleConfirmCancelOrder} />
-                    {cancelOrder.status === 'pending' && (
+                    {isLoading && (
                         <div className={styles.preloader__wrapper}>
                             <Preloader />
                         </div>

@@ -20,7 +20,8 @@ import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
 import Favorites from './pages/Favorites/Favorites';
-import WaitingOrder from './pages/WaitingOrderPage/WaitingOrder/WaitingOrder';
+import Search from './pages/Search/Search';
+import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 
 function App() {
     const [city, setCity] = useState('');
@@ -53,8 +54,9 @@ function App() {
                 <Route path="/basket" element={<ProtectedRoute component={<Basket />} />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
-                <Route path="*" element={<PageNotFound />} />
+                <Route path="/search" element={<Search />} />
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />
         </div>

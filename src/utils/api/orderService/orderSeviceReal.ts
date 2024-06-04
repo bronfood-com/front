@@ -8,6 +8,10 @@ type ApiResponse<T> = {
 };
 
 class OrderServiceReal {
+    async _wait(ms: number) {
+        // to be removed after testing
+        return new Promise((res) => setTimeout(res, ms));
+    }
     async _fetchResponse<T>(url: string, options?: RequestInit): Promise<ApiResponse<T>> {
         try {
             const response = await fetch(url, options);
@@ -40,6 +44,7 @@ class OrderServiceReal {
     }
 
     async cancelOrder(id: string): Promise<ApiResponse<void>> {
+        await this._wait(4000); // to be removed after testing
         const options = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },

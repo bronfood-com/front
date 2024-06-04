@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { UseQueryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderState } from '../../api/orderService/orderService';
 import OrderServiceReal from '../../api/orderService/orderSeviceReal';
+import i18n from 'i18next';
 
 export const useOrderData = (userId: string, placedOrder: OrderState | null) => {
     const queryClient = useQueryClient();
@@ -17,22 +18,54 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         }
     }, [placedOrder]);
 
-    const cancelOrder = useMutation({
+    const {
+        mutate: cancelOrderMutate,
+        isPending: isCancelOrderPending,
+        isSuccess: isCancelOrderSuccess,
+    } = useMutation({
         mutationFn: (orderId: string) => orderService.cancelOrder(orderId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['order', userId] });
         },
         onError: (error) => {
-            setErrorMessage(String(error));
+            const errorMsg = typeof error === 'string' ? error : i18n.t('errors.anUnexpectedErrorHasOccurred');
+            setErrorMessage(errorMsg);
         },
     });
+
+    const queryOptions: UseQueryOptions<'confirmed' | 'waiting' | 'notConfirmed' | null> = {
+        queryKey: ['checkPreparationStatus', userId],
+        queryFn: async () => {
+            const response = await orderService.checkPreparationStatus(userId);
+            return response.data;
+        },
+        enabled: !!userId && !!placedOrder,
+        refetchInterval: 10000,
+    };
+
+    const { data: preparationStatus, error: statusError, isFetching: isQueryFetching } = useQuery(queryOptions);
+
+    useEffect(() => {
+        if (statusError) {
+            const errorMsg = typeof statusError === 'string' ? statusError : i18n.t('errors.anUnexpectedErrorHasOccurred');
+            setErrorMessage(errorMsg);
+        }
+    }, [statusError]);
+
+    const isLoading = isQueryFetching || isCancelOrderPending;
 
     return {
         preparationTime,
         setPreparationTime,
         cancellationTime,
         setCancellationTime,
-        cancelOrder,
-        errorMessage,
+        cancelOrder: {
+            mutate: cancelOrderMutate,
+            isPending: isCancelOrderPending,
+            isSuccess: isCancelOrderSuccess,
+        },
+        errorMessage: errorMessage || statusError,
+        isLoading,
+        preparationStatus,
     };
 };

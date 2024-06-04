@@ -6,7 +6,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
-import useGetFavorites, { useFavoritesMutations } from '../../utils/hooks/useFavorites/useFavorites';
+import useGetFavorites from '../../utils/hooks/useFavorites/useFavorites';
+import RestaurantCardLarge from '../../components/Cards/RestaurantCardLarge/RestaurantCardLarge';
 
 interface ApiResponse<T> {
     status: 'success' | 'error';
@@ -15,7 +16,6 @@ interface ApiResponse<T> {
 }
 
 const Favorites = () => {
-    const { deleteFavorite } = useFavoritesMutations();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [favoritesList, setFavoritesList] = useState<Restaurant[]>([]);
@@ -25,12 +25,9 @@ const Favorites = () => {
     useEffect(() => {
         const restaurantsData = queryClient.getQueryData<ApiResponse<Restaurant[]>>(['restaurants']);
         if (restaurantsData && favoritesData) {
-            const favoriteRestaurants = restaurantsData.data.filter((restaurant) => favoritesData.includes(restaurant.id));
-            setFavoritesList(favoriteRestaurants);
+            setFavoritesList(favoritesData);
         }
     }, [favoritesData, queryClient]);
-
-    const handleDeleteFavorite = (id: string) => deleteFavorite.mutate(id);
 
     return (
         <Popup
@@ -49,10 +46,10 @@ const Favorites = () => {
                     ) : (
                         <div className={styles.favorites}>
                             {favoritesList.length > 0 ? (
-                                <ul>
+                                <ul className={styles.favorites__list}>
                                     {favoritesList.map((restaurant) => (
                                         <li key={restaurant.id}>
-                                            {restaurant.name} - {restaurant.address} ({restaurant.rating})<button onClick={() => handleDeleteFavorite(restaurant.id)}>delete</button>
+                                            <RestaurantCardLarge card={restaurant}></RestaurantCardLarge>
                                         </li>
                                     ))}
                                 </ul>

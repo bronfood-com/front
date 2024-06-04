@@ -4,18 +4,17 @@ import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
 import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
 import { useParams } from 'react-router-dom';
 import { useFavoritesMutations } from '../../../../utils/hooks/useFavorites/useFavorites';
+import { Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
 
 type RestaurantPopupProps = {
     close: () => void;
     isMealPageOpen: boolean;
     setIsMealPageOpen: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
-    isLiked: boolean;
-    restaurantId: string;
-    handleLikeFavorite: () => void;
+    restaurant: Restaurant;
 };
 
-const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, isLiked, restaurantId, handleLikeFavorite }: RestaurantPopupProps) => {
+const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, restaurant }: RestaurantPopupProps) => {
     const { addFavorite, deleteFavorite } = useFavoritesMutations();
     const { mealId } = useParams();
     const handleOverlayClick = (e: MouseEvent) => {
@@ -30,23 +29,13 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, i
         }
     }, [mealId, setIsMealPageOpen]);
 
-    const handleFavoriteClick = (id: string) => {
-        if (isLiked) {
-            deleteFavorite.mutate(id, {
-                onSuccess: (res) => {
-                    if (res.status === 'success') {
-                        handleLikeFavorite();
-                    }
-                },
-            });
-        } else {
-            addFavorite.mutate(id, {
-                onSuccess: (res) => {
-                    if (res.status === 'success') {
-                        handleLikeFavorite();
-                    }
-                },
-            });
+    const handleFavoriteClick = () => {
+        if (restaurant) {
+            if (restaurant.isLiked) {
+                deleteFavorite.mutate(restaurant.id);
+            } else {
+                addFavorite.mutate(restaurant.id);
+            }
         }
     };
 
@@ -54,7 +43,7 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, i
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
                 <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_like}`}>
-                    <Button type="button" onClick={() => handleFavoriteClick(restaurantId)} icon="favorite" isActive={isLiked ? true : false} />
+                    <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
                 </div>
                 <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_close}`}>
                     <Button type="button" onClick={close} icon="close" />
