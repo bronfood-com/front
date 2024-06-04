@@ -2,7 +2,7 @@ import { mockRestaurants } from '../../../pages/Restaurants/MockRestaurantsList'
 import { Restaurant } from '../restaurantsService/restaurantsService';
 import { FavoritesService } from './favoritesService';
 
-export const mockUser = {
+export const mockUser: { favorites: Restaurant[] } = {
     favorites: [],
 };
 
