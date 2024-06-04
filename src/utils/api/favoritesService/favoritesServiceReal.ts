@@ -22,7 +22,7 @@ export class FavoritesServiceReal implements FavoritesService {
         return res.json();
     }
 
-    async setFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[]  } | { status: 'error'; error_message: string }> {
+    async setFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         const token = this._getToken();
         const res = await fetch(`${API_URL}/api/favorites/${restId}`, {
             method: 'PUT',
@@ -37,7 +37,7 @@ export class FavoritesServiceReal implements FavoritesService {
         return res.json();
     }
 
-    async deleteFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[]  } | { status: 'error'; error_message: string }> {
+    async deleteFavorites(restId: string): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         const token = this._getToken();
         const res = await fetch(`${API_URL}/api/favorites/${restId}`, {
             method: 'DELETE',
