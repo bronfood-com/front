@@ -7,17 +7,17 @@ import starRedImg from '../../../vendor/images/icons/star-red.svg';
 interface RatingProps {
     maxRating: number;
     onRatingChange: (rating: number) => void;
-    showError: boolean;
-    resetError: () => void;
+    filledStars: boolean;
+    resetFilledStars: () => void;
 }
 
-const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, showError, resetError }) => {
+const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, filledStars, resetFilledStars }) => {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [redStars, setRedStars] = useState<number[]>([]);
 
     useEffect(() => {
-        if (showError) {
+        if (filledStars) {
             const timeouts: NodeJS.Timeout[] = [];
             for (let i = 1; i <= maxRating; i++) {
                 const timeout = setTimeout(() => {
@@ -28,9 +28,9 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, showErro
             const clearRedStarsTimeout = setTimeout(
                 () => {
                     setRedStars([]);
-                    resetError();
+                    resetFilledStars();
                 },
-                maxRating * 200 + 1000
+                maxRating * 200 + 400
             );
 
             return () => {
@@ -38,7 +38,7 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, showErro
                 clearTimeout(clearRedStarsTimeout);
             };
         }
-    }, [showError, maxRating, resetError]);
+    }, [filledStars, maxRating, resetFilledStars]);
 
     const handleClick = (ratingValue: number) => {
         setRating(ratingValue);

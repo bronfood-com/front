@@ -147,6 +147,7 @@ i18n
                         leaveOrderFeedback: {
                             evaluate: 'Оценить',
                             leaveFeedback: 'Оставить отзыв',
+                            errorWhileSubmittingFeedback: 'Произошла ошибка при отправке отзыва.',
                         },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',

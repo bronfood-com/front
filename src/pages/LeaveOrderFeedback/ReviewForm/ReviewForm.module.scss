@@ -25,19 +25,28 @@
         border: 1px solid $line;
         font-size: 14px;
         line-height: 19.6px;
-        color: black; // Цвет вводимого текста
+        color: black;
         resize: none;
         min-height: 147px;
         background: $background;
 
         &::placeholder {
-            color: $light-gray; // Цвет placeholder
+            color: $light-gray;
         }
     }
 
-    &__link {
+    &__skip_button_wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__skip_button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0;
         color: $light-gray;
-        width: 100%;
         display: flex;
         font-size: 15px;
         font-weight: 500;
