@@ -15,7 +15,7 @@ const Drawer = () => {
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
-    const [isClicked, setIsClicked] = useState('');
+    const [isClicked, setIsClicked] = useState<string>('');
     const { setActiveRestaurant } = useRestaurants();
 
     useEffect(() => {

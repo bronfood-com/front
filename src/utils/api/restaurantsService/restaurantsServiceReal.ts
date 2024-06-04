@@ -1,4 +1,4 @@
-import { Restaurant, RestaurantsService } from './restaurantsService';
+import { RestaurantWithoutMeals, RestaurantsService, Restaurant } from './restaurantsService';
 import { API_URL } from '../../consts';
 
 export class RestaurantsServiceReal implements RestaurantsService {
@@ -11,6 +11,36 @@ export class RestaurantsServiceReal implements RestaurantsService {
     async getRestaurants(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         const token = this._getToken();
         const res = await fetch(`${API_URL}/restaurant/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+        });
+        if (!res.ok) {
+            throw new Error('error');
+        }
+        return res.json();
+    }
+
+    async getRestaurantsNew(): Promise<{ status: 'success'; data: RestaurantWithoutMeals[] } | { status: 'error'; error_message: string }> {
+        const token = this._getToken();
+        const res = await fetch(`${API_URL}/restaurant/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+        });
+        if (!res.ok) {
+            throw new Error('error');
+        }
+        return res.json();
+    }
+
+    async getRestaurantNew(id: string | number): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }> {
+        const token = this._getToken();
+        const res = await fetch(`${API_URL}/restaurant/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

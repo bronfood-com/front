@@ -7,17 +7,20 @@ import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
+import { useAllRestaurantsQuery } from '../../utils/hooks/useAllRestaurantsQuery/useAllRestaurantsQuery';
 import { useNavigate } from 'react-router-dom';
+import { RestaurantWithoutMeals } from '../../utils/api/restaurantsService/restaurantsService';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { restaurantsFiltered, inView } = useRestaurants();
+    const { data, isSuccess } = useAllRestaurantsQuery();
     const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
     const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
     const { isLogin } = useCurrentUser();
-    const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+    const [activePlaceId, setActivePlaceId] = useState<string>('');
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -91,27 +94,28 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                         />
                     )}
                     //* restaurants
-                    {restaurantsFiltered.map((place) => {
-                        const marked = activePlaceId === place.id;
-                        return (
-                            <Placemark
-                                key={place.id}
-                                geometry={[place.coordinates.latitude, place.coordinates.longitude]}
-                                options={{
-                                    preset: 'islands#redDotIcon',
-                                    iconLayout: 'default#image',
-                                    iconImageHref: marked ? placeIconActive : placeIcon,
-                                    iconImageSize: [30, 40],
-                                    iconImageOffset: [-15, -35],
-                                }}
-                                properties={{
-                                    hintContent: place.name, //tooltip(hover)
-                                }}
-                                modules={['geoObject.addon.hint']}
-                                onClick={() => handlePlacemarkClick(place.id, place.coordinates.latitude, place.coordinates.longitude)}
-                            />
-                        );
-                    })}
+                    {isSuccess &&
+                        data.map((place: RestaurantWithoutMeals) => {
+                            const marked = activePlaceId === place.id.toString();
+                            return (
+                                <Placemark
+                                    key={place.id}
+                                    geometry={[place.coordinates.latitude, place.coordinates.longitude]}
+                                    options={{
+                                        preset: 'islands#redDotIcon',
+                                        iconLayout: 'default#image',
+                                        iconImageHref: marked ? placeIconActive : placeIcon,
+                                        iconImageSize: [30, 40],
+                                        iconImageOffset: [-15, -35],
+                                    }}
+                                    properties={{
+                                        hintContent: place.name, //tooltip(hover)
+                                    }}
+                                    modules={['geoObject.addon.hint']}
+                                    onClick={() => handlePlacemarkClick(place.id.toString(), place.coordinates.latitude, place.coordinates.longitude)}
+                                />
+                            );
+                        })}
                 </Map>
             </div>
         </YMaps>

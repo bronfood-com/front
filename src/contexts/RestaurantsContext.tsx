@@ -120,9 +120,22 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
     const { isPending, isError, isSuccess, data } = useQuery({
         queryKey: ['restaurants'],
-        queryFn: () => restaurantsService.getRestaurants(),
+        queryFn: () =>
+            restaurantsService
+                .getRestaurants()
+                .then((res) => {
+                    if (res.status === 'success' && 'data' in res) {
+                        return res.data;
+                    } else throw new Error('no data property in answer object');
+                })
+                .catch((e) => {
+                    alert(`Ошибка в RestaurantsProvider: ${e}`);
+                    return [];
+                }),
     });
-    const restaurantsOnMap: Restaurant[] = isSuccess && 'data' in data ? data.data : [];
+    // const {isPending, isError, isSuccess, data} = useAllRestaurantsQuery();
+    // const restaurantsOnMap: Restaurant[] = data;
+    const restaurantsOnMap: Restaurant[] = isSuccess ? data : [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());

@@ -19,7 +19,8 @@ function Restaurant() {
     const params = useParams();
     const { restaurantsFiltered, isLoading } = useRestaurants();
     const { isLoading: isBasketLoading } = useBasket();
-    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    // const { data } = useRestaurantQuery(params.restaurantId ? params.restaurantId : 1 );
+    // const restaurant: RestaurantProps | undefined = data;
     const close = () => {
         navigate('/restaurants');
     };
@@ -29,6 +30,8 @@ function Restaurant() {
     const deleteMealType = (mealType: MealType) => {
         setSelectedMealTypes(selectedMealTypes.filter((type: MealType) => type !== mealType));
     };
+    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+
     if (restaurant) {
         const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
         const mealsFiltered: Meal[] = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
