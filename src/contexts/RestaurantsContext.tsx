@@ -133,8 +133,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     return [];
                 }),
     });
-    // const {isPending, isError, isSuccess, data} = useAllRestaurantsQuery();
-    // const restaurantsOnMap: Restaurant[] = data;
     const restaurantsOnMap: Restaurant[] = isSuccess ? data : [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
