@@ -118,8 +118,14 @@ export type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
+export interface RestaurantWithoutMeals extends Omit<Restaurant, 'meals' | 'id'> {
+    id: number;
+}
+
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
+    getRestaurantsNew: () => Promise<{ status: 'success'; data: RestaurantWithoutMeals[] } | { status: 'error'; error_message: string }>;
+    getRestaurantNew: (id: string | number) => Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
 }
 
 // export const restaurantsService = new RestaurantsServiceReal();
