@@ -43,7 +43,7 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<Restaurants />}>
-                    <Route path=":restaurantId" element={<MealPage />} >
+                    <Route path=":restaurantId" element={<MealPage />}>
                         <Route path="meal/:mealId" element={<MealPage />} />
                     </Route>
                 </Route>
