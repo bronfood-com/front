@@ -43,9 +43,9 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
-                <Route path="/restaurants" element={<ProtectedRoute component={<Restaurants />} />}>
-                    <Route path=":restaurantId" element={<ProtectedRoute component={<Restaurant />} />}>
-                        <Route path="meal/:mealId" element={<ProtectedRoute component={<MealPage />} />} />
+                <Route path="/restaurants" element={<Restaurants />} >
+                    <Route path=":restaurantId" element={<Restaurant />}>
+                        <Route path="meal/:mealId" element={<MealPage />} />
                     </Route>
                 </Route>
                 <Route path="/restore-password" element={<RestorePassword />} />
