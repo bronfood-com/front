@@ -20,6 +20,7 @@ import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
+import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 
 function App() {
     const [city, setCity] = useState('');
@@ -43,7 +44,7 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<Restaurants />} >
-                    <Route path=":restaurantId" element={<MealPage />} >
+                    <Route path=":restaurantId" element={<Restaurant />} >
                         <Route path="meal/:mealId" element={<MealPage />} />
                     </Route>
                 </Route>
