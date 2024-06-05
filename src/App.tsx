@@ -10,7 +10,6 @@ import Logout from './pages/Logout/Logout';
 import Main from './pages/Main/Main';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Profile from './pages/Profile/Profile';
-import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -44,7 +43,7 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute component={<Profile />} />} />
                 <Route path="/logout" element={<ProtectedRoute component={<Logout />} />} />
                 <Route path="/restaurants" element={<Restaurants />} >
-                    <Route path=":restaurantId" element={<Restaurant />}>
+                    <Route path=":restaurantId" element={<MealPage />}>
                         <Route path="meal/:mealId" element={<MealPage />} />
                     </Route>
                 </Route>
