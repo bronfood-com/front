@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import OrderServiceReal from '../../api/orderService/orderSeviceReal';
+import { useNavigate } from 'react-router-dom';
 
 interface UseOrderFeedbackProps {
     restaurantId: string;
-    onReviewSubmitted: () => void;
+    onFeedbackSubmitted: () => void;
 }
 
 interface ReviewData {
@@ -12,13 +13,14 @@ interface ReviewData {
     review: string;
 }
 
-export const useOrderFeedback = ({ restaurantId, onReviewSubmitted }: UseOrderFeedbackProps) => {
+export const useOrderFeedback = ({ restaurantId, onFeedbackSubmitted }: UseOrderFeedbackProps) => {
     const orderService = new OrderServiceReal();
     const queryClient = useQueryClient();
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [filledStars, setFilledStars] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleRatingChange = (newRating: number) => {
         setRating(newRating);
@@ -43,17 +45,18 @@ export const useOrderFeedback = ({ restaurantId, onReviewSubmitted }: UseOrderFe
             queryClient.invalidateQueries({
                 queryKey: ['restaurant', restaurantId, 'reviews'],
             });
-            onReviewSubmitted();
+            onFeedbackSubmitted();
         },
         onError: (error) => {
             setErrorMessage(error.message);
+            navigate('/');
         },
     });
 
     const handleSubmitReview = () => {
         if (rating === 0) {
             triggerFilledStars();
-            setTimeout(() => submitOrderFeedback({ rating, review }), 700);
+            setTimeout(() => submitOrderFeedback({ rating, review }), 1200);
         } else {
             submitOrderFeedback({ rating, review });
         }

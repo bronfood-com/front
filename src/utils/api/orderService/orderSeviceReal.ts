@@ -66,7 +66,6 @@ class OrderServiceReal {
     }
 
     async submitOrderFeedback(restaurantId: string, rating: number, review: string): Promise<ApiResponse<void>> {
-        await this._wait(2000); // to be removed after testing
         const options = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

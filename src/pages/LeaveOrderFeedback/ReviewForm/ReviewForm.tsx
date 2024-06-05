@@ -36,7 +36,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ rating, review, onRatingChange,
             <StarRating maxRating={5} onRatingChange={handleRatingChange} filledStars={filledStars} resetFilledStars={resetFilledStars} />
             <div className={styles.review_form__input}>
                 <h3 className={styles.review_form__subtitle}>{t('pages.leaveOrderFeedback.leaveFeedback')}</h3>
-                <textarea className={styles.review_form__textarea} value={review} onChange={handleReviewChange} placeholder="Напишите свой отзыв" maxLength={1000} />
+                <textarea className={styles.review_form__textarea} value={review} onChange={handleReviewChange} placeholder="Напишите свой отзыв" minLength={5} maxLength={1000} />
             </div>
             <Button type="submit" disabled={isSubmitting || (rating === 0 && review === '')}>
                 Отправить

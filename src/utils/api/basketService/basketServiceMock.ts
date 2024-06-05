@@ -114,7 +114,7 @@ export class BasketServiceMock implements BasketService {
             userId,
             id: this.generateOrderId(),
             totalAmount: this.basket.meals.reduce((sum, { meal, count }) => sum + meal.price * count, 0),
-            preparationStatus: 'confirmed',
+            preparationStatus: 'waiting',
             preparationTime: this.basket.meals.reduce((maxTime, { meal }) => Math.max(maxTime, meal.waitingTime), 0),
             paymentStatus: 'paid',
             reviewStatus: 'waiting',

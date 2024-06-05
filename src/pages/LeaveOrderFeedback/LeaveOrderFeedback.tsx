@@ -1,10 +1,11 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './LeaveOrderFeedback.module.scss';
 import Popup from '../../components/Popups/Popup/Popup';
 import { FC, useEffect, useState } from 'react';
 import { useOrderFeedback } from '../../utils/hooks/useOrderFeedback/useOrderFeedback';
 import ReviewForm from './ReviewForm/ReviewForm';
+import PopupFeedbackThanks from '../PopupFeedbackThanks/PopupFeedbackThanks';
 
 interface LocationState {
     restaurantId: string;
@@ -13,8 +14,8 @@ interface LocationState {
 const LeaveOrderFeedback: FC = () => {
     const { t } = useTranslation();
     const location = useLocation();
-    const navigate = useNavigate();
     const [restaurantId, setRestaurantId] = useState<string | null>(null);
+    const [showThanksPopup, setShowThanksPopup] = useState(false);
 
     useEffect(() => {
         const state = location.state as LocationState;
@@ -25,7 +26,7 @@ const LeaveOrderFeedback: FC = () => {
 
     const { rating, review, filledStars, isSubmitting, handleRatingChange, handleReviewChange, triggerFilledStars, resetFilledStars, handleSubmitReview } = useOrderFeedback({
         restaurantId: restaurantId!,
-        onReviewSubmitted: () => navigate('/'),
+        onFeedbackSubmitted: () => setShowThanksPopup(true),
     });
 
     const handleSkipOrClose = () => {
@@ -33,6 +34,10 @@ const LeaveOrderFeedback: FC = () => {
             handleSubmitReview();
         }
     };
+
+    if (showThanksPopup) {
+        return <PopupFeedbackThanks />;
+    }
 
     return (
         <Popup onClose={handleSkipOrClose}>
