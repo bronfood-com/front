@@ -109,6 +109,10 @@ export type Restaurant = {
      */
     workingTime: string;
     /**
+     * User's favorite state
+     */
+    isLiked: boolean;
+    /**
      * List of venue's meals available for order
      */
     meals: Meal[];

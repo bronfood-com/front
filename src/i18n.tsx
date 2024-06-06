@@ -32,6 +32,7 @@ i18n
                             basketTitleHover: 'Корзина',
                             logoTitleHover: 'Bronfood',
                             buttonCloseTitleHover: 'Закрыть',
+                            searchTitleHover: 'Поиск',
                         },
                         inputPhone: {
                             required: 'Обязательное поле',
@@ -234,6 +235,11 @@ i18n
                             preview: 'Превью',
                             offerAgreement: 'Договор оферты',
                             privacyPolicy: 'Политика конфиденциальности',
+                        },
+                        favorites: {
+                            title: 'Избранное',
+                            error_load: 'Ошибка загрузки',
+                            list_empty: 'Ваш список избранного пуст...',
                         },
                     },
 
