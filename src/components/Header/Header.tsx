@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
@@ -14,6 +14,16 @@ const Header = ({ city }: { city: string }) => {
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };
+    const [isPageFavorites, setIsPageFavorites] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname === '/favorites') {
+            setIsPageFavorites(true);
+        } else {
+            setIsPageFavorites(false);
+        }
+    }, [location.pathname]);
 
     return (
         <header className={styles.header}>
@@ -26,7 +36,9 @@ const Header = ({ city }: { city: string }) => {
                 <div className={styles.header__buttons}>
                     {isLogin ? (
                         <>
-                            <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon}`}></button>
+                            <Link to="/favorites">
+                                <button title={t('components.header.favouritesTitleHover')} className={`${styles.header__favorite} ${styles.header__icon} ${isPageFavorites ? styles.header__favorite_active : ''}`}></button>
+                            </Link>
                             <Link to="/basket">
                                 <div className={styles.header__basket}>
                                     <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />

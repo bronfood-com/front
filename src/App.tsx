@@ -18,6 +18,7 @@ import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
 import Feedback from './pages/Feedback/Feedback';
+import Favorites from './pages/Favorites/Favorites';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
@@ -32,6 +33,7 @@ function App() {
             navigate('/restaurants');
         }
     }, [currentUser, navigate, pathname]);
+
     return (
         <div>
             <Header city={city} />
@@ -53,6 +55,7 @@ function App() {
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             <ReactQueryDevtools initialIsOpen={false} />
