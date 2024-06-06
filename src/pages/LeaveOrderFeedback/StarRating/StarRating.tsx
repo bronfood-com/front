@@ -15,7 +15,7 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, filledSt
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const [redStars, setRedStars] = useState<number[]>([]);
-    
+
     useEffect(() => {
         if (filledStars) {
             const timeouts: NodeJS.Timeout[] = [];
