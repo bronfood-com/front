@@ -35,19 +35,9 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
 
     const queryOptions: UseQueryOptions<'confirmed' | 'waiting' | 'notConfirmed' | null> = {
         queryKey: ['checkPreparationStatus', placedOrder?.id],
-
-        // uncomment below queryFn for realservice
-
-        // queryFn: async () => {
-        //     const response = await orderService.checkPreparationStatus(placedOrder?.id ?? '');
-        //     return response.data;
-        // },
-
-        // below queryFn is used for testing, to be removed after testing
         queryFn: async () => {
-            // Симуляция возврата статуса 'confirmed' через 5 секунд
-            await new Promise((res) => setTimeout(res, 5000));
-            return 'confirmed' as 'confirmed' | 'waiting' | 'notConfirmed';
+            const response = await orderService.checkPreparationStatus(placedOrder?.id ?? '');
+            return response.data;
         },
         enabled: !!userId && !!placedOrder,
         refetchInterval: 10000,

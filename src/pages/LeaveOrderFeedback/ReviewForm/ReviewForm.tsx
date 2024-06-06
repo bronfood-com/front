@@ -39,11 +39,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ rating, review, onRatingChange,
                 <textarea className={styles.review_form__textarea} value={review} onChange={handleReviewChange} placeholder="Напишите свой отзыв" minLength={5} maxLength={1000} />
             </div>
             <Button type="submit" disabled={isSubmitting || (rating === 0 && review === '')}>
-                Отправить
+                {t('pages.leaveOrderFeedback.send')}
             </Button>
             <div className={styles.review_form__skip_button_wrapper}>
                 <button className={styles.review_form__skip_button} type="button" onClick={onSkipOrClose}>
-                    Пропустить
+                    {t('pages.leaveOrderFeedback.skip')}
                 </button>
             </div>
         </form>

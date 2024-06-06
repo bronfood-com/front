@@ -148,6 +148,8 @@ i18n
                             evaluate: 'Оценить',
                             leaveFeedback: 'Оставить отзыв',
                             errorWhileSubmittingFeedback: 'Произошла ошибка при отправке отзыва.',
+                            send: 'Отправить',
+                            skip: 'Пропустить',
                         },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',
