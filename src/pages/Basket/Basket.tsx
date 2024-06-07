@@ -31,7 +31,7 @@ function Basket() {
     }, [placedOrder, navigate]);
     const handlePayOrder = async () => {
         if (userId) {
-            await placeOrder(userId);
+            await placeOrder(userId, restaurant!.id);
         }
     };
     return (

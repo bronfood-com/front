@@ -56,4 +56,8 @@ export interface OrderState {
      * Array with details of items in the order.
      */
     orderedMeal: OrderedMeal[];
+    /**
+     * Provides restaurantId for order feedback
+     */
+    restaurantId: string;
 }

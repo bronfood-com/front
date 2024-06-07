@@ -47,9 +47,9 @@ type BasketContext = {
      */
     emptyBasket: () => void;
     /**
-     * Place order based on meals in basket by userId
+     * Place order based on meals in basket by userId and restaurantId
      */
-    placeOrder: (userId: string) => void;
+    placeOrder: (userId: string, restaurantId: string) => void;
     /**
      * Placed order based on OrderState
      */
@@ -122,7 +122,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         },
     });
     const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
-        mutationFn: (userId: string) => basketService.placeOrder(userId),
+        mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: string }) => basketService.placeOrder(userId, restaurantId),
         onSuccess: (result) => {
             queryClient.setQueryData(['basket'], result);
             setPlacedOrder(result);
@@ -171,7 +171,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 addMeal,
                 deleteMeal,
                 emptyBasket,
-                placeOrder,
+                placeOrder: (userId) => placeOrder({ userId, restaurantId: restaurant.id }),
                 placedOrder,
                 reset,
             }}
