@@ -39,6 +39,12 @@ export const useOrderFeedback = ({ restaurantId, onFeedbackSubmitted }: UseOrder
         setFilledStars(false);
     };
 
+    const resetFeedback = () => {
+        setRating(0);
+        setReview('');
+        resetFilledStars();
+    };
+
     const { mutate: submitOrderFeedback, isPending: isSubmitting } = useMutation({
         mutationFn: (data: ReviewData) => orderService.submitOrderFeedback(restaurantId, data.rating, data.review),
         onSuccess: () => {
@@ -46,6 +52,7 @@ export const useOrderFeedback = ({ restaurantId, onFeedbackSubmitted }: UseOrder
                 queryKey: ['restaurant', restaurantId, 'reviews'],
             });
             onFeedbackSubmitted();
+            resetFeedback();
         },
         onError: (error) => {
             setErrorMessage(error.message);
@@ -73,5 +80,6 @@ export const useOrderFeedback = ({ restaurantId, onFeedbackSubmitted }: UseOrder
         resetFilledStars,
         handleSubmitReview,
         errorMessage,
+        resetFeedback,
     };
 };

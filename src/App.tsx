@@ -22,6 +22,7 @@ import Favorites from './pages/Favorites/Favorites';
 import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
+import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 
 function App() {
     const [city, setCity] = useState('');
@@ -40,6 +41,7 @@ function App() {
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
                 <Route path="/waiting-order" element={<WaitingOrder />} />
+                <Route path="leave-order-feedback" element={<ProtectedRoute component={<LeaveOrderFeedback />} />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />

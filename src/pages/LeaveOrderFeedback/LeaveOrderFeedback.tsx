@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './LeaveOrderFeedback.module.scss';
 import Popup from '../../components/Popups/Popup/Popup';
@@ -24,15 +24,17 @@ const LeaveOrderFeedback: FC = () => {
         }
     }, [location.state]);
 
-    const { rating, review, filledStars, isSubmitting, handleRatingChange, handleReviewChange, triggerFilledStars, resetFilledStars, handleSubmitReview } = useOrderFeedback({
+    const { rating, review, filledStars, isSubmitting, handleRatingChange, handleReviewChange, triggerFilledStars, resetFilledStars, handleSubmitReview, resetFeedback } = useOrderFeedback({
         restaurantId: restaurantId!,
         onFeedbackSubmitted: () => setShowThanksPopup(true),
     });
 
+    const navigate = useNavigate();
+
     const handleSkipOrClose = () => {
-        if (!isSubmitting) {
-            handleSubmitReview();
-        }
+        resetFeedback();
+        triggerFilledStars();
+        setTimeout(() => navigate('/'), 2000);
     };
 
     if (showThanksPopup) {

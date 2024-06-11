@@ -40,6 +40,13 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, filledSt
         }
     }, [filledStars, maxRating, resetFilledStars]);
 
+    useEffect(() => {
+        if (!filledStars) {
+            setRating(0);
+            setHoverRating(0);
+        }
+    }, [filledStars]);
+
     const handleClick = (ratingValue: number) => {
         setRating(ratingValue);
         onRatingChange(ratingValue);
