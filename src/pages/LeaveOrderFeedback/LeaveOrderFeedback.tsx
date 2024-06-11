@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from 'react';
 import { useOrderFeedback } from '../../utils/hooks/useOrderFeedback/useOrderFeedback';
 import ReviewForm from './ReviewForm/ReviewForm';
 import PopupFeedbackThanks from '../PopupFeedbackThanks/PopupFeedbackThanks';
+import Preloader from '../../components/Preloader/Preloader';
 
 interface LocationState {
     restaurantId: string;
@@ -47,6 +48,11 @@ const LeaveOrderFeedback: FC = () => {
                 <h3 className={styles.leave_order_feedback__subtitle}>{t('pages.leaveOrderFeedback.evaluate')}</h3>
                 <ReviewForm rating={rating} review={review} onRatingChange={handleRatingChange} onReviewChange={handleReviewChange} filledStars={filledStars} triggerFilledStars={triggerFilledStars} resetFilledStars={resetFilledStars} onSubmit={handleSubmitReview} onSkipOrClose={handleSkipOrClose} isSubmitting={isSubmitting} />
             </div>
+            {isSubmitting && (
+                <div className={styles.leave_order_feedback__preloader_wrapper}>
+                    <Preloader />
+                </div>
+            )}
         </Popup>
     );
 };

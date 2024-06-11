@@ -29,9 +29,14 @@
         resize: none;
         min-height: 147px;
         background: $background;
+        transition: background-color 0.3s ease-in-out;
 
         &::placeholder {
             color: $light-gray;
+        }
+
+        &.error {
+            background-color: rgba(255, 204, 204, 0.2);
         }
     }
 
