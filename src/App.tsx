@@ -40,8 +40,8 @@ function App() {
             <Header city={city} />
             <YandexMap setCity={setCity}></YandexMap>
             <Routes>
-                <Route path="/waiting-order" element={<WaitingOrder />} />
-                <Route path="leave-order-feedback" element={<ProtectedRoute component={<LeaveOrderFeedback />} />} />
+                <Route path="/waiting-order" element={<ProtectedRoute component={<WaitingOrder />} />} />
+                <Route path="/leave-order-feedback" element={<ProtectedRoute component={<LeaveOrderFeedback />} />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
