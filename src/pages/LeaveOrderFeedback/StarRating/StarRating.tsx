@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { t } from 'i18next';
 import styles from './StarRating.module.scss';
 import starGreyImg from '../../../vendor/images/icons/star-grey.svg';
 import starOrangeImg from '../../../vendor/images/icons/star-orange.svg';
@@ -64,9 +65,9 @@ const StarRating: React.FC<RatingProps> = ({ maxRating, onRatingChange, filledSt
         <div className={styles.starRating}>
             {Array.from({ length: maxRating }, (_, index) => index + 1).map((star) => (
                 <div key={star} className={styles.starRating__star} onClick={() => handleClick(star)} onMouseOver={() => handleMouseOver(star)} onMouseOut={handleMouseOut}>
-                    <img src={starGreyImg} alt={`Grey Star ${star}`} className={styles.starRating__img} />
-                    <img src={starOrangeImg} alt={`Orange Star ${star}`} className={`${styles.starRating__img} ${styles.starRating__img_filled}`} style={{ opacity: star <= (hoverRating || rating) ? 1 : 0 }} />
-                    {redStars.includes(star) && <img src={starRedImg} alt={`Red Star ${star}`} className={`${styles.starRating__img} ${styles.starRating__img_error}`} />}
+                    <img src={starGreyImg} alt={t('pages.leaveOrderFeedback.starGrey', { number: star })} className={styles.starRating__img} />
+                    <img src={starOrangeImg} alt={t('pages.leaveOrderFeedback.starOrange', { number: star })} className={`${styles.starRating__img} ${styles.starRating__img_filled}`} style={{ opacity: star <= (hoverRating || rating) ? 1 : 0 }} />
+                    {redStars.includes(star) && <img src={starRedImg} alt={t('pages.leaveOrderFeedback.starRed', { number: star })} className={`${styles.starRating__img} ${styles.starRating__img_error}`} />}
                 </div>
             ))}
         </div>
