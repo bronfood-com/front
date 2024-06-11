@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 25px 15px;
+    padding: 34px 15px 22px;
     border-radius: 0px 0px 15px 15px;
     box-shadow: 0px 27px 48px -23px rgba(28, 39, 49, 0.16);
     background-color: $background;
@@ -14,7 +14,7 @@
     &__container {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
     }
     &__buttons {
         position: relative;
@@ -72,11 +72,13 @@
             height: 30px;
             background-image: url(../../vendor/images/icons/navigation.svg);
             background-position: center;
+            margin: 6px 0 0 4px;
         }
         &_name {
             font-size: 17px;
             font-weight: 400;
             line-height: normal;
+            padding: 7px 0 0 0;
         }
     }
     &__menu {
