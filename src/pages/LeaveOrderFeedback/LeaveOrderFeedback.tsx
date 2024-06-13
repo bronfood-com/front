@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './LeaveOrderFeedback.module.scss';
 import Popup from '../../components/Popups/Popup/Popup';
@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from 'react';
 import { useOrderFeedback } from '../../utils/hooks/useOrderFeedback/useOrderFeedback';
 import ReviewForm from './ReviewForm/ReviewForm';
 import PopupFeedbackThanks from '../PopupFeedbackThanks/PopupFeedbackThanks';
+import Preloader from '../../components/Preloader/Preloader';
 
 interface LocationState {
     restaurantId: string;
@@ -24,15 +25,17 @@ const LeaveOrderFeedback: FC = () => {
         }
     }, [location.state]);
 
-    const { rating, review, filledStars, isSubmitting, handleRatingChange, handleReviewChange, triggerFilledStars, resetFilledStars, handleSubmitReview } = useOrderFeedback({
+    const { rating, review, filledStars, isSubmitting, handleRatingChange, handleReviewChange, triggerFilledStars, resetFilledStars, handleSubmitReview, resetFeedback } = useOrderFeedback({
         restaurantId: restaurantId!,
         onFeedbackSubmitted: () => setShowThanksPopup(true),
     });
 
+    const navigate = useNavigate();
+
     const handleSkipOrClose = () => {
-        if (!isSubmitting) {
-            handleSubmitReview();
-        }
+        resetFeedback();
+        triggerFilledStars();
+        setTimeout(() => navigate('/'), 2000);
     };
 
     if (showThanksPopup) {
@@ -45,6 +48,11 @@ const LeaveOrderFeedback: FC = () => {
                 <h3 className={styles.leave_order_feedback__subtitle}>{t('pages.leaveOrderFeedback.evaluate')}</h3>
                 <ReviewForm rating={rating} review={review} onRatingChange={handleRatingChange} onReviewChange={handleReviewChange} filledStars={filledStars} triggerFilledStars={triggerFilledStars} resetFilledStars={resetFilledStars} onSubmit={handleSubmitReview} onSkipOrClose={handleSkipOrClose} isSubmitting={isSubmitting} />
             </div>
+            {isSubmitting && (
+                <div className={styles.leave_order_feedback__preloader_wrapper}>
+                    <Preloader />
+                </div>
+            )}
         </Popup>
     );
 };

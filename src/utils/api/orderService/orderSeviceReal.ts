@@ -65,13 +65,13 @@ class OrderServiceReal {
         return { data: response.data[0].preparationStatus, error: null };
     }
 
-    async submitOrderFeedback(restaurantId: string, rating: number, review: string): Promise<ApiResponse<void>> {
+    async submitOrderFeedback(restaurantId: string, rating: number, comment: string): Promise<ApiResponse<void>> {
         const options = {
-            method: 'PUT',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ rating, review }),
+            body: JSON.stringify({ rating, comment }),
         };
-        const response = await this._fetchResponse<void>(`${API_URL}/restaurant/${restaurantId}/rating`, options);
+        const response = await this._fetchResponse<void>(`${API_URL}/review/create_rating/${restaurantId}`, options);
         if (response.error) {
             return { data: null, error: i18n.t('pages.leaveOrderFeedback.errorWhileSubmittingFeedback') };
         }
