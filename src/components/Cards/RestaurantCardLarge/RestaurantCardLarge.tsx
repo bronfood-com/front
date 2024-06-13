@@ -14,7 +14,7 @@ function RestaurantCardLarge({ card }: { card: Restaurant }) {
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
                         <p className={styles.card__title}>{card.name}</p>
-                        <p className={styles.card__rating}>{card.rating.toFixed(1)}</p>
+                        <p className={styles.card__rating}>{card.rating}</p>
                         <div className={`${styles.card__icon} ${styles.card__icon_star} ${styles.card__icon_large}`} />
                     </div>
                     <div className={styles.card__feature}>

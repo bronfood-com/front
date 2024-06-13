@@ -10,7 +10,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
 
     async getRestaurants(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         const token = this._getToken();
-        const res = await fetch(`${API_URL}/restaurant/`, {
+        const res = await fetch(`${API_URL}/api/restaurant/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
