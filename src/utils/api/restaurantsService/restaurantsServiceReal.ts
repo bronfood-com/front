@@ -10,16 +10,23 @@ export class RestaurantsServiceReal implements RestaurantsService {
 
     async getRestaurants(): Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }> {
         const token = this._getToken();
-        const res = await fetch(`${API_URL}/api/restaurant/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                authorization: `Token ${token}`,
-            },
-        });
-        if (!res.ok) {
-            throw new Error('error');
+        if (!token) {
+            return {
+                status: 'error',
+                error_message: 'Пройдите авторизацию',
+            };
+        } else {
+            const res = await fetch(`${API_URL}/api/restaurant/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    authorization: `Token ${token}`,
+                },
+            });
+            if (!res.ok) {
+                throw new Error('error');
+            }
+            return res.json();
         }
-        return res.json();
     }
 }

@@ -28,6 +28,10 @@ export type VenueType = {
 
 type RestaurantsContext = {
     /**
+     * Reload data restaurants
+     */
+    refetch: () => void;
+    /**
      * Set id restaurant which centered in list
      */
     setActiveRestaurant: (id: string) => void;
@@ -102,6 +106,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
+    refetch: () => [],
     options: {
         all: [],
         selectedOptions: [],
@@ -118,7 +123,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
-    const { isPending, isError, isSuccess, data } = useQuery({
+    const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
@@ -156,8 +161,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 inView,
                 restaurantsOnMap,
                 restaurantsFiltered,
-                isLoading: isPending,
+                isLoading: isLoading,
                 isError,
+                refetch: refetch,
                 options: {
                     all: options,
                     selectedOptions,

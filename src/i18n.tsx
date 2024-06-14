@@ -199,6 +199,7 @@ i18n
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',
+                            filters: 'Фильтры',
                         },
                         filter: {
                             filters: 'Фильтры',
