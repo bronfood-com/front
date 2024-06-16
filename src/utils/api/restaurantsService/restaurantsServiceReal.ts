@@ -29,4 +29,26 @@ export class RestaurantsServiceReal implements RestaurantsService {
             return res.json();
         }
     }
+
+    async getRestaurantById(id: string): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }> {
+        const token = this._getToken();
+        if (!token) {
+            return {
+                status: 'error',
+                error_message: 'Пройдите авторизацию',
+            };
+        } else {
+            const res = await fetch(`${API_URL}/api/restaurant/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    authorization: `Token ${token}`,
+                },
+            });
+            if (!res.ok) {
+                throw new Error('error');
+            }
+            return res.json();
+        }
+    }
 }
