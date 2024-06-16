@@ -34,9 +34,9 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
     });
 
     const queryOptions: UseQueryOptions<'confirmed' | 'waiting' | 'notConfirmed' | null> = {
-        queryKey: ['checkPreparationStatus', userId],
+        queryKey: ['checkPreparationStatus', placedOrder?.id],
         queryFn: async () => {
-            const response = await orderService.checkPreparationStatus(userId);
+            const response = await orderService.checkPreparationStatus(placedOrder?.id ?? '');
             return response.data;
         },
         enabled: !!userId && !!placedOrder,
@@ -67,5 +67,6 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         errorMessage: errorMessage || statusError,
         isLoading,
         preparationStatus,
+        placedOrder,
     };
 };

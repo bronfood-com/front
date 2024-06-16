@@ -145,6 +145,17 @@ i18n
                             serverError: 'Ошибка на сервере',
                             Unauthorized: 'Вы не авторизованы',
                         },
+                        leaveOrderFeedback: {
+                            evaluate: 'Оценить',
+                            leaveFeedback: 'Оставить отзыв',
+                            errorWhileSubmittingFeedback: 'Произошла ошибка при отправке отзыва.',
+                            send: 'Отправить',
+                            skip: 'Пропустить',
+                            writeYourReview: 'Напишите свой отзыв',
+                            starGrey: 'Звезда серая',
+                            starRed: 'Звезда красная',
+                            starOrange: 'Звезда оранжевая',
+                        },
                         pageNotFound: {
                             goBack: 'Вернуться на главную',
                             somethingWentWrong: 'Кажется что-то пошло не так...',
