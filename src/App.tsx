@@ -27,12 +27,20 @@ function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { currentUser } = useCurrentUser();
+    const { currentUser, checkAuthorization } = useCurrentUser();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            checkAuthorization.mutateAsync().catch((e) => console.log(e));
+        }
+    }, []);
+
     useEffect(() => {
         if (currentUser && pathname === '/') {
             navigate('/restaurants');
         }
-    }, [currentUser, navigate, pathname]);
+    }, [currentUser, pathname, navigate]);
 
     return (
         <div>

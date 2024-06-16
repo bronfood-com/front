@@ -122,4 +122,33 @@ export class AuthServiceReal implements AuthService {
             return;
         }
     }
+
+    async checkAuthorization(): Promise<{ data: User }> {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_URL}/client/profile/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
+            },
+        });
+        const result = await res.json();
+        if (!res.ok) {
+            if (result.error_message) {
+                throw new Error(result.error_message);
+            } else if (result.detail) {
+                throw new Error(result.detail);
+            } else throw new Error('Unknown error');
+        } else {
+            if (result.status === 'success') {
+                const { auth_token } = result.data;
+                localStorage.setItem('token', auth_token);
+                delete result.data.auth_token;
+                delete result.status;
+                return result;
+            } else {
+                throw new Error('check authorization error');
+            }
+        }
+    }
 }

@@ -10,11 +10,13 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import { useQuery } from '@tanstack/react-query';
+import { authService } from '../../utils/api/authService';
 
 const Profile = () => {
     const {
@@ -25,10 +27,19 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { currentUser, updateUser, confirmUpdateUser } = useCurrentUser();
-    const [fullname, setFullname] = useState(currentUser?.fullname);
-    const [phoneNumber, setPhoneNumber] = useState(currentUser?.phone);
+    const { updateUser, confirmUpdateUser } = useCurrentUser();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+    const {
+        data: user,
+        isLoading,
+        isSuccess,
+    } = useQuery({
+        queryKey: ['user'],
+        queryFn: authService.checkAuthorization,
+        select: (data) => data.data,
+        staleTime: 1000 * 15,
+    });
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
@@ -39,11 +50,6 @@ const Profile = () => {
         });
         setIsConfirmOpen(true);
     };
-
-    useEffect(() => {
-        setFullname(currentUser?.fullname);
-        setPhoneNumber(currentUser?.phone);
-    }, [currentUser]);
 
     const validatePasswordMatch = (value: FieldValues) => {
         const { newPassword } = getValues();
@@ -67,15 +73,17 @@ const Profile = () => {
                         navigate('/');
                     }}
                 >
-                    {updateUser.isPending && <Preloader />}
+                    {isLoading && <Preloader />}
                     <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
                         {updateUser.isError && <ErrorMessage message={updateUser.error.message} />}
-                        <FormInputs>
-                            <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={fullname}></Input>
-                            <InputPhone register={register} errors={errors} value={phoneNumber}></InputPhone>
-                            <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
-                            <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
-                        </FormInputs>
+                        {isSuccess && (
+                            <FormInputs>
+                                <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.fullname}></Input>
+                                <InputPhone register={register} errors={errors} value={user.phone}></InputPhone>
+                                <InputPassword register={register} errors={errors} name="newPassword" nameLabel={t('pages.profile.nameLabelPassword')} required={false} />
+                                <InputPassword register={register} errors={errors} name="newPasswordConfirm" nameLabel={t('pages.profile.nameLabelRepeatPassword')} validate={validatePasswordMatch} required={false} />
+                            </FormInputs>
+                        )}
                         <div className={styles.profile__button_space}></div>
                         <Button disabled={updateUser.isPending}>{t('pages.profile.save')}</Button>
                     </Form>
