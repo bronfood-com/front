@@ -33,10 +33,9 @@ function App() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            // eslint-disable-next-line no-console
-            checkAuthorization.mutateAsync().catch((e) => console.log(e));
+            checkAuthorization.mutate();
         }
-    }, [checkAuthorization]);
+    }, []);
 
     useEffect(() => {
         if (currentUser && pathname === '/') {
