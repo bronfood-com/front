@@ -15,8 +15,6 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
 import InputPassword from '../../components/InputPassword/InputPassword';
-import { useQuery } from '@tanstack/react-query';
-import { authService } from '../../utils/api/authService';
 
 const Profile = () => {
     const {
@@ -27,19 +25,10 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { updateUser, confirmUpdateUser } = useCurrentUser();
+    const { updateUser, confirmUpdateUser, useQueryProfile } = useCurrentUser();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-    const {
-        data: user,
-        isLoading,
-        isSuccess,
-    } = useQuery({
-        queryKey: ['user'],
-        queryFn: authService.checkAuthorization,
-        select: (data) => data.data,
-        staleTime: 1000 * 15,
-    });
+    const { data: user, isLoading, isSuccess } = useQueryProfile();
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({

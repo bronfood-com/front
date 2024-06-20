@@ -1,6 +1,6 @@
-import { createContext, FC, useState, PropsWithChildren } from 'react';
+import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
-import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query';
+import { useMutation, UseMutationResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -11,7 +11,7 @@ type CurrentUserContent = {
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
-    checkAuthorization: UseMutationResult<{ data: User }, Error, void, unknown> | Record<string, never>;
+    useQueryProfile: () => UseQueryResult<User, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContent>({
@@ -23,7 +23,7 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
     updateUser: {},
     confirmSignUp: {},
     confirmUpdateUser: {},
-    checkAuthorization: {},
+    useQueryProfile: () => ({}),
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -71,20 +71,26 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         },
     });
 
-    const client = useQueryClient();
-
-    const checkAuthorization = useMutation({
-        mutationFn: () => authService.checkAuthorization(),
-        onSuccess: (res) => {
-            setCurrentUser(res.data);
-            client.setQueryData(['user'], res);
-        },
-        onError: () => {
-            setCurrentUser(null);
-            localStorage.removeItem('token');
-        },
-        gcTime: 1000 * 600,
-    });
+    const useQueryProfile = () => {
+        const token = localStorage.getItem('token');
+        const profile = useQuery({
+            queryKey: ['profile'],
+            queryFn: authService.checkAuthorization,
+            select: (data) => data.data,
+            staleTime: 1000 * 15,
+            enabled: !!token,
+        });
+        useEffect(() => {
+            if (profile.status === 'success') {
+                setCurrentUser(profile.data);
+            }
+            if (profile.status === 'error') {
+                setCurrentUser(null);
+                localStorage.removeItem('token');
+            }
+        }, [profile.status, profile.data]);
+        return profile;
+    };
 
     return (
         <CurrentUserContext.Provider
@@ -97,7 +103,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 updateUser,
                 confirmSignUp,
                 confirmUpdateUser,
-                checkAuthorization,
+                useQueryProfile,
             }}
         >
             {children}

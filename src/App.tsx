@@ -28,14 +28,9 @@ function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { currentUser, checkAuthorization } = useCurrentUser();
+    const { currentUser, useQueryProfile } = useCurrentUser();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            checkAuthorization.mutate();
-        }
-    }, []);
+    useQueryProfile();
 
     useEffect(() => {
         if (currentUser && pathname === '/') {
