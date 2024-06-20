@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Navigation from '../Navigation/Navigation';
 import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const Header = ({ city }: { city: string }) => {
+    const menuRef = useRef<HTMLDivElement>(null);
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
@@ -24,6 +25,20 @@ const Header = ({ city }: { city: string }) => {
             setIsPageFavorites(false);
         }
     }, [location.pathname]);
+
+    const closeOpenMenus = useCallback(
+        (e: MouseEvent) => {
+            if (isMenuActive && e.target instanceof HTMLElement && !menuRef.current?.contains(e.target)) {
+                setIsMenuActive(false);
+            }
+        },
+        [isMenuActive]
+    );
+
+    useEffect(() => {
+        document.addEventListener('mousedown', closeOpenMenus);
+        return () => document.removeEventListener('mousedown', closeOpenMenus);
+    }, [closeOpenMenus]);
 
     return (
         <header className={styles.header}>
@@ -53,7 +68,7 @@ const Header = ({ city }: { city: string }) => {
                     )}
                 </div>
             </div>
-            <div className={`${styles.header__menu} ${isMenuActive ? styles.header__menu_active : ''}`}>
+            <div ref={menuRef} className={`${styles.header__menu} ${isMenuActive ? styles.header__menu_active : ''}`}>
                 <div className={styles.header__upblock}>
                     <Link title={t('components.header.logoTitleHover')} className={styles.header__logo} to="/"></Link>
                     <button title={t('components.header.buttonCloseTitleHover')} className={`${styles.header__close} ${styles.header__icon}`} onClick={handleMenuActive}></button>
