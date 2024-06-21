@@ -53,12 +53,14 @@ function MealPage() {
     }, [watch, features]);
 
     useEffect(() => {
-        if (meal) {
+        if (meal?.features) {
             setFeatures(meal.features);
+        } else {
+            setFeatures([]);
         }
     }, [meal]);
 
-    if (meal && meal.features.length > 0) {
+    if (meal && features.length > 0) {
         const onSubmit: SubmitHandler<FieldValues> = async () => {
             const newFeatures = features.map((feature: Feature) => {
                 const choiceChosen = feature.choices.filter((choice) => choice.chosen)[0];
@@ -78,7 +80,7 @@ function MealPage() {
                     <MealPopup goBack={goBack} close={close}>
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
-                        <MealFeatureList features={meal.features} />
+                        <MealFeatureList features={features} />
                         <MealTotal price={price} buttonDisabled={isLoading} />
                         {isLoading && <Preloader />}
                     </MealPopup>
