@@ -10,13 +10,13 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { addMeal, isLoading } = useBasket();
-    const hasFeatures = card.features.length > 0;
+    const hasFeatures = features && features.length > 0;
     const handleClick = () => {
         if (hasFeatures) {
             navigate(`${pathname}/meal/${id}`);
             setIsMealPageOpen(true);
         } else {
-            addMeal({ mealId: id, features });
+            addMeal({ mealId: id, features: features || [] });
         }
     };
     return (
@@ -25,7 +25,7 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
                 <div className={styles.boxfood__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.boxfood__description}>
                     <p className={styles.boxfood__name}>{card.name}</p>
-                    <span className={styles.boxfood__price}>{`${card.price.toFixed(0)} ₸`}</span>
+                    <span className={styles.boxfood__price}>{`${card.price} ₸`}</span>
                     <div className={styles.boxfood__button}>
                         <Button type="button" icon="add" isActive={isLoading} disabled={isLoading} />
                     </div>

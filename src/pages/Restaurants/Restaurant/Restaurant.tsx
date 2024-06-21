@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
-import { Meal, MealType, Restaurant as RestaurantProps } from '../../../utils/api/restaurantsService/restaurantsService';
+import { Meal, MealType } from '../../../utils/api/restaurantsService/restaurantsService';
 import RestaurantPopup from './RestaurantPopup/RestaurantPopup';
 import RestaurantImage from './RestaurantImage/RestaurantImage';
 import RestaurantDescription from './RestaurantDescription/RestaurantDescription';
@@ -12,16 +11,16 @@ import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
+import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
 
 function Restaurant() {
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
-    const params = useParams();
-    const { restaurantsFiltered, isLoading } = useRestaurants();
+    const { restaurantId } = useParams();
     const { isLoading: isBasketLoading } = useBasket();
-    const restaurant: RestaurantProps | undefined = restaurantsFiltered.find((restaurant) => restaurant.id === params.restaurantId);
+    const { data: restaurant, isLoading } = useRestaurant(restaurantId || '');
     const close = () => {
         navigate('/restaurants');
     };
