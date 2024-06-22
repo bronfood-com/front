@@ -126,7 +126,6 @@ i18n
                         },
                         signUp: {
                             signUpHeading: 'Регистрация',
-                            PhoneNumberIsAlreadyUsed: 'Номер телефона уже используется.',
                             password: 'Пароль',
                             name: 'Имя Фамилия',
                             namePlaceholder: 'Владислав Иванов',

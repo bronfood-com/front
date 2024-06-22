@@ -28,18 +28,26 @@ export class AuthServiceReal implements AuthService {
     }
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
-        const res = await fetch(`${API_URL}/client/request_to_signup/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ phone, password, fullname }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
+        try {
+            const res = await fetch(`${API_URL}/client/request_to_signup/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({ phone, password, fullname }),
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                if (result.error_message === 'PhoneNumberIsAlreadyUsed') {
+                    throw new Error('duplicate');
+                }
+            }
             return result;
+        } catch (error) {
+            if (error instanceof Error && error.message === 'duplicate') {
+                throw error;
+            }
+            throw new Error('server');
         }
     }
 

@@ -53,7 +53,7 @@ const SignUp = () => {
                 >
                     {signUp.isPending && <Preloader />}
                     <Form name="form-signup" onSubmit={handleSubmit(onSubmit)}>
-                        {signUp.isError && <ErrorMessage message={t(`pages.signUp.${signUp.error.message}`)} />}
+                        {signUp.isError && <ErrorMessage message={t(`pages.error.${signUp.error.message}`)} />}
                         <fieldset className={styles.form__field} disabled={signUp.isPending}>
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.signUp.namePlaceholder')} nameLabel={t('pages.signUp.name')} register={register} errors={errors} pattern={regexClientName}></Input>
