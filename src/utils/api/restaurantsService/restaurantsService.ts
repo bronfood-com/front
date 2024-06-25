@@ -1,5 +1,4 @@
-import { RestaurantsServiceMock } from './restaurantsServiceMock';
-// import { RestaurantsServiceReal } from './restaurantsServiceReal';
+import { RestaurantsServiceReal } from './restaurantsServiceReal';
 
 export type Choice = {
     /**
@@ -126,5 +125,4 @@ export interface RestaurantsService {
     getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
 }
 
-// export const restaurantsService = new RestaurantsServiceReal();
-export const restaurantsService = new RestaurantsServiceMock();
+export const restaurantsService = new RestaurantsServiceReal();
