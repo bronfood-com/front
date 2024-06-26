@@ -62,11 +62,11 @@ export class AuthServiceReal implements AuthService {
         }
     }
 
-    async updateUser({ fullname, phone, password, confirmPassword }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
+    async updateUser({ fullname, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
         const token = this.getToken();
         let requestData: UpdateUser = { fullname, phone };
-        if (password && confirmPassword) {
-            requestData = { ...requestData, password, confirmPassword };
+        if (password && password_confirm) {
+            requestData = { ...requestData, password, password_confirm };
         }
         const res = await fetch(`${API_URL}/client/profile/update_request/`, {
             method: 'POST',
@@ -85,10 +85,12 @@ export class AuthServiceReal implements AuthService {
     }
 
     async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
+        const token = this.getToken();
         const res = await fetch(`${API_URL}/client/profile/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+                authorization: `Token ${token}`,
             },
             body: JSON.stringify({ confirmation_code }),
         });
