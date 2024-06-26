@@ -25,10 +25,10 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { updateUser, confirmUpdateUser, useQueryProfile } = useCurrentUser();
+    const { updateUser, confirmUpdateUser, /* useQueryProfile */ profile } = useCurrentUser();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-    const { data: user, isLoading, isSuccess } = useQueryProfile();
+    const { data: user, isLoading, isSuccess } = profile;
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
