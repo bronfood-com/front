@@ -38,16 +38,20 @@ export class AuthServiceReal implements AuthService {
             });
             const result = await res.json();
             if (!res.ok) {
-                if (result.error_message === 'PhoneNumberIsAlreadyUsed') {
-                    throw new Error('duplicate');
-                }
+                throw new Error(result.error_message);
+            } else {
+                return result;
             }
-            return result;
         } catch (error) {
-            if (error instanceof Error && error.message === 'duplicate') {
-                throw error;
+            if (error instanceof Error) {
+                if (error.message === 'Failed to fetch') {
+                    throw new Error('connectionError');
+                } else {
+                    throw new Error(error.message);
+                }
+            } else {
+                throw new Error('unknownError');
             }
-            throw new Error('server');
         }
     }
 
