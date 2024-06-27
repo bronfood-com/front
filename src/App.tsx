@@ -28,12 +28,15 @@ function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { currentUser } = useCurrentUser();
+    const { currentUser, useQueryProfile } = useCurrentUser();
+
+    useQueryProfile();
+
     useEffect(() => {
         if (currentUser && pathname === '/') {
             navigate('/restaurants');
         }
-    }, [currentUser, navigate, pathname]);
+    }, [currentUser, pathname, navigate]);
 
     return (
         <div>
