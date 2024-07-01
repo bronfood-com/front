@@ -59,6 +59,10 @@ type RestaurantsContext = {
      */
     isError: boolean;
     /**
+     * Shows error message
+     */
+    errorMessage?: string;
+    /**
      * Options' states and controls. Options come from user's input
      */
     options: {
@@ -127,6 +131,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
     const [restaurant, setRestaurant] = useState<(Restaurant & { meals: Meal[] }) | undefined>(undefined);
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
     const queryClient = useQueryClient();
 
     const { isLoading, isError, data, refetch } = useQuery<Restaurant[]>({
@@ -162,8 +167,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                     const response = await restaurantsService.getRestaurantById(id);
                     if (response.status === 'success') {
                         setRestaurant(response.data);
+                        setErrorMessage(undefined);
                     } else {
-                        console.error(response.error_message);
+                        setErrorMessage(response.error_message);
                     }
                 }
             }
@@ -208,6 +214,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 isLoading: isLoading,
                 isError,
                 refetch: refetch,
+                errorMessage,
                 options: {
                     all: options,
                     selectedOptions,
