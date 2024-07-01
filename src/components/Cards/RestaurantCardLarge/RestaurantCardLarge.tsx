@@ -1,6 +1,7 @@
 import styles from './RestaurantCardLarge.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 import { useFavoritesMutations } from '../../../utils/hooks/useFavorites/useFavorites';
+import { API_URL } from '../../../utils/consts';
 
 function RestaurantCardLarge({ card }: { card: Restaurant }) {
     const { deleteFavorite } = useFavoritesMutations();
@@ -10,7 +11,7 @@ function RestaurantCardLarge({ card }: { card: Restaurant }) {
         <div className={styles.card}>
             <div className={styles.card__container}>
                 <div className={styles.card__delete} onClick={() => handleDeleteFavorite(card.id)}></div>
-                <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
+                <div className={styles.card__image} style={{ backgroundImage: `url(${API_URL}${card.photo})` }} />
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
                         <p className={styles.card__title}>{card.name}</p>
