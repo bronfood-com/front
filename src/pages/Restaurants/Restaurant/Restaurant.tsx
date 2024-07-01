@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { Meal, MealType } from '../../../utils/api/restaurantsService/restaurantsService';
@@ -11,7 +11,7 @@ import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
-import { useRestaurant } from '../../../utils/hooks/useRestaurant/useRestaurant';
+import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 
 function Restaurant() {
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
@@ -20,7 +20,17 @@ function Restaurant() {
     const navigate = useNavigate();
     const { restaurantId } = useParams();
     const { isLoading: isBasketLoading } = useBasket();
-    const { data: restaurant, isLoading } = useRestaurant(restaurantId || '');
+    const { setActiveRestaurant, restaurant, isLoading: restaurantLoading } = useRestaurants();
+
+    const prevRestaurantId = useRef<string | undefined>();
+
+    useEffect(() => {
+        if (restaurantId && restaurantId !== prevRestaurantId.current) {
+            setActiveRestaurant(restaurantId);
+            prevRestaurantId.current = restaurantId;
+        }
+    }, [restaurantId, setActiveRestaurant]);
+
     const close = () => {
         navigate('/restaurants');
     };
@@ -46,7 +56,7 @@ function Restaurant() {
                 <Outlet />
             </>
         );
-    } else if (isLoading || favoritesLoading) {
+    } else if (restaurantLoading || favoritesLoading || isBasketLoading) {
         return (
             <div className={styles.restaurant_popup_overlay}>
                 <div className={styles.restaurant_popup}>

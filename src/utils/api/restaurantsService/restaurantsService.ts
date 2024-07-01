@@ -112,7 +112,7 @@ export type Restaurant = {
      */
     isLiked: boolean;
     /**
-     * List of venue's meals available for order
+     * Array of venue's meals available for order
      */
     meals: Meal[];
     /**
@@ -121,6 +121,15 @@ export type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
+/**
+ * Type to represent a restaurant with all list of meals from api
+ */
+export type RestaurantWithMeals = Omit<Restaurant, 'meals'> & {
+    /**
+     * Array of venue's meals available
+     */
+    meals: Meal[];
+};
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
 }

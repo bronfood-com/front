@@ -16,17 +16,6 @@ const Drawer = () => {
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
-    // const [isClicked, setIsClicked] = useState('');
-    // const { setActiveRestaurant } = useRestaurants();
-
-    // useEffect(() => {
-    //     setActiveRestaurant(isClicked);
-    // }, [isClicked, setActiveRestaurant]);
-
-    // const handleClick = (id: string) => {
-    //     isClicked === id ? navigate(`/restaurants/${id}`) : setIsClicked(id);
-    // };
-
     const { currentUser } = useCurrentUser();
 
     useEffect(() => {

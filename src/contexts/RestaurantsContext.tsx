@@ -1,8 +1,7 @@
-import { createContext, FC, useState, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, createContext, useCallback, useState } from 'react';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
-import { Restaurant } from '../utils/api/restaurantsService/restaurantsService';
-import { restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
-import { useQuery } from '@tanstack/react-query';
+import { Meal, Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export type Option = {
     /**
@@ -32,9 +31,13 @@ type RestaurantsContext = {
      */
     refetch: () => void;
     /**
-     * Set id restaurant which centered in list
+     * Sets clicked restaurant page
      */
     setActiveRestaurant: (id: string) => void;
+    /**
+     * restaurant to add all meals to it
+     */
+    restaurant?: Restaurant & { meals: Meal[] };
     /**
      * Restaurant which centered in list
      */
@@ -106,7 +109,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
-    refetch: () => [],
+    refetch: () => {},
     options: {
         all: [],
         selectedOptions: [],
@@ -123,35 +126,75 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
-    const { isLoading, isError, isSuccess, data, refetch } = useQuery({
+    const [restaurant, setRestaurant] = useState<(Restaurant & { meals: Meal[] }) | undefined>(undefined);
+    const queryClient = useQueryClient();
+
+    const { isLoading, isError, data, refetch } = useQuery<Restaurant[]>({
         queryKey: ['restaurants'],
-        queryFn: () => restaurantsService.getRestaurants(),
+        queryFn: async () => {
+            const response = await restaurantsService.getRestaurants();
+            if (response.status === 'success') {
+                return response.data;
+            } else {
+                throw new Error('Failed to fetch restaurants');
+            }
+        },
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
     });
-    const restaurantsOnMap: Restaurant[] = isSuccess && Array.isArray(data) ? data : [];
+
+    const restaurantsOnMap: Restaurant[] = data || [];
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
     const typeNames: string[] = selectedVenueTypes.map((type) => type.name.toLowerCase());
     const restaurantsFiltered: Restaurant[] = selectedOptions.length === 0 && selectedVenueTypes.length === 0 ? restaurantsOnMap : restaurantsOnMap.filter((restaurant) => restaurant.meals.some((meal) => optionNames.includes(meal.name.toLowerCase())) || optionNames.includes(restaurant.name.toLowerCase()) || typeNames.includes(restaurant.type.toLowerCase()));
+
+    const setActiveRestaurant = useCallback(
+        async (id: string) => {
+            if (id !== inView) {
+                setInView(id);
+
+                const cachedRestaurant = queryClient.getQueryData<Restaurant[]>(['restaurants'])?.find((restaurant) => restaurant.id === id);
+                if (cachedRestaurant) {
+                    setRestaurant(cachedRestaurant);
+                } else {
+                    const response = await restaurantsService.getRestaurantById(id);
+                    if (response.status === 'success') {
+                        setRestaurant(response.data);
+                    } else {
+                        console.error(response.error_message);
+                    }
+                }
+            }
+        },
+        [inView, queryClient]
+    );
+
     const addOption = (option: Option) => {
-        const isDouble = selectedOptions.find((opt: Option) => opt.id === option.id);
-        if (isDouble) {
-            return;
-        } else {
-            setSelectedOptions([...selectedOptions, option]);
-        }
+        setSelectedOptions((prevOptions) => {
+            if (prevOptions.find((opt) => opt.id === option.id)) {
+                return prevOptions;
+            }
+            return [...prevOptions, option];
+        });
     };
-    const setActiveRestaurant = (id: string) => {
-        setInView(id);
-    };
+
     const deleteOption = (option: Option) => {
-        setSelectedOptions(selectedOptions.filter((opt: Option) => opt.id !== option.id));
+        setSelectedOptions((prevOptions) => prevOptions.filter((opt) => opt.id !== option.id));
     };
+
     const addVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes([...selectedVenueTypes, venueType]);
+        setSelectedVenueTypes((prevTypes) => {
+            if (prevTypes.find((type) => type.id === venueType.id)) {
+                return prevTypes;
+            }
+            return [...prevTypes, venueType];
+        });
     };
+
     const deleteVenueType = (venueType: VenueType) => {
-        setSelectedVenueTypes(selectedVenueTypes.filter((type: VenueType) => type.id !== venueType.id));
+        setSelectedVenueTypes((prevTypes) => prevTypes.filter((type) => type.id !== venueType.id));
     };
 
     return (
@@ -161,6 +204,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 inView,
                 restaurantsOnMap,
                 restaurantsFiltered,
+                restaurant,
                 isLoading: isLoading,
                 isError,
                 refetch: refetch,
