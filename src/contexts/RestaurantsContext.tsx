@@ -127,7 +127,10 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
-    const restaurantsOnMap: Restaurant[] = isSuccess && Array.isArray(data) ? data : [];
+    let restaurantsOnMap: Restaurant[] = [];
+    if (isSuccess && data.status === 'success') {
+        restaurantsOnMap = data.data;
+    }
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
