@@ -23,7 +23,7 @@ function RestaurantDescription({ name, address, workingTime, rating, reviews }: 
                 </div>
             </div>
             <div className={styles.restaurant_description__rating_container}>
-                <span className={styles.restaurant_description__rating}>{rating.toFixed(1)}</span>
+                <span className={styles.restaurant_description__rating}>{rating}</span>
                 <div className={`${styles.restaurant_description__icon} ${styles.restaurant_description__icon_star} ${styles.restaurant_description__icon_large}`} />
                 <span className={styles.restaurant_description__reviews}>{reviews}</span>
             </div>

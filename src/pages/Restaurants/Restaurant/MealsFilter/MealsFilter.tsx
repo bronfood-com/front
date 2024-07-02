@@ -14,10 +14,10 @@ function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterP
     const { t } = useTranslation();
     return (
         <ul className={`${styles.meals_filter}`}>
-            {types.map((type) => {
+            {types.map((type, index) => {
                 const isActive = selectedTypes.includes(type);
                 return (
-                    <li key={type}>
+                    <li key={`${type}-${index}`}>
                         <ChipWithIcon text={t(`pages.restaurant.${type}`)} icon={type} isActive={isActive} add={() => addType(type)} delete={() => deleteType(type)} />
                     </li>
                 );

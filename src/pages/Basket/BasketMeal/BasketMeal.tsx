@@ -6,21 +6,24 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
-    const { id, name, photo, price, features } = meal;
+    const { id, name, photo, price, features = [] } = meal;
     const mealPrice =
-        meal.features.length > 0
-            ? sumBy(meal.features, (feature) => {
-                  const isChosen = feature.choices.some((choice) => choice.chosen);
-                  if (isChosen) {
-                      return feature.choices.filter((choice) => choice.chosen)[0].price;
-                  } else {
-                      return feature.choices.filter((choice) => choice.default)[0].price;
+        features.length > 0
+            ? sumBy(features, (feature) => {
+                  const chosenChoice = feature.choices.find((choice) => choice.chosen);
+                  const defaultChoice = feature.choices.find((choice) => choice.default);
+                  if (chosenChoice) {
+                      return chosenChoice.price;
+                  } else if (defaultChoice) {
+                      return defaultChoice.price;
                   }
+                  return 0;
               })
             : price;
     const featureName = 'Размер';
-    const toppings = features.length > 0 && features.filter((feature) => feature.name !== featureName);
-    const size = features.length > 0 ? features.filter((feature) => feature.name === featureName)[0].choices.filter((choice) => choice.chosen)[0].name : null;
+    const toppings = features.filter((feature) => feature.name !== featureName);
+    const sizeFeature = features.find((feature) => feature.name === featureName);
+    const size = sizeFeature ? sizeFeature.choices.find((choice) => choice.chosen)?.name : null;
     const { addMeal, deleteMeal } = useBasket();
     return (
         <div className={`${styles.basket_meal}`}>
@@ -29,17 +32,16 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                 <div className={styles.basket_meal__description}>
                     <p className={styles.basket_meal__name}>{name}</p>
                     <ul>
-                        {toppings &&
-                            toppings.map((feature) => {
-                                const choice = feature.choices.find((choice) => choice.chosen);
-                                if (choice) {
-                                    return (
-                                        <li key={feature.id}>
-                                            <p className={styles.basket_meal__feature}>{choice.name}</p>
-                                        </li>
-                                    );
-                                }
-                            })}
+                        {toppings.map((feature) => {
+                            const choice = feature.choices.find((choice) => choice.chosen);
+                            if (choice) {
+                                return (
+                                    <li key={feature.id}>
+                                        <p className={styles.basket_meal__feature}>{choice.name}</p>
+                                    </li>
+                                );
+                            }
+                        })}
                     </ul>
                     <div className={styles.basket_meal__price_container}>
                         {size && <p className={styles.basket_meal__size}>{size}</p>}

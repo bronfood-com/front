@@ -250,6 +250,7 @@ i18n
 
                     errors: {
                         anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
+                        errorDuringTheRequest: 'Произошла ошибка при запросе',
                     },
                 },
             },
