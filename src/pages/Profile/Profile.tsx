@@ -35,7 +35,7 @@ const Profile = () => {
             phone: data.phoneNumber.replace(/\D/g, ''),
             fullname: data.username,
             password: data.newPassword || null,
-            confirmPassword: data.newPasswordConfirm || null,
+            password_confirm: data.newPasswordConfirm || null,
         });
         setIsConfirmOpen(true);
     };

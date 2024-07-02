@@ -16,7 +16,9 @@ function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; i
     return (
         <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
-                <div className={styles.card__image} style={{ backgroundImage: `url(${API_URL}${card.photo})` }} />
+                <div>
+                    <div className={styles.card__image} style={{ backgroundImage: `url(${API_URL}${card.photo})` }} />
+                </div>
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
                         <p className={styles.card__title}>{card.name}</p>
