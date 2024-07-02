@@ -28,18 +28,30 @@ export class AuthServiceReal implements AuthService {
     }
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
-        const res = await fetch(`${API_URL}/client/request_to_signup/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ phone, password, fullname }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            return result;
+        try {
+            const res = await fetch(`${API_URL}/client/request_to_signup/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({ phone, password, fullname }),
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                throw new Error(result.error_message);
+            } else {
+                return result;
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.message === 'Failed to fetch') {
+                    throw new Error('connectionError');
+                } else {
+                    throw new Error(error.message);
+                }
+            } else {
+                throw new Error('unknownError');
+            }
         }
     }
 
