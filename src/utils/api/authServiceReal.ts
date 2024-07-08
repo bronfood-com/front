@@ -56,13 +56,8 @@ export class AuthServiceReal implements AuthService {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
         };
-        const result = await handleFetch('client/signout', { method: 'POST' });
-        if (result) {
-            clearLocalStorage();
-            return;
-        } else {
-            clearLocalStorage();
-            throw new Error(res.statusText);
-        }
+        await handleFetch('client/signout', { method: 'POST' });
+        clearLocalStorage();
+        return;
     }
 }
