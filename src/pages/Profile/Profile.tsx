@@ -10,7 +10,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
@@ -25,17 +25,20 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { updateUser, confirmUpdateUser, /* useQueryProfile */ profile } = useCurrentUser();
+    const { updateUser, confirmUpdateUser, profile } = useCurrentUser();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const { data: user, isLoading, isSuccess, isStale, refetch } = profile;
 
-    const { data: user, isLoading, isSuccess } = profile;
+    useEffect(() => {
+        if (isStale) refetch();
+    }, [refetch, isStale]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
             phone: data.phoneNumber.replace(/\D/g, ''),
             fullname: data.username,
             password: data.newPassword || null,
-            confirmPassword: data.newPasswordConfirm || null,
+            password_confirm: data.newPasswordConfirm || null,
         });
         setIsConfirmOpen(true);
     };

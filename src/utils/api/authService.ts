@@ -19,7 +19,7 @@ export interface UpdateUser {
     fullname: string;
     phone: PhoneNumber;
     password?: string;
-    confirmPassword?: string;
+    password_confirm?: string;
 }
 /*
  temp_data_code: Temporary code that the server assign to the user in db during registration
@@ -62,7 +62,7 @@ export interface AuthService {
 
     confirmRegisterPhone: ({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData) => Promise<{ data: User }>;
 
-    updateUser: ({ fullname, phone, password, confirmPassword }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
+    updateUser: ({ fullname, phone, password, password_confirm }: UpdateUser) => Promise<{ data: { temp_data_code: string } }>;
 
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
