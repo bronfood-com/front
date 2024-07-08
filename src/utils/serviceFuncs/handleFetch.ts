@@ -8,18 +8,18 @@ interface FetchOptions extends RequestInit {
  * Wrapper for fetch requests
  *
  * @param {} endpoint API URL's endpoint
- * @param {} options request's custom options
+ * @param {} options request's custom options (optional)
  */
 export const handleFetch = async (endpoint: string, { data, ...customOptions }: FetchOptions | Record<string, never> = {}) => {
     const token = localStorage.getItem('token');
-    const headers = {};
+    const headers: RequestInit['headers'] = {};
     if (token) {
         headers.Authorization = `Token ${token}`;
     }
     if (data) {
         headers['Content-Type'] = 'application/json;charset=utf-8';
     }
-    const options = {
+    const options: RequestInit = {
         method: customOptions.method || 'GET',
         headers: {
             ...headers,
@@ -30,7 +30,6 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     if (data) {
         options.body = JSON.stringify(data);
     }
-    console.log(options);
     const res = await fetch(`${API_URL}/${endpoint}/`, options);
     if (res.status === 401) {
         localStorage.removeItem('token');
