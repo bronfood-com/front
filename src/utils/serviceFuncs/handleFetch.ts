@@ -1,7 +1,7 @@
 import { API_URL } from '../consts';
 
 interface FetchOptions extends RequestInit {
-    data: object;
+    data?: object;
 }
 
 /**
@@ -10,27 +10,36 @@ interface FetchOptions extends RequestInit {
  * @param {} endpoint API URL's endpoint
  * @param {} options request's custom options
  */
-export const handleFetch = async (endpoint: string, { method, data, headers: customHeaders, ...customOptions }: FetchOptions | Record<string, never> = {}) => {
+export const handleFetch = async (endpoint: string, { data, ...customOptions }: FetchOptions | Record<string, never> = {}) => {
     const token = localStorage.getItem('token');
-    const options: RequestInit = {
-        method: data ? method : 'GET',
+    const headers = {};
+    if (token) {
+        headers.Authorization = `Token ${token}`;
+    }
+    if (data) {
+        headers['Content-Type'] = 'application/json;charset=utf-8';
+    }
+    const options = {
+        method: customOptions.method || 'GET',
         headers: {
-            Authorization: token ? `Token ${token}` : '',
-            'Content-Type': data ? 'application/json;charset=utf-8' : '',
-            ...customHeaders,
+            ...headers,
+            ...customOptions.headers,
         },
-        body: data ? JSON.stringify(data) : undefined,
         ...customOptions,
     };
+    if (data) {
+        options.body = JSON.stringify(data);
+    }
+    console.log(options);
     const res = await fetch(`${API_URL}/${endpoint}/`, options);
     if (res.status === 401) {
         localStorage.removeItem('token');
-        throw new Error('Authorization error');
+        throw new Error('Unauthorized');
     }
     const result = await res.json();
     if (res.ok) {
         return result;
     } else {
-        return Promise.reject(result);
+        throw new Error(result.error_message);
     }
 };
