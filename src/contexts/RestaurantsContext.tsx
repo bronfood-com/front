@@ -28,6 +28,10 @@ export type VenueType = {
 
 type RestaurantsContext = {
     /**
+     * Reload data restaurants
+     */
+    refetch: () => void;
+    /**
      * Set id restaurant which centered in list
      */
     setActiveRestaurant: (id: string) => void;
@@ -102,6 +106,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
+    refetch: () => [],
     options: {
         all: [],
         selectedOptions: [],
@@ -118,11 +123,14 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState('');
-    const { isPending, isError, isSuccess, data } = useQuery({
+    const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
         queryFn: () => restaurantsService.getRestaurants(),
     });
-    const restaurantsOnMap: Restaurant[] = isSuccess && 'data' in data ? data.data : [];
+    let restaurantsOnMap: Restaurant[] = [];
+    if (isSuccess && data.status === 'success') {
+        restaurantsOnMap = data.data;
+    }
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const optionNames: string[] = selectedOptions.map((option) => option.name.toLowerCase());
@@ -156,8 +164,9 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
                 inView,
                 restaurantsOnMap,
                 restaurantsFiltered,
-                isLoading: isPending,
+                isLoading: isLoading,
                 isError,
+                refetch: refetch,
                 options: {
                     all: options,
                     selectedOptions,

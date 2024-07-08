@@ -12,7 +12,7 @@
         display: flex;
     }
     &__image {
-        height: 106px;
+        height: 100%;
         width: 113px;
         background-repeat: no-repeat;
         background-size: cover;
@@ -36,6 +36,7 @@
         font-weight: 500;
         line-height: 1.4;
         color: $black;
+        margin-right: 5px;
     }
     &__rating {
         width: 24px;
@@ -46,6 +47,7 @@
         color: $black;
     }
     &__icon {
+        flex-shrink: 0;
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -71,6 +73,8 @@
         background-image: url(./../../../vendor/images/icons/restaurant/clock.svg);
     }
     &__feature_title {
+        display: block;
+        width: 100%;
         font-size: 13px;
         font-weight: 400;
         line-height: 1.21;
