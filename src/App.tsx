@@ -28,9 +28,7 @@ function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { currentUser /* useQueryProfile */ } = useCurrentUser();
-
-    // useQueryProfile();
+    const { currentUser } = useCurrentUser();
 
     useEffect(() => {
         if (currentUser && pathname === '/') {
