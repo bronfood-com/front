@@ -1,8 +1,8 @@
-import { FC, PropsWithChildren, createContext, useCallback, useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { FC, PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
+import i18n from '../i18n';
 import { options, types } from '../pages/Restaurants/MockRestaurantsList';
 import { Meal, Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import i18n from '../i18n';
 
 export type Option = {
     /**

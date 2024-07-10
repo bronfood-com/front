@@ -1,127 +1,63 @@
 import { AuthService, ConfirmUpdateUser, User, LoginData, RegisterData, ConfirmRegisterPhoneData, UpdateUser, UserExtra } from './authService';
-import { API_URL } from '../consts';
+import { handleFetch } from '../serviceFuncs/handleFetch';
 
 export class AuthServiceReal implements AuthService {
     /* contracts https://www.notion.so/Api-Auth-b7317228f7134259a5089a7d05e79bb2 */
 
-    getToken() {
-        return localStorage.getItem('token');
-    }
-
     async login({ phone, password }: LoginData): Promise<{ data: User }> {
-        const res = await fetch(`${API_URL}/signin/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ phone, password }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            const { auth_token } = result.data;
-            localStorage.setItem('token', auth_token);
-            delete result.data.auth_token;
-            return result;
-        }
+        const result = await handleFetch('signin', { method: 'POST', data: { phone, password } });
+        const { auth_token } = result.data;
+        localStorage.setItem('token', auth_token);
+        delete result.data.auth_token;
+        return result;
     }
 
     async register({ fullname, phone, password }: RegisterData): Promise<{ data: { temp_data_code: string } }> {
-        const res = await fetch(`${API_URL}/client/request_to_signup/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ phone, password, fullname }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            return result;
+        try {
+            return handleFetch('client/request_to_signup', { method: 'POST', data: { phone, password, fullname } });
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.message === 'Failed to fetch') {
+                    throw new Error('connectionError');
+                } else {
+                    throw new Error(error.message);
+                }
+            } else {
+                throw new Error('unknownError');
+            }
         }
     }
 
     async confirmRegisterPhone({ temp_data_code, confirmation_code }: ConfirmRegisterPhoneData): Promise<{ data: User }> {
-        const res = await fetch(`${API_URL}/client/signup/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({ temp_data_code, confirmation_code }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            const { auth_token } = result.data;
-            localStorage.setItem('token', auth_token);
-            delete result.data.auth_token;
-            return result;
-        }
+        const result = await handleFetch('client/signup', { method: 'POST', data: { temp_data_code, confirmation_code } });
+        const { auth_token } = result.data;
+        localStorage.setItem('token', auth_token);
+        delete result.data.auth_token;
+        return result;
     }
 
     async updateUser({ fullname, phone, password, password_confirm }: UpdateUser): Promise<{ data: { temp_data_code: string } }> {
-        const token = this.getToken();
         let requestData: UpdateUser = { fullname, phone };
         if (password && password_confirm) {
             requestData = { ...requestData, password, password_confirm };
         }
-        const res = await fetch(`${API_URL}/client/profile/update_request/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                authorization: `Token ${token}`,
-            },
-            body: JSON.stringify(requestData),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            return result;
-        }
+        return handleFetch('client/profile/update_request', { method: 'POST', data: requestData });
     }
 
     async confirmUpdateUser({ confirmation_code }: ConfirmUpdateUser): Promise<{ data: UserExtra }> {
-        const token = this.getToken();
-        const res = await fetch(`${API_URL}/client/profile/`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                authorization: `Token ${token}`,
-            },
-            body: JSON.stringify({ confirmation_code }),
-        });
-        const result = await res.json();
-        if (!res.ok) {
-            throw new Error(result.error_message);
-        } else {
-            delete result.data.auth_token;
-            delete result.data.role;
-            return result;
-        }
+        const result = await handleFetch('client/profile', { method: 'PATCH', data: { confirmation_code } });
+        delete result.data.auth_token;
+        delete result.data.role;
+        return result;
     }
 
     async logOut() {
-        const token = this.getToken();
         const clearLocalStorage = () => {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
         };
-        const res = await fetch(`${API_URL}/client/signout/`, {
-            method: 'POST',
-            headers: {
-                authorization: `Token ${token}`,
-            },
-        });
-        if (!res.ok) {
-            clearLocalStorage();
-            throw new Error(res.statusText);
-        } else {
-            clearLocalStorage();
-            return;
-        }
+        await handleFetch('client/signout', { method: 'POST' });
+        clearLocalStorage();
+        return;
     }
 }
