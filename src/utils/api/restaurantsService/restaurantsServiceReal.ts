@@ -13,7 +13,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         if (!token) {
             return {
                 status: 'error',
-                error_message: 'Пройдите авторизацию',
+                error_message: i18n.t('pages.restaurantsServiceReal.unauthorized'),
             };
         }
         if (this._restaurantsCache !== null) {
@@ -26,11 +26,11 @@ export class RestaurantsServiceReal implements RestaurantsService {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
-                    authorization: `Bearer ${token}`,
+                    authorization: token,
                 },
             });
             if (!res.ok) {
-                throw new Error(`Failed to fetch restaurants, status: ${res.status}`);
+                throw new Error(i18n.t('pages.restaurantsServiceReal.failedToFetchRestaurants'));
             }
             const responseData = await res.json();
             this._restaurantsCache = responseData.data;
@@ -43,21 +43,21 @@ export class RestaurantsServiceReal implements RestaurantsService {
         }
         const token = this._getToken();
         if (!token) {
-            throw new Error(i18n.t('pages.logout.Unauthorized'));
+            throw new Error(i18n.t('pages.restaurantsServiceReal.unauthorized'));
         }
         const res = await fetch(`${API_URL}/api/meals/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                authorization: `Bearer ${token}`,
+                authorization: token,
             },
         });
         if (!res.ok) {
-            throw new Error(`Failed to fetch meals, status: ${res.status}`);
+            throw new Error(i18n.t('pages.restaurantsServiceReal.failedToFetchMeals'));
         }
         this._allMealsCache = await res.json();
         if (this._allMealsCache === null) {
-            throw new Error('Failed to fetch meals');
+            throw new Error(i18n.t('pages.restaurantsServiceReal.failedToFetchMeals'));
         }
         return this._allMealsCache;
     }
@@ -66,7 +66,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
         if (!token) {
             return {
                 status: 'error',
-                error_message: i18n.t('pages.logout.Unauthorized'),
+                error_message: i18n.t('pages.restaurantsServiceReal.unauthorized'),
             };
         }
         if (this._restaurantsCache !== null) {
@@ -82,13 +82,13 @@ export class RestaurantsServiceReal implements RestaurantsService {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                authorization: `Bearer ${token}`,
+                authorization: token,
             },
         });
         if (!res.ok) {
             return {
                 status: 'error',
-                error_message: `Failed to fetch restaurant, status: ${res.status}`,
+                error_message: i18n.t('pages.restaurantsServiceReal.failedToFetchRestaurant'),
             };
         }
         const restaurant = await res.json();

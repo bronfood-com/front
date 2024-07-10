@@ -1,19 +1,14 @@
-import { RefObject, useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { useRef } from 'react';
 import styles from './RestaurantCard.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 
-function RestaurantCard({ card, isTheOnlyOne, container }: { card: Restaurant; isTheOnlyOne: boolean; container: RefObject<Element> }) {
+function RestaurantCard({ card, isTheOnlyOne, lastClickedRestaurantId }: { card: Restaurant; isTheOnlyOne: boolean; lastClickedRestaurantId: string | null }) {
     const ref = useRef(null);
 
-    const isInView = useInView(ref, {
-        amount: 'all',
-        root: container,
-        margin: '-18% 0px -18% 0px',
-    });
+    const isClicked = card.id === lastClickedRestaurantId;
 
     return (
-        <div ref={ref} className={`${styles.card} ${isInView || isTheOnlyOne ? styles.card__active : ''}`}>
+        <div ref={ref} className={`${styles.card} ${isTheOnlyOne || isClicked ? styles.card__active : ''}`}>
             <div className={styles.card__container}>
                 <div>
                     <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
