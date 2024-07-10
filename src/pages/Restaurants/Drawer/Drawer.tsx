@@ -7,7 +7,6 @@ import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestauran
 import Preloader from '../../../components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import PageNotFound from '../../PageNotFound/PageNotFound';
-import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -27,15 +26,9 @@ const Drawer = () => {
         isClicked === id ? navigate(`/restaurants/${id}`) : setIsClicked(id);
     };
 
-    const { currentUser } = useCurrentUser();
-
     useEffect(() => {
-        if (!currentUser) {
-            navigate(`/`);
-        } else {
-            refetch();
-        }
-    }, [currentUser, navigate, refetch]);
+        refetch();
+    }, [refetch]);
 
     if (isError) {
         return <PageNotFound />;
