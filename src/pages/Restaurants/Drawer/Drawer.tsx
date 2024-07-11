@@ -12,7 +12,7 @@ import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUse
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered, restaurantLoading, restaurantError, refetchRestaurants, lastClickedRestaurantId, setLastClickedRestaurantId } = useRestaurants();
+    const { restaurantsFiltered, restaurantLoading, restaurantError, refetch, lastClickedRestaurantId, setLastClickedRestaurantId } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
@@ -23,9 +23,9 @@ const Drawer = () => {
         if (!currentUser) {
             navigate(`/`);
         } else {
-            refetchRestaurants();
+            refetch();
         }
-    }, [currentUser, navigate, refetchRestaurants]);
+    }, [currentUser, navigate, refetch]);
 
     const handleClick = (id: string) => {
         if (lastClickedRestaurantId === id) {

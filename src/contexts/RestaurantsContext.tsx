@@ -30,15 +30,11 @@ export type RestaurantsContext = {
     /**
      * Reload data restaurants
      */
-    refetchRestaurants: () => void;
+    refetch: () => void;
     /**
      * Sets clicked restaurant page
      */
     setActiveRestaurant: (id: string) => void;
-    /**
-     * restaurant to add all meals to it
-     */
-    restaurant?: Restaurant & { meals: Meal[] };
     /**
      * Restaurant which is clicked in a list
      */
@@ -51,6 +47,18 @@ export type RestaurantsContext = {
      * List of restaurants filtered with user selected options
      */
     restaurantsFiltered: Restaurant[];
+    /**
+     * Indicates whether restaurants are loading
+     */
+    isLoading: boolean;
+    /**
+     * Indicates whether query encountered an error
+     */
+    isError: boolean;
+    /**
+     * Restaurant to add all meals to it
+     */
+    restaurant?: Restaurant & { meals: Meal[] };
     /**
      * Indicates whether restaurant are loading
      */
@@ -123,9 +131,11 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     setActiveRestaurant: () => {},
     restaurantsOnMap: [],
     restaurantsFiltered: [],
+    isLoading: false,
+    isError: false,
+    refetch: () => {},
     restaurantLoading: false,
     restaurantError: false,
-    refetchRestaurants: () => {},
     refetchRestaurant: () => {},
     setInView: () => {},
     lastClickedRestaurantId: null,
@@ -150,20 +160,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const queryClient = useQueryClient();
     const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
-    const { data: restaurantsData, refetch: refetchRestaurants } = useQuery({
+    const { isLoading, isError, isSuccess, data, refetch } = useQuery({
         queryKey: ['restaurants'],
-        queryFn: async () => {
-            const response = await restaurantsService.getRestaurants();
-            if (response.status === 'success') {
-                return response.data;
-            } else {
-                throw new Error(i18n.t('pages.restaurantsContext.failedToFetchRestaurants'));
-            }
-        },
-        staleTime: 5 * 60 * 1000,
-        refetchOnWindowFocus: false,
+        queryFn: () => restaurantsService.getRestaurants(),
     });
-    const restaurantsOnMap = restaurantsData || [];
+    let restaurantsOnMap: Restaurant[] = [];
+    if (isSuccess && data.status === 'success') {
+        restaurantsOnMap = data.data;
+    }
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [selectedVenueTypes, setSelectedVenueTypes] = useState<VenueType[]>([]);
     const restaurantsFiltered: Restaurant[] =
@@ -191,8 +195,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
             return response.data;
         },
         enabled: !!restaurantId,
-        staleTime: 5 * 60 * 1000,
-        refetchOnWindowFocus: false,
     });
     useEffect(() => {
         if (fetchedRestaurant) {
@@ -227,12 +229,14 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     return (
         <RestaurantsContext.Provider
             value={{
+                isLoading,
+                isError,
                 restaurant,
                 restaurantLoading,
                 restaurantError,
                 setActiveRestaurant,
                 restaurantsFiltered,
-                refetchRestaurants,
+                refetch: refetch,
                 refetchRestaurant,
                 restaurantsOnMap,
                 inView,
