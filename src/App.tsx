@@ -23,6 +23,7 @@ import Search from './pages/Search/Search';
 import WaitingOrder from './pages/WaitingOrder/WaitingOrder/WaitingOrder';
 import Restaurant from './pages/Restaurants/Restaurant/Restaurant';
 import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
+import NotificationPopup from './components/Popups/NotificationPopup/NotificationPopup';
 
 function App() {
     const [city, setCity] = useState('');
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/favorites" element={<ProtectedRoute component={<Favorites />} />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
+            <NotificationPopup type="warning" message="В настоящее время доставка в выбранный вами ресторан недоступна" />
             <ReactQueryDevtools initialIsOpen={false} />
         </div>
     );
