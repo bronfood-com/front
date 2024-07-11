@@ -2,14 +2,19 @@ import styles from './RestaurantCardLarge.module.scss';
 import { Restaurant } from '../../../utils/api/restaurantsService/restaurantsService';
 import { useFavoritesMutations } from '../../../utils/hooks/useFavorites/useFavorites';
 
-function RestaurantCardLarge({ card }: { card: Restaurant }) {
+type RestaurantCardLargeProps = {
+    card: Restaurant;
+    isFavorite?: boolean;
+};
+
+function RestaurantCardLarge({ card, isFavorite = false }: RestaurantCardLargeProps) {
     const { deleteFavorite } = useFavoritesMutations();
     const handleDeleteFavorite = (id: string) => deleteFavorite.mutate(id);
 
     return (
         <div className={styles.card}>
             <div className={styles.card__container}>
-                <div className={styles.card__delete} onClick={() => handleDeleteFavorite(card.id)}></div>
+                {isFavorite ? <div className={styles.card__delete} onClick={() => handleDeleteFavorite(card.id)}></div> : ''}
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />
                 <div className={styles.card__description}>
                     <div className={styles.card__title_container}>
