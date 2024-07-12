@@ -29,6 +29,11 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
     const isLogin = !!currentUser;
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        setCurrentUser(null);
+    };
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
         onSuccess: (res) => {
@@ -66,11 +71,8 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const logout = useMutation({
         mutationFn: () => authService.logOut(),
-        onSuccess: () => {
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            setCurrentUser(null);
-        },
+        onSuccess: () => handleLogout(),
+        onError: () => handleLogout(),
     });
     useEffect(() => {
         setCurrentUser(user && JSON.parse(user));

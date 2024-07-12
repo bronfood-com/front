@@ -52,12 +52,11 @@ export class AuthServiceReal implements AuthService {
     }
 
     async logOut() {
-        const clearLocalStorage = () => {
+        /* const clearLocalStorage = () => {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-        };
-        await handleFetch('client/signout', { method: 'POST' });
-        clearLocalStorage();
-        return;
+        }; */
+        return handleFetch('client/signout', { method: 'POST' });
+        /* clearLocalStorage(); */
     }
 }
