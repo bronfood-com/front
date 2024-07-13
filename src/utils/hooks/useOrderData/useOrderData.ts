@@ -37,7 +37,11 @@ export const useOrderData = (userId: string, placedOrder: OrderState | null) => 
         queryKey: ['checkPreparationStatus', placedOrder?.id],
         queryFn: async () => {
             const response = await orderService.checkPreparationStatus(placedOrder?.id ?? '');
-            return response.data;
+            if (response.status === 'success') {
+                return response.data[0].preparationStatus;
+            } else {
+                throw new Error(response.error_message);
+            }
         },
         enabled: !!userId && !!placedOrder,
         refetchInterval: 10000,
