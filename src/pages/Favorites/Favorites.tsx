@@ -49,7 +49,7 @@ const Favorites = () => {
                                 <ul className={styles.favorites__list}>
                                     {favoritesList.map((restaurant) => (
                                         <li key={restaurant.id}>
-                                            <RestaurantCardLarge card={restaurant}></RestaurantCardLarge>
+                                            <RestaurantCardLarge card={restaurant} isFavorite={true}></RestaurantCardLarge>
                                         </li>
                                     ))}
                                 </ul>
