@@ -248,10 +248,20 @@ i18n
                             error_load: 'Ошибка загрузки',
                             list_empty: 'Ваш список избранного пуст...',
                         },
+                        restaurantsSeviceReal: {
+                            unauthorized: 'Вы не авторизованы',
+                            failedToFetchRestaurants: 'Не удалось загрузить рестораны',
+                            failedToFetchRestaurant: 'Не удалось загрузить ресторан',
+                            failedTFetchMeals: 'Не удалось загрузить блюда',
+                        },
+                        restaurantsContext: {
+                            failedToFetchRestaurants: 'Не удалось загрузить рестораны',
+                            noRestaurantIdProvided: 'Не указан ID ресторана',
+                        },
                     },
-
                     errors: {
                         anUnexpectedErrorHasOccurred: 'Произошла непредвиденная ошибка',
+                        errorDuringTheRequest: 'Произошла ошибка при запросе',
                     },
                 },
             },

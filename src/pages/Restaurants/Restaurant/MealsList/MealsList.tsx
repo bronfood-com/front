@@ -6,8 +6,8 @@ import BoxFood from '../BoxFood/BoxFood';
 const MealsList = ({ meals, setIsMealPageOpen }: { meals: Meal[]; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) => {
     return (
         <ul className={`${styles.meals_list} ${meals.length === 1 ? styles.meals_list_short : ''}`}>
-            {meals.map((meal) => (
-                <li key={meal.id}>
+            {meals.map((meal, index) => (
+                <li key={`${meal}-${index}`}>
                     <BoxFood card={meal} setIsMealPageOpen={setIsMealPageOpen} />
                 </li>
             ))}

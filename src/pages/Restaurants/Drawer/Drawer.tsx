@@ -12,22 +12,12 @@ import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUse
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const { restaurantsFiltered, isLoading, isError, refetch } = useRestaurants();
+    const { restaurantsFiltered, restaurantLoading, restaurantError, refetch, lastClickedRestaurantId, setLastClickedRestaurantId } = useRestaurants();
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
-    const [isClicked, setIsClicked] = useState('');
-    const { setActiveRestaurant } = useRestaurants();
-
-    useEffect(() => {
-        setActiveRestaurant(isClicked);
-    }, [isClicked, setActiveRestaurant]);
-
-    const handleClick = (id: string) => {
-        isClicked === id ? navigate(`/restaurants/${id}`) : setIsClicked(id);
-    };
-
     const { currentUser } = useCurrentUser();
+    const { setActiveRestaurant } = useRestaurants();
 
     useEffect(() => {
         if (!currentUser) {
@@ -37,7 +27,16 @@ const Drawer = () => {
         }
     }, [currentUser, navigate, refetch]);
 
-    if (isError) {
+    const handleClick = (id: string) => {
+        if (lastClickedRestaurantId === id) {
+            navigate(`/restaurants/${id}`);
+        } else {
+            setActiveRestaurant(id);
+            setLastClickedRestaurantId(id);
+        }
+    };
+
+    if (restaurantError) {
         return <PageNotFound />;
     } else {
         return (
@@ -50,11 +49,11 @@ const Drawer = () => {
                         <p className={styles.drawer__title}>{t('pages.restaurants.selectPlace')}</p>
                         <button onClick={() => setIsFilterOpen(true)} type="button" className={styles.drawer__icon} title={t('pages.restaurants.filters')} />
                     </div>
-                    {isLoading && <Preloader />}
+                    {restaurantLoading && <Preloader />}
                     <ul ref={container} className={styles.drawer__list}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.drawer__list_item} onClick={() => handleClick(card.id)}>
-                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} container={container} />
+                                <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} lastClickedRestaurantId={lastClickedRestaurantId} />
                             </li>
                         ))}
                     </ul>
