@@ -18,6 +18,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
     const { isLogin } = useCurrentUser();
     const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+    const apiKey = import.meta.env.VITE_YNDX_API_KEY || process.env.REACT_APP_YNDX_API_KEY;
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -45,7 +46,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
 
     const center = activePlaceId ? [location.latitude, location.longitude] : [userLocation.latitude, userLocation.longitude];
     return (
-        <YMaps key={version} query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
+        <YMaps key={version} query={{ apikey: apiKey }}>
             <div className={styles.yamap}>
                 <Map
                     state={{ center: center, zoom: 12 }}
