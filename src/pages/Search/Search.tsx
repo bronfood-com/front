@@ -13,7 +13,7 @@ const Search = () => {
             <Filter
                 close={() => navigate('/')}
                 children={
-                    <ul className={styles.search__list}>
+                    <ul className={`${styles.search__list} bronfood-scrollbar`}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.search__list_item}>
                                 <RestaurantCardLarge card={card} />

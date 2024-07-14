@@ -5,7 +5,7 @@ import BoxFood from '../BoxFood/BoxFood';
 
 const MealsList = ({ meals, setIsMealPageOpen }: { meals: Meal[]; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) => {
     return (
-        <ul className={`${styles.meals_list} ${meals.length === 1 ? styles.meals_list_short : ''}`}>
+        <ul className={`${styles.meals_list} bronfood-scrollbar ${meals.length === 1 ? styles.meals_list_short : ''}`}>
             {meals.map((meal, index) => (
                 <li key={`${meal}-${index}`}>
                     <BoxFood card={meal} setIsMealPageOpen={setIsMealPageOpen} />
