@@ -5,6 +5,7 @@ import Button from '../../../../components/ButtonIconOrange/ButtonIconOrange';
 import { Meal } from '../../../../utils/api/restaurantsService/restaurantsService';
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 import { API_URL } from '../../../../utils/consts';
+import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 
 function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
@@ -12,12 +13,18 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
     const navigate = useNavigate();
     const { addMeal, isLoading } = useBasket();
     const hasFeatures = features && features.length > 0;
+    const { isLogin } = useCurrentUser();
+
     const handleClick = () => {
-        if (hasFeatures) {
-            navigate(`${pathname}/meal/${id}`);
-            setIsMealPageOpen(true);
+        if (isLogin) {
+            if (hasFeatures) {
+                navigate(`${pathname}/meal/${id}`);
+                setIsMealPageOpen(true);
+            } else {
+                addMeal({ mealId: id, features: features || [] });
+            }
         } else {
-            addMeal({ mealId: id, features: features || [] });
+            navigate(`/signin`);
         }
     };
     return (
