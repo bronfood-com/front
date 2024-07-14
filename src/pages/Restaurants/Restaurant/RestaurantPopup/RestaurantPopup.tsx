@@ -4,14 +4,14 @@ import Button from '../../../../components/ButtonIconRound/ButtonIconRound';
 import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
 import { useParams } from 'react-router-dom';
 import { useFavoritesMutations } from '../../../../utils/hooks/useFavorites/useFavorites';
-import { Restaurant } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { RestaurantWithMeals } from '../../../../utils/api/restaurantsService/restaurantsService';
 
 type RestaurantPopupProps = {
     close: () => void;
     isMealPageOpen: boolean;
     setIsMealPageOpen: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
-    restaurant: Restaurant;
+    restaurant: RestaurantWithMeals;
 };
 
 const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, restaurant }: RestaurantPopupProps) => {
