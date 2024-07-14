@@ -37,6 +37,11 @@
         line-height: 1.4;
         color: $black;
         margin-right: 5px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     &__rating {
         width: 24px;
@@ -79,5 +84,10 @@
         font-weight: 400;
         line-height: 1.21;
         color: $grey;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
