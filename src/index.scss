@@ -32,3 +32,20 @@ ul {
     padding: 0;
     background-color: transparent;
 }
+
+.bronfood-scrollbar {
+    overflow-y: auto;
+}
+
+.bronfood-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.bronfood-scrollbar::-webkit-scrollbar-track {
+    background-color: #ff8f0b33;
+}
+
+.bronfood-scrollbar::-webkit-scrollbar-thumb {
+    background-color: $orange;
+    border-radius: 4px;
+}
