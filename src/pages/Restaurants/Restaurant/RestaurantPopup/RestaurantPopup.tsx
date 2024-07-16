@@ -45,12 +45,10 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                {isLogin ? (
+                {isLogin && (
                     <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_like}`}>
                         <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
                     </div>
-                ) : (
-                    ''
                 )}
                 <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_close}`}>
                     <Button type="button" onClick={close} icon="close" />
