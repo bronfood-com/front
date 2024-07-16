@@ -5,6 +5,7 @@ import { useEsc } from '../../../../utils/hooks/useEsc/useEsc';
 import { useParams } from 'react-router-dom';
 import { useFavoritesMutations } from '../../../../utils/hooks/useFavorites/useFavorites';
 import { RestaurantWithMeals } from '../../../../utils/api/restaurantsService/restaurantsService';
+import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 
 type RestaurantPopupProps = {
     close: () => void;
@@ -17,6 +18,8 @@ type RestaurantPopupProps = {
 const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, restaurant }: RestaurantPopupProps) => {
     const { addFavorite, deleteFavorite } = useFavoritesMutations();
     const { mealId } = useParams();
+    const { isLogin } = useCurrentUser();
+
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {
             close();
@@ -42,9 +45,11 @@ const RestaurantPopup = ({ close, isMealPageOpen, setIsMealPageOpen, children, r
     return (
         <div className={styles.restaurant_popup_overlay} onClick={handleOverlayClick}>
             <div className={styles.restaurant_popup}>
-                <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_like}`}>
-                    <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
-                </div>
+                {isLogin && (
+                    <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_like}`}>
+                        <Button type="button" onClick={() => handleFavoriteClick()} icon="favorite" isActive={restaurant.isLiked ? true : false} />
+                    </div>
+                )}
                 <div className={`${styles.restaurant_popup_button} ${styles.restaurant_popup_button_close}`}>
                     <Button type="button" onClick={close} icon="close" />
                 </div>

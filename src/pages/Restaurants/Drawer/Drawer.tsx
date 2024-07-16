@@ -7,7 +7,6 @@ import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestauran
 import Preloader from '../../../components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import PageNotFound from '../../PageNotFound/PageNotFound';
-import { useCurrentUser } from '../../../utils/hooks/useCurrentUser/useCurretUser';
 
 const Drawer = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -16,16 +15,11 @@ const Drawer = () => {
     const { t } = useTranslation();
     const container = useRef(null);
     const navigate = useNavigate();
-    const { currentUser } = useCurrentUser();
     const { setActiveRestaurant } = useRestaurants();
 
     useEffect(() => {
-        if (!currentUser) {
-            navigate(`/`);
-        } else {
-            refetch();
-        }
-    }, [currentUser, navigate, refetch]);
+        refetch();
+    }, [refetch]);
 
     const handleClick = (id: string) => {
         if (lastClickedRestaurantId === id) {
