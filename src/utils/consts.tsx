@@ -5,5 +5,5 @@
 export const regexClientName: RegExp = /^([a-zA-Z\\-]+(?:\s[a-zA-Z\\-]+)|[a-яА-ЯёЁ\\-]+(?:\s[a-яА-ЯёЁ\\-]+)*|[a-яА-ЯёЁ-ӘҒҚҢӨҰҮІі]+(?:\s[a-яА-ЯёЁ-ӘҒҚҢӨҰҮІі]+)*)$/;
 export const regexPassword: RegExp = /^[A-Za-z\d!@#$%^&*()-_+=<>?]{4,256}$/;
 export const regexPhoneNumberKazakhstan: RegExp = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
-// export const API_URL = 'http://127.0.0.1:8000';
-export const API_URL = 'https://bron-dev.bounceme.net'; // test server
+export const YNDX_API_KEY = import.meta.env.VITE_YNDX_API_KEY || process.env.REACT_APP_YNDX_API_KEY;
+export const API_URL = import.meta.env.VITE_API_URL || process.env.REACT_APP_API_URL;
