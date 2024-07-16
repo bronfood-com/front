@@ -14,7 +14,7 @@ const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
         );
     };
     return (
-        <ul className={styles.basket_meals_list}>
+        <ul className={`${styles.basket_meals_list} bronfood-scrollbar`}>
             {meals.map((meal) => {
                 const idPostfix = createIdPostfix(meal);
 

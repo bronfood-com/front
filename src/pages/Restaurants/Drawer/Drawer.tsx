@@ -50,7 +50,7 @@ const Drawer = () => {
                         <button onClick={() => setIsFilterOpen(true)} type="button" className={styles.drawer__icon} title={t('pages.restaurants.filters')} />
                     </div>
                     {restaurantLoading && <Preloader />}
-                    <ul ref={container} className={styles.drawer__list}>
+                    <ul ref={container} className={`${styles.drawer__list} bronfood-scrollbar`}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.drawer__list_item} onClick={() => handleClick(card.id)}>
                                 <RestaurantCard card={card} isTheOnlyOne={restaurantsFiltered.length === 1} lastClickedRestaurantId={lastClickedRestaurantId} />

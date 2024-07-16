@@ -4,7 +4,7 @@ import { Choice as ChoiceType, Feature } from '../../../utils/api/restaurantsSer
 
 const MealFeatureList = ({ features }: { features: Feature[] | [] }) => {
     return (
-        <ul className={styles.feature_list}>
+        <ul className={`${styles.feature_list} bronfood-scrollbar`}>
             {features.map((feature) => (
                 <li key={feature.id}>
                     <MealFeature feature={feature} />
