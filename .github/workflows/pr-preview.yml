@@ -1,9 +1,5 @@
 name: Deploy PR previews
 
-env:
-      VITE_API_URL: ${{ secrets.VITE_API_URL }}
-      VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
-
 on:
     push:
         branches: [main, master]
