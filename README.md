@@ -14,11 +14,10 @@ npm 7+
 
     `npm install` или `yarn install`
 
-3.  Создать файлы `.env.development` и `.env.production` на основе `.env.example`:
+3.  Создать файл `.env.development` на основе `.env.example`:
 
     ```sh
     cp .env.example .env.development
-    cp .env.example .env.production
     ```
 
 4.  Настройте переменные окружения в `.env.development` для разработки:
@@ -26,19 +25,6 @@ npm 7+
     ```env
     VITE_API_URL=https://dev-server.example.com
     VITE_YNDX_API_KEY=dev-api-key
-
-    REACT_APP_API_URL=https://dev-server.example.com
-    REACT_APP_YNDX_API_KEY=dev-api-key
-    ```
-
-5.  Настройте переменные окружения в `.env.production` для продакшн:
-
-    ```env
-    VITE_API_URL=https://prod-server.example.com
-    VITE_YNDX_API_KEY=prod-api-key
-
-    REACT_APP_API_URL=https://prod-server.example.com
-    REACT_APP_YNDX_API_KEY=prod-api-key
     ```
 
 # Скрипты
