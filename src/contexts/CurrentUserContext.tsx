@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren /* useEffect  */ } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
@@ -27,17 +27,27 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    // const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
-    const isLogin = !!currentUser;
+    const token = localStorage.getItem('token');
+    const profile = useQuery({
+        queryKey: ['profile'],
+        queryFn: authService.checkAuthorization,
+        select: (data) => data.data,
+        staleTime: 1000 * 0,
+        retry: false,
+        enabled: !!token,
+    });
+
+    const isLogin = !!profile.data;
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
-        onSuccess: (res) => {
-            setCurrentUser(res.data);
+        onSuccess: () => {
+            profile.refetch();
         },
-        onError: () => {
+        /* onError: () => {
             setCurrentUser(null);
-        },
+        }, */
     });
     const signUp = useMutation({
         mutationFn: (variables: RegisterData) => authService.register(variables),
@@ -45,23 +55,24 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const confirmSignUp = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: variables.confirmation_code }),
-        onSuccess: (res) => {
-            setCurrentUser(res.data);
+        onSuccess: () => {
+            // profile.refetch()
             setServerSMSCode('');
         },
-        onError: () => {
+        /* onError: () => {
             setCurrentUser(null);
-        },
+        }, */
     });
     const client = useQueryClient();
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
+        //не использует приходящий в ответе temp_data_code ??
     });
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
-        onSuccess: (res) => {
+        onSuccess: () => {
             client.invalidateQueries({ queryKey: ['profile'] });
-            setCurrentUser(res.data);
+            profile.refetch();
         },
     });
     const logout = useMutation({
@@ -69,18 +80,14 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: () => {
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            setCurrentUser(null);
+            profile.refetch();
+            // client.setQueryData(['profile'], null);
+            // console.log(profile.data);
+            // setCurrentUser(null);
         },
     });
 
-    const token = localStorage.getItem('token');
-    const profile = useQuery({
-        queryKey: ['profile'],
-        queryFn: authService.checkAuthorization,
-        select: (data) => data.data,
-        staleTime: 1000 * 0,
-        enabled: !!token,
-    });
+    /*
     useEffect(() => {
         if (profile.status === 'success') {
             setCurrentUser(profile.data);
@@ -89,12 +96,12 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
             setCurrentUser(null);
             localStorage.removeItem('token');
         }
-    }, [profile.status, profile.data]);
+    }, [profile.status, profile.data]); */
 
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser,
+                currentUser: profile.data || null,
                 isLogin,
                 signIn,
                 signUp,

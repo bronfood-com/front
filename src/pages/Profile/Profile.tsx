@@ -10,7 +10,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { regexClientName } from '../../utils/consts';
 import InputPhone from '../../components/InputPhone/InputPhone';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useState, useEffect } from 'react';
+import { useState /* useEffect  */ } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
 import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
@@ -25,13 +25,13 @@ const Profile = () => {
     } = useForm();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { updateUser, confirmUpdateUser, profile } = useCurrentUser();
+    const { updateUser, confirmUpdateUser, profile /* currentUser  */ } = useCurrentUser();
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-    const { data: user, isLoading, isSuccess, isStale, refetch } = profile;
+    const { data: user, isLoading, isSuccess /* isStale, refetch  */ } = profile;
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isStale) refetch();
-    }, [refetch, isStale]);
+    }, [refetch, isStale]); */
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         await updateUser.mutateAsync({
