@@ -11,17 +11,12 @@ npm 7+
 
 1.  Склонировать репозиторий
 2.  Установить зависимоcти командой:
-
     `npm install` или `yarn install`
-
 3.  Создать файл `.env.development` на основе `.env.example`:
-
     ```sh
     cp .env.example .env.development
     ```
-
 4.  Настройте переменные окружения в `.env.development` для разработки:
-
     ```env
     VITE_API_URL=https://dev-server.example.com
     VITE_YNDX_API_KEY=dev-api-key
