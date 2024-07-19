@@ -20,38 +20,8 @@ jobs:
     build-deploy-and-preview:
         name: Deploy PR previews
         runs-on: ubuntu-latest
-
         steps:
-            - uses: actions/checkout@v3
-
-            - name: Clear Cache
-              run: npm cache clean --force
-
-            - name: Use Node.js 18.x
-              uses: actions/setup-node@v3
+            - name: Deploy PR previews
+              uses: chvmvd/build-deploy-and-preview-action@v1.2.0
               with:
-                  node-version: '18.x'
-                  cache: 'npm'
-
-            - run: npm ci
-
-            - name: Install Vite
-              run: npm install -g vite
-
-            - name: Export environment variables
-              env:
-                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
-                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
-              run: |
-                  echo "VITE_API_URL=${VITE_API_URL}" >> $GITHUB_ENV
-                  echo "VITE_YNDX_API_KEY=${VITE_YNDX_API_KEY}" >> $GITHUB_ENV
-
-            - name: Build project
-              run: npm run build
-
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist
-                  destination_dir: pr-preview/pr-${{ github.event.pull_request.number }}
+                  type: vite
