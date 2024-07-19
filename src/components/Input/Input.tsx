@@ -51,9 +51,11 @@ const Input: FC<Input> = (props) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
+
     useEffect(() => {
         if (props.value) setInputValue(props.value);
     }, [props.value]);
+
     return (
         <div className={styles.input}>
             <label htmlFor={id} className={`${styles.input__label} ${errorMessage ? styles.input__label__error : ''}`}>

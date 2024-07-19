@@ -1,4 +1,4 @@
-import { createContext, FC, useState, PropsWithChildren /* useEffect  */ } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
 import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
@@ -27,7 +27,6 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    // const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
     const token = localStorage.getItem('token');
     const profile = useQuery({
@@ -45,9 +44,6 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         onSuccess: () => {
             profile.refetch();
         },
-        /* onError: () => {
-            setCurrentUser(null);
-        }, */
     });
     const signUp = useMutation({
         mutationFn: (variables: RegisterData) => authService.register(variables),
@@ -56,47 +52,27 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     const confirmSignUp = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: variables.confirmation_code }),
         onSuccess: () => {
-            // profile.refetch()
             setServerSMSCode('');
         },
-        /* onError: () => {
-            setCurrentUser(null);
-        }, */
     });
-    const client = useQueryClient();
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
-        //не использует приходящий в ответе temp_data_code ??
     });
+
+    const client = useQueryClient();
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
         onSuccess: () => {
             client.invalidateQueries({ queryKey: ['profile'] });
-            profile.refetch();
-        },
-    });
-    const logout = useMutation({
-        mutationFn: () => authService.logOut(),
-        onSuccess: () => {
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            profile.refetch();
-            // client.setQueryData(['profile'], null);
-            // console.log(profile.data);
-            // setCurrentUser(null);
         },
     });
 
-    /*
-    useEffect(() => {
-        if (profile.status === 'success') {
-            setCurrentUser(profile.data);
-        }
-        if (profile.status === 'error') {
-            setCurrentUser(null);
-            localStorage.removeItem('token');
-        }
-    }, [profile.status, profile.data]); */
+    const logout = useMutation({
+        mutationFn: () => authService.logOut(),
+        onSuccess: () => {
+            client.removeQueries({ queryKey: ['profile'] });
+        },
+    });
 
     return (
         <CurrentUserContext.Provider

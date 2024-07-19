@@ -118,21 +118,16 @@ export class AuthServiceReal implements AuthService {
 
     async logOut() {
         const token = this.getToken();
-        const clearLocalStorage = () => {
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-        };
         const res = await fetch(`${API_URL}/client/signout/`, {
             method: 'POST',
             headers: {
                 authorization: `Token ${token}`,
             },
         });
+        localStorage.removeItem('token');
         if (!res.ok) {
-            clearLocalStorage();
             throw new Error(res.statusText);
         } else {
-            clearLocalStorage();
             return;
         }
     }
@@ -148,6 +143,7 @@ export class AuthServiceReal implements AuthService {
         });
         const result = await res.json();
         if (!res.ok) {
+            localStorage.removeItem('token');
             if (result.error_message) {
                 throw new Error(result.error_message);
             } else if (result.detail) {
