@@ -46,10 +46,10 @@ const Favorites = () => {
                     ) : (
                         <div className={styles.favorites}>
                             {favoritesList.length > 0 ? (
-                                <ul className={styles.favorites__list}>
+                                <ul className={`${styles.favorites__list} bronfood-scrollbar`}>
                                     {favoritesList.map((restaurant) => (
                                         <li key={restaurant.id}>
-                                            <RestaurantCardLarge card={restaurant}></RestaurantCardLarge>
+                                            <RestaurantCardLarge card={restaurant} isFavorite={true}></RestaurantCardLarge>
                                         </li>
                                     ))}
                                 </ul>

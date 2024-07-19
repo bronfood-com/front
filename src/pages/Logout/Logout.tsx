@@ -14,16 +14,20 @@ const Logout: FC = () => {
     const { currentUser, logout } = useCurrentUser();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const handleLogout = async () => {
-        await logout.mutateAsync();
-        queryClient.setQueryData(['basket'], () => {
-            return {
-                data: {
-                    restaurant: {},
-                    meals: [],
-                },
-            };
-        });
+    const handleLogout = () => {
+        try {
+            logout.mutate();
+        } finally {
+            logout.reset();
+            queryClient.setQueryData(['basket'], () => {
+                return {
+                    data: {
+                        restaurant: {},
+                        meals: [],
+                    },
+                };
+            });
+        }
     };
     const handleOverlayClick = (e: MouseEvent) => {
         if (e.target === e.currentTarget) {

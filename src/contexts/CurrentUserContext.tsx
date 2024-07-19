@@ -71,6 +71,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
         mutationFn: () => authService.logOut(),
         onSuccess: () => {
             client.removeQueries({ queryKey: ['profile'] });
+            profile.refetch();
         },
     });
 

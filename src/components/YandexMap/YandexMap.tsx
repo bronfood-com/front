@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import navigationIcon from '../../vendor/images/icons/navigation.svg';
 import placeIcon from '../../vendor/images/icons/navigation_grey.svg';
 import placeIconActive from '../../vendor/images/icons/navigation_active.svg';
-import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useNavigate } from 'react-router-dom';
+import { YNDX_API_KEY } from '../../utils/consts';
 
 const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) => {
     const [version, setVersion] = useState(0);
@@ -16,7 +16,6 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
     const { restaurantsFiltered, inView } = useRestaurants();
     const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
     const [userLocation, setUserLocation] = useState({ latitude: 43.246345, longitude: 76.921552 });
-    const { isLogin } = useCurrentUser();
     const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -45,7 +44,7 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
 
     const center = activePlaceId ? [location.latitude, location.longitude] : [userLocation.latitude, userLocation.longitude];
     return (
-        <YMaps key={version} query={{ apikey: '15c31511-a1d5-4084-85c0-96cce06323bf' }}>
+        <YMaps key={version} query={{ apikey: YNDX_API_KEY }}>
             <div className={styles.yamap}>
                 <Map
                     state={{ center: center, zoom: 12 }}
@@ -64,11 +63,9 @@ const YandexMap = ({ setCity }: { setCity: Dispatch<SetStateAction<string>> }) =
                     }}
                     instanceRef={(map) => {
                         if (map) {
-                            if (isLogin) {
-                                const currentGlobalPixelCenter = map.getGlobalPixelCenter();
-                                const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 170];
-                                map.setGlobalPixelCenter(newGlobalPixelCenter);
-                            }
+                            const currentGlobalPixelCenter = map.getGlobalPixelCenter();
+                            const newGlobalPixelCenter = [currentGlobalPixelCenter[0], currentGlobalPixelCenter[1] + 170];
+                            map.setGlobalPixelCenter(newGlobalPixelCenter);
                         }
                     }}
                 >

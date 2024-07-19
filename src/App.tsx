@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from './components/Header/Header';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -13,7 +13,6 @@ import Profile from './pages/Profile/Profile';
 import Restaurants from './pages/Restaurants/Restaurants';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
-import { useCurrentUser } from './utils/hooks/useCurrentUser/useCurretUser';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import MealPage from './pages/MealPage/MealPage';
 import AboutUs from './components/AboutUs/AboutUs';
@@ -27,14 +26,10 @@ import LeaveOrderFeedback from './pages/LeaveOrderFeedback/LeaveOrderFeedback';
 function App() {
     const [city, setCity] = useState('');
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const { currentUser } = useCurrentUser();
 
     useEffect(() => {
-        if (currentUser && pathname === '/') {
-            navigate('/restaurants');
-        }
-    }, [currentUser, pathname, navigate]);
+        navigate('/restaurants');
+    }, [navigate]);
 
     return (
         <div>
