@@ -43,7 +43,11 @@ jobs:
                   echo "VITE_API_URL=${VITE_API_URL}" >> $GITHUB_ENV
                   echo "VITE_YNDX_API_KEY=${VITE_YNDX_API_KEY}" >> $GITHUB_ENV
 
-            - name: Deploy PR previews
-              uses: chvmvd/build-deploy-and-preview-action@v1.2.0
+            - name: Build project
+              run: npm run build
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
               with:
-                  type: vite
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist
