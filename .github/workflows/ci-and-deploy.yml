@@ -2,9 +2,9 @@ name: CI and Deploy
 
 on:
     push:
-        branches: ['main']
+        branches: ['main', 'master']
     pull_request:
-        branches: ['main']
+        branches: ['main', 'master']
         types: [opened, reopened, synchronize, closed]
     workflow_dispatch:
 
@@ -34,8 +34,13 @@ jobs:
                   VITE_API_URL: ${{ secrets.VITE_API_URL }}
                   VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
 
-            - name: secrets
-              run: echo "My key ${{ secrets.VITE_YNDX_API_KEY }}"
+            - name: Display environment variables
+              run: |
+                  echo "VITE_API_URL: ${{ secrets.VITE_API_URL }}"
+                  echo "VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}"
+              env:
+                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
 
     deploy:
         runs-on: ubuntu-latest
@@ -45,3 +50,14 @@ jobs:
               uses: chvmvd/build-deploy-and-preview-action@v1.2.0
               with:
                   type: vite
+              env:
+                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
+
+            - name: Verify environment variables
+              run: |
+                  echo "Deployed with VITE_API_URL: ${{ secrets.VITE_API_URL }}"
+                  echo "Deployed with VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}"
+              env:
+                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
