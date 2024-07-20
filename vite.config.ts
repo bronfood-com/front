@@ -4,5 +4,6 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react(), svgr()],
-    base: process.env.NODE_ENV === 'production' ? '/front/#/' : '',
+    // base: process.env.NODE_ENV === 'production' ? '/front/#/' : '',
+    base: process.env.NODE_ENV === 'production' ? process.env.VITE_BASE_PATH || '/' : '',
 });
