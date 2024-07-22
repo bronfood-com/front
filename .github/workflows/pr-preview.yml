@@ -1,42 +1,32 @@
 name: Deploy PR previews
 
 on:
+    push:
+        branches: [main, master]
     pull_request:
-        branches: ['main']
+        types:
+            - opened
+            - reopened
+            - synchronize
+            - closed
 
 permissions:
     contents: write
     pull-requests: write
 
+concurrency: ci-${{ github.ref }}
+
 jobs:
     build-deploy-and-preview:
         name: Deploy PR previews
         runs-on: ubuntu-latest
-
         steps:
             - uses: actions/checkout@v3
-
-            - name: Use Node.js
-              uses: actions/setup-node@v3
+            - name: Set environment variables
+              run: |
+                  echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
+                  echo "VITE_YNDX_API_KEY=${{ secrets.VITE_YNDX_API_KEY }}" >> $GITHUB_ENV
+            - name: Deploy PR previews
+              uses: chvmvd/build-deploy-and-preview-action@v1.2.0
               with:
-                  node-version: '18'
-                  cache: 'npm'
-
-            - run: npm ci
-
-            - run: npm run build
-              env:
-                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
-                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
-
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist
-
-            - name: Comment on PR with Preview Link
-              uses: thollander/actions-comment-pull-request@v1
-              with:
-                  message: 'Preview available at: https://bronfood-com.github.io/front/${{ github.head_ref }}'
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  type: vite
