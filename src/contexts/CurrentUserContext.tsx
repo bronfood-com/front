@@ -1,6 +1,6 @@
-import { createContext, FC, useState, PropsWithChildren, useEffect } from 'react';
+import { createContext, FC, useState, PropsWithChildren } from 'react';
 import { authService, LoginData, RegisterData, UpdateUser, User, UserExtra } from '../utils/api/authService';
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useMutation, UseMutationResult, useQuery, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 type CurrentUserContent = {
     currentUser: User | null;
@@ -11,6 +11,7 @@ type CurrentUserContent = {
     updateUser: UseMutationResult<{ data: { temp_data_code: string } }, Error, UpdateUser, unknown> | Record<string, never>;
     confirmSignUp: UseMutationResult<{ data: User }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
     confirmUpdateUser: UseMutationResult<{ data: UserExtra }, Error, { confirmation_code: string }, unknown> | Record<string, never>;
+    profile: UseQueryResult<User, Error> | Record<string, never>;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContent>({
@@ -22,26 +23,26 @@ export const CurrentUserContext = createContext<CurrentUserContent>({
     updateUser: {},
     confirmSignUp: {},
     confirmUpdateUser: {},
+    profile: {},
 });
 
 export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
-    const user = localStorage.getItem('user');
-    const [currentUser, setCurrentUser] = useState<User | null>(user && JSON.parse(user));
     const [serverSMSCode, setServerSMSCode] = useState<string>('');
-    const isLogin = !!currentUser;
-    const handleLogout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        setCurrentUser(null);
-    };
+    const token = localStorage.getItem('token');
+    const profile = useQuery({
+        queryKey: ['profile'],
+        queryFn: authService.checkAuthorization,
+        select: (data) => data.data,
+        staleTime: 1000 * 0,
+        retry: false,
+        enabled: !!token,
+    });
+
+    const isLogin = !!profile.data;
     const signIn = useMutation({
         mutationFn: (variables: LoginData) => authService.login(variables),
-        onSuccess: (res) => {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
-        },
-        onError: () => {
-            setCurrentUser(null);
+        onSuccess: () => {
+            profile.refetch();
         },
     });
     const signUp = useMutation({
@@ -50,37 +51,34 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     const confirmSignUp = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmRegisterPhone({ temp_data_code: serverSMSCode, confirmation_code: variables.confirmation_code }),
-        onSuccess: (res) => {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
+        onSuccess: () => {
             setServerSMSCode('');
-        },
-        onError: () => {
-            setCurrentUser(null);
         },
     });
     const updateUser = useMutation({
         mutationFn: (variables: UpdateUser) => authService.updateUser(variables),
     });
+
+    const client = useQueryClient();
     const confirmUpdateUser = useMutation({
         mutationFn: (variables: { confirmation_code: string }) => authService.confirmUpdateUser({ confirmation_code: variables.confirmation_code }),
-        onSuccess: (res) => {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            setCurrentUser(res.data);
+        onSuccess: () => {
+            client.invalidateQueries({ queryKey: ['profile'] });
         },
     });
+
     const logout = useMutation({
         mutationFn: () => authService.logOut(),
-        onSuccess: () => handleLogout(),
-        onError: () => handleLogout(),
+        onSuccess: () => {
+            client.removeQueries({ queryKey: ['profile'] });
+            profile.refetch();
+        },
     });
-    useEffect(() => {
-        setCurrentUser(user && JSON.parse(user));
-    }, [user]);
+
     return (
         <CurrentUserContext.Provider
             value={{
-                currentUser,
+                currentUser: profile.data || null,
                 isLogin,
                 signIn,
                 signUp,
@@ -88,6 +86,7 @@ export const CurrentUserProvider: FC<PropsWithChildren> = ({ children }) => {
                 updateUser,
                 confirmSignUp,
                 confirmUpdateUser,
+                profile,
             }}
         >
             {children}

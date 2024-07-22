@@ -1,4 +1,5 @@
 import { AuthServiceReal } from './authServiceReal';
+// import { AuthServiceMock } from './authServiceMock';
 
 /**
  11 digits string, no space, brackets, or +
@@ -45,6 +46,15 @@ export interface UserExtra {
     role?: 'CLIENT';
     auth_token: string;
 }
+export interface SuccessProfileResponse {
+    status: 'success';
+    data: User;
+}
+export interface ErrorProfileResponse {
+    status: 'error';
+    error_message: string;
+}
+
 export interface AuthService {
     login: ({ phone, password }: LoginData) => Promise<{ data: User }>;
 
@@ -57,6 +67,9 @@ export interface AuthService {
     confirmUpdateUser: ({ confirmation_code }: ConfirmUpdateUser) => Promise<{ data: UserExtra }>;
 
     logOut: () => Promise<void>;
+
+    checkAuthorization: () => Promise<{ data: User }>;
 }
 
+// export const authService = new AuthServiceMock();
 export const authService = new AuthServiceReal();
