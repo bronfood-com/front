@@ -21,6 +21,11 @@ jobs:
         name: Deploy PR previews
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v3
+            - name: Set up .env
+              run: |
+                  echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+                  echo "VITE_YNDX_API_KEY=${{ secrets.VITE_YNDX_API_KEY }}" >> .env
             - name: Deploy PR previews
               uses: chvmvd/build-deploy-and-preview-action@v1.2.0
               with:
