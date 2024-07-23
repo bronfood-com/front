@@ -17,6 +17,7 @@ jobs:
         strategy:
             matrix:
                 node-version: ['>=18']
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
             - uses: actions/checkout@v3
@@ -26,9 +27,10 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
             - run: npm ci
-            - name: Set environment variables
-              run: |
-                  echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
-                  echo "VITE_YNDX_API_KEY=${{ secrets.VITE_YNDX_API_KEY }}" >> $GITHUB_ENV
-                  echo "VITE_BASE_PATH=/front/pr-preview/pr-${{ github.event.number }}/" >> $GITHUB_ENV
             - run: npm run build
+              env:
+                  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+                  VITE_YNDX_API_KEY: ${{ secrets.VITE_YNDX_API_KEY }}
+
+            - name: secrets
+              run: echo "My key ${{ secrets.VITE_YNDX_API_KEY }}"
