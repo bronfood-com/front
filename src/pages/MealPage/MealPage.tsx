@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
 import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 import MealPopup from './MealPopup/MealPopup';
 import MealImage from './MealImage/MealImage';
@@ -9,20 +8,20 @@ import MealDescription from './MealDescription/MealDescription';
 import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
-import { Feature, Meal, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
+import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
 import { sumBy } from 'lodash';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { restaurantsOnMap, restaurant } = useRestaurants();
+    const { data: meals } = useMeals(params.restaurantId);
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
-    const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
-    const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
+    const meal: Meal | undefined = meals.find((meal) => meal.id === params.mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
@@ -71,7 +70,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal({ restaurantId: restaurant?.id, mealId: meal.id, features: newFeatures });
+            await addMeal({ restaurantId: params.restaurantId, mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (

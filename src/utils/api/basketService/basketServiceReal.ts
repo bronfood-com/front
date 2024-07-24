@@ -1,6 +1,7 @@
 import { BasketService, Basket } from './basketService';
 import { Feature } from '../restaurantsService/restaurantsService';
 import { handleFetch } from '../../serviceFuncs/handleFetch';
+import { OrderState } from '../orderService/orderService';
 
 export class BasketServiceReal implements BasketService {
     async getBasket(): Promise<{ data: Basket }> {
@@ -14,5 +15,8 @@ export class BasketServiceReal implements BasketService {
     }
     async emptyBasket(): Promise<{ data: Basket }> {
         return handleFetch('api/basket/empty');
+    }
+    async placeOrder(userId: string, restaurantId: string): Promise<OrderState> {
+        return handleFetch('api/orders', { method: 'POST', data: { restaurantId, userId } });
     }
 }
