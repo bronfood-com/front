@@ -21,7 +21,7 @@ function Restaurant() {
     const { restaurantId } = useParams();
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
     const { data: meals, isLoading: mealsLoading } = useMeals(restaurantId);
-    console.log(meals);
+
     useEffect(() => {
         if (restaurantId) {
             setActiveRestaurant(restaurantId);

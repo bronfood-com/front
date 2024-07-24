@@ -37,11 +37,11 @@ type BasketContext = {
     /**
      * Add meal to basket
      */
-    addMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    addMeal: (variables: { restaurantId: string; mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Delete meal from basket
      */
-    deleteMeal: (variables: { mealId: string; features: Feature[] | never[] }) => void;
+    deleteMeal: (variables: { restaurantId: string; mealId: string; features: Feature[] | never[] }) => void;
     /**
      * Removes restaurant and all meals from basket on client and server side
      */
@@ -93,7 +93,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         isPending: addMealPending,
         reset: resetAddMeal,
     } = useMutation({
-        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.addMeal(mealId, features),
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.addMeal(restaurantId, mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);
@@ -104,7 +104,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         isPending: deleteMealPending,
         reset: resetDeleteMeal,
     } = useMutation({
-        mutationFn: ({ mealId, features }: { mealId: string; features: Feature[] }) => basketService.deleteMeal(mealId, features),
+        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.deleteMeal(restaurantId, mealId, features),
         onSuccess: (result) => queryClient.setQueryData(['basket'], result),
         onError: (error) => {
             setErrorMessage(error.message);

@@ -17,7 +17,7 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { restaurantsOnMap } = useRestaurants();
+    const { restaurantsOnMap, restaurant } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
@@ -71,7 +71,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal({ mealId: meal.id, features: newFeatures });
+            await addMeal({ restaurantId: restaurant?.id, mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (

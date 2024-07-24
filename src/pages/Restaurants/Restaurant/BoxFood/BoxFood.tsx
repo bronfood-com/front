@@ -6,11 +6,13 @@ import { Meal } from '../../../../utils/api/restaurantsService/restaurantsServic
 import { useBasket } from '../../../../utils/hooks/useBasket/useBasket';
 import { API_URL } from '../../../../utils/consts';
 import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
+import { useRestaurants } from '../../../../utils/hooks/useRestaurants/useRestaurants';
 
 function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const { restaurant } = useRestaurants();
     const { addMeal, isLoading } = useBasket();
     const hasFeatures = features && features.length > 0;
     const { isLogin } = useCurrentUser();
@@ -21,7 +23,7 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
                 navigate(`${pathname}/meal/${id}`);
                 setIsMealPageOpen(true);
             } else {
-                addMeal({ mealId: id, features: features || [] });
+                addMeal({ restaurantId: restaurant?.id, mealId: id, features: features || [] });
             }
         } else {
             navigate(`/signin`);

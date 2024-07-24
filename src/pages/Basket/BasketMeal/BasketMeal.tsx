@@ -3,10 +3,12 @@ import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
+import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price, features = [] } = meal;
+    const { restaurant } = useRestaurants();
     const mealPrice =
         features.length > 0
             ? sumBy(features, (feature) => {
@@ -49,7 +51,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     </div>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal({ mealId: id, features })} decrement={() => deleteMeal({ mealId: id, features })} />
+                    <Counter count={count} increment={() => addMeal({ restaurantId: restaurant?.id, mealId: id, features })} decrement={() => deleteMeal({ restaurantId: restaurant?.id, mealId: id, features })} />
                 </div>
             </div>
         </div>
