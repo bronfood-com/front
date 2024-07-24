@@ -198,6 +198,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     });
     useEffect(() => {
         if (fetchedRestaurant) {
+            console.log(fetchedRestaurant);
             setRestaurant(fetchedRestaurant);
         }
     }, [fetchedRestaurant]);
