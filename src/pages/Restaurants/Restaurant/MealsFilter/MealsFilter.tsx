@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './MealsFilter.module.scss';
 import { MealType } from '../../../../utils/api/restaurantsService/restaurantsService';
 import ChipWithIcon from './ChipWithIcon/ChipWithIcon';
+import { mealTypes as types } from '../../../../utils/consts';
 
 type MealsFilterProps = {
     selectedTypes: MealType[];
@@ -10,7 +11,6 @@ type MealsFilterProps = {
 };
 
 function MealsFilter({ selectedTypes, addType, deleteType }: MealsFilterProps) {
-    const types: MealType[] = ['food', 'drink', 'dessert'];
     const { t } = useTranslation();
     return (
         <ul className={`${styles.meals_filter}`}>
