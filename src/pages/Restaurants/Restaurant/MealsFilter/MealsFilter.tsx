@@ -4,13 +4,13 @@ import { MealType } from '../../../../utils/api/restaurantsService/restaurantsSe
 import ChipWithIcon from './ChipWithIcon/ChipWithIcon';
 
 type MealsFilterProps = {
-    types: MealType[];
     selectedTypes: MealType[];
     addType: (type: MealType) => void;
     deleteType: (type: MealType) => void;
 };
 
-function MealsFilter({ types, selectedTypes, addType, deleteType }: MealsFilterProps) {
+function MealsFilter({ selectedTypes, addType, deleteType }: MealsFilterProps) {
+    const types: MealType[] = ['food', 'drink', 'dessert'];
     const { t } = useTranslation();
     return (
         <ul className={`${styles.meals_filter}`}>

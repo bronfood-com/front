@@ -59,7 +59,6 @@ function Restaurant() {
         return null;
     }
 
-    const types = restaurant.meals.map(({ type }) => type).filter((type, i, ar) => ar.indexOf(type) === i);
     const mealsFiltered = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
 
     return (
@@ -67,7 +66,7 @@ function Restaurant() {
             <RestaurantPopup close={close} isMealPageOpen={isMealPageOpen} setIsMealPageOpen={setIsMealPageOpen} restaurant={restaurant}>
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
-                <MealsFilter types={types} selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
+                <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
                 <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />
                 {isBasketLoading && <Preloader />}
             </RestaurantPopup>
