@@ -12,6 +12,7 @@ import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { useMeals } from '../../../utils/hooks/useMeals/useMeals';
 
 function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
@@ -19,7 +20,7 @@ function Restaurant() {
     const navigate = useNavigate();
     const { restaurantId } = useParams();
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
-
+    const { data: meals, isLoading: mealsLoading } = useMeals(restaurantId);
     useEffect(() => {
         if (restaurantId) {
             setActiveRestaurant(restaurantId);
@@ -59,7 +60,7 @@ function Restaurant() {
         return null;
     }
 
-    const mealsFiltered = selectedMealTypes.length === 0 ? restaurant.meals : restaurant.meals.filter((meal) => selectedMealTypes.includes(meal.type));
+    const mealsFiltered = selectedMealTypes.length === 0 ? meals : meals.filter((meal) => selectedMealTypes.includes(meal.type));
 
     return (
         <>
@@ -67,7 +68,7 @@ function Restaurant() {
                 <RestaurantImage image={restaurant.photo} />
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
-                <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />
+                {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />}
                 {isBasketLoading && <Preloader />}
             </RestaurantPopup>
             <Outlet />
