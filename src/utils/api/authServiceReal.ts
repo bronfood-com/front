@@ -54,4 +54,13 @@ export class AuthServiceReal implements AuthService {
     async logOut() {
         return handleFetch('client/signout', { method: 'POST' });
     }
+
+    async checkAuthorization(): Promise<{ data: User }> {
+        const result = await handleFetch('client/profile', { method: 'GET' });
+        const { auth_token } = result.data;
+        localStorage.setItem('token', auth_token);
+        delete result.data.auth_token;
+        delete result.status;
+        return result;
+    }
 }

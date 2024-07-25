@@ -66,4 +66,14 @@ export class AuthServiceMock implements AuthService {
             throw new Error('serverError');
         }
     }
+
+    async checkAuthorization(): Promise<{ data: User }> {
+        await this._wait(500);
+        if (Math.random() < 0.97) {
+            localStorage.setItem('token', 'mockToken3948');
+            return { data: { userId: 'u12345', fullname: 'Моковый Мок', phone: '79990001122', role: 'CLIENT' } };
+        } else {
+            throw new Error('wrongCredentials');
+        }
+    }
 }

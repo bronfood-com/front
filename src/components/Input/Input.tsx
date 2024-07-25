@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './Input.module.scss';
 import { useId } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
@@ -44,13 +44,17 @@ interface Input {
 }
 
 const Input: FC<Input> = (props) => {
-    const [inputValue, setInputValue] = useState(props.value === undefined ? '' : props.value);
+    const [inputValue, setInputValue] = useState<string>(props.value ?? '');
     const { t } = useTranslation();
     const errorMessage = (props.errors[props.name]?.message as string) || undefined;
     const id = useId();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
+
+    useEffect(() => {
+        if (props.value) setInputValue(props.value);
+    }, [props.value]);
 
     return (
         <div className={styles.input}>
