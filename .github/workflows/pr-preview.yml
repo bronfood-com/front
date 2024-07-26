@@ -1,9 +1,14 @@
 name: Deploy PR previews
 
 on:
-    pull_request:
+    push:
         branches: [main, master]
-        types: [opened, reopened, synchronize]
+    pull_request:
+        types:
+            - opened
+            - reopened
+            - synchronize
+            - closed
 
 permissions:
     contents: write
@@ -16,16 +21,6 @@ jobs:
         name: Deploy PR previews
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js 18.x
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '18.x'
-                  cache: 'npm'
-            - name: Set PR number
-              run: echo "PULL_REQUEST_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-            - run: npm ci
-            - run: npm run build
             - name: Deploy PR previews
               uses: chvmvd/build-deploy-and-preview-action@v1.2.0
               with:
