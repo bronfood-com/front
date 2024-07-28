@@ -1,14 +1,9 @@
 name: Deploy PR previews
 
 on:
-    push:
-        branches: [main, master]
     pull_request:
-        types:
-            - opened
-            - reopened
-            - synchronize
-            - closed
+        branches: [main, master]
+        types: [opened, reopened, synchronize]
 
 permissions:
     contents: write
@@ -18,10 +13,24 @@ concurrency: ci-${{ github.ref }}
 
 jobs:
     build-deploy-and-preview:
-        name: Deploy PR previews
         runs-on: ubuntu-latest
+
         steps:
-            - name: Deploy PR previews
-              uses: chvmvd/build-deploy-and-preview-action@v1.2.0
+            - uses: actions/checkout@v3
+
+            - name: Use Node.js
+              uses: actions/setup-node@v3
               with:
-                  type: vite
+                  node-version: '18'
+
+            - run: npm ci
+            - run: npm run build
+              env:
+                  GITHUB_REF: ${{ github.ref }}
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist
+                  destination_dir: pr-preview/${{ github.event.number }}
