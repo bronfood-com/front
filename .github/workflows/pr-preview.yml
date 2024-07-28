@@ -26,7 +26,7 @@ jobs:
             - run: npm ci
             - run: npm run build
               env:
-                  GITHUB_REF: ${{ github.ref }}
+                  VITE_BASE_URL: /front/pr-preview/${{ github.event.number }}/
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3

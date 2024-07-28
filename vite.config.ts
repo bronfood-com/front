@@ -4,5 +4,5 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react(), svgr()],
-    base: process.env.GITHUB_REF ? `/front/pr-preview/${process.env.GITHUB_REF}/` : '/',
+    base: process.env.VITE_BASE_URL || '/',
 });
