@@ -11,7 +11,7 @@ import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsSer
 import { sumBy } from 'lodash';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
-import { useBasketMutations } from '../../utils/hooks/useBasket/useBasketHooks';
+import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);

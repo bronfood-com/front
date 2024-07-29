@@ -6,7 +6,7 @@ import { Meal } from '../../../../utils/api/restaurantsService/restaurantsServic
 import { API_URL } from '../../../../utils/consts';
 import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 import { useRestaurants } from '../../../../utils/hooks/useRestaurants/useRestaurants';
-import { useBasketMutations } from '../../../../utils/hooks/useBasket/useBasketHooks';
+import { useBasketMutations } from '../../../../utils/hooks/useBasket/useBasket';
 
 function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './BasketConfirmation.module.scss';
 import ConfirmationPopup from '../../../components/Popups/ConfirmationPopup/ConfirmationPopup';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
-import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasketHooks';
+import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
 const BasketConfirmation = ({ close }: { close: () => void }) => {
     const { emptyBasket } = useBasketMutations();

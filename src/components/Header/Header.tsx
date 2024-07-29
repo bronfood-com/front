@@ -4,7 +4,7 @@ import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useGetBasket } from '../../utils/hooks/useBasket/useBasketHooks';
+import { useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const Header = ({ city }: { city: string }) => {
     const menuRef = useRef<HTMLDivElement>(null);

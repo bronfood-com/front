@@ -3,7 +3,7 @@ import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
-import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasketHooks';
+import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;

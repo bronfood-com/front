@@ -11,7 +11,7 @@ import BasketMealsList from './BasketMealsList/BasketMealsList';
 import BasketPopup from './BasketPopup/BasketPopup';
 import BasketRestaurant from './BasketRestaurant/BasketRestaurant';
 import BasketTotal from './BasketTotal/BasketTotal';
-import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasketHooks';
+import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
 
