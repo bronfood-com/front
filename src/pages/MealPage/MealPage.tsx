@@ -9,7 +9,6 @@ import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
 import { sumBy } from 'lodash';
-import PageNotFound from '../PageNotFound/PageNotFound';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 
@@ -21,7 +20,7 @@ function MealPage() {
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(params.restaurantId);
-    const meals = isSuccess && data.meals;
+    const meals = isSuccess && data.data;
     const meal: Meal | undefined = meals.find((meal) => meal.id == params.mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
@@ -81,13 +80,13 @@ function MealPage() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={features} />
-                        <MealTotal price={price} buttonDisabled={isLoading} />
+                        <MealTotal price={price} buttonDisabled={addMeal.isPending} />
                         {addMeal.isPending && <Preloader />}
                     </MealPopup>
                 </form>
             </FormProvider>
         );
-    } else return <PageNotFound />;
+    } else return null;
 }
 
 export default MealPage;
