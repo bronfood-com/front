@@ -21,7 +21,7 @@ function Restaurant() {
     const { restaurantId } = useParams();
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
     const { data, isLoading: mealsLoading, isSuccess } = useMeals(restaurantId);
-    const meals = isSuccess && data.meals;
+    const meals = isSuccess && data.data;
     useEffect(() => {
         if (restaurantId) {
             setActiveRestaurant(restaurantId);
