@@ -70,7 +70,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal({ restaurantId: params.restaurantId, mealId: meal.id, features: newFeatures });
+            await addMeal.mutateAsync({ restaurantId: params.restaurantId, mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (
