@@ -120,9 +120,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const isEmpty = Object.keys(restaurant).length === 0;
     const reset = () => {
         setErrorMessage('');
-        resetAddMeal();
-        resetDeleteMeal();
-        resetEmptyBasket();
+        addMeal.reset();
+        deleteMeal.reset();
+        emptyBasket.reset();
     };
     return (
         <BasketContext.Provider
