@@ -112,10 +112,6 @@ export type Restaurant = {
      */
     isLiked: boolean;
     /**
-     * Array of venue's meals available for order
-     */
-    meals: Meal[];
-    /**
      * Venue's type
      */
     type: 'fastFood' | 'cafe' | 'cafeBar';
