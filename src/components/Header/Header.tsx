@@ -4,14 +4,15 @@ import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
+import { useGetBasket } from '../../utils/hooks/useBasket/useBasketHooks';
 
 const Header = ({ city }: { city: string }) => {
     const menuRef = useRef<HTMLDivElement>(null);
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
-    const { meals } = useBasket();
+    const { data, isSuccess } = useGetBasket();
+    const meals = isSuccess && data.data.meals;
     const handleMenuActive = () => {
         setIsMenuActive(!isMenuActive);
     };

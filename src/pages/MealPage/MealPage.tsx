@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 import MealPopup from './MealPopup/MealPopup';
 import MealImage from './MealImage/MealImage';
 import MealDescription from './MealDescription/MealDescription';
@@ -12,12 +11,13 @@ import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsSer
 import { sumBy } from 'lodash';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
+import { useBasketMutations } from '../../utils/hooks/useBasket/useBasketHooks';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { addMeal, isLoading } = useBasket();
+    const { addMeal } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(params.restaurantId);
@@ -82,7 +82,7 @@ function MealPage() {
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={features} />
                         <MealTotal price={price} buttonDisabled={isLoading} />
-                        {isLoading && <Preloader />}
+                        {addMeal.isPending && <Preloader />}
                     </MealPopup>
                 </form>
             </FormProvider>

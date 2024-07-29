@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import BasketConfirmation from './BasketConfirmation/BasketConfirmation';
 import BasketDescription from './BasketDescription/BasketDescription';
@@ -12,12 +11,38 @@ import BasketMealsList from './BasketMealsList/BasketMealsList';
 import BasketPopup from './BasketPopup/BasketPopup';
 import BasketRestaurant from './BasketRestaurant/BasketRestaurant';
 import BasketTotal from './BasketTotal/BasketTotal';
+import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasketHooks';
+import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
+import { MealInBasket } from '../../utils/api/basketService/basketService';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { isEmpty, restaurant, meals, price, waitingTime, isLoading, placeOrder, errorMessage, placedOrder, reset } = useBasket();
+    const { addMeal, deleteMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
+    const { data, isSuccess } = useGetBasket();
+    const restaurant: Restaurant = (isSuccess && data?.data?.restaurant) || {};
+    const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
+    const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
+    const isEmpty = Object.keys(restaurant).length === 0;
+    const price = meals.reduce((acc, current) => {
+        if (current.meal.features && current.meal.features.length > 0) {
+            return (
+                acc +
+                current.count *
+                    sumBy(current.meal.features, (feature) => {
+                        const isChosen = feature.choices.some((choice) => choice.chosen);
+                        if (isChosen) {
+                            return feature.choices.filter((choice) => choice.chosen)[0].price;
+                        } else {
+                            return feature.choices.filter((choice) => choice.default)[0].price;
+                        }
+                    })
+            );
+        }
+        return acc + current.count * current.meal.price;
+    }, 0);
+    const isLoading = addMeal.isPending || deleteMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
     const close = () => {
@@ -25,13 +50,14 @@ function Basket() {
         navigate(-1);
     };
     useEffect(() => {
-        if (placedOrder) {
-            navigate('/waiting-order', { state: { placedOrder } });
+        if (placeOrder.data) {
+            const order = placeOrder.data;
+            navigate('/waiting-order', { state: { order } });
         }
-    }, [placedOrder, navigate]);
+    }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
         if (userId) {
-            await placeOrder(userId, restaurant!.id);
+            await placeOrder.mutate(userId, restaurant!.id);
         }
     };
     return (

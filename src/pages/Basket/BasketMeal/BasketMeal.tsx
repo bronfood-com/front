@@ -2,8 +2,8 @@ import { sumBy } from 'lodash';
 import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
-import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
+import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasketHooks';
 
 function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const { meal, count } = mealInBasket;
@@ -26,7 +26,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
     const toppings = features.filter((feature) => feature.name !== featureName);
     const sizeFeature = features.find((feature) => feature.name === featureName);
     const size = sizeFeature ? sizeFeature.choices.find((choice) => choice.chosen)?.name : null;
-    const { addMeal, deleteMeal } = useBasket();
+    const { addMeal, deleteMeal } = useBasketMutations();
     return (
         <div className={`${styles.basket_meal}`}>
             <div className={styles.basket_meal__container}>
@@ -51,7 +51,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     </div>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal({ restaurantId: restaurant?.id, mealId: id, features })} decrement={() => deleteMeal({ restaurantId: restaurant?.id, mealId: id, features })} />
+                    <Counter count={count} increment={() => addMeal.mutateAsync({ restaurantId: restaurant?.id, mealId: id, features })} decrement={() => deleteMeal.mutateAsync({ restaurantId: restaurant?.id, mealId: id, features })} />
                 </div>
             </div>
         </div>

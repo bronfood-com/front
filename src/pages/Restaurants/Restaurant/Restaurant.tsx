@@ -8,7 +8,6 @@ import MealsFilter from './MealsFilter/MealsFilter';
 import Preloader from '../../../components/Preloader/Preloader';
 import PageNotFound from '../../PageNotFound/PageNotFound';
 import { MealType } from '../../../utils/api/restaurantsService/restaurantsService';
-import { useBasket } from '../../../utils/hooks/useBasket/useBasket';
 import useGetFavorites from '../../../utils/hooks/useFavorites/useFavorites';
 import styles from './RestaurantPopup/RestaurantPopup.module.scss';
 import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
@@ -20,7 +19,7 @@ function Restaurant() {
     const navigate = useNavigate();
     const { restaurantId } = useParams();
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
-    const { data, isLoading: mealsLoading, isSuccess } = useMeals(restaurantId);
+    const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
     useEffect(() => {
         if (restaurantId) {
@@ -28,7 +27,6 @@ function Restaurant() {
         }
     }, [restaurantId, setActiveRestaurant]);
 
-    const { isLoading: isBasketLoading } = useBasket();
     const { data: favoriteRestaurants, isLoading: favoritesLoading } = useGetFavorites();
 
     const close = () => {
@@ -42,8 +40,7 @@ function Restaurant() {
     const deleteMealType = (mealType: MealType) => {
         setSelectedMealTypes(selectedMealTypes.filter((type) => type !== mealType));
     };
-
-    if (restaurantLoading || favoritesLoading || isBasketLoading) {
+    if (restaurantLoading || favoritesLoading) {
         return (
             <div className={styles.restaurant_popup_overlay}>
                 <div className={styles.restaurant_popup}>
@@ -70,7 +67,6 @@ function Restaurant() {
                 <RestaurantDescription name={restaurant.name} address={restaurant.address} workingTime={restaurant.workingTime} rating={restaurant.rating} reviews="(123+)" />
                 <MealsFilter selectedTypes={selectedMealTypes} addType={addMealType} deleteType={deleteMealType} />
                 {mealsLoading ? <Preloader /> : <MealsList meals={mealsFiltered} setIsMealPageOpen={setIsMealPageOpen} />}
-                {isBasketLoading && <Preloader />}
             </RestaurantPopup>
             <Outlet />
         </>
