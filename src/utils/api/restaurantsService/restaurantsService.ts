@@ -117,15 +117,6 @@ export type Restaurant = {
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
-/**
- * Type to represent a restaurant with all list of meals from api
- */
-export type RestaurantWithMeals = Omit<Restaurant, 'meals'> & {
-    /**
-     * Array of venue's meals available
-     */
-    meals: Meal[];
-};
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
     getRestaurantById(id: string): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
