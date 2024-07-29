@@ -2,8 +2,9 @@ import { createContext, FC, PropsWithChildren, useState } from 'react';
 import { Feature, Restaurant } from '../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket, basketService } from '../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { OrderState } from '../utils/api/orderService/orderService';
+import { useBasketMutations, useGetBasket } from '../utils/hooks/useBasket/useBasketHooks';
 
 type BasketContext = {
     /**
@@ -80,47 +81,12 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
     const [placedOrder, setPlacedOrder] = useState<OrderState | null>(null);
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState('');
-    const { data, isSuccess } = useQuery({
-        queryKey: ['basket'],
-        queryFn: () => basketService.getBasket(),
-    });
+    const { data, isSuccess } = useGetBasket();
     // To ensure that `restaurant` is an empty object if data is not yet loaded or there's no restaurant data
     const restaurant = (isSuccess && data?.data?.restaurant) || {};
     // To ensure that `meals` is an empty array if data is not yet loaded or there's no meals data
     const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
-    const {
-        mutate: addMeal,
-        isPending: addMealPending,
-        reset: resetAddMeal,
-    } = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.addMeal(restaurantId, mealId, features),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
-        onError: (error) => {
-            setErrorMessage(error.message);
-        },
-    });
-    const {
-        mutate: deleteMeal,
-        isPending: deleteMealPending,
-        reset: resetDeleteMeal,
-    } = useMutation({
-        mutationFn: ({ restaurantId, mealId, features }: { restaurantId: string; mealId: string; features: Feature[] }) => basketService.deleteMeal(restaurantId, mealId, features),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
-        onError: (error) => {
-            setErrorMessage(error.message);
-        },
-    });
-    const {
-        mutate: emptyBasket,
-        isPending: emptyBasketPending,
-        reset: resetEmptyBasket,
-    } = useMutation({
-        mutationFn: () => basketService.emptyBasket(),
-        onSuccess: (result) => queryClient.setQueryData(['basket'], result),
-        onError: (error) => {
-            setErrorMessage(error.message);
-        },
-    });
+    const { addMeal, deleteMeal, emptyBasket } = useBasketMutations();
     const { mutate: placeOrder, isPending: placeOrderPending } = useMutation({
         mutationFn: ({ userId, restaurantId }: { userId: string; restaurantId: string }) => basketService.placeOrder(userId, restaurantId),
         onSuccess: (result) => {
@@ -131,7 +97,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
             setErrorMessage(error.message);
         },
     });
-    const isLoading = addMealPending || deleteMealPending || emptyBasketPending || placeOrderPending;
+    const isLoading = addMeal.isPending || deleteMeal.isPending || emptyBasket.isPending || placeOrderPending;
     const price = meals.reduce((acc, current) => {
         if (current.meal.features && current.meal.features.length > 0) {
             return (
@@ -168,9 +134,9 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
                 errorMessage,
                 waitingTime,
                 price,
-                addMeal,
-                deleteMeal,
-                emptyBasket,
+                addMeal: addMeal.mutateAsync,
+                deleteMeal: deleteMeal.mutateAsync,
+                emptyBasket: emptyBasket.mutateAsync,
                 placeOrder: (userId) => placeOrder({ userId, restaurantId: restaurant.id }),
                 placedOrder,
                 reset,
