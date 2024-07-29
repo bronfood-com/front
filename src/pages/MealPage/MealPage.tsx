@@ -17,11 +17,13 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    const { data: meals } = useMeals(params.restaurantId);
+    /* const { data: meals } = useMeals(params.restaurantId); */
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
-    const meal: Meal | undefined = meals.find((meal) => meal.id === params.mealId);
+    const { data, isSuccess } = useMeals(params.restaurantId);
+    const meals = isSuccess && data.meals;
+    const meal: Meal | undefined = meals.find((meal) => meal.id == params.mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
