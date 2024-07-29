@@ -17,7 +17,6 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const params = useParams();
-    /* const { data: meals } = useMeals(params.restaurantId); */
     const { addMeal, isLoading } = useBasket();
     const methods = useForm();
     const { watch } = methods;
