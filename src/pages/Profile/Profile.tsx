@@ -13,8 +13,8 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Preloader from '../../components/Preloader/Preloader';
-import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import SMSVerify from '../../components/SMSVerify/SMSVerify';
 
 const Profile = () => {
     const {
@@ -52,7 +52,7 @@ const Profile = () => {
     return (
         <>
             {isConfirmOpen ? (
-                <SMSConfirm onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} error={confirmUpdateUser.error?.message} isConfirmErrorVisible={confirmUpdateUser.isError} onSubmit={confirm} />
+                <SMSVerify onClose={confirmUpdateUser.reset} isLoading={confirmUpdateUser.isPending} isErrorVisible={confirmUpdateUser.isError} error={confirmUpdateUser.error?.message} onSubmit={confirm} />
             ) : (
                 <Popup
                     title={t('pages.profile.title')}

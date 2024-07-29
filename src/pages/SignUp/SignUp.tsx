@@ -14,8 +14,8 @@ import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
 import Preloader from '../../components/Preloader/Preloader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
-import SMSConfirm from '../../components/SMSConfirm/SMSConfirm';
 import PopupSignupSuccess from './PopupSignupSuccess/PopupSignupSuccess';
+import SMSVerify from '../../components/SMSVerify/SMSVerify';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -41,9 +41,9 @@ const SignUp = () => {
 
     return (
         <>
-            {isConfirmOpen ? (
-                <SMSConfirm onClose={confirmSignUp.reset} isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} isConfirmErrorVisible={confirmSignUp.isError} onSubmit={confirm} isInfoPopupOpen={isInfoPopupOpen} popupSuccessOpened={<PopupSignupSuccess isOpened={isInfoPopupOpen} />} />
-            ) : (
+            {isConfirmOpen && isInfoPopupOpen && <PopupSignupSuccess isOpened={isInfoPopupOpen} />}
+            {isConfirmOpen && !isInfoPopupOpen && <SMSVerify onClose={confirmSignUp.reset} isErrorVisible={confirmSignUp.isError} isLoading={confirmSignUp.isPending} error={confirmSignUp.error?.message} onSubmit={confirm} />}
+            {!isConfirmOpen && (
                 <Popup
                     title={t('pages.signUp.signUpHeading')}
                     onClose={() => {
