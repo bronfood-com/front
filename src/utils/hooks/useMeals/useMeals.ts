@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { Meal } from '../../api/restaurantsService/restaurantsService';
-import { handleFetch } from '../../serviceFuncs/handleFetch';
+import { restaurantsService } from '../../api/restaurantsService/restaurantsService';
 
 export const useMeals = (restaurantId: string) => {
     return useQuery({
         queryKey: ['meals', restaurantId],
-        queryFn: async (): Promise<Array<Meal>> => handleFetch(`api/restaurant/${restaurantId}/menu`),
+        queryFn: () => restaurantsService.getMeals(restaurantId),
     });
 };

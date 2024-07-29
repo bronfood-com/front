@@ -1,5 +1,5 @@
 import { handleFetch } from '../../serviceFuncs/handleFetch';
-import { Restaurant, RestaurantsService } from './restaurantsService';
+import { Meal, Restaurant, RestaurantsService } from './restaurantsService';
 
 export class RestaurantsServiceReal implements RestaurantsService {
     private _restaurantsCache: Restaurant[] | null = null;
@@ -31,5 +31,9 @@ export class RestaurantsServiceReal implements RestaurantsService {
             status: 'success',
             data: restaurant.data,
         };
+    }
+
+    async getMeals(restaurantId: string): Promise<{ status: 'success'; data: Meal[] } | { status: 'error'; error_message: string }> {
+        return handleFetch(`api/restaurant/${restaurantId}/menu`);
     }
 }
