@@ -132,6 +132,7 @@ export type RestaurantWithMeals = Omit<Restaurant, 'meals'> & {
 };
 export interface RestaurantsService {
     getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
+    getRestaurantById(id: string): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();
