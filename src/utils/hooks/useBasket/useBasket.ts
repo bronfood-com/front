@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { basketService } from '../../api/basketService/basketService';
+import { Feature } from '../../api/restaurantsService/restaurantsService';
 
 export const useGetBasket = () => {
     return useQuery({

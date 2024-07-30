@@ -14,6 +14,7 @@ import BasketTotal from './BasketTotal/BasketTotal';
 import { useBasketMutations, useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 import { Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
 import { MealInBasket } from '../../utils/api/basketService/basketService';
+import { sumBy } from 'lodash';
 
 function Basket() {
     const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
@@ -21,8 +22,8 @@ function Basket() {
     const navigate = useNavigate();
     const { addMeal, deleteMeal, emptyBasket, errorMessage, reset, placeOrder } = useBasketMutations();
     const { data, isSuccess } = useGetBasket();
-    const restaurant: Restaurant = (isSuccess && data?.data?.restaurant) || {};
-    const meals: MealInBasket[] = (isSuccess && data?.data?.meals) || [];
+    const restaurant: Restaurant | Record<string, never> = isSuccess ? data.data.restaurant : {};
+    const meals: MealInBasket[] = isSuccess ? data.data.meals : [];
     const waitingTime = meals.some((meal) => meal.count > 0) ? Math.max(...meals.map(({ meal, count }) => (count > 0 ? meal.waitingTime : 0))) : 0;
     const isEmpty = Object.keys(restaurant).length === 0;
     const price = meals.reduce((acc, current) => {
@@ -45,6 +46,7 @@ function Basket() {
     const isLoading = addMeal.isPending || deleteMeal.isPending || emptyBasket.isPending;
     const { currentUser } = useCurrentUser();
     const userId = currentUser?.userId;
+    const restaurantId = restaurant.id;
     const close = () => {
         reset();
         navigate(-1);
@@ -57,7 +59,7 @@ function Basket() {
     }, [placeOrder, navigate]);
     const handlePayOrder = async () => {
         if (userId) {
-            await placeOrder.mutate(userId, restaurant!.id);
+            await placeOrder.mutate({ userId, restaurantId });
         }
     };
     return (
@@ -69,7 +71,7 @@ function Basket() {
                     <>
                         <BasketDescription waitingTime={waitingTime}>{restaurant && <BasketRestaurant restaurant={restaurant} emptyBasket={() => setIsConfirmationPopupOpen(true)} />}</BasketDescription>
                         {errorMessage && <ErrorMessage message={t(`pages.basket.${errorMessage}`)} />}
-                        <BasketMealsList meals={meals} />
+                        <BasketMealsList meals={meals} restaurantId={restaurantId} />
                         <BasketTotal price={price} onPayOrderClick={handlePayOrder} />
                     </>
                 )}

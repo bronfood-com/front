@@ -118,9 +118,9 @@ export type Restaurant = {
 };
 
 export interface RestaurantsService {
-    getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
-    getRestaurantById(id: string): Promise<{ status: 'success'; data: Restaurant } | { status: 'error'; error_message: string }>;
-    getMeals(restaurantId: string): Promise<{ status: 'success'; data: Meal[] } | { status: 'error'; error_message: string }>;
+    getRestaurants: () => Promise<{ data: Restaurant[] }>;
+    getRestaurantById(id: string): Promise<{ data: Restaurant }>;
+    getMeals(restaurantId: string): Promise<{ data: Meal[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();

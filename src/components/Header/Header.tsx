@@ -58,7 +58,7 @@ const Header = ({ city }: { city: string }) => {
                             <Link to="/basket">
                                 <div className={styles.header__basket}>
                                     <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                                    {meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
+                                    {meals && meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
                                 </div>
                             </Link>
                         </>

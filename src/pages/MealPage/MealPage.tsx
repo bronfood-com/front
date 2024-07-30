@@ -15,13 +15,13 @@ import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
-    const params = useParams();
+    const { restaurantId = '', mealId = '' } = useParams();
     const { addMeal } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
-    const { data, isSuccess } = useMeals(params.restaurantId);
+    const { data, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
-    const meal: Meal | undefined = meals.find((meal) => meal.id == params.mealId);
+    const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
@@ -31,7 +31,7 @@ function MealPage() {
         }
     });
     const goBack = () => {
-        navigate(`/restaurants/${params.restaurantId}`);
+        navigate(`/restaurants/${restaurantId}`);
     };
     const close = () => {
         navigate('/restaurants');
@@ -52,7 +52,7 @@ function MealPage() {
     }, [watch, features]);
 
     useEffect(() => {
-        if (meal?.features) {
+        if (meal && meal?.features) {
             setFeatures(meal.features);
         } else {
             setFeatures([]);
@@ -70,7 +70,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal.mutateAsync({ restaurantId: params.restaurantId, mealId: meal.id, features: newFeatures });
+            await addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
             goBack();
         };
         return (

@@ -1,4 +1,3 @@
-// import { BasketServiceMock } from './basketServiceMock';
 import { BasketServiceReal } from './basketServiceReal';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 

@@ -17,7 +17,7 @@ function Restaurant() {
     const [isMealPageOpen, setIsMealPageOpen] = useState(false);
     const [selectedMealTypes, setSelectedMealTypes] = useState<MealType[]>([]);
     const navigate = useNavigate();
-    const { restaurantId } = useParams();
+    const { restaurantId = '' } = useParams();
     const { restaurant, restaurantLoading, restaurantError, setActiveRestaurant } = useRestaurants();
     const { data, isPending: mealsLoading, isSuccess } = useMeals(restaurantId);
     const meals = isSuccess && data.data;
@@ -58,7 +58,7 @@ function Restaurant() {
         return null;
     }
 
-    const mealsFiltered = selectedMealTypes.length === 0 ? meals : meals.filter((meal) => selectedMealTypes.includes(meal.type));
+    const mealsFiltered = meals && selectedMealTypes.length === 0 ? meals : meals ? meals.filter((meal) => selectedMealTypes.includes(meal.type)) : [];
 
     return (
         <>

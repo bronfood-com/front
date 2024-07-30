@@ -2,13 +2,11 @@ import { sumBy } from 'lodash';
 import styles from './BasketMeal.module.scss';
 import Counter from '../../../components/Counter/Counter';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
-import { useRestaurants } from '../../../utils/hooks/useRestaurants/useRestaurants';
 import { useBasketMutations } from '../../../utils/hooks/useBasket/useBasket';
 
-function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
+function BasketMeal({ mealInBasket, restaurantId }: { mealInBasket: MealInBasket; restaurantId: string }) {
     const { meal, count } = mealInBasket;
     const { id, name, photo, price, features = [] } = meal;
-    const { restaurant } = useRestaurants();
     const mealPrice =
         features.length > 0
             ? sumBy(features, (feature) => {
@@ -51,7 +49,7 @@ function BasketMeal({ mealInBasket }: { mealInBasket: MealInBasket }) {
                     </div>
                 </div>
                 <div className={styles.basket_meal__counter}>
-                    <Counter count={count} increment={() => addMeal.mutateAsync({ restaurantId: restaurant?.id, mealId: id, features })} decrement={() => deleteMeal.mutateAsync({ restaurantId: restaurant?.id, mealId: id, features })} />
+                    <Counter count={count} increment={() => addMeal.mutateAsync({ restaurantId, mealId: id, features })} decrement={() => deleteMeal.mutateAsync({ restaurantId, mealId: id, features })} />
                 </div>
             </div>
         </div>

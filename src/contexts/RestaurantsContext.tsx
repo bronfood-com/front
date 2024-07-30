@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { FC, PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
 import i18n from '../i18n';
-import { options, types } from '../pages/Restaurants/MockRestaurantsList';
-import { Meal, Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { Restaurant, restaurantsService } from '../utils/api/restaurantsService/restaurantsService';
+import { mockMeals } from '../pages/Restaurants/MockRestaurantsList';
 
 export type Option = {
     /**
@@ -58,7 +58,7 @@ export type RestaurantsContext = {
     /**
      * Restaurant to add all meals to it
      */
-    restaurant?: Restaurant & { meals: Meal[] };
+    restaurant?: Restaurant;
     /**
      * Indicates whether restaurant are loading
      */
@@ -156,7 +156,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<string | undefined>(undefined);
-    const [restaurant, setRestaurant] = useState<(Restaurant & { meals: Meal[] }) | undefined>(undefined);
+    const [restaurant, setRestaurant] = useState<Restaurant | undefined>(undefined);
     const queryClient = useQueryClient();
     const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
@@ -165,7 +165,7 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryFn: () => restaurantsService.getRestaurants(),
     });
     let restaurantsOnMap: Restaurant[] = [];
-    if (isSuccess && data.status === 'success') {
+    if (isSuccess) {
         restaurantsOnMap = data.data;
     }
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -189,9 +189,6 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         queryFn: async () => {
             if (!restaurantId) throw new Error(i18n.t('pages.restaurantsContext.noRestaurantIdProvided'));
             const response = await restaurantsService.getRestaurantById(restaurantId);
-            if (response.status === 'error') {
-                throw new Error(response.error_message);
-            }
             return response.data;
         },
         enabled: !!restaurantId,
@@ -209,6 +206,26 @@ export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
         },
         [queryClient]
     );
+    const increment = (function (n) {
+        return function () {
+            n += 1;
+            return n;
+        };
+    })(0);
+    const options = mockMeals
+        .map(({ meals, restaurantName }) => {
+            return meals.map((meal) => {
+                return [meal.name, restaurantName];
+            });
+        })
+        .flat(2)
+        .filter((option, i, ar) => ar.indexOf(option) === i)
+        .map((option) => {
+            return { id: increment(), name: option };
+        });
+    const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
+        return { id: increment(), name: type, selected: false };
+    });
     const addOption = (option: Option) => {
         if (!selectedOptions.find((opt: Option) => opt.id === option.id)) {
             setSelectedOptions([...selectedOptions, option]);
