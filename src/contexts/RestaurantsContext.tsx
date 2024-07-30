@@ -58,7 +58,7 @@ export type RestaurantsContext = {
     /**
      * Restaurant to add all meals to it
      */
-    restaurant?: Restaurant;
+    restaurant: Restaurant | null;
     /**
      * Indicates whether restaurant are loading
      */
@@ -133,6 +133,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
     restaurantsFiltered: [],
     isLoading: false,
     isError: false,
+    restaurant: null,
     refetch: () => {},
     restaurantLoading: false,
     restaurantError: false,
@@ -156,7 +157,7 @@ export const RestaurantsContext = createContext<RestaurantsContext>({
 
 export const RestaurantsProvider: FC<PropsWithChildren> = ({ children }) => {
     const [inView, setInView] = useState<string | undefined>(undefined);
-    const [restaurant, setRestaurant] = useState<Restaurant | undefined>(undefined);
+    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
     const queryClient = useQueryClient();
     const [restaurantId, setRestaurantId] = useState<string | undefined>(undefined);
     const [lastClickedRestaurantId, setLastClickedRestaurantId] = useState<string | null>(null);
