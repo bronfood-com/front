@@ -1,5 +1,5 @@
 import NewPassword from './NewPassword/NewPassword';
-import SMSVerify from './SMSVerify/SMSVerify';
+import SMSVerify from '../../components/SMSVerify/SMSVerify';
 import SuccessPasswordChange from './SuccessPasswordChange/SuccessPasswordChange';
 import QueryPhone from './QueryPhone/QueryPhone';
 import { restorePasswordService } from '../../utils/api/restorePasswordService/restorePasswordService';
