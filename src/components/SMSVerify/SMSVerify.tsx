@@ -17,7 +17,7 @@ interface SMSVerify {
     /**
      * Error message
      */
-    error: string | undefined;
+    error?: string;
     /**
      * Is called when the user submits the code.
      */
