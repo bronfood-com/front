@@ -354,3 +354,26 @@ export const mockMeals = [
         ],
     },
 ];
+
+const increment = (function (n) {
+    return function () {
+        n += 1;
+        return n;
+    };
+})(0);
+
+export const options = mockMeals
+    .map(({ meals, restaurantName }) => {
+        return meals.map((meal) => {
+            return [meal.name, restaurantName];
+        });
+    })
+    .flat(2)
+    .filter((option, i, ar) => ar.indexOf(option) === i)
+    .map((option) => {
+        return { id: increment(), name: option };
+    });
+
+export const types = ['fastFood', 'cafe', 'cafeBar'].map((type) => {
+    return { id: increment(), name: type, selected: false };
+});
