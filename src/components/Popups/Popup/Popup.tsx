@@ -1,4 +1,4 @@
-import { FC, ReactNode, MouseEvent } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import styles from './Popup.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEsc } from '../../../utils/hooks/useEsc/useEsc';
@@ -41,15 +41,20 @@ const Popup: FC<Popup> = (props) => {
         props.onClose();
     };
 
-    const handleOverlayClick = (e: MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            props.onClose();
-        }
-    };
     const { onClose } = props;
     useEsc(() => onClose(), [onClose]);
+
+    useEffect(() => {
+        const overlayElement = document.getElementById('popup-overlay');
+        const handleMouseDown = (e: Event) => {
+            e.target === e.currentTarget && onClose();
+        };
+        overlayElement?.addEventListener('mousedown', handleMouseDown);
+        return () => overlayElement?.removeEventListener('mousedown', handleMouseDown);
+    }, [onClose]);
+
     return (
-        <div className={styles.popup_overlay} onClick={handleOverlayClick}>
+        <div id={'popup-overlay'} className={styles.popup_overlay}>
             <div className={`${styles.popup} ${styles[`popup_${props.mode}`]}`}>
                 {props.title && <h2 className={`${styles.popup__title} ${styles[`popup__title_${props.mode}`]}`}>{props.title}</h2>}
                 {props.children}
