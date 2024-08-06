@@ -16,7 +16,7 @@ const Search = () => {
                     <ul className={`${styles.search__list} bronfood-scrollbar`}>
                         {restaurantsFiltered.map((card) => (
                             <li key={card.id} className={styles.search__list_item}>
-                                <RestaurantCardLarge card={card} />
+                                <RestaurantCardLarge card={card} onRestaurantClick={() => navigate(`/restaurants/${card.id}`)} />
                             </li>
                         ))}
                     </ul>
