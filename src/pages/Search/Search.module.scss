@@ -10,7 +10,8 @@
     border-radius: 35px 35px 0px 0px;
 
     &__list {
-        height: 360px;
+        max-height: 360px;
+        height: 100%;
         display: flex;
         flex-direction: column;
         row-gap: 15px;
@@ -18,5 +19,9 @@
     }
     &__list_item {
         scroll-snap-align: start;
+        min-width: 320px;
+        width: 100%;
+        min-height: 201px;
+        height: 100%;
     }
 }
