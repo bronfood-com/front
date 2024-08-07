@@ -49,7 +49,7 @@ const Favorites = () => {
                                 <ul className={`${styles.favorites__list} bronfood-scrollbar`}>
                                     {favoritesList.map((restaurant) => (
                                         <li key={restaurant.id}>
-                                            <RestaurantCardLarge card={restaurant} isFavorite={true}></RestaurantCardLarge>
+                                            <RestaurantCardLarge card={restaurant} isFavorite={true} onRestaurantClick={() => navigate(`/restaurants/${restaurant.id}`)}></RestaurantCardLarge>
                                         </li>
                                     ))}
                                 </ul>
