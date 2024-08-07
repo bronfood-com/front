@@ -131,7 +131,7 @@ i18n
                             namePlaceholder: 'Владислав Иванов',
                             registerButton: 'Регистрация',
                             connectionError: 'Сервер не отвечает. Попробуйте позже',
-                            PhoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
+                            phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
                             unknownError: 'Неизвестная ошибка',
                         },
                         confirmation: {

@@ -5,14 +5,15 @@ import { useFavoritesMutations } from '../../../utils/hooks/useFavorites/useFavo
 type RestaurantCardLargeProps = {
     card: Restaurant;
     isFavorite?: boolean;
+    onRestaurantClick: () => void;
 };
 
-function RestaurantCardLarge({ card, isFavorite = false }: RestaurantCardLargeProps) {
+function RestaurantCardLarge({ card, isFavorite = false, onRestaurantClick }: RestaurantCardLargeProps) {
     const { deleteFavorite } = useFavoritesMutations();
     const handleDeleteFavorite = (id: string) => deleteFavorite.mutate(id);
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onRestaurantClick}>
             <div className={styles.card__container}>
                 {isFavorite ? <div className={styles.card__delete} onClick={() => handleDeleteFavorite(card.id)}></div> : ''}
                 <div className={styles.card__image} style={{ backgroundImage: `url(${card.photo})` }} />

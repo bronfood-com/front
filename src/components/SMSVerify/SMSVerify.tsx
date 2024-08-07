@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import Popup from '../../../components/Popups/Popup/Popup';
+import Popup from '../Popups/Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 import styles from './SMSVerify.module.scss';
-import Button from '../../../components/Button/Button';
+import Button from '../Button/Button';
 import { PinInput } from 'react-input-pin-code';
 import { FC, useState } from 'react';
 import { Form, useForm } from 'react-hook-form';
-import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Preloader from '../Preloader/Preloader';
 
 interface SMSVerify {
     /**
@@ -16,11 +17,19 @@ interface SMSVerify {
     /**
      * Error message
      */
-    error: string;
+    error?: string;
     /**
      * Is called when the user submits the code.
      */
     onSubmit: (code: string) => void;
+    /**
+     * Open loading spinner
+     */
+    isLoading?: boolean;
+    /**
+     * Function invoked when popup closed
+     */
+    onClose?: () => void;
 }
 
 const SMSVerify: FC<SMSVerify> = (props) => {
@@ -50,10 +59,12 @@ const SMSVerify: FC<SMSVerify> = (props) => {
         <Popup
             title={t('pages.confirmation.enterSmsCode')}
             onClose={() => {
+                props.onClose?.();
                 navigate('/');
             }}
         >
             <div className={styles.sms_verify__layout}>
+                {props.isLoading && <Preloader />}
                 {props.isErrorVisible && <ErrorMessage message={t(`pages.error.${props.error}`)} />}
                 <Form control={control} name="form-confirmation" onSubmit={onSubmit}>
                     <PinInput values={values} name="PinInput" placeholder="" required={true} containerClassName={styles.sms_verify__inputs} showState={showError} autoFocus={true} onChange={handleChange} validate={valTest} />

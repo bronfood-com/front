@@ -13,7 +13,9 @@ const Header = ({ city }: { city: string }) => {
     const { t } = useTranslation();
     const { data, isSuccess } = useGetBasket();
     const meals = isSuccess && data.data.meals;
+    const [isContentVisible, setIsContentVisible] = useState(true);
     const handleMenuActive = () => {
+        setIsContentVisible(false);
         setIsMenuActive(!isMenuActive);
     };
     const [isPageFavorites, setIsPageFavorites] = useState(false);
@@ -31,6 +33,9 @@ const Header = ({ city }: { city: string }) => {
         (e: MouseEvent) => {
             if (isMenuActive && e.target instanceof HTMLElement && !menuRef.current?.contains(e.target)) {
                 setIsMenuActive(false);
+                setTimeout(() => {
+                    setIsContentVisible(true);
+                }, 300);
             }
         },
         [isMenuActive]
@@ -41,9 +46,17 @@ const Header = ({ city }: { city: string }) => {
         return () => document.removeEventListener('mousedown', closeOpenMenus);
     }, [closeOpenMenus]);
 
+    useEffect(() => {
+        if (!isMenuActive) {
+            setTimeout(() => {
+                setIsContentVisible(true);
+            }, 300);
+        }
+    }, [isMenuActive]);
+
     return (
         <header className={styles.header}>
-            <div className={styles.header__container}>
+            <div className={`${styles.header__container} ${!isContentVisible ? styles.header__container_hidden : ''}`}>
                 <button title={t('components.header.burgerTitleHover')} className={`${styles.header__burger} ${styles.header__icon}`} onClick={handleMenuActive}></button>
                 <div className={styles.header__place}>
                     <div className={styles.header__place_point}></div>
