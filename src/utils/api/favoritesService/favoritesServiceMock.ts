@@ -24,7 +24,7 @@ export class FavoritesServiceMock implements FavoritesService {
         await this._wait(100);
         const token = true;
         if (token) {
-            const rest = mockRestaurants.find((rest) => restId === rest.id);
+            const rest: Restaurant | undefined = mockRestaurants.find((rest) => restId === rest.id);
             if (rest) {
                 rest.isLiked = true;
                 mockUser.favorites.push(rest);

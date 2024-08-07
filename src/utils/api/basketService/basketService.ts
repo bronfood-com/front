@@ -1,4 +1,4 @@
-import { BasketServiceMock } from './basketServiceMock';
+import { BasketServiceReal } from './basketServiceReal';
 import { Feature, Meal, Restaurant } from '../restaurantsService/restaurantsService';
 
 export type MealInBasket = {
@@ -25,9 +25,9 @@ export type Basket = {
 
 export interface BasketService {
     getBasket: () => Promise<{ data: Basket }>;
-    addMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
-    deleteMeal: (mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    addMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
+    deleteMeal: (restaurantId: string, mealId: string, fetures: Feature[] | never[]) => Promise<{ data: Basket }>;
     emptyBasket: () => Promise<{ data: Basket }>;
 }
 
-export const basketService = new BasketServiceMock();
+export const basketService = new BasketServiceReal();

@@ -112,26 +112,15 @@ export type Restaurant = {
      */
     isLiked: boolean;
     /**
-     * Array of venue's meals available for order
-     */
-    meals: Meal[];
-    /**
      * Venue's type
      */
     type: 'fastFood' | 'cafe' | 'cafeBar';
 };
 
-/**
- * Type to represent a restaurant with all list of meals from api
- */
-export type RestaurantWithMeals = Omit<Restaurant, 'meals'> & {
-    /**
-     * Array of venue's meals available
-     */
-    meals: Meal[];
-};
 export interface RestaurantsService {
-    getRestaurants: () => Promise<{ status: 'success'; data: Restaurant[] } | { status: 'error'; error_message: string }>;
+    getRestaurants: () => Promise<{ data: Restaurant[] }>;
+    getRestaurantById(id: string): Promise<{ data: Restaurant }>;
+    getMeals(restaurantId: string): Promise<{ data: Meal[] }>;
 }
 
 export const restaurantsService = new RestaurantsServiceReal();
