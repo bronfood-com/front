@@ -198,6 +198,7 @@ i18n
                             validationError: 'Некорректный ввод',
                             invalidConformationCode: 'Введен неправильный код',
                             serverDoesntRespond: 'Сервер не отвечает. Попытайтесь еще раз позже',
+                            failedToFetch: 'Не удалось сделать запрос. Проверьте подключение к интернету',
                         },
                         restaurants: {
                             selectPlace: 'Выберите заведение',
