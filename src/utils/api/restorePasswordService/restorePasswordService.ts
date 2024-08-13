@@ -1,5 +1,4 @@
-import { RestorePasswordServiceMock } from './restorePasswordServiceMock';
-// import { RestorePasswordServiceReal } from './restorePasswordServiceReal';
+import { RestorePasswordServiceReal } from './restorePasswordServiceReal';
 
 export type RestorePassword = {
     /**
@@ -46,5 +45,4 @@ export interface RestorePasswordService {
     verifyPasswordChange: (temp_data_code: string, confirmation_code: string) => Promise<CompleteChangePasswordResponse | RequestChangePasswordResponseError>;
 }
 
-// export const restorePasswordService = new RestorePasswordServiceReal();
-export const restorePasswordService = new RestorePasswordServiceMock();
+export const restorePasswordService = new RestorePasswordServiceReal();
