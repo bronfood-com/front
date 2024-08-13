@@ -1,4 +1,3 @@
-// import { RestorePasswordServiceMock } from './restorePasswordServiceMock';
 import { RestorePasswordServiceReal } from './restorePasswordServiceReal';
 
 export type RestorePassword = {
@@ -47,4 +46,3 @@ export interface RestorePasswordService {
 }
 
 export const restorePasswordService = new RestorePasswordServiceReal();
-// export const restorePasswordService = new RestorePasswordServiceMock();
