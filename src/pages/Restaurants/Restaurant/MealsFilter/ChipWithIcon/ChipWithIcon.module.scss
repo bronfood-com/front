@@ -15,9 +15,8 @@
     cursor: pointer;
 
     &_input {
-        z-index: -1;
+        position: absolute;
         opacity: 0;
-        display: block;
         width: 0;
         height: 0;
     }
@@ -28,13 +27,13 @@
         background-repeat: no-repeat;
     }
     &_food {
-        background-image: url(./../../../../../vendor/images/restaurant/food.png);
+        background-image: url(./../../../../../vendor/images/restaurant/food-svg.svg);
     }
     &_drink {
-        background-image: url(./../../../../../vendor/images/restaurant/drink.png);
+        background-image: url(./../../../../../vendor/images/restaurant/drink-svg.svg);
     }
     &_dessert {
-        background-image: url(./../../../../../vendor/images/restaurant/desert.png);
+        background-image: url(./../../../../../vendor/images/restaurant/desert-svg.svg);
     }
     &_text {
         padding: 10px 10px 10px 2px;
