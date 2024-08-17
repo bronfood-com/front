@@ -5,7 +5,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 54px;
+    gap: 39px;
+    margin: 5px 0 14px 0;
 
     &__name {
         width: 100%;
@@ -21,5 +22,6 @@
         background-position: center;
         background-repeat: no-repeat;
         background-image: url('../../../vendor/images/basket/basket-empty.svg');
+        margin: 0 17px 0 0;
     }
 }
