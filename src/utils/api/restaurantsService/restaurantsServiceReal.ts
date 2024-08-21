@@ -31,6 +31,6 @@ export class RestaurantsServiceReal implements RestaurantsService {
     }
 
     async getMeals(restaurantId: string): Promise<{ data: Meal[] }> {
-        return handleFetch(`api/restaurant/${restaurantId}/menu`);
+        return handleFetch(`api/restaurant/${restaurantId}/meals`);
     }
 }
