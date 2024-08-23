@@ -63,7 +63,7 @@ const Profile = () => {
                 >
                     {isLoading && <Preloader />}
                     <Form name="form-profile" onSubmit={handleSubmit(onSubmit)}>
-                        {updateUser.isError && <ErrorMessage message={updateUser.error.message} />}
+                        {updateUser.isError && <ErrorMessage message={t(`pages.profile.${updateUser.error.message}`)} />}
                         {isSuccess && (
                             <FormInputs>
                                 <Input type="text" name="username" placeholder={t('pages.profile.placeholderUserName')} nameLabel={t('pages.profile.nameLabelUserName')} register={register} errors={errors} pattern={regexClientName} value={user.fullname}></Input>
