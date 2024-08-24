@@ -7,11 +7,11 @@ export class BasketServiceReal implements BasketService {
     async getBasket(): Promise<{ data: Basket }> {
         return handleFetch('api/basket');
     }
-    async addMeal(restaurantId: string, mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
-        return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurantId, mealId, features } });
+    async addMeal(restaurant_id: string, meal_id: string, feature_id: Feature[] | never[]): Promise<{ data: Basket }> {
+        return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurant_id, meal_id, feature_id } });
     }
-    async deleteMeal(restaurantId: string, mealId: string, features: Feature[] | never[]): Promise<{ data: Basket }> {
-        return handleFetch('api/basket/delete_meal', { method: 'POST', data: { restaurantId, mealId, features } });
+    async deleteMeal(restaurant_id: string, meal_id: string, feature_id: Feature[] | never[]): Promise<{ data: Basket }> {
+        return handleFetch('api/basket/delete_meal', { method: 'POST', data: { restaurant_id, meal_id, feature_id } });
     }
     async emptyBasket(): Promise<{ data: Basket }> {
         return handleFetch('api/basket/empty');
