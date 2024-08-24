@@ -30,7 +30,7 @@ export const handleFetch = async (endpoint: string, { data, ...customOptions }: 
     if (data) {
         options.body = JSON.stringify(data);
     }
-    const res = await fetch(`${API_URL}/${endpoint}/`, options);
+    const res = await fetch(`${API_URL}/${endpoint}`, options);
     if (res.status === 401) {
         localStorage.removeItem('token');
         throw new Error('Unauthorized');
