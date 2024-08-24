@@ -123,6 +123,7 @@ i18n
                             forgotPassword: 'Забыли пароль?',
                             loginButton: 'Войти',
                             registartion: 'Регистрация',
+                            checkYourInternetConnection: 'Проверьте ваше соединение с интернетом',
                         },
                         signUp: {
                             signUpHeading: 'Регистрация',
