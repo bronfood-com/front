@@ -5,7 +5,7 @@ import { OrderState } from '../orderService/orderService';
 
 export class BasketServiceReal implements BasketService {
     async getBasket(): Promise<{ data: Basket }> {
-        return handleFetch('api/basket');
+        return handleFetch('api/basket/');
     }
     async addMeal(restaurant_id: string, meal_id: string, feature_id: Feature[] | never[]): Promise<{ data: Basket }> {
         return handleFetch('api/basket/add_meal', { method: 'POST', data: { restaurant_id, meal_id, feature_id } });
