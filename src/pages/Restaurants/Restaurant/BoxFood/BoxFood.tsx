@@ -6,21 +6,27 @@ import { Meal } from '../../../../utils/api/restaurantsService/restaurantsServic
 import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurretUser';
 import { useRestaurants } from '../../../../utils/hooks/useRestaurants/useRestaurants';
 import { useBasketMutations } from '../../../../utils/hooks/useBasket/useBasket';
+import { useQueryClient } from '@tanstack/react-query';
 
 function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { restaurant } = useRestaurants();
-    const { addMeal } = useBasketMutations();
+    const { addMeal, emptyBasket } = useBasketMutations();
     const hasFeatures = features && features.length > 0;
     const { isLogin } = useCurrentUser();
+    const queryClient = useQueryClient();
+    const basket = queryClient.getQueryData(['basket']);
     const handleClick = () => {
         if (isLogin) {
             if (hasFeatures) {
                 navigate(`${pathname}/meal/${id}`);
                 setIsMealPageOpen(true);
-            } else if (restaurant) {
+            } else if (restaurant?.id === basket.data.restaurant.id) {
+                addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: id, features: features || [] });
+            } else {
+                emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: id, features: features || [] });
             }
         } else {

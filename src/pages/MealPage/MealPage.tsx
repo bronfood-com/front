@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 import MealPopup from './MealPopup/MealPopup';
 import MealImage from './MealImage/MealImage';
 import MealDescription from './MealDescription/MealDescription';
@@ -16,7 +17,7 @@ function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
     const { restaurantId = '', mealId = '' } = useParams();
-    const { addMeal } = useBasketMutations();
+    const { addMeal, emptyBasket } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
     const { data, isSuccess } = useMeals(restaurantId);
@@ -30,6 +31,8 @@ function MealPage() {
             return feature.choices.filter((choice) => choice.default)[0].price;
         }
     });
+    const queryClient = useQueryClient();
+    const basket = queryClient.getQueryData(['basket']);
     const goBack = () => {
         navigate(`/restaurants/${restaurantId}`);
     };
@@ -70,8 +73,14 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
-            goBack();
+            if (restaurantId === basket.data.restaurant.id) {
+                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+                goBack();
+            } else {
+                emptyBasket.mutateAsync();
+                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+                goBack();
+            }
         };
         return (
             <FormProvider {...methods}>
