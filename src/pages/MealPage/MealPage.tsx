@@ -9,6 +9,7 @@ import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
 import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
+import { Basket } from '../../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
 import { useMeals } from '../../utils/hooks/useMeals/useMeals';
 import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
@@ -32,7 +33,7 @@ function MealPage() {
         }
     });
     const queryClient = useQueryClient();
-    const basket = queryClient.getQueryData(['basket']);
+    const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
         navigate(`/restaurants/${restaurantId}`);
     };
@@ -73,7 +74,7 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            if (restaurantId === basket.data.restaurant.id) {
+            if (restaurantId === basket?.data.restaurant.id) {
                 addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
                 goBack();
             } else {

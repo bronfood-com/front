@@ -7,6 +7,7 @@ import { useCurrentUser } from '../../../../utils/hooks/useCurrentUser/useCurret
 import { useRestaurants } from '../../../../utils/hooks/useRestaurants/useRestaurants';
 import { useBasketMutations } from '../../../../utils/hooks/useBasket/useBasket';
 import { useQueryClient } from '@tanstack/react-query';
+import { Basket } from '../../../../utils/api/basketService/basketService';
 
 function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: Dispatch<SetStateAction<boolean>> }) {
     const { id, features } = card;
@@ -17,15 +18,15 @@ function BoxFood({ card, setIsMealPageOpen }: { card: Meal; setIsMealPageOpen: D
     const hasFeatures = features && features.length > 0;
     const { isLogin } = useCurrentUser();
     const queryClient = useQueryClient();
-    const basket = queryClient.getQueryData(['basket']);
+    const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const handleClick = () => {
-        if (isLogin) {
+        if (isLogin && restaurant) {
             if (hasFeatures) {
                 navigate(`${pathname}/meal/${id}`);
                 setIsMealPageOpen(true);
-            } else if (restaurant?.id === basket.data.restaurant.id) {
+            } else if (restaurant.id === basket?.data.restaurant.id) {
                 addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: id, features: features || [] });
-            } else {
+            } else if (restaurant) {
                 emptyBasket.mutateAsync();
                 addMeal.mutateAsync({ restaurantId: restaurant.id, mealId: id, features: features || [] });
             }
