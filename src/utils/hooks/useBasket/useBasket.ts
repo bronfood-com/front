@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { basketService } from '../../api/basketService/basketService';
 import { Feature } from '../../api/restaurantsService/restaurantsService';
+import { useCurrentUser } from '../useCurrentUser/useCurretUser';
 
 export const useGetBasket = () => {
+    const { isLogin } = useCurrentUser();
     return useQuery({
         queryKey: ['basket'],
         queryFn: () => basketService.getBasket(),
+        enabled: isLogin,
     });
 };
 
