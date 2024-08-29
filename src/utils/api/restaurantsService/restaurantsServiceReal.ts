@@ -10,7 +10,7 @@ export class RestaurantsServiceReal implements RestaurantsService {
                 data: this._restaurantsCache,
             };
         }
-        const responseData = await handleFetch('api/restaurant');
+        const responseData = await handleFetch('api/restaurant/');
         this._restaurantsCache = responseData.data;
         return responseData;
     }
@@ -24,13 +24,13 @@ export class RestaurantsServiceReal implements RestaurantsService {
                 };
             }
         }
-        const restaurant = await handleFetch(`api/restaurant/${id}`);
+        const restaurant = await handleFetch(`api/restaurant/${id}/`);
         return {
             data: restaurant.data,
         };
     }
 
     async getMeals(restaurantId: string): Promise<{ data: Meal[] }> {
-        return handleFetch(`api/restaurant/${restaurantId}/meals`);
+        return handleFetch(`api/restaurant/${restaurantId}/meals/`);
     }
 }
