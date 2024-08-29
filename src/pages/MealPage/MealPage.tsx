@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FieldValues, SubmitHandler, useForm, FormProvider } from 'react-hook-form';
-import { useRestaurants } from '../../utils/hooks/useRestaurants/useRestaurants';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
+import { useQueryClient } from '@tanstack/react-query';
 import MealPopup from './MealPopup/MealPopup';
 import MealImage from './MealImage/MealImage';
 import MealDescription from './MealDescription/MealDescription';
 import MealTotal from './MealTotal/MealTotal';
 import MealFeatureList from './MealFeatureList/MealFeatureList';
 import Preloader from '../../components/Preloader/Preloader';
-import { Feature, Meal, Restaurant } from '../../utils/api/restaurantsService/restaurantsService';
+import { Feature, Meal } from '../../utils/api/restaurantsService/restaurantsService';
+import { Basket } from '../../utils/api/basketService/basketService';
 import { sumBy } from 'lodash';
-import PageNotFound from '../PageNotFound/PageNotFound';
+import { useMeals } from '../../utils/hooks/useMeals/useMeals';
+import { useBasketMutations } from '../../utils/hooks/useBasket/useBasket';
 
 function MealPage() {
     const [features, setFeatures] = useState<Feature[]>([]);
     const navigate = useNavigate();
-    const params = useParams();
-    const { restaurantsOnMap } = useRestaurants();
-    const { addMeal, isLoading } = useBasket();
+    const { restaurantId = '', mealId = '' } = useParams();
+    const { addMeal, emptyBasket } = useBasketMutations();
     const methods = useForm();
     const { watch } = methods;
-    const restaurant: Restaurant | undefined = restaurantsOnMap.find((restaurant) => restaurant.id === params.restaurantId);
-    const meal: Meal | undefined = restaurant && restaurant.meals.find((meal) => meal.id === params.mealId);
+    const { data, isSuccess } = useMeals(restaurantId);
+    const meals = isSuccess && data.data;
+    const meal: Meal | undefined | false = meals && meals.find((meal) => meal.id == mealId);
     const price = sumBy(features, (feature) => {
         const isChosen = feature.choices.some((choice) => choice.chosen);
         if (isChosen) {
@@ -31,8 +32,10 @@ function MealPage() {
             return feature.choices.filter((choice) => choice.default)[0].price;
         }
     });
+    const queryClient = useQueryClient();
+    const basket: undefined | { data: Basket } = queryClient.getQueryData(['basket']);
     const goBack = () => {
-        navigate(`/restaurants/${params.restaurantId}`);
+        navigate(`/restaurants/${restaurantId}`);
     };
     const close = () => {
         navigate('/restaurants');
@@ -53,7 +56,7 @@ function MealPage() {
     }, [watch, features]);
 
     useEffect(() => {
-        if (meal?.features) {
+        if (meal && meal?.features) {
             setFeatures(meal.features);
         } else {
             setFeatures([]);
@@ -71,8 +74,14 @@ function MealPage() {
                     return { ...feature, choices };
                 }
             });
-            await addMeal({ mealId: meal.id, features: newFeatures });
-            goBack();
+            if (restaurantId === basket?.data.restaurant.id) {
+                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+                goBack();
+            } else {
+                emptyBasket.mutateAsync();
+                addMeal.mutateAsync({ restaurantId, mealId: meal.id, features: newFeatures });
+                goBack();
+            }
         };
         return (
             <FormProvider {...methods}>
@@ -81,13 +90,13 @@ function MealPage() {
                         <MealImage image={meal.photo} />
                         <MealDescription name={meal.name} description={meal.description} />
                         <MealFeatureList features={features} />
-                        <MealTotal price={price} buttonDisabled={isLoading} />
-                        {isLoading && <Preloader />}
+                        <MealTotal price={price} buttonDisabled={addMeal.isPending} />
+                        {addMeal.isPending && <Preloader />}
                     </MealPopup>
                 </form>
             </FormProvider>
         );
-    } else return <PageNotFound />;
+    } else return null;
 }
 
 export default MealPage;

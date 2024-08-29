@@ -2,7 +2,7 @@ import styles from './BasketMealsList.module.scss';
 import BasketMeal from '../BasketMeal/BasketMeal';
 import { MealInBasket } from '../../../utils/api/basketService/basketService';
 
-const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
+const BasketMealsList = ({ meals, restaurantId }: { meals: MealInBasket[]; restaurantId: string }) => {
     const createIdPostfix = (meal: MealInBasket) => {
         return (
             meal.meal.features
@@ -20,7 +20,7 @@ const BasketMealsList = ({ meals }: { meals: MealInBasket[] }) => {
 
                 return (
                     <li key={meal.meal.id + idPostfix}>
-                        <BasketMeal mealInBasket={meal} />
+                        <BasketMeal mealInBasket={meal} restaurantId={restaurantId} />
                     </li>
                 );
             })}

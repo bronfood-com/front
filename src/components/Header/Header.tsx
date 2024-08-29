@@ -4,14 +4,15 @@ import styles from './Header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useCurrentUser } from '../../utils/hooks/useCurrentUser/useCurretUser';
-import { useBasket } from '../../utils/hooks/useBasket/useBasket';
+import { useGetBasket } from '../../utils/hooks/useBasket/useBasket';
 
 const Header = ({ city }: { city: string }) => {
     const menuRef = useRef<HTMLDivElement>(null);
     const { isLogin } = useCurrentUser();
     const [isMenuActive, setIsMenuActive] = useState(false);
     const { t } = useTranslation();
-    const { meals } = useBasket();
+    const { data, isSuccess } = useGetBasket();
+    const meals = isSuccess && data.data.meals;
     const [isContentVisible, setIsContentVisible] = useState(true);
     const handleMenuActive = () => {
         setIsContentVisible(false);
@@ -70,7 +71,7 @@ const Header = ({ city }: { city: string }) => {
                             <Link to="/basket">
                                 <div className={styles.header__basket}>
                                     <button title={t('components.header.basketTitleHover')} className={styles.header__icon} />
-                                    {meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
+                                    {meals && meals.length > 0 ? <span className={styles.header__chip}>{meals.length}</span> : null}
                                 </div>
                             </Link>
                         </>

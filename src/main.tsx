@@ -6,7 +6,6 @@ import './i18n.tsx';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { CurrentUserProvider } from './contexts/CurrentUserContext.tsx';
 import { RestaurantsProvider } from './contexts/RestaurantsContext.tsx';
-import { BasketProvider } from './contexts/BasketContext.tsx';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 const router = createHashRouter([{ path: '*', element: <App /> }]);
@@ -17,9 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <QueryClientProvider client={queryClient}>
             <CurrentUserProvider>
                 <RestaurantsProvider>
-                    <BasketProvider>
-                        <RouterProvider router={router} />
-                    </BasketProvider>
+                    <RouterProvider router={router} />
                 </RestaurantsProvider>
             </CurrentUserProvider>
         </QueryClientProvider>
