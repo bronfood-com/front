@@ -191,6 +191,7 @@ i18n
                             save: 'Сохранить',
                             passwordDontMatch: 'Пароли не совпадают',
                             errorMessage: 'Не удалось изменить данные',
+                            phoneNumberIsAlreadyUsed: 'Такой номер телефона уже зарегистрирован',
                         },
                         error: {
                             server: 'Сервер не отвечает. Попробуйте позже',
